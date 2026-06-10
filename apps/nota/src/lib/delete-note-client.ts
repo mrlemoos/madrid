@@ -1,13 +1,6 @@
-import { getBrowserClient } from './supabase/browser';
-import {
-  drainNotesOutbox,
-  getStoredNote,
-  isLikelyOnline,
-  markPendingDelete,
-} from './notes-offline';
-import { deleteNote } from '../models/notes';
 import { setAppHash } from './app-navigation';
 import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
+import { vaultMutator } from './notes-vault-runtime';
 import type { UserPreferences } from '~/types/database.types';
 
 export async function clientDeleteNoteById(
@@ -24,44 +17,21 @@ export async function clientDeleteNoteById(
   },
 ): Promise<void> {
   const { userId } = options;
-  if (!userId) {
-    return;
-  }
-  if (!options.notaProEntitled) {
-    return;
-  }
-  const client = getBrowserClient();
-  const uid = userId;
-
-  const runLocalDelete = async (): Promise<void> => {
-    const stored = await getStoredNote(uid, noteId);
-    await markPendingDelete(uid, noteId, !stored?.pending_create);
-    void drainNotesOutbox(uid);
-    options.removeNoteFromList(noteId);
-    setAppHash({ kind: 'notes', panel: 'list', noteId: null });
-    await maybePruneEmptyFolder({
-      folderId: options.noteFolderId,
-      userPreferences: options.userPreferences,
-      removeFolderFromList: options.removeFolderFromList,
-    });
-  };
-
-  if (!isLikelyOnline()) {
-    await runLocalDelete();
+  if (!userId || !options.notaProEntitled) {
     return;
   }
 
-  try {
-    await deleteNote(client, noteId);
-    options.removeNoteFromList(noteId);
-    setAppHash({ kind: 'notes', panel: 'list', noteId: null });
-    await maybePruneEmptyFolder({
-      folderId: options.noteFolderId,
-      userPreferences: options.userPreferences,
-      removeFolderFromList: options.removeFolderFromList,
-    });
+  const result = await vaultMutator.deleteNote(userId, noteId);
+
+  options.removeNoteFromList(noteId);
+  setAppHash({ kind: 'notes', panel: 'list', noteId: null });
+  await maybePruneEmptyFolder({
+    folderId: options.noteFolderId,
+    userPreferences: options.userPreferences,
+    removeFolderFromList: options.removeFolderFromList,
+  });
+
+  if (result.outcome === 'deleted-remote') {
     await options.refreshNotesList({ silent: true });
-  } catch {
-    await runLocalDelete();
   }
 }

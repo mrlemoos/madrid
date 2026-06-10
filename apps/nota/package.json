@@ -30,6 +30,7 @@
     "@nota/note-graph": "workspace:*",
     "@nota/note-link-graph": "workspace:*",
     "@nota/notes-offline": "workspace:*",
+    "@nota/notes-offline-core": "workspace:*",
     "@nota/validation": "workspace:*",
     "@nota/web-design": "workspace:*",
     "@posthog/react": "^1.8.2",

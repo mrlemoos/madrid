@@ -24,14 +24,9 @@ import {
   useNotesDataMeta,
   useNotesDataActions,
 } from '../context/notes-data-context';
-import { mergeUpdatedNoteLocalContent } from '../lib/note-updated-content-merge';
-import {
-  drainNotesOutbox,
-  isLikelyOnline,
-  markNoteSyncedFromServer,
-  saveLocalNoteDraft,
-} from '@/lib/notes-offline';
-import { updateNote } from '../models/notes';
+import { editorDraftContext } from '../lib/note-editor-draft-context';
+import { noteAfterPatchMutation } from '../lib/note-patch-result';
+import { vaultMutator } from '../lib/notes-vault-runtime';
 import type { Json, Note, NoteAttachment } from '~/types/database.types';
 import { NoteLayoutMenu } from './note-layout-menu';
 import {
@@ -333,58 +328,34 @@ function NoteEditorImpl({
         if (next === lastSavedTitle.current) {
           return;
         }
+        if (!user?.id) {
+          return;
+        }
         setSaveStatus('saving');
         try {
-          if (user?.id) {
-            await saveLocalNoteDraft(user.id, {
-              id: note.id,
+          const result = await vaultMutator.patchNote(user.id, {
+            noteId: note.id,
+            fields: { title: next },
+            draftContext: editorDraftContext(noteRef.current, {
               title: next,
-              content: lastSavedContent.current,
-              user_id: note.user_id,
-              created_at: note.created_at,
-              due_at: note.due_at,
-              is_deadline: note.is_deadline,
-              editor_settings: noteRef.current.editor_settings,
-            });
-          }
+              content: lastSavedContent.current as Json,
+            }),
+            allowRemote: notaProEntitledRef.current,
+          });
           setSaveStatus('saved');
-
-          if (isLikelyOnline() && notaProEntitledRef.current) {
-            const client = getBrowserClient();
-            const updatedNote = await updateNote(client, note.id, {
-              title: next,
-            });
-            if (user?.id) {
-              await markNoteSyncedFromServer(user.id, updatedNote);
-            }
-            lastSavedTitle.current = next;
-            onNoteUpdated?.(
-              mergeUpdatedNoteLocalContent(
-                updatedNote,
-                pendingContentRef.current,
-                lastSavedContent.current,
-              ),
-            );
-          } else if (user?.id) {
-            lastSavedTitle.current = next;
-            onNoteUpdated?.(
-              mergeUpdatedNoteLocalContent(
-                {
-                  ...note,
-                  title: next,
-                  updated_at: new Date().toISOString(),
-                },
-                pendingContentRef.current,
-                lastSavedContent.current,
-              ),
-            );
-          }
+          lastSavedTitle.current = next;
+          onNoteUpdated?.(
+            noteAfterPatchMutation(
+              result,
+              noteRef.current,
+              { title: next },
+              pendingContentRef.current,
+              lastSavedContent.current as Json,
+            ),
+          );
         } catch (error) {
           console.error('Failed to save title:', error);
           setSaveStatus('error');
-          if (user?.id && notaProEntitledRef.current) {
-            void drainNotesOutbox(user.id);
-          }
         }
       })();
     }, SAVE_DEBOUNCE_MS);
@@ -495,60 +466,36 @@ function NoteEditorImpl({
           setSaveStatus('saved');
           return;
         }
+        if (!user?.id) {
+          return;
+        }
         setSaveStatus('saving');
         try {
           const titleForRow = persistedDisplayTitle(titleRef.current);
-          if (user?.id) {
-            await saveLocalNoteDraft(user.id, {
-              id: note.id,
+          const result = await vaultMutator.patchNote(user.id, {
+            noteId: note.id,
+            fields: { content: toSave as Json },
+            draftContext: editorDraftContext(noteRef.current, {
               title: titleForRow,
               content: toSave as Json,
-              user_id: note.user_id,
-              created_at: note.created_at,
-              due_at: note.due_at,
-              is_deadline: note.is_deadline,
-              editor_settings: noteRef.current.editor_settings,
-            });
-          }
+            }),
+            allowRemote: notaProEntitledRef.current,
+          });
           const mergedBody = (pendingContentRef.current ?? toSave) as Json;
           lastSavedContent.current = mergedBody;
           setSaveStatus('saved');
-
-          if (isLikelyOnline() && notaProEntitledRef.current) {
-            const client = getBrowserClient();
-            const updatedNote = await updateNote(client, note.id, {
-              content: toSave as Json,
-            });
-            if (user?.id) {
-              await markNoteSyncedFromServer(user.id, updatedNote);
-            }
-            onNoteUpdated?.(
-              mergeUpdatedNoteLocalContent(
-                updatedNote,
-                pendingContentRef.current,
-                toSave as Json,
-              ),
-            );
-          } else if (user?.id) {
-            onNoteUpdated?.(
-              mergeUpdatedNoteLocalContent(
-                {
-                  ...note,
-                  title: titleForRow,
-                  content: mergedBody,
-                  updated_at: new Date().toISOString(),
-                },
-                pendingContentRef.current,
-                toSave as Json,
-              ),
-            );
-          }
+          onNoteUpdated?.(
+            noteAfterPatchMutation(
+              result,
+              noteRef.current,
+              { title: titleForRow, content: mergedBody },
+              pendingContentRef.current,
+              toSave as Json,
+            ),
+          );
         } catch (error) {
           console.error('Failed to save note:', error);
           setSaveStatus('error');
-          if (user?.id && notaProEntitledRef.current) {
-            void drainNotesOutbox(user.id);
-          }
         }
       })();
     }, SAVE_DEBOUNCE_MS);
@@ -577,49 +524,29 @@ function NoteEditorImpl({
         lastSavedContent.current) as Json;
       setSaveStatus('saving');
       try {
-        await saveLocalNoteDraft(userId, {
-          id: n.id,
-          title: titleForRow,
-          content: contentForRow,
-          user_id: n.user_id,
-          created_at: n.created_at,
-          due_at: n.due_at,
-          is_deadline: n.is_deadline,
-          editor_settings: json,
-        });
-        if (isLikelyOnline() && notaProEntitledRef.current) {
-          const client = getBrowserClient();
-          const updatedNote = await updateNote(client, n.id, {
+        const result = await vaultMutator.patchNote(userId, {
+          noteId: n.id,
+          fields: { editor_settings: json },
+          draftContext: editorDraftContext(n, {
+            title: titleForRow,
+            content: contentForRow,
             editor_settings: json,
-          });
-          await markNoteSyncedFromServer(userId, updatedNote);
-          onNoteUpdatedRef.current?.(
-            mergeUpdatedNoteLocalContent(
-              updatedNote,
-              pendingContentRef.current,
-              lastSavedContent.current,
-            ),
-          );
-        } else {
-          onNoteUpdatedRef.current?.(
-            mergeUpdatedNoteLocalContent(
-              {
-                ...n,
-                editor_settings: json,
-                updated_at: new Date().toISOString(),
-              },
-              pendingContentRef.current,
-              lastSavedContent.current,
-            ),
-          );
-        }
+          }),
+          allowRemote: notaProEntitledRef.current,
+        });
+        onNoteUpdatedRef.current?.(
+          noteAfterPatchMutation(
+            result,
+            n,
+            { editor_settings: json },
+            pendingContentRef.current,
+            lastSavedContent.current as Json,
+          ),
+        );
         setSaveStatus('saved');
       } catch (error) {
         console.error('Failed to save note layout:', error);
         setSaveStatus('error');
-        if (notaProEntitledRef.current) {
-          void drainNotesOutbox(userId);
-        }
       }
     },
     [],
@@ -634,50 +561,29 @@ function NoteEditorImpl({
       lastSavedContent.current) as Json;
     setSaveStatus('saving');
     try {
-      await saveLocalNoteDraft(userId, {
-        id: n.id,
-        title: titleForRow,
-        content: contentForRow,
-        user_id: n.user_id,
-        created_at: n.created_at,
-        due_at: n.due_at,
-        is_deadline: n.is_deadline,
-        editor_settings: n.editor_settings,
-        banner_attachment_id: attachmentId,
-      });
-      if (isLikelyOnline() && notaProEntitledRef.current) {
-        const client = getBrowserClient();
-        const updatedNote = await updateNote(client, n.id, {
+      const result = await vaultMutator.patchNote(userId, {
+        noteId: n.id,
+        fields: { banner_attachment_id: attachmentId },
+        draftContext: editorDraftContext(n, {
+          title: titleForRow,
+          content: contentForRow,
           banner_attachment_id: attachmentId,
-        });
-        await markNoteSyncedFromServer(userId, updatedNote);
-        onNoteUpdatedRef.current?.(
-          mergeUpdatedNoteLocalContent(
-            updatedNote,
-            pendingContentRef.current,
-            lastSavedContent.current,
-          ),
-        );
-      } else {
-        onNoteUpdatedRef.current?.(
-          mergeUpdatedNoteLocalContent(
-            {
-              ...n,
-              banner_attachment_id: attachmentId,
-              updated_at: new Date().toISOString(),
-            },
-            pendingContentRef.current,
-            lastSavedContent.current,
-          ),
-        );
-      }
+        }),
+        allowRemote: notaProEntitledRef.current,
+      });
+      onNoteUpdatedRef.current?.(
+        noteAfterPatchMutation(
+          result,
+          n,
+          { banner_attachment_id: attachmentId },
+          pendingContentRef.current,
+          lastSavedContent.current as Json,
+        ),
+      );
       setSaveStatus('saved');
     } catch (error) {
       console.error('Failed to save banner:', error);
       setSaveStatus('error');
-      if (notaProEntitledRef.current) {
-        void drainNotesOutbox(userId);
-      }
     }
   }, []);
 

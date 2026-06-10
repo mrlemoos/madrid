@@ -59,6 +59,9 @@
       "path": "../../packages/notes-offline/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/notes-offline-core/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-link-graph/tsconfig.lib.json"
     },
     {

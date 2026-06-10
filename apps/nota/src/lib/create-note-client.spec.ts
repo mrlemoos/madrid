@@ -1,42 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientCreateNote } from './create-note-client';
-
-import { createLocalOnlyNote, isLikelyOnline } from './notes-offline';
-import { createNote } from '../models/notes';
+import { vaultMutator } from './notes-vault-runtime';
 import { recordWritingActivityToday } from './writing-activity-tracking';
+import { setAppHash } from './app-navigation';
 
 const insertNoteAtFront = vi.fn();
 const refreshNotesList = vi.fn();
 
-vi.mock('./supabase/browser', () => ({
-  getBrowserClient: () => ({}),
-}));
-
-vi.mock('./notes-offline', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('./notes-offline')>();
-  return {
-    ...actual,
-    createLocalOnlyNote: vi.fn(() => Promise.resolve('local-note-id')),
-    isLikelyOnline: vi.fn(),
-  };
-});
-
-vi.mock('../models/notes', () => ({
-  createNote: vi.fn(() =>
-    Promise.resolve({
-      id: 'server-note-id',
-      user_id: 'u1',
-      title: 'Untitled Note',
-      content: { type: 'doc', content: [] },
-      created_at: '',
-      updated_at: '',
-      due_at: null,
-      is_deadline: false,
-      editor_settings: {},
-      banner_attachment_id: null,
-      folder_id: 'folder-1',
-    }),
-  ),
+vi.mock('./notes-vault-runtime', () => ({
+  vaultMutator: {
+    createNote: vi.fn(),
+  },
 }));
 
 vi.mock('./app-navigation', () => ({
@@ -54,7 +28,6 @@ describe('clientCreateNote', () => {
 
   it('does nothing when not entitled', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(true);
     const args = {
       userId: 'u1',
       insertNoteAtFront,
@@ -66,14 +39,29 @@ describe('clientCreateNote', () => {
     await clientCreateNote(args);
 
     // Assert
-    expect(createNote).not.toHaveBeenCalled();
-    expect(createLocalOnlyNote).not.toHaveBeenCalled();
+    expect(vaultMutator.createNote).not.toHaveBeenCalled();
     expect(refreshNotesList).not.toHaveBeenCalled();
   });
 
-  it('creates in a folder on the server when online and Nota Pro', async () => {
+  it('inserts the server row when the mutation creates remotely', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(true);
+    const serverNote = {
+      id: 'server-note-id',
+      user_id: 'u1',
+      title: 'Untitled Note',
+      content: { type: 'doc', content: [] },
+      created_at: '',
+      updated_at: '',
+      due_at: null,
+      is_deadline: false,
+      editor_settings: {},
+      banner_attachment_id: null,
+      folder_id: 'folder-1',
+    };
+    vi.mocked(vaultMutator.createNote).mockResolvedValue({
+      outcome: 'created-remote',
+      note: serverNote,
+    });
     const args = {
       userId: 'u1',
       insertNoteAtFront,
@@ -86,14 +74,37 @@ describe('clientCreateNote', () => {
     await clientCreateNote(args);
 
     // Assert
-    expect(createNote).toHaveBeenCalled();
-    expect(insertNoteAtFront).toHaveBeenCalled();
+    expect(vaultMutator.createNote).toHaveBeenCalledWith('u1', {
+      folderId: 'folder-1',
+    });
+    expect(insertNoteAtFront).toHaveBeenCalledWith(serverNote);
+    expect(setAppHash).toHaveBeenCalledWith({
+      kind: 'notes',
+      panel: 'note',
+      noteId: 'server-note-id',
+    });
+    expect(refreshNotesList).toHaveBeenCalledWith({ silent: true });
     expect(recordWritingActivityToday).toHaveBeenCalledOnce();
   });
 
-  it('creates untitled note at root on server when online', async () => {
+  it('creates at root remotely when folderId is omitted', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(true);
+    vi.mocked(vaultMutator.createNote).mockResolvedValue({
+      outcome: 'created-remote',
+      note: {
+        id: 'server-note-id',
+        user_id: 'u1',
+        title: 'Untitled Note',
+        content: { type: 'doc', content: [] },
+        created_at: '',
+        updated_at: '',
+        due_at: null,
+        is_deadline: false,
+        editor_settings: {},
+        banner_attachment_id: null,
+        folder_id: null,
+      },
+    });
     const args = {
       userId: 'u1',
       insertNoteAtFront,
@@ -105,21 +116,19 @@ describe('clientCreateNote', () => {
     await clientCreateNote(args);
 
     // Assert
-    expect(createNote).toHaveBeenCalledWith(
-      expect.anything(),
-      'u1',
-      'Untitled Note',
-      undefined,
-      { folder_id: null },
-    );
+    expect(vaultMutator.createNote).toHaveBeenCalledWith('u1', {
+      folderId: undefined,
+    });
     expect(insertNoteAtFront).toHaveBeenCalled();
     expect(refreshNotesList).toHaveBeenCalled();
-    expect(recordWritingActivityToday).toHaveBeenCalledOnce();
   });
 
-  it('creates untitled note at root locally when offline', async () => {
+  it('navigates to a local note without inserting at front when offline', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(false);
+    vi.mocked(vaultMutator.createNote).mockResolvedValue({
+      outcome: 'created-local',
+      noteId: 'local-note-id',
+    });
     const args = {
       userId: 'u1',
       insertNoteAtFront,
@@ -131,33 +140,13 @@ describe('clientCreateNote', () => {
     await clientCreateNote(args);
 
     // Assert
-    expect(createLocalOnlyNote).toHaveBeenCalledWith(
-      'u1',
-      undefined,
-      undefined,
-      null,
-    );
-    expect(createNote).not.toHaveBeenCalled();
-    expect(refreshNotesList).toHaveBeenCalled();
+    expect(insertNoteAtFront).not.toHaveBeenCalled();
+    expect(setAppHash).toHaveBeenCalledWith({
+      kind: 'notes',
+      panel: 'note',
+      noteId: 'local-note-id',
+    });
+    expect(refreshNotesList).toHaveBeenCalledWith({ silent: true });
     expect(recordWritingActivityToday).toHaveBeenCalledOnce();
-  });
-
-  it('does nothing when offline and not entitled', async () => {
-    // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(false);
-    const args = {
-      userId: 'u1',
-      insertNoteAtFront,
-      refreshNotesList,
-      notaProEntitled: false,
-    };
-
-    // Act
-    await clientCreateNote(args);
-
-    // Assert
-    expect(createNote).not.toHaveBeenCalled();
-    expect(createLocalOnlyNote).not.toHaveBeenCalled();
-    expect(recordWritingActivityToday).not.toHaveBeenCalled();
   });
 });

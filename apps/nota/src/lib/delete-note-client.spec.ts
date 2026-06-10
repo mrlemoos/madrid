@@ -1,30 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientDeleteNoteById } from './delete-note-client';
-
-import { isLikelyOnline, markPendingDelete } from './notes-offline';
-import { deleteNote } from '../models/notes';
+import { vaultMutator } from './notes-vault-runtime';
 
 const removeNoteFromList = vi.fn();
 const removeFolderFromList = vi.fn();
 const refreshNotesList = vi.fn();
 
-vi.mock('./supabase/browser', () => ({
-  getBrowserClient: () => ({}),
-}));
-
-vi.mock('./notes-offline', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('./notes-offline')>();
-  return {
-    ...actual,
-    drainNotesOutbox: vi.fn(),
-    getStoredNote: vi.fn(() => Promise.resolve(null)),
-    markPendingDelete: vi.fn(() => Promise.resolve()),
-    isLikelyOnline: vi.fn(),
-  };
-});
-
-vi.mock('../models/notes', () => ({
-  deleteNote: vi.fn(() => Promise.resolve()),
+vi.mock('./notes-vault-runtime', () => ({
+  vaultMutator: {
+    deleteNote: vi.fn(),
+  },
 }));
 
 vi.mock('./app-navigation', () => ({
@@ -42,7 +27,6 @@ describe('clientDeleteNoteById', () => {
 
   it('does nothing when not entitled', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(true);
     const noteId = 'n1';
     const args = {
       userId: 'u1',
@@ -58,14 +42,15 @@ describe('clientDeleteNoteById', () => {
     await clientDeleteNoteById(noteId, args);
 
     // Assert
-    expect(deleteNote).not.toHaveBeenCalled();
-    expect(markPendingDelete).not.toHaveBeenCalled();
+    expect(vaultMutator.deleteNote).not.toHaveBeenCalled();
     expect(removeNoteFromList).not.toHaveBeenCalled();
   });
 
-  it('deletes locally when offline and entitled', async () => {
+  it('removes the note locally when the mutation is queued offline', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(false);
+    vi.mocked(vaultMutator.deleteNote).mockResolvedValue({
+      outcome: 'queued-local-delete',
+    });
     const noteId = 'n1';
     const args = {
       userId: 'u1',
@@ -81,14 +66,16 @@ describe('clientDeleteNoteById', () => {
     await clientDeleteNoteById(noteId, args);
 
     // Assert
-    expect(deleteNote).not.toHaveBeenCalled();
-    expect(markPendingDelete).toHaveBeenCalled();
+    expect(vaultMutator.deleteNote).toHaveBeenCalledWith('u1', 'n1');
     expect(removeNoteFromList).toHaveBeenCalledWith('n1');
+    expect(refreshNotesList).not.toHaveBeenCalled();
   });
 
-  it('calls Supabase delete when online and Nota Pro', async () => {
+  it('refreshes the vault list after a remote delete', async () => {
     // Arrange
-    vi.mocked(isLikelyOnline).mockReturnValue(true);
+    vi.mocked(vaultMutator.deleteNote).mockResolvedValue({
+      outcome: 'deleted-remote',
+    });
     const noteId = 'n1';
     const args = {
       userId: 'u1',
@@ -104,8 +91,8 @@ describe('clientDeleteNoteById', () => {
     await clientDeleteNoteById(noteId, args);
 
     // Assert
-    expect(deleteNote).toHaveBeenCalled();
-    expect(markPendingDelete).not.toHaveBeenCalled();
-    expect(refreshNotesList).toHaveBeenCalled();
+    expect(vaultMutator.deleteNote).toHaveBeenCalledWith('u1', 'n1');
+    expect(removeNoteFromList).toHaveBeenCalledWith('n1');
+    expect(refreshNotesList).toHaveBeenCalledWith({ silent: true });
   });
 });

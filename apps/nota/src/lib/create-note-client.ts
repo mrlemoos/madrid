@@ -1,7 +1,5 @@
-import { getBrowserClient } from './supabase/browser';
-import { createLocalOnlyNote, isLikelyOnline } from './notes-offline';
-import { createNote } from '../models/notes';
 import { setAppHash } from './app-navigation';
+import { vaultMutator } from './notes-vault-runtime';
 import { recordWritingActivityToday } from './writing-activity-tracking';
 import type { Note } from '~/types/database.types';
 
@@ -15,82 +13,21 @@ export async function clientCreateNote(options: {
   notes?: Pick<Note, 'id' | 'folder_id'>[];
 }): Promise<void> {
   const { userId, folderId } = options;
-  if (!userId) {
+  if (!userId || !options.notaProEntitled) {
     return;
   }
 
-  if (!options.notaProEntitled) {
-    return;
+  const result = await vaultMutator.createNote(userId, { folderId });
+
+  recordWritingActivityToday();
+
+  const noteId =
+    result.outcome === 'created-remote' ? result.note.id : result.noteId;
+
+  if (result.outcome === 'created-remote') {
+    options.insertNoteAtFront(result.note);
   }
 
-  const c = getBrowserClient();
-
-  function goToNote(id: string): void {
-    setAppHash({ kind: 'notes', panel: 'note', noteId: id });
-  }
-
-  function recordNoteCreated(): void {
-    recordWritingActivityToday();
-  }
-
-  const targetFolderId = folderId === undefined ? null : folderId;
-
-  if (targetFolderId !== null) {
-    if (!isLikelyOnline()) {
-      const id = await createLocalOnlyNote(
-        userId,
-        undefined,
-        undefined,
-        targetFolderId,
-      );
-      recordNoteCreated();
-      goToNote(id);
-      await options.refreshNotesList({ silent: true });
-      return;
-    }
-
-    try {
-      const row = await createNote(c, userId, 'Untitled Note', undefined, {
-        folder_id: targetFolderId,
-      });
-      options.insertNoteAtFront(row);
-      recordNoteCreated();
-      goToNote(row.id);
-      await options.refreshNotesList({ silent: true });
-    } catch {
-      const id = await createLocalOnlyNote(
-        userId,
-        undefined,
-        undefined,
-        targetFolderId,
-      );
-      recordNoteCreated();
-      goToNote(id);
-      await options.refreshNotesList({ silent: true });
-    }
-    return;
-  }
-
-  if (!isLikelyOnline()) {
-    const id = await createLocalOnlyNote(userId, undefined, undefined, null);
-    recordNoteCreated();
-    goToNote(id);
-    await options.refreshNotesList({ silent: true });
-    return;
-  }
-
-  try {
-    const row = await createNote(c, userId, 'Untitled Note', undefined, {
-      folder_id: null,
-    });
-    options.insertNoteAtFront(row);
-    recordNoteCreated();
-    goToNote(row.id);
-    await options.refreshNotesList({ silent: true });
-  } catch {
-    const id = await createLocalOnlyNote(userId, undefined, undefined, null);
-    recordNoteCreated();
-    goToNote(id);
-    await options.refreshNotesList({ silent: true });
-  }
+  setAppHash({ kind: 'notes', panel: 'note', noteId });
+  await options.refreshNotesList({ silent: true });
 }
