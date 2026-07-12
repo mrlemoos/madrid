@@ -31,6 +31,22 @@ if (
   });
 }
 
+// jsdom does not implement `window.matchMedia`; ThemeProvider, nota-motion, note-editor, etc.
+if (typeof window.matchMedia !== 'function') {
+  vi.stubGlobal(
+    'matchMedia',
+    (query: string) =>
+      ({
+        matches: false,
+        media: query,
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+        onchange: null,
+      }) as MediaQueryList,
+  );
+}
+
 // TipTap `@tiptap/extension-emoji` pulls `is-emoji-supported`, which probes canvas; jsdom
 // otherwise logs "Not implemented: HTMLCanvasElement.prototype.getContext".
 const canvasCtor = (

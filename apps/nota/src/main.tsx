@@ -1,6 +1,3 @@
-import { ClerkProvider } from '@clerk/react';
-import { ui } from '@clerk/ui';
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 /* Import via the JS graph so Vite emits `url(./files/*.woff2)` assets. `@import` inside
  * `styles.css` is handled only by PostCSS/Tailwind and does not attach font files to the bundle,
@@ -11,38 +8,13 @@ import '@fontsource-variable/source-serif-4/index.css';
 import '@fontsource/geist-sans/latin.css';
 import '../styles.css';
 import { bootstrapAppNavigation } from './lib/app-navigation';
-import { DeferredPostHogRoot } from './components/deferred-posthog-root';
-import { AppErrorBoundary } from './components/app-error-boundary';
-import { ThemeProvider } from '@nota/web-design/theme';
-import { ClerkSupabaseBridge } from './context/clerk-supabase-bridge';
-import { NoteEditorCommandsProvider } from '@nota/editor';
-import { StickyDocTitleProvider } from './context/sticky-doc-title';
-import { AppSessionProvider } from './context/session-context';
-import {
-  clerkFullNotesUrl,
-  clerkFullSignInUrl,
-  clerkFullSignUpUrl,
-  clerkRouterPush,
-  clerkRouterReplace,
-  repairClerkAuthLocationHash,
-} from './lib/clerk-hash-navigation';
-import { ClerkSsoCallbackRoute } from './components/clerk-sso-callback-route';
+import { repairClerkAuthLocationHash } from './lib/clerk-hash-navigation';
 import { NotaApp } from './app-root';
-import { viteEnvString } from './lib/vite-env';
-
-const POSTHOG_PROJECT_TOKEN = viteEnvString(
-  'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN',
-);
-const clerkPublishableKey =
-  viteEnvString('VITE_CLERK_PUBLISHABLE_KEY')?.trim() ?? '';
+import { AppProviders } from './providers';
 
 const rootEl = document.getElementById('root');
 if (!rootEl) {
   throw new Error('Missing #root element');
-}
-
-if (!clerkPublishableKey) {
-  throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY');
 }
 
 /** Hash may not be visible on the first synchronous tick; re-run through the document lifecycle. */
@@ -71,34 +43,7 @@ window.addEventListener(
 bootstrapAppNavigation();
 
 createRoot(rootEl).render(
-  <ClerkProvider
-    ui={ui}
-    publishableKey={clerkPublishableKey}
-    signInUrl={clerkFullSignInUrl()}
-    signUpUrl={clerkFullSignUpUrl()}
-    signInForceRedirectUrl={clerkFullNotesUrl()}
-    signUpForceRedirectUrl={clerkFullNotesUrl()}
-    routerPush={clerkRouterPush}
-    routerReplace={clerkRouterReplace}
-    allowedRedirectProtocols={['nota:']}
-  >
-    <StrictMode>
-      <DeferredPostHogRoot apiKey={POSTHOG_PROJECT_TOKEN}>
-        <ClerkSupabaseBridge>
-          <ClerkSsoCallbackRoute />
-          <ThemeProvider defaultTheme="system" storageKey="nota-ui-theme">
-            <AppSessionProvider>
-              <StickyDocTitleProvider>
-                <NoteEditorCommandsProvider>
-                  <AppErrorBoundary>
-                    <NotaApp />
-                  </AppErrorBoundary>
-                </NoteEditorCommandsProvider>
-              </StickyDocTitleProvider>
-            </AppSessionProvider>
-          </ThemeProvider>
-        </ClerkSupabaseBridge>
-      </DeferredPostHogRoot>
-    </StrictMode>
-  </ClerkProvider>,
+  <AppProviders>
+    <NotaApp />
+  </AppProviders>,
 );
