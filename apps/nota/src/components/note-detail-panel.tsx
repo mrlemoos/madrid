@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Note, NoteAttachment } from '~/types/database.types';
 import { NoteEditor } from './note-editor';
 import { NoteBacklinksPanel } from './note-backlinks-panel';
@@ -28,6 +28,7 @@ import {
 import { useAppSession } from '../context/session-context';
 import { ATTACHMENT_SIGNED_URL_TTL_SEC } from '../lib/pdf-attachment-client';
 import {
+  getCachedNoteAttachmentSignedUrl,
   getValidNoteAttachmentSignedUrlCacheEntry,
   setCachedNoteAttachmentSignedUrl,
 } from '../lib/note-attachment-signed-url-cache';
@@ -254,7 +255,17 @@ export function NoteDetailPanel({
   const bannerAttachment = bannerAttachmentId
     ? (attachments.find((a) => a.id === bannerAttachmentId) ?? null)
     : null;
-  const [bannerSignedUrl, setBannerSignedUrl] = useState<string | null>(null);
+  const cachedBannerSignedUrl = useMemo(() => {
+    if (!bannerAttachmentId) return null;
+    return getCachedNoteAttachmentSignedUrl(
+      bannerAttachmentId,
+      bannerAttachment?.storage_path,
+    );
+  }, [bannerAttachmentId, bannerAttachment?.storage_path]);
+  const [fetchedBannerSignedUrl, setFetchedBannerSignedUrl] = useState<
+    string | null
+  >(null);
+  const bannerSignedUrl = cachedBannerSignedUrl ?? fetchedBannerSignedUrl;
   const bannerRefreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
@@ -262,13 +273,13 @@ export function NoteDetailPanel({
 
   useEffect(() => {
     let cancelled = false;
+    setFetchedBannerSignedUrl(null);
     if (bannerRefreshTimerRef.current) {
       clearTimeout(bannerRefreshTimerRef.current);
       bannerRefreshTimerRef.current = null;
     }
 
     if (!bannerAttachmentId) {
-      setBannerSignedUrl(null);
       return;
     }
 
@@ -280,12 +291,6 @@ export function NoteDetailPanel({
       : getValidNoteAttachmentSignedUrlCacheEntry(bannerId, undefined);
 
     const storagePath = pathFromRow ?? entry?.storagePath ?? null;
-
-    if (entry) {
-      setBannerSignedUrl(entry.signedUrl);
-    } else {
-      setBannerSignedUrl(null);
-    }
 
     if (!storagePath) {
       return () => {
@@ -317,7 +322,7 @@ export function NoteDetailPanel({
         .createSignedUrl(bannerStoragePath, ATTACHMENT_SIGNED_URL_TTL_SEC);
       if (cancelled) return;
       if (error || !data.signedUrl) {
-        setBannerSignedUrl(null);
+        setFetchedBannerSignedUrl(null);
         return;
       }
       setCachedNoteAttachmentSignedUrl(
@@ -326,7 +331,7 @@ export function NoteDetailPanel({
         data.signedUrl,
         ATTACHMENT_SIGNED_URL_TTL_SEC,
       );
-      setBannerSignedUrl(data.signedUrl);
+      setFetchedBannerSignedUrl(data.signedUrl);
       scheduleRefresh();
     }
 

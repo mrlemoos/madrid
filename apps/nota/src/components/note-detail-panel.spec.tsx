@@ -37,4 +37,18 @@ describe('NoteDetailPanel note switch', () => {
     // Assert
     expect(definesNoteOpenFade).toBe(false);
   });
+
+  it('resolves banner signed URL from cache during render', () => {
+    // Arrange
+    const source = loadNoteDetailPanelSource();
+
+    // Act
+    const derivesCachedBannerUrl = source.includes('cachedBannerSignedUrl');
+    const usesAsyncOnlyBannerState =
+      /const \[bannerSignedUrl, setBannerSignedUrl\] = useState/.test(source);
+
+    // Assert
+    expect(derivesCachedBannerUrl).toBe(true);
+    expect(usesAsyncOnlyBannerState).toBe(false);
+  });
 });
