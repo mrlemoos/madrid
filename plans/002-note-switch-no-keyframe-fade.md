@@ -1,7 +1,7 @@
 # 002 — Remove note-switch keyframe fade (instant swap)
 
 - **Status**: DONE
-- **Commit**: 08ed1fa
+- **Commit**: dcd804b (panel wrapper), 19daf91 (CSS removal)
 - **Severity**: HIGH
 - **Category**: Purpose & frequency
 - **Estimated scope**: 2 files, ~25 lines removed
