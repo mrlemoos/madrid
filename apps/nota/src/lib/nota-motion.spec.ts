@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { NOTA_EASE_OUT } from '@nota/web-design/motion-tokens';
 import {
   NOTA_MOTION_EASE_IN,
   NOTA_MOTION_EASE_IN_OUT,
@@ -22,6 +23,11 @@ describe('nota-motion', () => {
     expect(NOTA_MOTION_EASE_OUT).toBe('sine.out');
     expect(NOTA_MOTION_EASE_IN).toBe('sine.in');
     expect(NOTA_MOTION_EASE_IN_OUT).toBe('sine.inOut');
+  });
+
+  it('keeps GSAP shell eases separate from CSS --ease-out tokens', () => {
+    expect(NOTA_MOTION_EASE_OUT).toBe('sine.out');
+    expect(NOTA_MOTION_EASE_OUT).not.toBe(NOTA_EASE_OUT);
   });
 
   it('defines a modest horizontal slide for the notes sidebar', () => {

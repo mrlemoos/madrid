@@ -4,6 +4,11 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(useGSAP);
 
+/**
+ * GSAP shell/palette eases — calm sine band; see nota-motion.spec.ts.
+ * CSS micro-interactions use `@nota/web-design` `--ease-out` / `--ease-in-out`
+ * (motion-tokens.ts / theme-chrome.css), not these GSAP strings.
+ */
 export const NOTA_MOTION_EASE_OUT = 'sine.out';
 export const NOTA_MOTION_EASE_IN = 'sine.in';
 export const NOTA_MOTION_EASE_IN_OUT = 'sine.inOut';
