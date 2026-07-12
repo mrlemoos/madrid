@@ -74,6 +74,51 @@ describe('NotesSidebarList', () => {
     expect(screen.queryByText(formattedDate)).toBeNull();
   });
 
+  it('renders a note icon beside each sidebar note title', () => {
+    // Arrange
+    render(
+      <NotesSidebarList
+        notes={[
+          {
+            id: 'note-1',
+            user_id: 'user-1',
+            title: 'Alpha note',
+            content: {},
+            created_at: '2026-04-15T12:00:00.000Z',
+            updated_at: '2026-04-15T12:00:00.000Z',
+            due_at: null,
+            is_deadline: false,
+            editor_settings: {},
+            banner_attachment_id: null,
+            folder_id: null,
+          },
+        ]}
+        folders={[]}
+        panel="list"
+        routeNoteId={null}
+        userId="user-1"
+        notaProEntitled
+        userPreferences={null}
+        insertNoteAtFront={vi.fn()}
+        insertFolderSorted={vi.fn()}
+        patchNoteInList={vi.fn()}
+        patchFolderInList={vi.fn()}
+        removeNoteFromList={vi.fn()}
+        removeFolderFromList={vi.fn()}
+        refreshNotesList={vi.fn(() => Promise.resolve())}
+      />,
+    );
+
+    // Act
+    const noteLink = screen.getByRole('link', { name: 'Alpha note' });
+    const noteRow = noteLink.parentElement;
+
+    // Assert
+    expect(
+      noteRow?.querySelector('[data-nota-sidebar-note-icon]'),
+    ).toBeTruthy();
+  });
+
   it('allows inline folder rename on double click and commits on blur', () => {
     // Arrange
     const patchFolderInList = vi.fn();

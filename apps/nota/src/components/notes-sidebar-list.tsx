@@ -17,6 +17,7 @@ import {
   FolderAddIcon,
   Home01Icon,
   NoteAddIcon,
+  NoteIcon,
   PencilEdit01Icon,
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
@@ -165,9 +166,20 @@ function NoteRow(options: {
                 setDropTargetId(null);
               }}
             >
+              <HugeiconsIcon
+                icon={NoteIcon}
+                size={14}
+                strokeWidth={1.5}
+                aria-hidden
+                data-nota-sidebar-note-icon
+                className={cn(
+                  'shrink-0',
+                  isActive ? 'text-foreground' : 'text-muted-foreground',
+                )}
+              />
               <a
                 href={noteHashHref(note.id)}
-                className="relative z-0 min-w-0 flex-1 truncate px-1 text-sm font-normal"
+                className="relative z-0 min-w-0 flex-1 truncate text-sm font-normal"
                 aria-current={isActive ? 'page' : undefined}
               >
                 <NotaTooltip>

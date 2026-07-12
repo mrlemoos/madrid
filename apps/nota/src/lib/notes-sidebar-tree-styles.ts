@@ -7,7 +7,7 @@ export const NOTA_SIDEBAR_TREE_BRANCH_CLASS = 'nota-folder-branch ml-4 pl-1';
 export const NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS = 'nota-folder-branch__inner';
 
 const treeNoteRowBase =
-  'group flex w-full min-w-0 cursor-pointer items-center rounded-lg py-1.5 text-left transition-colors';
+  'group flex w-full min-w-0 cursor-pointer items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition-colors';
 
 const treeFolderRowBase =
   'group relative flex w-full min-w-0 cursor-pointer items-center rounded-md py-1 text-left transition-colors before:absolute before:inset-y-0 before:left-0 before:-z-10 before:h-7 before:w-full before:rounded-md before:bg-accent/70 before:opacity-0 before:transition-opacity hover:before:opacity-100';
@@ -58,17 +58,14 @@ export const notesSidebarTreeChevronClass =
   'mr-0.5 size-3.5 shrink-0 text-muted-foreground/50 motion-safe:transition-transform motion-safe:duration-[180ms] motion-safe:ease-out';
 
 /** Note leaf row inside a folder branch. */
-export const notesSidebarTreeLeafRowVariants = cva(
-  `${treeNoteRowBase} ml-5 gap-0`,
-  {
-    variants: {
-      selected: {
-        true: 'bg-muted/20',
-        false: '',
-      },
-    },
-    defaultVariants: {
-      selected: false,
+export const notesSidebarTreeLeafRowVariants = cva(`${treeNoteRowBase} ml-5`, {
+  variants: {
+    selected: {
+      true: 'bg-muted/20',
+      false: '',
     },
   },
-);
+  defaultVariants: {
+    selected: false,
+  },
+});
