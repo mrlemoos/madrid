@@ -17,9 +17,6 @@ export const NOTA_SIDEBAR_WIDTH_PX = 288;
 /** Horizontal slide (px) when the notes sidebar closes :  content exits to the left. */
 export const NOTA_SIDEBAR_SLIDE_PX = 20;
 
-export const NOTA_BUTTON_PRESS_S = 0.25;
-export const NOTA_BUTTON_RELEASE_S = 0.35;
-
 export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 

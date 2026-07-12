@@ -21,7 +21,7 @@ export const NOTA_MOTION_EASE_IN = 'sine.in';
 export const NOTA_MOTION_EASE_IN_OUT = 'sine.inOut';
 ```
 
-Used by `command-palette.tsx` and `notes-shell.tsx`. `nota-motion.spec.ts:29-33` **locks these to `sine.*`** with the comment *"uses sine eases for settled motion (no power2 snappiness)"* and a **0.3–0.55s timing band** for shell/palette. This is deliberate product intent — **do not change**.
+Used by `command-palette.tsx` and `notes-shell.tsx`. `nota-motion.spec.ts:29-33` **locks these to `sine.*`** with the comment _"uses sine eases for settled motion (no power2 snappiness)"_ and a **0.3–0.55s timing band** for shell/palette. This is deliberate product intent — **do not change**.
 
 ### 2. Hand-typed CSS cubic-bezier (micro-interactions)
 
@@ -30,8 +30,7 @@ Used by `command-palette.tsx` and `notes-shell.tsx`. `nota-motion.spec.ts:29-33`
 ```css
 /* apps/nota/styles.css:147-151 — current */
 .nota-pressable {
-  transition-property:
-    transform, opacity, color, background-color, border-color, box-shadow;
+  transition-property: transform, opacity, color, background-color, border-color, box-shadow;
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -61,7 +60,7 @@ Sibling micro-interaction classes in the same block (`.nota-shell-nav-item`, `.n
 
 ```tsx
 /* packages/web-design/src/components/button.tsx:34 — excerpt */
-"... transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-200 ease-out motion-safe:active:scale-[0.98] ..."
+'... transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-200 ease-out motion-safe:active:scale-[0.98] ...';
 ```
 
 ### No shared token today
@@ -107,7 +106,7 @@ html.light {
 
 ```tsx
 /* target — button keeps `ease-out` class; Tailwind maps it to the token via @theme */
-"... duration-200 ease-out motion-safe:active:scale-[0.98] ..."
+'... duration-200 ease-out motion-safe:active:scale-[0.98] ...';
 ```
 
 ```ts
@@ -118,10 +117,10 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 
 **Dual-system model (post-migration):**
 
-| Layer | Easing | Used for |
-| --- | --- | --- |
-| CSS `--ease-out` / `--ease-in-out` | Strong cubic-bezier tokens | Press, hover colour, buttons, auth enter, marketing buttons |
-| GSAP `sine.*` via `NOTA_MOTION_EASE_*` | Calm sine curves | Sidebar tween, command palette backdrop (0.3–0.55s band) |
+| Layer                                  | Easing                     | Used for                                                    |
+| -------------------------------------- | -------------------------- | ----------------------------------------------------------- |
+| CSS `--ease-out` / `--ease-in-out`     | Strong cubic-bezier tokens | Press, hover colour, buttons, auth enter, marketing buttons |
+| GSAP `sine.*` via `NOTA_MOTION_EASE_*` | Calm sine curves           | Sidebar tween, command palette backdrop (0.3–0.55s band)    |
 
 ## Repo conventions to follow
 
@@ -140,12 +139,14 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 2. **Green** — Add `packages/web-design/src/lib/motion-tokens.ts` with those exports; copy values into `theme-chrome.css`; tests pass.
 
 3. **Red** — Extend `apps/nota/src/lib/nota-motion.spec.ts` with one test documenting the split:
+
    ```ts
    it('keeps GSAP shell eases separate from CSS --ease-out tokens', () => {
      expect(NOTA_MOTION_EASE_OUT).toBe('sine.out');
      expect(NOTA_MOTION_EASE_OUT).not.toBe(NOTA_EASE_OUT);
    });
    ```
+
    Import `NOTA_EASE_OUT` from `@nota/web-design/motion-tokens` — fails until export path exists.
 
 4. **Green** — Add `./motion-tokens` package export in `packages/web-design/package.json`; re-export in `nota-motion.ts` comment block only (GSAP constants unchanged); test passes.
@@ -155,6 +156,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 ## Steps
 
 1. **Add TypeScript token module** — create `packages/web-design/src/lib/motion-tokens.ts`:
+
    ```ts
    /** Canonical easing strings — keep in sync with theme-chrome.css */
    export const NOTA_EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
@@ -162,6 +164,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
    ```
 
 2. **Add package export** — in `packages/web-design/package.json` `exports`, add:
+
    ```json
    "./motion-tokens": {
      "@nota/source": "./src/lib/motion-tokens.ts",
@@ -170,22 +173,27 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
      "default": "./dist/motion-tokens.js"
    }
    ```
+
    Ensure `vite build` / `tsc` pick up the new entry (match `./theme-color` pattern).
 
 3. **Add vitest spec** — `packages/web-design/src/lib/motion-tokens.spec.ts` with AAA sections per repo convention.
 
 4. **Define CSS tokens** — in `packages/web-design/src/theme-chrome.css`, under the existing `:root, html.light` block, append:
+
    ```css
    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
    ```
+
    Add comment: `/* Motion eases — keep in sync with motion-tokens.ts */`
 
 5. **Bridge Tailwind utilities (nota app)** — in `apps/nota/styles.css` `@theme inline` block (~line 1020), add:
+
    ```css
    --ease-out: var(--ease-out);
    --ease-in-out: var(--ease-in-out);
    ```
+
    This overrides Tailwind's weak default `ease-out` / `ease-in-out` with the strong tokens for any `ease-out` class in the nota app (including `NotaButton`).
 
 6. **Bridge Tailwind utilities (marketing)** — in `apps/nota-marketing/src/styles/global.css` `@theme inline` block (~line 10), add the same two lines.
@@ -198,10 +206,13 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
    - `.nota-save-pulse` animation (~line 196): keep `ease-in-out` keyword OR switch to `var(--ease-in-out)` for consistency (either is fine; prefer token)
 
 8. **Marketing button ease** — in `apps/nota-marketing/src/styles/global.css`, change:
+
    ```css
    --btn-ease: cubic-bezier(0.22, 1, 0.36, 1);
    ```
+
    to:
+
    ```css
    --btn-ease: var(--ease-out);
    ```
@@ -225,11 +236,13 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 ## Verification
 
 - **Mechanical**:
+
   ```bash
   pnpm exec nx test @nota/web-design --outputStyle=static
   pnpm exec nx test @nota/nota --testPathPattern=nota-motion --outputStyle=static
   pnpm exec nx run-many -t lint --projects=@nota/web-design,@nota/nota --outputStyle=static
   ```
+
   All pass; existing `nota-motion.spec.ts` sine/timing tests unchanged and green.
 
 - **Token presence** — in DevTools on `http://localhost:4200`, inspect `:root` computed styles:

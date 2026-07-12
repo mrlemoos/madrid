@@ -44,6 +44,7 @@ import { cn } from '@/lib/utils';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
+  NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS,
   notesSidebarTreeChevronClass,
   notesSidebarTreeFolderLabelClass,
   notesSidebarTreeFolderRowVariants,
@@ -969,12 +970,15 @@ export function NotesSidebarList({
         notaProEntitled={notaProEntitled}
         patchFolderInList={patchFolderInList}
       >
-        {!isCollapsed ? (
-          <div
-            id={folderContentId}
-            className={cn(NOTA_SIDEBAR_TREE_BRANCH_CLASS, 'min-w-0 pb-1')}
-            role="group"
-          >
+        <div
+          id={folderContentId}
+          className={cn(NOTA_SIDEBAR_TREE_BRANCH_CLASS, 'min-w-0 pb-1')}
+          role="group"
+          data-expanded={!isCollapsed}
+          aria-hidden={isCollapsed}
+          inert={isCollapsed ? true : undefined}
+        >
+          <div className={NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS}>
             {notesInFolder.length === 0 && children.length === 0 ? (
               <p className="ml-5 py-2 text-muted-foreground text-xs">
                 {t('No notes in this folder.')}
@@ -1009,7 +1013,7 @@ export function NotesSidebarList({
               </ul>
             )}
           </div>
-        ) : null}
+        </div>
       </FolderRow>
     );
   };

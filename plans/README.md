@@ -13,14 +13,14 @@ Self-contained execution plans from the `improve-animations` audit (@ commit `08
 | 005 | [Note-open keyframes → opacity transition](./005-note-fade-transition-not-keyframes.md) | MEDIUM   | SUPERSEDED by 002 | —                                               |
 | 006 | [Sidebar folder row: drop transition-all](./006-sidebar-folder-no-transition-all.md)    | MEDIUM   | DONE              | —                                               |
 | 007 | [Unify motion easing tokens](./007-unify-motion-easing-tokens.md)                       | MEDIUM   | TODO              | —                                               |
-| 008 | [Popup surfaces: explicit duration + ease-out](./008-popover-explicit-duration-ease.md) | MEDIUM   | TODO              | 007 (optional)                                  |
+| 008 | [Popup surfaces: explicit duration + ease-out](./008-popover-explicit-duration-ease.md) | MEDIUM   | DONE              | 007 (optional)                                  |
 | 009 | [Cap shell and palette durations](./009-cap-shell-palette-durations.md)                 | LOW      | DONE              | 001, 004                                        |
 | 010 | [Remove dead button motion constants](./010-remove-dead-button-motion-constants.md)     | LOW      | TODO              | —                                               |
 | 011 | [Guard chevron transform under reduced motion](./011-chevron-reduced-motion.md)         | LOW      | TODO              | —                                               |
 | 012 | [Add lightbox enter/exit motion](./012-lightbox-enter-exit-motion.md)                   | LOW      | TODO              | 007 (optional)                                  |
 | 013 | [Animate folder branch expand/collapse](./013-folder-branch-expand-motion.md)           | LOW      | TODO              | 006, 011                                        |
 | 014 | [Crossfade journal month grid](./014-journal-month-grid-crossfade.md)                   | LOW      | TODO              | —                                               |
-| 015 | [Extract shared popup motion class](./015-shared-popup-motion-class.md)                 | LOW      | TODO              | 008 (optional; 015 subsumes 008 for four files) |
+| 015 | [Extract shared popup motion class](./015-shared-popup-motion-class.md)                 | LOW      | SUPERSEDED by 008 | 008 (optional; 015 subsumes 008 for four files) |
 
 ## Recommended execution order
 

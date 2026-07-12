@@ -586,10 +586,59 @@ describe('NotesSidebarList', () => {
 
     // Act
     const chevron = expandButton.querySelector('svg');
+    const branch = document.getElementById('sidebar-folder-folder-1');
 
     // Assert
     expect(chevron?.getAttribute('class') ?? '').toContain('rotate-90');
-    expect(document.getElementById('sidebar-folder-folder-1')).toBeTruthy();
+    expect(branch).toBeTruthy();
+    expect(branch?.getAttribute('data-expanded')).toBe('true');
+    expect(branch?.getAttribute('aria-hidden')).toBe('false');
+    expect(branch?.hasAttribute('inert')).toBe(false);
+  });
+
+  it('keeps the folder branch mounted when collapsed', () => {
+    // Arrange
+    render(
+      <NotesSidebarList
+        notes={[]}
+        folders={[
+          {
+            id: 'folder-1',
+            user_id: 'user-1',
+            name: 'Expanded folder',
+            parent_id: null,
+            tint: null,
+            created_at: '2026-04-25T00:00:00.000Z',
+            updated_at: '2026-04-25T00:00:00.000Z',
+          },
+        ]}
+        panel="list"
+        routeNoteId={null}
+        userId="user-1"
+        notaProEntitled
+        userPreferences={null}
+        insertNoteAtFront={vi.fn()}
+        insertFolderSorted={vi.fn()}
+        patchNoteInList={vi.fn()}
+        patchFolderInList={vi.fn()}
+        removeNoteFromList={vi.fn()}
+        removeFolderFromList={vi.fn()}
+        refreshNotesList={vi.fn(() => Promise.resolve())}
+      />,
+    );
+    const collapseButton = screen.getByRole('button', {
+      name: 'Collapse folder Expanded folder',
+    });
+
+    // Act
+    fireEvent.click(collapseButton);
+    const branch = document.getElementById('sidebar-folder-folder-1');
+
+    // Assert
+    expect(branch).toBeTruthy();
+    expect(branch?.getAttribute('data-expanded')).toBe('false');
+    expect(branch?.getAttribute('aria-hidden')).toBe('true');
+    expect(branch?.hasAttribute('inert')).toBe(true);
   });
 
   it('exposes data-folder-tint when a folder has a persisted tint', () => {

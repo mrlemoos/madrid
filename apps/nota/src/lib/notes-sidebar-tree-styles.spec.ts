@@ -69,6 +69,19 @@ describe('notes-sidebar-tree-styles', () => {
     expect(leaf).toContain('bg-muted/20');
   });
 
+  it('scopes folder row transitions to colour only, not transition-all', () => {
+    // Arrange
+    // Act
+    const folderRow = notesSidebarTreeFolderRowVariants();
+    const noteRow = notesSidebarTreeRowVariants();
+
+    // Assert
+    expect(folderRow).not.toContain('transition-all');
+    expect(folderRow).toContain('transition-colors');
+    expect(folderRow).toContain('before:transition-opacity');
+    expect(noteRow).toContain('transition-colors');
+  });
+
   it('gates folder chevron transform transition behind motion-safe', () => {
     // Arrange
     // Act

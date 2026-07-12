@@ -29,7 +29,7 @@
 }
 
 .nota-note-open-fade {
-  animation: nota-note-open-fade 0.4s ease-in-out forwards;
+  animation: nota-note-open-fade 0.4s var(--ease-in-out) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -52,7 +52,7 @@
 }
 
 .nota-auth-card-enter {
-  animation: nota-auth-card-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: nota-auth-card-enter 0.6s var(--ease-out) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -148,7 +148,7 @@
   transition-property:
     transform, opacity, color, background-color, border-color, box-shadow;
   transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  transition-timing-function: var(--ease-out);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -159,15 +159,15 @@
 
 .nota-shell-nav-item {
   transition:
-    background-color 200ms ease-out,
-    color 200ms ease-out;
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
 }
 
 .nota-sidebar-row {
   transition:
-    background-color 200ms ease-out,
-    color 200ms ease-out,
-    opacity 200ms ease-out;
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    opacity 200ms var(--ease-out);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -176,10 +176,38 @@
   }
 }
 
+:root {
+  --folder-branch-dur: 180ms;
+}
+
+/* Folder branch expand/collapse — opacity fade; height snaps via grid (no height tween). */
+.nota-folder-branch {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: opacity var(--folder-branch-dur) var(--ease-out);
+}
+
+.nota-folder-branch[data-expanded='true'] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.nota-folder-branch__inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nota-folder-branch {
+    transition: none;
+  }
+}
+
 .nota-cmdk-item {
   transition:
-    background-color 150ms ease-out,
-    color 150ms ease-out;
+    background-color 150ms var(--ease-out),
+    color 150ms var(--ease-out);
 }
 
 @keyframes nota-save-pulse {
@@ -193,7 +221,7 @@
 }
 
 .nota-save-pulse {
-  animation: nota-save-pulse 1.2s ease-in-out infinite;
+  animation: nota-save-pulse 1.2s var(--ease-in-out) infinite;
 }
 
 /* Notes sidebar :  drag handle on the inner edge (right). */
@@ -216,7 +244,7 @@
   width: 1px;
   transform: translateX(-50%);
   background-color: transparent;
-  transition: background-color 150ms ease-out;
+  transition: background-color 150ms var(--ease-out);
 }
 
 .nota-sidebar-resize-handle:hover::after,
@@ -1021,6 +1049,8 @@
   --font-heading: var(--font-sans);
   --font-sans: 'Inter Variable', sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
   /* London theme: Instrument Serif titles; Geist Sans body. */
   --font-london-body: 'Geist Sans', ui-sans-serif, system-ui, sans-serif;
   /* Marketing / legacy long-form serif (nota London body uses --font-london-body). */
