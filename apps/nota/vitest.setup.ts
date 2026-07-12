@@ -32,19 +32,21 @@ if (
 }
 
 // jsdom does not implement `window.matchMedia`; ThemeProvider, nota-motion, note-editor, etc.
+function createMatchMediaStub(query: string): MediaQueryList {
+  return {
+    matches: false,
+    media: query,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+    onchange: null,
+  };
+}
+
 if (typeof window.matchMedia !== 'function') {
-  vi.stubGlobal(
-    'matchMedia',
-    (query: string) =>
-      ({
-        matches: false,
-        media: query,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        dispatchEvent: () => false,
-        onchange: null,
-      }) as MediaQueryList,
-  );
+  vi.stubGlobal('matchMedia', createMatchMediaStub);
 }
 
 // TipTap `@tiptap/extension-emoji` pulls `is-emoji-supported`, which probes canvas; jsdom
