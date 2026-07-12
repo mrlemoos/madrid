@@ -113,6 +113,7 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       include: [
         'src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+        '__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
         'scripts/**/*.spec.mjs',
       ],
       setupFiles: ['./vitest.setup.ts'],
