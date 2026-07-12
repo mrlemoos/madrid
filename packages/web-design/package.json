@@ -64,6 +64,18 @@
       "import": "./dist/theme-color.js",
       "default": "./dist/theme-color.js"
     },
+    "./motion-tokens": {
+      "@nota/source": "./src/lib/motion-tokens.ts",
+      "types": "./dist/lib/motion-tokens.d.ts",
+      "import": "./dist/motion-tokens.js",
+      "default": "./dist/motion-tokens.js"
+    },
+    "./popup-motion": {
+      "@nota/source": "./src/lib/nota-popup-motion.ts",
+      "types": "./dist/lib/nota-popup-motion.d.ts",
+      "import": "./dist/popup-motion.js",
+      "default": "./dist/popup-motion.js"
+    },
     "./theme-chrome.css": "./src/theme-chrome.css"
   },
   "peerDependencies": {

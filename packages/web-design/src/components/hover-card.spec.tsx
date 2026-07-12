@@ -57,3 +57,39 @@ describe('NotaHoverCardPopup (default popover styles)', () => {
     }
   });
 });
+
+describe('NotaHoverCardPopup (motion)', () => {
+  it('applies shared popup motion tokens including duration and easing', () => {
+    // Arrange
+    const { baseElement } = render(
+      <NotaHoverCard defaultOpen>
+        <NotaHoverCardTrigger
+          nativeButton={false}
+          render={<span>Anchor</span>}
+        />
+        <NotaHoverCardPortal>
+          <NotaHoverCardPositioner side="top" sideOffset={8}>
+            <NotaHoverCardPopup>Card body</NotaHoverCardPopup>
+          </NotaHoverCardPositioner>
+        </NotaHoverCardPortal>
+      </NotaHoverCard>,
+    );
+
+    // Act
+    const popup = within(baseElement).getByText('Card body', { exact: true });
+    const surface = popup.closest('div') ?? popup;
+    const classes = surface.className.split(/\s+/).filter(Boolean);
+
+    // Assert
+    for (const token of [
+      'origin-[var(--transform-origin)]',
+      'transition-[transform,scale,opacity]',
+      'duration-200',
+      'ease-out',
+      'data-[starting-style]:scale-95',
+      'data-[ending-style]:scale-95',
+    ]) {
+      expect(classes).toContain(token);
+    }
+  });
+});

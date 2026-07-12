@@ -52,3 +52,32 @@ describe('NotaContextMenuPositioner (default layering)', () => {
     );
   });
 });
+
+describe('NotaContextMenuPopup (motion)', () => {
+  it('applies explicit duration and ease-out for enter/exit', () => {
+    // Arrange
+    const { baseElement } = render(
+      <NotaContextMenu defaultOpen>
+        <NotaContextMenuTrigger render={<span>Anchor</span>} />
+        <NotaContextMenuPortal>
+          <NotaContextMenuPositioner side="right" sideOffset={4}>
+            <NotaContextMenuPopup>
+              <NotaContextMenuViewport>
+                <NotaContextMenuItem>Rename</NotaContextMenuItem>
+              </NotaContextMenuViewport>
+            </NotaContextMenuPopup>
+          </NotaContextMenuPositioner>
+        </NotaContextMenuPortal>
+      </NotaContextMenu>,
+    );
+
+    // Act
+    const item = within(baseElement).getByText('Rename', { exact: true });
+    const popup = item.closest('[role="menu"]');
+    const classes = popup?.className.split(/\s+/).filter(Boolean) ?? [];
+
+    // Assert
+    expect(classes).toContain('duration-200');
+    expect(classes).toContain('ease-out');
+  });
+});

@@ -12,6 +12,7 @@
 import type { ComponentProps } from 'react';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 
+import { NOTA_POPUP_MOTION_CLASS } from '../lib/nota-popup-motion.js';
 import { cn } from '../lib/utils.js';
 
 export type NotaHoverCardProps = ComponentProps<typeof BasePopover.Root>;
@@ -27,10 +28,8 @@ export type NotaHoverCardPositionerProps = ComponentProps<
 export type NotaHoverCardPopupProps = ComponentProps<typeof BasePopover.Popup>;
 
 const DEFAULT_HOVER_CARD_POPUP_CLASS = cn(
-  'z-50 w-80 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg',
-  'origin-[var(--transform-origin)] outline-none transition-[transform,scale,opacity]',
-  'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
-  'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
+  'z-50 w-80 overflow-hidden rounded-xl border border-border bg-popover text-popover-foreground shadow-lg outline-none',
+  NOTA_POPUP_MOTION_CLASS,
 );
 
 export const NotaHoverCard = BasePopover.Root;

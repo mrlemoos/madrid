@@ -13,6 +13,7 @@ import type { ComponentProps } from 'react';
 import { ContextMenu as BaseContextMenu } from '@base-ui/react/context-menu';
 import { Menu as BaseMenu } from '@base-ui/react/menu';
 
+import { NOTA_POPUP_MOTION_CLASS } from '../lib/nota-popup-motion.js';
 import { cn } from '../lib/utils.js';
 
 export type NotaContextMenuProps = ComponentProps<typeof BaseContextMenu.Root>;
@@ -55,9 +56,7 @@ export type NotaContextMenuRadioItemIndicatorProps = ComponentProps<
 
 const DEFAULT_CONTEXT_MENU_POPUP_CLASS = cn(
   'z-50 min-w-48 overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-md',
-  'origin-[var(--transform-origin)] transition-[transform,scale,opacity]',
-  'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
-  'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
+  NOTA_POPUP_MOTION_CLASS,
 );
 
 const DEFAULT_CONTEXT_MENU_VIEWPORT_CLASS = cn(

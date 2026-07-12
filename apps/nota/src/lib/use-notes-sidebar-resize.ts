@@ -5,8 +5,21 @@ import {
 } from 'react';
 import { clampNotaSidebarWidthPx } from '@/lib/nota-sidebar-width';
 
+function setSidebarWidths(
+  asideEl: HTMLElement,
+  railEl: HTMLElement | null,
+  widthPx: number,
+): void {
+  const width = `${String(widthPx)}px`;
+  asideEl.style.width = width;
+  if (railEl) {
+    railEl.style.width = width;
+  }
+}
+
 export function useNotesSidebarResize(options: {
   asideRef: React.RefObject<HTMLElement | null>;
+  railRef?: React.RefObject<HTMLElement | null>;
   open: boolean;
   widthPx: number;
   setSidebarWidthPx: (widthPx: number) => void;
@@ -36,7 +49,7 @@ export function useNotesSidebarResize(options: {
     liveWidthRef.current = next;
     const el = options.asideRef.current;
     if (el) {
-      el.style.width = `${String(next)}px`;
+      setSidebarWidths(el, options.railRef?.current ?? null, next);
     }
     options.setSidebarWidthPx(next);
   };
@@ -51,7 +64,7 @@ export function useNotesSidebarResize(options: {
       liveWidthRef.current = next;
       const el = options.asideRef.current;
       if (el) {
-        el.style.width = `${String(next)}px`;
+        setSidebarWidths(el, options.railRef?.current ?? null, next);
       }
     };
 
@@ -74,7 +87,7 @@ export function useNotesSidebarResize(options: {
     };
     // commitWidth reads refs + aside width; listing it would rebind window listeners every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- commitWidth
-  }, [options.asideRef, options.setSidebarWidthPx]);
+  }, [options.asideRef, options.railRef, options.setSidebarWidthPx]);
 
   const onResizePointerDown = (
     event: ReactPointerEvent<HTMLDivElement>,

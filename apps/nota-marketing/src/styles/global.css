@@ -10,6 +10,8 @@
 @theme inline {
   --font-sans: 'Geist Sans', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -61,7 +63,7 @@ html.dark {
 
   /* Marketing buttons (transitions.dev easing) */
   --btn-dur: 200ms;
-  --btn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --btn-ease: var(--ease-out);
   --btn-lift: -1px;
   --btn-active-scale: 0.98;
 }

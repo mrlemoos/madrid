@@ -12,12 +12,12 @@ Opening a different note is a **high-frequency** navigation action: sidebar clic
 
 The current implementation couples a React remount key with a CSS keyframe fade, producing a 400 ms opacity ramp on every switch. Rapid sidebar hopping restarts the animation from `opacity: 0` each time because keyframes do not retarget mid-flight.
 
-| Audit rule | Current value | Budget / target |
-| --- | --- | --- |
-| Purpose & frequency (tens+/day sidebar nav) | 400 ms fade on every note switch | Remove or drastically reduce |
-| UI duration budget | `0.4s` (400 ms) | UI animations stay under 300 ms |
-| Interruptibility | `@keyframes` + `key={displayNote.id}` remount | CSS **transitions** retarget; keyframes restart from zero |
-| Easing on enter | `ease-in-out` on fade-in | Entering/exiting → **`ease-out`** (`cubic-bezier(0.23, 1, 0.32, 1)`) — but frequency rule overrides: **delete the animation** |
+| Audit rule                                  | Current value                                 | Budget / target                                                                                                               |
+| ------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Purpose & frequency (tens+/day sidebar nav) | 400 ms fade on every note switch              | Remove or drastically reduce                                                                                                  |
+| UI duration budget                          | `0.4s` (400 ms)                               | UI animations stay under 300 ms                                                                                               |
+| Interruptibility                            | `@keyframes` + `key={displayNote.id}` remount | CSS **transitions** retarget; keyframes restart from zero                                                                     |
+| Easing on enter                             | `ease-in-out` on fade-in                      | Entering/exiting → **`ease-out`** (`cubic-bezier(0.23, 1, 0.32, 1)`) — but frequency rule overrides: **delete the animation** |
 
 **Location 1:** `apps/nota/src/components/note-detail-panel.tsx:434` — wrapper forces remount and applies fade class:
 
@@ -83,9 +83,9 @@ Note switches are **instant** for all users: new note title and body appear on t
 
 ## Repo conventions to follow
 
-- **Motion tokens:** shared durations live in `apps/nota/src/lib/nota-motion.ts`; CSS keyframes for one-off surfaces live in `apps/nota/styles.css` (auth card enter at `styles.css:42–64` is an exemplar for *retained* rare-first-visit motion — note switching should not follow that pattern).
+- **Motion tokens:** shared durations live in `apps/nota/src/lib/nota-motion.ts`; CSS keyframes for one-off surfaces live in `apps/nota/styles.css` (auth card enter at `styles.css:42–64` is an exemplar for _retained_ rare-first-visit motion — note switching should not follow that pattern).
 - **Editor sync without remount:** workspace rule — TipTap `setContent` on `noteId` change, not every list refresh. Removing `key` aligns with `packages/editor/src/components/tiptap-editor.tsx:463–482`.
-- **Reduced motion:** AUDIT.md §6 — keep comprehension-aiding feedback, drop decorative movement. Here the movement *is* the entire animation; deletion satisfies both default and reduced-motion users.
+- **Reduced motion:** AUDIT.md §6 — keep comprehension-aiding feedback, drop decorative movement. Here the movement _is_ the entire animation; deletion satisfies both default and reduced-motion users.
 - **No GSAP on editor surface:** workspace rule; this fix is CSS + one JSX attribute removal only.
 - **British spelling** in any new comments (if added): e.g. "behaviour", not "behavior".
 
@@ -109,13 +109,13 @@ Note switches are **instant** for all users: new note title and body appear on t
 
 This change is mostly deletions; guard against regression with a cheap static check rather than animating in jsdom.
 
-| Phase | Action | Expected |
-| --- | --- | --- |
-| **Red** | Before edits, `rg 'nota-note-open-fade' apps/nota` | 2 files: `styles.css`, `note-detail-panel.tsx` |
-| **Red** | (Optional) add a one-line Vitest in `note-detail-panel` spec if one is created later: assert rendered wrapper lacks `nota-note-open-fade` class | Fails today |
-| **Green** | Apply steps 1–2 | `rg` returns no matches; optional spec passes |
-| **Green** | `pnpm exec nx test @nota/nota --testPathPattern=note-detail` (if spec exists) or full `@nota/nota` test target | All pass |
-| **Green** | `pnpm exec nx build @nota/nota` | Succeeds |
+| Phase     | Action                                                                                                                                          | Expected                                       |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **Red**   | Before edits, `rg 'nota-note-open-fade' apps/nota`                                                                                              | 2 files: `styles.css`, `note-detail-panel.tsx` |
+| **Red**   | (Optional) add a one-line Vitest in `note-detail-panel` spec if one is created later: assert rendered wrapper lacks `nota-note-open-fade` class | Fails today                                    |
+| **Green** | Apply steps 1–2                                                                                                                                 | `rg` returns no matches; optional spec passes  |
+| **Green** | `pnpm exec nx test @nota/nota --testPathPattern=note-detail` (if spec exists) or full `@nota/nota` test target                                  | All pass                                       |
+| **Green** | `pnpm exec nx build @nota/nota`                                                                                                                 | Succeeds                                       |
 
 No new dependencies. Do not add animation assertions to jsdom tests — motion correctness is manual feel-check only.
 
@@ -142,7 +142,7 @@ No new dependencies. Do not add animation assertions to jsdom tests — motion c
   - **History keyboard:** type in note A, open note B, press Mod+[ — note A appears instantly; Mod+] back to B — instant again. Repeat 5× rapidly: no animation queue.
   - **Command palette:** Cmd/Ctrl+K → pick another note via search — instant content swap when the palette closes.
   - **Backlinks:** open a note with backlinks, click a backlink — instant navigation to target note.
-  - **Long note scroll:** open a long note, scroll halfway down, switch to another note via sidebar — confirm the new note's content is readable (note scroll position on `<main>` may persist; that is pre-existing behaviour, not a failure of this plan unless content is visibly wrong *because of* a fade).
+  - **Long note scroll:** open a long note, scroll halfway down, switch to another note via sidebar — confirm the new note's content is readable (note scroll position on `<main>` may persist; that is pre-existing behaviour, not a failure of this plan unless content is visibly wrong _because of_ a fade).
   - **DevTools → Animations panel** at 10% playback: switch notes — **no** `nota-note-open-fade` keyframes fire (contrast with auth screen card enter if you navigate to sign-in).
   - **DevTools → Rendering → `prefers-reduced-motion: reduce`:** note switching identical to default (instant).
 

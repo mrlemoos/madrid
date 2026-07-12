@@ -16,6 +16,8 @@ const libEntries = {
   utils: path.join(root, 'src/lib/utils.ts'),
   theme: path.join(root, 'src/lib/theme.tsx'),
   'theme-color': path.join(root, 'src/lib/theme-color.ts'),
+  'motion-tokens': path.join(root, 'src/lib/motion-tokens.ts'),
+  'popup-motion': path.join(root, 'src/lib/nota-popup-motion.ts'),
 } as const;
 
 export default defineConfig(() => ({

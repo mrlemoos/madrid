@@ -36,7 +36,10 @@ import {
   useGSAP,
   usePrefersReducedMotion,
 } from '@/lib/nota-motion';
-import { getNotaSidebarAsideMotionTargets } from '@/lib/nota-sidebar-shell-motion';
+import {
+  getNotaSidebarClipLayout,
+  getNotaSidebarRailMotionTargets,
+} from '@/lib/nota-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@/lib/use-notes-sidebar-resize';
 import { hasJournalNotes } from '@/lib/journal-notes';
 import {
@@ -102,12 +105,14 @@ export function NotesShell(): JSX.Element {
   } = useNotesData();
   const { open, widthPx, setSidebarWidthPx } = useNotesSidebarStore();
   const asideRef = useRef<HTMLElement>(null);
+  const sidebarRailRef = useRef<HTMLDivElement>(null);
   const sidebarWidthPxRef = useRef(widthPx);
   sidebarWidthPxRef.current = widthPx;
   const prefersReducedMotion = usePrefersReducedMotion();
   const sidebarMotionReadyRef = useRef(false);
   const { onResizePointerDown } = useNotesSidebarResize({
     asideRef,
+    railRef: sidebarRailRef,
     open,
     widthPx,
     setSidebarWidthPx,
@@ -210,44 +215,74 @@ export function NotesShell(): JSX.Element {
   }, [sidebarChromeMounted]);
 
   useLayoutEffect(() => {
-    const el = asideRef.current;
-    if (!el || !sidebarChromeMounted || !open) {
+    const clip = asideRef.current;
+    if (!clip || !sidebarChromeMounted || !open) {
       return;
     }
-    gsap.set(el, { width: widthPx, maxWidth: widthPx });
+    gsap.set(clip, getNotaSidebarClipLayout({ open: true, widthPx }));
     // eslint-disable-next-line react-hooks/exhaustive-deps -- widthPx + mount: not open toggle
   }, [sidebarChromeMounted, widthPx]);
 
   useGSAP(
     () => {
-      const el = asideRef.current;
-      if (!el) {
+      const clip = asideRef.current;
+      const rail = sidebarRailRef.current;
+      if (!clip || !rail) {
         return;
       }
 
-      const targets = getNotaSidebarAsideMotionTargets({
+      const clipLayout = getNotaSidebarClipLayout({
         open,
         widthPx: sidebarWidthPxRef.current,
+      });
+      const railTargets = getNotaSidebarRailMotionTargets({
+        open,
         prefersReducedMotion,
       });
 
-      const widthConstraint =
-        open && targets.width > 0
-          ? { maxWidth: sidebarWidthPxRef.current }
-          : { maxWidth: 'none' };
-
       if (prefersReducedMotion || !sidebarMotionReadyRef.current) {
         sidebarMotionReadyRef.current = true;
-        gsap.set(el, { ...targets, ...widthConstraint });
+        gsap.set(clip, clipLayout);
+        gsap.set(rail, railTargets);
         return;
       }
 
-      gsap.to(el, {
-        ...targets,
-        ...widthConstraint,
+      if (open) {
+        gsap.set(clip, clipLayout);
+        gsap.set(
+          rail,
+          getNotaSidebarRailMotionTargets({
+            open: false,
+            prefersReducedMotion,
+          }),
+        );
+        gsap.to(rail, {
+          x: 0,
+          opacity: 1,
+          duration: NOTA_SIDEBAR_S,
+          ease: NOTA_MOTION_EASE_IN_OUT,
+          overwrite: 'auto',
+        });
+        return;
+      }
+
+      gsap.to(rail, {
+        ...getNotaSidebarRailMotionTargets({
+          open: false,
+          prefersReducedMotion,
+        }),
         duration: NOTA_SIDEBAR_S,
         ease: NOTA_MOTION_EASE_IN_OUT,
         overwrite: 'auto',
+        onComplete: () => {
+          gsap.set(
+            clip,
+            getNotaSidebarClipLayout({
+              open: false,
+              widthPx: sidebarWidthPxRef.current,
+            }),
+          );
+        },
       });
     },
     { dependencies: [open, prefersReducedMotion, sidebarChromeMounted] },
@@ -341,140 +376,147 @@ export function NotesShell(): JSX.Element {
               )}
               aria-hidden={!open}
             >
-              <NotaTooltipProvider>
-                <div
-                  className={cn(
-                    'flex shrink-0 items-center justify-between pr-4 pb-4',
-                    isElectron
-                      ? cn(
-                          'relative z-40 pl-20 pt-[max(1rem,env(safe-area-inset-top))]',
-                          ELECTRON_WINDOW_NO_DRAG_CLASS,
-                        )
-                      : 'pl-4 pt-4',
-                  )}
-                >
-                  <h2 className="font-serif text-lg font-semibold tracking-normal">
-                    Notes
-                  </h2>
-                  <div className="flex items-center gap-2">
-                    <SidebarToggle />
-                  </div>
-                </div>
-
-                {loadError && (
+              <div
+                ref={sidebarRailRef}
+                data-nota-sidebar-rail
+                className="flex h-full min-h-0 w-full min-w-0 flex-col"
+                style={{ width: widthPx }}
+              >
+                <NotaTooltipProvider>
                   <div
-                    className="m-4 shrink-0 rounded-md bg-destructive/15 p-3 text-sm text-destructive"
-                    role="alert"
+                    className={cn(
+                      'flex shrink-0 items-center justify-between pr-4 pb-4',
+                      isElectron
+                        ? cn(
+                            'relative z-40 pl-20 pt-[max(1rem,env(safe-area-inset-top))]',
+                            ELECTRON_WINDOW_NO_DRAG_CLASS,
+                          )
+                        : 'pl-4 pt-4',
+                    )}
                   >
-                    {loadError}
+                    <h2 className="font-serif text-lg font-semibold tracking-normal">
+                      Notes
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      <SidebarToggle />
+                    </div>
                   </div>
-                )}
 
-                <nav className="min-h-0 flex-1 overflow-y-auto p-2">
-                  <NotesSidebarList
-                    notes={notes}
-                    folders={folders}
-                    panel={panel}
-                    routeNoteId={routeNoteId}
+                  {loadError && (
+                    <div
+                      className="m-4 shrink-0 rounded-md bg-destructive/15 p-3 text-sm text-destructive"
+                      role="alert"
+                    >
+                      {loadError}
+                    </div>
+                  )}
+
+                  <nav className="min-h-0 flex-1 overflow-y-auto p-2">
+                    <NotesSidebarList
+                      notes={notes}
+                      folders={folders}
+                      panel={panel}
+                      routeNoteId={routeNoteId}
+                      userId={user?.id}
+                      notaProEntitled={notaProEntitled}
+                      userPreferences={userPreferences}
+                      insertNoteAtFront={insertNoteAtFront}
+                      insertFolderSorted={insertFolderSorted}
+                      patchNoteInList={patchNoteInList}
+                      patchFolderInList={patchFolderInList}
+                      removeNoteFromList={removeNoteFromList}
+                      removeFolderFromList={removeFolderFromList}
+                      refreshNotesList={refreshNotesList}
+                    />
+                  </nav>
+                  <FolderCreateDialog
+                    open={folderCreateOpen}
+                    onOpenChange={setFolderCreateOpen}
                     userId={user?.id}
-                    notaProEntitled={notaProEntitled}
-                    userPreferences={userPreferences}
-                    insertNoteAtFront={insertNoteAtFront}
                     insertFolderSorted={insertFolderSorted}
-                    patchNoteInList={patchNoteInList}
-                    patchFolderInList={patchFolderInList}
-                    removeNoteFromList={removeNoteFromList}
-                    removeFolderFromList={removeFolderFromList}
                     refreshNotesList={refreshNotesList}
                   />
-                </nav>
-                <FolderCreateDialog
-                  open={folderCreateOpen}
-                  onOpenChange={setFolderCreateOpen}
-                  userId={user?.id}
-                  insertFolderSorted={insertFolderSorted}
-                  refreshNotesList={refreshNotesList}
-                />
 
-                {user ? (
-                  <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
-                    <div className="flex flex-col gap-3">
-                      <a
-                        href={graphHref}
-                        className={cn(
-                          NOTA_SHELL_NAV_ITEM_CLASS,
-                          NOTA_PRESSABLE_CLASS,
-                          'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                          panel === 'graph'
-                            ? 'bg-muted font-medium text-foreground'
-                            : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                        )}
-                      >
-                        <span className="inline-flex shrink-0" aria-hidden>
-                          <HugeiconsIcon icon={Flowchart01Icon} size={16} />
-                        </span>
-                        {t('Note Graph')}
-                      </a>
-                      <a
-                        href={shortcutsHref}
-                        className={cn(
-                          NOTA_SHELL_NAV_ITEM_CLASS,
-                          NOTA_PRESSABLE_CLASS,
-                          'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                          panel === 'shortcuts'
-                            ? 'bg-muted font-medium text-foreground'
-                            : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                        )}
-                      >
-                        <span className="inline-flex shrink-0" aria-hidden>
-                          <HugeiconsIcon icon={SparklesIcon} size={16} />
-                        </span>
-                        {t('Shortcuts')}
-                      </a>
-                      <a
-                        href={settingsHref}
-                        className={cn(
-                          NOTA_SHELL_NAV_ITEM_CLASS,
-                          NOTA_PRESSABLE_CLASS,
-                          'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                          panel === 'settings'
-                            ? 'bg-muted font-medium text-foreground'
-                            : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                        )}
-                      >
-                        <span className="inline-flex shrink-0" aria-hidden>
-                          <HugeiconsIcon icon={Settings01Icon} size={16} />
-                        </span>
-                        {t('Settings')}
-                      </a>
-                      {showJournalNav ? (
+                  {user ? (
+                    <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
+                      <div className="flex flex-col gap-3">
                         <a
-                          href={journalHref}
+                          href={graphHref}
                           className={cn(
                             NOTA_SHELL_NAV_ITEM_CLASS,
                             NOTA_PRESSABLE_CLASS,
                             'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                            panel === 'journal'
+                            panel === 'graph'
                               ? 'bg-muted font-medium text-foreground'
                               : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <HugeiconsIcon icon={Calendar03Icon} size={16} />
+                            <HugeiconsIcon icon={Flowchart01Icon} size={16} />
                           </span>
-                          {t('Journal')}
+                          {t('Note Graph')}
                         </a>
-                      ) : null}
-                    </div>
-                  </footer>
+                        <a
+                          href={shortcutsHref}
+                          className={cn(
+                            NOTA_SHELL_NAV_ITEM_CLASS,
+                            NOTA_PRESSABLE_CLASS,
+                            'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                            panel === 'shortcuts'
+                              ? 'bg-muted font-medium text-foreground'
+                              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+                          )}
+                        >
+                          <span className="inline-flex shrink-0" aria-hidden>
+                            <HugeiconsIcon icon={SparklesIcon} size={16} />
+                          </span>
+                          {t('Shortcuts')}
+                        </a>
+                        <a
+                          href={settingsHref}
+                          className={cn(
+                            NOTA_SHELL_NAV_ITEM_CLASS,
+                            NOTA_PRESSABLE_CLASS,
+                            'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                            panel === 'settings'
+                              ? 'bg-muted font-medium text-foreground'
+                              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+                          )}
+                        >
+                          <span className="inline-flex shrink-0" aria-hidden>
+                            <HugeiconsIcon icon={Settings01Icon} size={16} />
+                          </span>
+                          {t('Settings')}
+                        </a>
+                        {showJournalNav ? (
+                          <a
+                            href={journalHref}
+                            className={cn(
+                              NOTA_SHELL_NAV_ITEM_CLASS,
+                              NOTA_PRESSABLE_CLASS,
+                              'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
+                              panel === 'journal'
+                                ? 'bg-muted font-medium text-foreground'
+                                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+                            )}
+                          >
+                            <span className="inline-flex shrink-0" aria-hidden>
+                              <HugeiconsIcon icon={Calendar03Icon} size={16} />
+                            </span>
+                            {t('Journal')}
+                          </a>
+                        ) : null}
+                      </div>
+                    </footer>
+                  ) : null}
+                </NotaTooltipProvider>
+                {open ? (
+                  <NotesSidebarResizeHandle
+                    ariaLabel={t('Resize sidebar')}
+                    onPointerDown={onResizePointerDown}
+                  />
                 ) : null}
-              </NotaTooltipProvider>
-              {open ? (
-                <NotesSidebarResizeHandle
-                  ariaLabel={t('Resize sidebar')}
-                  onPointerDown={onResizePointerDown}
-                />
-              ) : null}
+              </div>
             </aside>
           ) : null}
 

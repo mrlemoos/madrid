@@ -9,6 +9,7 @@ import {
 } from '@hugeicons/core-free-icons';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { notaButtonVariants } from '@nota/web-design/button';
+import { NOTA_POPUP_MOTION_CLASS } from '@nota/web-design/popup-motion';
 import { cn } from '@/lib/utils';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 import { type Theme, useTheme } from '@nota/web-design/theme';
@@ -52,9 +53,7 @@ export function ThemeMenu(): JSX.Element {
           <Menu.Popup
             className={cn(
               'z-50 min-w-[var(--anchor-width)] overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-md',
-              'origin-[var(--transform-origin)] transition-[transform,scale,opacity]',
-              'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
-              'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
+              NOTA_POPUP_MOTION_CLASS,
             )}
           >
             <Menu.Viewport>

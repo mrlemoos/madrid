@@ -70,7 +70,9 @@ describe('NoteImageLightbox', () => {
 
     // Assert
     expect(
-      screen.getByTestId('note-image-lightbox-backdrop').getAttribute('data-mounted'),
+      screen
+        .getByTestId('note-image-lightbox-backdrop')
+        .getAttribute('data-mounted'),
     ).toBe('true');
   });
 

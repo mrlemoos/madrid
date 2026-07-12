@@ -1,7 +1,12 @@
 import { useMemo, type JSX } from 'react';
 import { NotaButton } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
-import { buildJournalCalendarCells } from '@/lib/journal-calendar';
+import {
+  buildJournalCalendarCells,
+  type JournalCalendarCell,
+} from '@/lib/journal-calendar';
+import { useJournalMonthGridCrossfade } from '@/lib/journal-month-grid-transition';
+import { usePrefersReducedMotion } from '@/lib/nota-motion';
 import { localDateKey } from '@/lib/todays-note';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 
@@ -35,6 +40,13 @@ export function JournalCalendar({
     () => buildJournalCalendarCells(year, month),
     [month, year],
   );
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const { outgoingLayer, incomingLayer, phase } = useJournalMonthGridCrossfade(
+    year,
+    month,
+    cells,
+    prefersReducedMotion,
+  );
 
   const monthLabel = useMemo(() => {
     return new Date(year, month, 1).toLocaleDateString(undefined, {
@@ -53,6 +65,76 @@ export function JournalCalendar({
   const goMonth = (delta: number): void => {
     const next = new Date(year, month + delta, 1);
     onMonthChange(next.getFullYear(), next.getMonth());
+  };
+
+  const gridLayerClass = cn(
+    'grid grid-cols-7 gap-1',
+    phase === 'crossfade' && 'motion-reduce:transition-none',
+  );
+  const gridLayerStyle =
+    phase === 'crossfade'
+      ? {
+          transitionProperty: 'opacity',
+          transitionDuration: '150ms',
+          transitionTimingFunction: 'cubic-bezier(0.23, 1, 0.32, 1)',
+        }
+      : undefined;
+
+  const renderMonthCells = (
+    monthCells: readonly JournalCalendarCell[],
+  ): JSX.Element[] => {
+    return monthCells.map((cell) => {
+      const hasNote = dateKeysWithNotes.has(cell.dateKey);
+      const isSelected = selectedDateKey === cell.dateKey;
+      const isToday = cell.dateKey === todayKey;
+      const day = cell.date.getDate();
+
+      return (
+        <button
+          key={cell.dateKey}
+          type="button"
+          role="gridcell"
+          aria-selected={isSelected}
+          disabled={!cell.inMonth}
+          onClick={() => {
+            if (!cell.inMonth) {
+              return;
+            }
+            onSelectDateKey(isSelected ? null : cell.dateKey);
+          }}
+          className={cn(
+            'relative flex min-h-[2.75rem] flex-col items-center justify-center rounded-lg px-0.5 py-1 text-sm transition-colors',
+            cell.inMonth
+              ? 'text-foreground hover:bg-muted/50'
+              : 'pointer-events-none text-transparent',
+            isSelected && cell.inMonth && 'bg-muted/80 ring-1 ring-border/80',
+            isToday && cell.inMonth && !isSelected && 'ring-1 ring-primary/40',
+          )}
+        >
+          <span
+            className={cn(
+              'tabular-nums',
+              !cell.inMonth && 'opacity-0',
+              isToday && cell.inMonth && 'font-semibold text-primary',
+            )}
+          >
+            {day}
+          </span>
+          {hasNote && cell.inMonth ? (
+            <span
+              className={cn(
+                'mt-0.5 h-1 w-1 shrink-0 rounded-full',
+                'bg-foreground shadow-[0_0_4px_rgba(0,0,0,0.2)]',
+                'dark:bg-white dark:shadow-[0_0_6px_rgba(255,255,255,0.45)]',
+              )}
+              aria-hidden
+            />
+          ) : (
+            <span className="mt-0.5 h-1 w-1 shrink-0" aria-hidden />
+          )}
+        </button>
+      );
+    });
   };
 
   return (
@@ -105,68 +187,28 @@ export function JournalCalendar({
         ))}
       </div>
 
-      <div
-        className="grid grid-cols-7 gap-1"
-        role="grid"
-        aria-label={t('Journal calendar')}
-      >
-        {cells.map((cell) => {
-          const hasNote = dateKeysWithNotes.has(cell.dateKey);
-          const isSelected = selectedDateKey === cell.dateKey;
-          const isToday = cell.dateKey === todayKey;
-          const day = cell.date.getDate();
-
-          return (
-            <button
-              key={cell.dateKey}
-              type="button"
-              role="gridcell"
-              aria-selected={isSelected}
-              disabled={!cell.inMonth}
-              onClick={() => {
-                if (!cell.inMonth) {
-                  return;
-                }
-                onSelectDateKey(isSelected ? null : cell.dateKey);
-              }}
-              className={cn(
-                'relative flex min-h-[2.75rem] flex-col items-center justify-center rounded-lg px-0.5 py-1 text-sm transition-colors',
-                cell.inMonth
-                  ? 'text-foreground hover:bg-muted/50'
-                  : 'pointer-events-none text-transparent',
-                isSelected &&
-                  cell.inMonth &&
-                  'bg-muted/80 ring-1 ring-border/80',
-                isToday &&
-                  cell.inMonth &&
-                  !isSelected &&
-                  'ring-1 ring-primary/40',
-              )}
-            >
-              <span
-                className={cn(
-                  'tabular-nums',
-                  !cell.inMonth && 'opacity-0',
-                  isToday && cell.inMonth && 'font-semibold text-primary',
-                )}
-              >
-                {day}
-              </span>
-              {hasNote && cell.inMonth ? (
-                <span
-                  className={cn(
-                    'mt-0.5 h-1 w-1 shrink-0 rounded-full',
-                    'bg-foreground shadow-[0_0_4px_rgba(0,0,0,0.2)]',
-                    'dark:bg-white dark:shadow-[0_0_6px_rgba(255,255,255,0.45)]',
-                  )}
-                  aria-hidden
-                />
-              ) : (
-                <span className="mt-0.5 h-1 w-1 shrink-0" aria-hidden />
-              )}
-            </button>
-          );
-        })}
+      <div className="relative min-h-[17.75rem]">
+        {outgoingLayer ? (
+          <div
+            className={cn(gridLayerClass, 'absolute inset-0')}
+            style={{
+              ...gridLayerStyle,
+              opacity: outgoingLayer.opacity,
+              filter: outgoingLayer.blur ? 'blur(2px)' : undefined,
+            }}
+            role="presentation"
+          >
+            {renderMonthCells(outgoingLayer.cells)}
+          </div>
+        ) : null}
+        <div
+          className={gridLayerClass}
+          style={{ ...gridLayerStyle, opacity: incomingLayer.opacity }}
+          role="grid"
+          aria-label={t('Journal calendar')}
+        >
+          {renderMonthCells(incomingLayer.cells)}
+        </div>
       </div>
     </div>
   );

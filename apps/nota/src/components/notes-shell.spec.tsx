@@ -64,6 +64,7 @@ const sidebarStoreState = vi.hoisted(() => ({
 }));
 
 const gsapTo = vi.hoisted(() => vi.fn());
+const gsapSet = vi.hoisted(() => vi.fn());
 
 vi.mock('@/lib/nota-motion', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/nota-motion')>();
@@ -72,6 +73,10 @@ vi.mock('@/lib/nota-motion', async (importOriginal) => {
     gsap: {
       ...actual.gsap,
       to: gsapTo,
+      set: (...args: Parameters<typeof actual.gsap.set>) => {
+        gsapSet(...args);
+        return actual.gsap.set(...args);
+      },
     },
   };
 });
@@ -150,6 +155,7 @@ describe('NotesShell', () => {
   beforeEach(() => {
     sidebarStoreState.open = true;
     gsapTo.mockClear();
+    gsapSet.mockClear();
     vi.mocked(useNotesData).mockImplementation(() => ({
       notes: [notesShellTestCtx.listNote],
       folders: [],
@@ -204,7 +210,39 @@ describe('NotesShell', () => {
     expect(aside?.style.width).toBe('288px');
   });
 
-  it('keeps the sidebar mounted and tweens closed instead of snapping width', () => {
+  it('keeps the sidebar mounted and tweens the inner rail closed', () => {
+    // Arrange
+    window.history.replaceState(null, '', '#/notes');
+    const { container, rerender } = render(<NotesShell />);
+    const aside = container.querySelector('aside');
+    const rail = container.querySelector('[data-nota-sidebar-rail]');
+    expect(aside).not.toBeNull();
+    expect(rail).not.toBeNull();
+
+    // Act
+    sidebarStoreState.open = false;
+    rerender(<NotesShell />);
+
+    // Assert
+    expect(container.querySelector('aside')).toBe(aside);
+    expect(gsapTo).toHaveBeenCalledWith(
+      rail,
+      expect.objectContaining({
+        opacity: 0,
+        x: expect.any(Number),
+        duration: expect.any(Number),
+      }),
+    );
+    expect(gsapTo).not.toHaveBeenCalledWith(
+      aside,
+      expect.objectContaining({ width: expect.any(Number) }),
+    );
+    for (const [, props] of gsapTo.mock.calls) {
+      expect(props).not.toHaveProperty('width');
+    }
+  });
+
+  it('snaps the clip width to zero after the close tween completes', () => {
     // Arrange
     window.history.replaceState(null, '', '#/notes');
     const { container, rerender } = render(<NotesShell />);
@@ -215,15 +253,19 @@ describe('NotesShell', () => {
     sidebarStoreState.open = false;
     rerender(<NotesShell />);
 
+    const closeCall = gsapTo.mock.calls.find(
+      ([target]) =>
+        target instanceof HTMLElement &&
+        target.matches('[data-nota-sidebar-rail]'),
+    );
+    expect(closeCall).toBeDefined();
+    const closeProps = closeCall?.[1] as { onComplete?: () => void };
+    closeProps.onComplete?.();
+
     // Assert
-    expect(container.querySelector('aside')).toBe(aside);
-    expect(gsapTo).toHaveBeenCalledWith(
+    expect(gsapSet).toHaveBeenCalledWith(
       aside,
-      expect.objectContaining({
-        width: 0,
-        opacity: 0,
-        duration: expect.any(Number),
-      }),
+      expect.objectContaining({ width: 0 }),
     );
   });
 
