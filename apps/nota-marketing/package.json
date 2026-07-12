@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nota/web-design": "workspace:*",
+    "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/geist-sans": "^5.2.5",
     "@fontsource/instrument-serif": "catalog:",
@@ -22,9 +23,15 @@
     "@vercel/analytics": "^1.5.0",
     "astro": "^6.1.0",
     "electron": "catalog:",
-    "jsdom": "catalog:"
+    "framer-motion": "^12.23.12",
+    "jsdom": "catalog:",
+    "lucide-react": "^0.542.0",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "tailwindcss": "catalog:",
     "to-ico": "^1.0.1",

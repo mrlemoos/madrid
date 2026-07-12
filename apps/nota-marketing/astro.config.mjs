@@ -1,4 +1,5 @@
 // @ts-check
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -9,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   site: 'https://nota.mrlemoos.dev',
-  integrations: [sitemap()],
+  integrations: [react(), sitemap()],
   vite: {
     envPrefix: ['VITE_', 'PUBLIC_'],
     plugins: [tailwindcss()],

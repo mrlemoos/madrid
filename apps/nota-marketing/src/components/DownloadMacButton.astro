@@ -1,17 +1,18 @@
 ---
-import AppleIcon from '@/components/AppleIcon.astro';
+import SlideArrowDownloadButton from '@/components/SlideArrowDownloadButton';
 import { NOTA_GITHUB_LATEST } from '@/lib/site';
 
 interface Props {
   class?: string;
+  variant?: 'hero' | 'page';
 }
 
-const defaultClass = 'mkt-focus mkt-btn mkt-btn--primary';
-
-const { class: className } = Astro.props;
+const { class: className, variant = 'page' } = Astro.props;
 ---
 
-<a href={NOTA_GITHUB_LATEST} class:list={[defaultClass, className]}>
-  <AppleIcon />
-  Download for macOS
-</a>
+<SlideArrowDownloadButton
+  client:load
+  href={NOTA_GITHUB_LATEST}
+  className={className}
+  variant={variant}
+/>

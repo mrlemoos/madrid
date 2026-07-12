@@ -48,7 +48,8 @@ const heroChecks = [
   ['mkt-hero-fade mkt-hero-fade-delay-3', 'hero screenshot fade-in'],
   ['mkt-hero-fade mkt-hero-fade-delay-1', 'hero download fade-in'],
   ['mkt-hero-fade mkt-hero-fade-delay-2', 'hero pricing link fade-in'],
-  ['mkt-btn--primary', 'primary button transition class'],
+  ['data-nota-download-mac', 'download Mac button hook'],
+  ['Download for Mac', 'download Mac button label'],
 ];
 
 for (const [needle, label] of heroChecks) {
