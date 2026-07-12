@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
+  notesSidebarTreeChevronClass,
   notesSidebarTreeFolderRowVariants,
   notesSidebarTreeLeafRowVariants,
   notesSidebarTreeRowVariants,
@@ -66,5 +67,18 @@ describe('notes-sidebar-tree-styles', () => {
     // Assert
     expect(leaf).toContain('ml-5');
     expect(leaf).toContain('bg-muted/20');
+  });
+
+  it('gates folder chevron transform transition behind motion-safe', () => {
+    // Arrange
+    // Act
+    const chevron = notesSidebarTreeChevronClass;
+    const tokens = chevron.split(/\s+/);
+
+    // Assert
+    expect(chevron).toContain('motion-safe:transition-transform');
+    expect(chevron).toContain('motion-safe:duration-200');
+    expect(tokens).not.toContain('transition-transform');
+    expect(tokens).not.toContain('duration-200');
   });
 });

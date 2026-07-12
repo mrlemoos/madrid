@@ -431,7 +431,7 @@ export function NoteDetailPanel({
           bannerSignedUrl && noteBannerNoteSurfaceClass,
         )}
       >
-        <div key={displayNote.id} className="nota-note-open-fade">
+        <div>
           <NoteEditor
             note={displayNote}
             noteMentionCandidates={notes}

@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { act, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { NoteImageLightbox } from './note-image-lightbox';
 
@@ -12,6 +12,68 @@ vi.mock('@/lib/use-is-electron', () => ({
 }));
 
 describe('NoteImageLightbox', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('keeps portal mounted briefly after open becomes false', () => {
+    // Arrange
+    const image = {
+      src: 'https://cdn.example.test/photo.webp',
+      alt: 'Coastline at dusk',
+      filename: 'Coastline.webp',
+    };
+
+    vi.useFakeTimers();
+
+    const { rerender } = render(
+      <NoteImageLightbox open image={image} onClose={() => {}} />,
+    );
+
+    // Act
+    rerender(
+      <NoteImageLightbox open={false} image={image} onClose={() => {}} />,
+    );
+
+    // Assert
+    expect(screen.getByTestId('note-image-lightbox-backdrop')).toBeTruthy();
+
+    act(() => {
+      vi.advanceTimersByTime(200);
+    });
+
+    expect(screen.queryByTestId('note-image-lightbox-backdrop')).toBeNull();
+  });
+
+  it('sets data-mounted on backdrop when open', async () => {
+    // Arrange
+    render(
+      <NoteImageLightbox
+        open
+        image={{
+          src: 'https://cdn.example.test/photo.webp',
+          alt: 'Coastline at dusk',
+          filename: 'Coastline.webp',
+        }}
+        onClose={() => {}}
+      />,
+    );
+
+    // Act
+    await act(async () => {
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => {
+          resolve();
+        });
+      });
+    });
+
+    // Assert
+    expect(
+      screen.getByTestId('note-image-lightbox-backdrop').getAttribute('data-mounted'),
+    ).toBe('true');
+  });
+
   it('renders full-screen image metadata and closes on close button', () => {
     // Arrange
     const onClose = vi.fn();

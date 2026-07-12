@@ -7,7 +7,7 @@ Self-contained execution plans from the `improve-animations` audit (@ commit `08
 | #   | Title                                                                                   | Severity | Status            | Depends on                                      |
 | --- | --------------------------------------------------------------------------------------- | -------- | ----------------- | ----------------------------------------------- |
 | 001 | [Make command palette open/close instant](./001-command-palette-instant-keyboard.md)    | HIGH     | TODO              | —                                               |
-| 002 | [Remove note-switch keyframe fade](./002-note-switch-no-keyframe-fade.md)               | HIGH     | TODO              | —                                               |
+| 002 | [Remove note-switch keyframe fade](./002-note-switch-no-keyframe-fade.md)               | HIGH     | DONE              | —                                               |
 | 003 | [Palette exit uses ease-out, not ease-in](./003-palette-exit-ease-out.md)               | HIGH     | DONE              | 001 (or moot if 001 lands)                      |
 | 004 | [Sidebar transform, not width tween](./004-sidebar-transform-not-width.md)              | MEDIUM   | TODO              | —                                               |
 | 005 | [Note-open keyframes → opacity transition](./005-note-fade-transition-not-keyframes.md) | MEDIUM   | SUPERSEDED by 002 | —                                               |
