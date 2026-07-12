@@ -11,7 +11,7 @@ Self-contained execution plans from the `improve-animations` audit (@ commit `08
 | 003 | [Palette exit uses ease-out, not ease-in](./003-palette-exit-ease-out.md)               | HIGH     | DONE              | 001 (or moot if 001 lands)                      |
 | 004 | [Sidebar transform, not width tween](./004-sidebar-transform-not-width.md)              | MEDIUM   | DONE              | —                                               |
 | 005 | [Note-open keyframes → opacity transition](./005-note-fade-transition-not-keyframes.md) | MEDIUM   | SUPERSEDED by 002 | —                                               |
-| 006 | [Sidebar folder row: drop transition-all](./006-sidebar-folder-no-transition-all.md)    | MEDIUM   | TODO              | —                                               |
+| 006 | [Sidebar folder row: drop transition-all](./006-sidebar-folder-no-transition-all.md)    | MEDIUM   | DONE              | —                                               |
 | 007 | [Unify motion easing tokens](./007-unify-motion-easing-tokens.md)                       | MEDIUM   | TODO              | —                                               |
 | 008 | [Popup surfaces: explicit duration + ease-out](./008-popover-explicit-duration-ease.md) | MEDIUM   | TODO              | 007 (optional)                                  |
 | 009 | [Cap shell and palette durations](./009-cap-shell-palette-durations.md)                 | LOW      | DONE              | 001, 004                                        |
