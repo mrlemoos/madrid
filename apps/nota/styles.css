@@ -18,27 +18,6 @@
   -webkit-app-region: no-drag;
 }
 
-/* Note open :  gentle reveal when switching notes */
-@keyframes nota-note-open-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.nota-note-open-fade {
-  animation: nota-note-open-fade 0.4s var(--ease-in-out) forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nota-note-open-fade {
-    animation: none;
-    opacity: 1;
-  }
-}
-
 /* Auth screens — glass card entrance over landscape */
 @keyframes nota-auth-card-enter {
   from {

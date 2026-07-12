@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
+  NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS,
   notesSidebarTreeChevronClass,
   notesSidebarTreeFolderRowVariants,
   notesSidebarTreeLeafRowVariants,
@@ -17,6 +18,19 @@ describe('notes-sidebar-tree-styles', () => {
     expect(branch).not.toContain('border-l');
     expect(branch).toContain('ml-4');
     expect(branch).toContain('pl-1');
+    expect(branch).toContain('nota-folder-branch');
+  });
+
+  it('exports folder branch motion class tokens', () => {
+    // Arrange
+    // Act
+    const inner = NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS;
+    const chevron = notesSidebarTreeChevronClass;
+
+    // Assert
+    expect(inner).toBe('nota-folder-branch__inner');
+    expect(chevron).toContain('ease-out');
+    expect(chevron).toContain('duration-[180ms]');
   });
 
   it('does not apply hover background on note rows', () => {
@@ -90,8 +104,8 @@ describe('notes-sidebar-tree-styles', () => {
 
     // Assert
     expect(chevron).toContain('motion-safe:transition-transform');
-    expect(chevron).toContain('motion-safe:duration-200');
+    expect(chevron).toContain('motion-safe:duration-[180ms]');
     expect(tokens).not.toContain('transition-transform');
-    expect(tokens).not.toContain('duration-200');
+    expect(tokens).not.toContain('duration-[180ms]');
   });
 });

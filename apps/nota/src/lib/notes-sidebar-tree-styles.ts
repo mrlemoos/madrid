@@ -55,7 +55,7 @@ export const notesSidebarTreeFolderLabelClass =
 
 /** Chevron on folder rows :  rotates when expanded. */
 export const notesSidebarTreeChevronClass =
-  'mr-0.5 size-3.5 shrink-0 text-muted-foreground/50 motion-safe:transition-transform motion-safe:duration-200';
+  'mr-0.5 size-3.5 shrink-0 text-muted-foreground/50 motion-safe:transition-transform motion-safe:duration-[180ms] motion-safe:ease-out';
 
 /** Note leaf row inside a folder branch. */
 export const notesSidebarTreeLeafRowVariants = cva(
