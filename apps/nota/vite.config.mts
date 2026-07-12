@@ -104,7 +104,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     ssr: {
-      noExternal: ['gsap', '@gsap/react'],
+      noExternal: ['gsap', '@gsap/react', 'motion'],
     },
     test: {
       name: '@nota/nota',

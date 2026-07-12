@@ -1,5 +1,5 @@
 ---
-import GitHubIcon from '@/components/GitHubIcon.astro';
+import { GitHubIcon } from '@/components/GitHubIcon';
 import { NOTA_GITHUB_LATEST, NOTA_GITHUB_REPO } from '@/lib/site';
 
 interface Props {
@@ -47,7 +47,7 @@ const navLinks = borderless
         target="_blank"
         aria-label="Nota on GitHub"
       >
-        <GitHubIcon />
+        <GitHubIcon client:load />
       </a>
     </nav>
   </div>

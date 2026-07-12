@@ -76,6 +76,18 @@
       "import": "./dist/popup-motion.js",
       "default": "./dist/popup-motion.js"
     },
+    "./icon": {
+      "@nota/source": "./src/components/icon.tsx",
+      "types": "./dist/components/icon.d.ts",
+      "import": "./dist/icon.js",
+      "default": "./dist/icon.js"
+    },
+    "./icons": {
+      "@nota/source": "./src/icons/index.ts",
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons.js",
+      "default": "./dist/icons.js"
+    },
     "./theme-chrome.css": "./src/theme-chrome.css"
   },
   "peerDependencies": {
@@ -87,6 +99,7 @@
     "@base-ui/react": "^1.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "motion": "catalog:",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {

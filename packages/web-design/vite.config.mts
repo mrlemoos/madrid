@@ -18,6 +18,8 @@ const libEntries = {
   'theme-color': path.join(root, 'src/lib/theme-color.ts'),
   'motion-tokens': path.join(root, 'src/lib/motion-tokens.ts'),
   'popup-motion': path.join(root, 'src/lib/nota-popup-motion.ts'),
+  icon: path.join(root, 'src/components/icon.tsx'),
+  icons: path.join(root, 'src/icons/index.ts'),
 } as const;
 
 export default defineConfig(() => ({
@@ -53,7 +55,9 @@ export default defineConfig(() => ({
         id === '@nota/helper-hooks' ||
         id.startsWith('react/') ||
         id.startsWith('@base-ui/') ||
-        id.startsWith('@nota/helper-hooks/'),
+        id.startsWith('@nota/helper-hooks/') ||
+        id === 'motion/react' ||
+        id.startsWith('motion/'),
     },
   },
   test: {

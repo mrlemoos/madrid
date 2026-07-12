@@ -7,13 +7,13 @@ import {
   Suspense,
   type JSX,
 } from 'react';
+import { NotaIcon } from '@nota/web-design/icon';
 import {
-  Calendar03Icon,
-  Flowchart01Icon,
-  Settings01Icon,
+  BrainCircuitIcon,
+  ClockIcon,
+  GearIcon,
   SparklesIcon,
-} from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+} from '@nota/web-design/icons';
 import { NotaTooltipProvider } from '@nota/web-design/tooltip';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@/lib/electron-window-chrome';
@@ -452,7 +452,7 @@ export function NotesShell(): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <HugeiconsIcon icon={Flowchart01Icon} size={16} />
+                            <NotaIcon icon={BrainCircuitIcon} size={16} />
                           </span>
                           {t('Note Graph')}
                         </a>
@@ -468,7 +468,7 @@ export function NotesShell(): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <HugeiconsIcon icon={SparklesIcon} size={16} />
+                            <NotaIcon icon={SparklesIcon} size={16} />
                           </span>
                           {t('Shortcuts')}
                         </a>
@@ -484,7 +484,7 @@ export function NotesShell(): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <HugeiconsIcon icon={Settings01Icon} size={16} />
+                            <NotaIcon icon={GearIcon} size={16} />
                           </span>
                           {t('Settings')}
                         </a>
@@ -501,7 +501,7 @@ export function NotesShell(): JSX.Element {
                             )}
                           >
                             <span className="inline-flex shrink-0" aria-hidden>
-                              <HugeiconsIcon icon={Calendar03Icon} size={16} />
+                              <NotaIcon icon={ClockIcon} size={16} />
                             </span>
                             {t('Journal')}
                           </a>

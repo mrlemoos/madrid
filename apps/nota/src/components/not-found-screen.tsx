@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowRight01Icon } from '@hugeicons/core-free-icons';
+import { NotaIcon } from '@nota/web-design/icon';
+import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
 import { NotaLogo } from '@/components/nota-logo';
 import { notaButtonVariants } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
@@ -102,7 +102,7 @@ export function NotFoundScreen({
           >
             {signedIn ? 'Back to notes' : 'Return home'}
             <span data-icon="inline-end" aria-hidden className="inline-flex">
-              <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+              <NotaIcon icon={ArrowNarrowRightIcon} size={16} />
             </span>
           </a>
         </div>

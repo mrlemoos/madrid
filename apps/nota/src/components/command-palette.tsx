@@ -11,23 +11,23 @@ import {
 import { Dialog } from '@base-ui/react/dialog';
 import type { DialogRoot } from '@base-ui/react/dialog';
 import { Command, defaultFilter } from 'cmdk';
+import { NotaIcon } from '@nota/web-design/icon';
 import {
-  AiAudioIcon,
-  Calendar03Icon,
-  ComputerIcon,
-  Flowchart01Icon,
-  Logout01Icon,
-  Moon02Icon,
-  NoteAddIcon,
-  NoteIcon,
-  NoteRemoveIcon,
+  BrainCircuitIcon,
+  BulbIcon,
+  ChartBarIcon,
+  ClockIcon,
+  CpuIcon,
+  FileDescriptionIcon,
+  HistoryCircleIcon,
+  LogoutIcon,
+  MoonIcon,
+  SimpleCheckedIcon,
   SparklesIcon,
-  Sun01Icon,
-  TableIcon,
-  TaskDaily01Icon,
-  Tick01Icon,
-} from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+  TrashIcon,
+  UserPlusIcon,
+  Volume2Icon,
+} from '@nota/web-design/icons';
 import { cn } from '@/lib/utils';
 import { notaKbdFooterClass, notaKbdHintClass } from '@/lib/nota-kbd-styles';
 import { useNoteEditorCommands } from '@nota/editor';
@@ -107,12 +107,12 @@ function PaletteItemIcon({
   icon,
   className,
 }: {
-  icon: ComponentProps<typeof HugeiconsIcon>['icon'];
+  icon: ComponentProps<typeof NotaIcon>['icon'];
   className?: string;
 }): JSX.Element {
   return (
     <span aria-hidden className={cn('inline-flex shrink-0', className)}>
-      <HugeiconsIcon icon={icon} size={16} />
+      <NotaIcon icon={icon} size={16} />
     </span>
   );
 }
@@ -638,8 +638,8 @@ export function CommandPalette(): JSX.Element {
                                   }}
                                 >
                                   {selected ? (
-                                    <HugeiconsIcon
-                                      icon={Tick01Icon}
+                                    <NotaIcon
+                                      icon={SimpleCheckedIcon}
                                       size={12}
                                     />
                                   ) : null}
@@ -1122,7 +1122,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={NoteAddIcon}
+                        icon={UserPlusIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">
@@ -1243,7 +1243,7 @@ export function CommandPalette(): JSX.Element {
                         )}
                       >
                         <PaletteItemIcon
-                          icon={NoteIcon}
+                          icon={FileDescriptionIcon}
                           className="text-muted-foreground group-aria-selected:text-accent-foreground"
                         />
                         <span className="min-w-0 flex-1">
@@ -1277,7 +1277,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={Flowchart01Icon}
+                        icon={BrainCircuitIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">Open note graph</span>
@@ -1307,7 +1307,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={TaskDaily01Icon}
+                        icon={HistoryCircleIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">
@@ -1336,7 +1336,7 @@ export function CommandPalette(): JSX.Element {
                         )}
                       >
                         <PaletteItemIcon
-                          icon={Calendar03Icon}
+                          icon={ClockIcon}
                           className="text-muted-foreground group-aria-selected:text-accent-foreground"
                         />
                         <span className="min-w-0 flex-1">
@@ -1382,7 +1382,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={AiAudioIcon}
+                        icon={Volume2Icon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">
@@ -1431,7 +1431,7 @@ export function CommandPalette(): JSX.Element {
                         )}
                       >
                         <PaletteItemIcon
-                          icon={AiAudioIcon}
+                          icon={Volume2Icon}
                           className="text-muted-foreground group-aria-selected:text-accent-foreground"
                         />
                         <span className="min-w-0 flex-1">
@@ -1507,7 +1507,7 @@ export function CommandPalette(): JSX.Element {
                         )}
                       >
                         <PaletteItemIcon
-                          icon={NoteIcon}
+                          icon={FileDescriptionIcon}
                           className="text-muted-foreground group-aria-selected:text-accent-foreground"
                         />
                         <span className="min-w-0 flex-1 truncate">
@@ -1546,7 +1546,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={Flowchart01Icon}
+                        icon={BrainCircuitIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">
@@ -1570,7 +1570,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={TableIcon}
+                        icon={ChartBarIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">Insert table</span>
@@ -1599,7 +1599,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={TaskDaily01Icon}
+                        icon={HistoryCircleIcon}
                         className="text-muted-foreground group-aria-selected:text-accent-foreground"
                       />
                       <span className="min-w-0 flex-1">Insert task list</span>
@@ -1645,7 +1645,7 @@ export function CommandPalette(): JSX.Element {
                       )}
                     >
                       <PaletteItemIcon
-                        icon={NoteRemoveIcon}
+                        icon={TrashIcon}
                         className="text-destructive group-aria-selected:text-destructive"
                       />
                       <span className="min-w-0 flex-1">
@@ -1680,7 +1680,7 @@ export function CommandPalette(): JSX.Element {
                     )}
                   >
                     <PaletteItemIcon
-                      icon={Sun01Icon}
+                      icon={BulbIcon}
                       className="text-muted-foreground group-aria-selected:text-accent-foreground"
                     />
                     <span className="min-w-0 flex-1">Use light theme</span>
@@ -1710,7 +1710,7 @@ export function CommandPalette(): JSX.Element {
                     )}
                   >
                     <PaletteItemIcon
-                      icon={Moon02Icon}
+                      icon={MoonIcon}
                       className="text-muted-foreground group-aria-selected:text-accent-foreground"
                     />
                     <span className="min-w-0 flex-1">Use dark theme</span>
@@ -1743,7 +1743,7 @@ export function CommandPalette(): JSX.Element {
                     )}
                   >
                     <PaletteItemIcon
-                      icon={ComputerIcon}
+                      icon={CpuIcon}
                       className="text-muted-foreground group-aria-selected:text-accent-foreground"
                     />
                     <span className="min-w-0 flex-1">Use system theme</span>
@@ -1806,7 +1806,7 @@ export function CommandPalette(): JSX.Element {
                     )}
                   >
                     <PaletteItemIcon
-                      icon={Logout01Icon}
+                      icon={LogoutIcon}
                       className="text-destructive group-aria-selected:text-destructive"
                     />
                     <span className="min-w-0 flex-1">

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react';
-import { TypeCursorIcon } from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+import { NotaIcon } from '@nota/web-design/icon';
+import { MousePointer2Icon } from '@nota/web-design/icons';
 import { NotaButton } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
 import {
@@ -92,7 +92,7 @@ export function NoteLayoutMenu({
           setOpen((o) => !o);
         }}
       >
-        <HugeiconsIcon icon={TypeCursorIcon} size={18} />
+        <NotaIcon icon={MousePointer2Icon} size={18} />
       </NotaButton>
       {open ? (
         <div

@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowRight01Icon } from '@hugeicons/core-free-icons';
+import { NotaIcon } from '@nota/web-design/icon';
+import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
 import { cn } from '@/lib/utils';
 import {
   NotaCard,
@@ -56,7 +56,7 @@ export function LandingPage(): JSX.Element {
             >
               Continue with email
               <span data-icon="inline-end" aria-hidden className="inline-flex">
-                <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+                <NotaIcon icon={ArrowNarrowRightIcon} size={16} />
               </span>
             </AuthScreenHashLink>
           </NotaCardContent>

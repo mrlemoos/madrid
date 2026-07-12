@@ -630,7 +630,7 @@ describe('NotesSidebarList', () => {
     });
 
     // Act
-    const chevron = expandButton.querySelector('svg');
+    const chevron = expandButton.querySelector('[class*="rotate-90"]');
     const branch = document.getElementById('sidebar-folder-folder-1');
 
     // Assert

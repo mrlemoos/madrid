@@ -25,7 +25,6 @@
     "electron": "catalog:",
     "framer-motion": "^12.23.12",
     "jsdom": "catalog:",
-    "lucide-react": "^0.542.0",
     "react": "catalog:",
     "react-dom": "catalog:"
   },

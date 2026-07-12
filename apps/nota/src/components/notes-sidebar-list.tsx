@@ -10,17 +10,16 @@ import {
   type ReactNode,
   type JSX,
 } from 'react';
+import { NotaIcon } from '@nota/web-design/icon';
 import {
-  ArrowRight01Icon,
-  Delete02Icon,
-  Folder01Icon,
-  FolderAddIcon,
-  Home01Icon,
-  NoteAddIcon,
-  NoteIcon,
-  PencilEdit01Icon,
-} from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+  ArrowNarrowRightIcon,
+  FileDescriptionIcon,
+  HomeIcon,
+  PenIcon,
+  StackIcon,
+  TrashIcon,
+  UserPlusIcon,
+} from '@nota/web-design/icons';
 import { NotaTintCircle } from '@nota/web-design/nota-tint-circle';
 import {
   NotaContextMenu,
@@ -166,8 +165,8 @@ function NoteRow(options: {
                 setDropTargetId(null);
               }}
             >
-              <HugeiconsIcon
-                icon={NoteIcon}
+              <NotaIcon
+                icon={FileDescriptionIcon}
                 size={14}
                 strokeWidth={1.5}
                 aria-hidden
@@ -204,15 +203,15 @@ function NoteRow(options: {
                 <NotaContextMenuSubmenuRoot>
                   <NotaContextMenuSubmenuTrigger label={t('Move to')}>
                     <span className="inline-flex min-w-0 flex-1 items-center gap-2">
-                      <HugeiconsIcon
-                        icon={Folder01Icon}
+                      <NotaIcon
+                        icon={StackIcon}
                         size={16}
                         className="shrink-0 text-muted-foreground"
                       />
                       <span className="min-w-0 flex-1">{t('Move to')}</span>
                     </span>
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
+                    <NotaIcon
+                      icon={ArrowNarrowRightIcon}
                       size={14}
                       className="shrink-0 text-muted-foreground"
                     />
@@ -231,8 +230,8 @@ function NoteRow(options: {
                               void onMoveNoteToFolder(note.id, null);
                             }}
                           >
-                            <HugeiconsIcon
-                              icon={Home01Icon}
+                            <NotaIcon
+                              icon={HomeIcon}
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
@@ -246,8 +245,8 @@ function NoteRow(options: {
                                 void onMoveNoteToFolder(note.id, folderId);
                               }}
                             >
-                              <HugeiconsIcon
-                                icon={Folder01Icon}
+                              <NotaIcon
+                                icon={StackIcon}
                                 size={16}
                                 className="shrink-0 text-muted-foreground"
                               />
@@ -263,8 +262,8 @@ function NoteRow(options: {
                               onMoveNoteToNewFolder(note);
                             }}
                           >
-                            <HugeiconsIcon
-                              icon={FolderAddIcon}
+                            <NotaIcon
+                              icon={UserPlusIcon}
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
@@ -299,8 +298,8 @@ function NoteRow(options: {
                     });
                   }}
                 >
-                  <HugeiconsIcon
-                    icon={Delete02Icon}
+                  <NotaIcon
+                    icon={TrashIcon}
                     size={16}
                     className="shrink-0 text-destructive"
                   />
@@ -437,8 +436,8 @@ function FolderRow(options: {
                   startRenamingFolder(folder);
                 }}
               >
-                <HugeiconsIcon
-                  icon={ArrowRight01Icon}
+                <NotaIcon
+                  icon={ArrowNarrowRightIcon}
                   size={14}
                   strokeWidth={1.5}
                   aria-hidden
@@ -454,11 +453,7 @@ function FolderRow(options: {
                   )}
                   aria-hidden
                 >
-                  <HugeiconsIcon
-                    icon={Folder01Icon}
-                    size={14}
-                    strokeWidth={1.5}
-                  />
+                  <NotaIcon icon={StackIcon} size={14} strokeWidth={1.5} />
                 </span>
                 {renamingFolderId === folder.id ? (
                   <input
@@ -535,8 +530,8 @@ function FolderRow(options: {
                     startRenamingFolder(folder);
                   }}
                 >
-                  <HugeiconsIcon
-                    icon={PencilEdit01Icon}
+                  <NotaIcon
+                    icon={PenIcon}
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
@@ -549,8 +544,8 @@ function FolderRow(options: {
                       onCreateNoteInFolder(folder.id);
                     }}
                   >
-                    <HugeiconsIcon
-                      icon={NoteAddIcon}
+                    <NotaIcon
+                      icon={UserPlusIcon}
                       size={16}
                       className="shrink-0 text-muted-foreground"
                     />
@@ -563,8 +558,8 @@ function FolderRow(options: {
                     onRequestNewSubfolder(folder);
                   }}
                 >
-                  <HugeiconsIcon
-                    icon={FolderAddIcon}
+                  <NotaIcon
+                    icon={UserPlusIcon}
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
@@ -574,8 +569,8 @@ function FolderRow(options: {
                   <NotaContextMenuSubmenuRoot>
                     <NotaContextMenuSubmenuTrigger label={t('Tint folder')}>
                       <span className="inline-flex min-w-0 flex-1 items-center gap-2">
-                        <HugeiconsIcon
-                          icon={Folder01Icon}
+                        <NotaIcon
+                          icon={StackIcon}
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
@@ -583,8 +578,8 @@ function FolderRow(options: {
                           {t('Tint folder')}
                         </span>
                       </span>
-                      <HugeiconsIcon
-                        icon={ArrowRight01Icon}
+                      <NotaIcon
+                        icon={ArrowNarrowRightIcon}
                         size={14}
                         className="shrink-0 text-muted-foreground"
                       />
@@ -636,8 +631,8 @@ function FolderRow(options: {
                     setFolderDeleteTarget(folder);
                   }}
                 >
-                  <HugeiconsIcon
-                    icon={Delete02Icon}
+                  <NotaIcon
+                    icon={TrashIcon}
                     size={16}
                     className="shrink-0 text-destructive"
                   />
@@ -1135,8 +1130,8 @@ export function NotesSidebarList({
                           createNoteAtFolder(null);
                         }}
                       >
-                        <HugeiconsIcon
-                          icon={NoteAddIcon}
+                        <NotaIcon
+                          icon={UserPlusIcon}
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
@@ -1148,8 +1143,8 @@ export function NotesSidebarList({
                           openCreateFolderDialog(null);
                         }}
                       >
-                        <HugeiconsIcon
-                          icon={FolderAddIcon}
+                        <NotaIcon
+                          icon={UserPlusIcon}
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />

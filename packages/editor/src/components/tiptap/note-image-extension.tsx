@@ -1,12 +1,12 @@
 import { Menu } from '@base-ui/react/menu';
 import { Node, mergeAttributes } from '@tiptap/core';
+import { NotaIcon } from '@nota/web-design/icon';
 import {
-  AlignHorizontalCenterIcon,
-  AlignHorizontalJustifyEndIcon,
-  AlignHorizontalJustifyStartIcon,
-  Tick01Icon,
-} from '@hugeicons/core-free-icons';
-import { HugeiconsIcon } from '@hugeicons/react';
+  AlignCenterIcon,
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
+  SimpleCheckedIcon,
+} from '@nota/web-design/icons';
 import {
   NodeViewWrapper,
   ReactNodeViewRenderer,
@@ -42,13 +42,10 @@ const ALIGN_MENU_ITEM_CLASS = cn(
   'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
 );
 
-const ALIGN_TRIGGER_ICON: Record<
-  NoteImageAlign,
-  typeof AlignHorizontalJustifyStartIcon
-> = {
-  left: AlignHorizontalJustifyStartIcon,
-  center: AlignHorizontalCenterIcon,
-  right: AlignHorizontalJustifyEndIcon,
+const ALIGN_TRIGGER_ICON: Record<NoteImageAlign, typeof ArrowNarrowLeftIcon> = {
+  left: ArrowNarrowLeftIcon,
+  center: AlignCenterIcon,
+  right: ArrowNarrowRightIcon,
 };
 
 export function NoteImageNodeView(props: NodeViewProps) {
@@ -260,7 +257,7 @@ export function NoteImageNodeView(props: NodeViewProps) {
                         'h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground',
                       )}
                     >
-                      <HugeiconsIcon
+                      <NotaIcon
                         icon={ALIGN_TRIGGER_ICON[align]}
                         size={16}
                         className="shrink-0"
@@ -291,14 +288,17 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 closeOnClick
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
-                                <HugeiconsIcon
-                                  icon={AlignHorizontalJustifyStartIcon}
+                                <NotaIcon
+                                  icon={ArrowNarrowLeftIcon}
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Left</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <HugeiconsIcon icon={Tick01Icon} size={14} />
+                                  <NotaIcon
+                                    icon={SimpleCheckedIcon}
+                                    size={14}
+                                  />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                               <Menu.RadioItem
@@ -306,14 +306,17 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 closeOnClick
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
-                                <HugeiconsIcon
-                                  icon={AlignHorizontalCenterIcon}
+                                <NotaIcon
+                                  icon={AlignCenterIcon}
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Centre</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <HugeiconsIcon icon={Tick01Icon} size={14} />
+                                  <NotaIcon
+                                    icon={SimpleCheckedIcon}
+                                    size={14}
+                                  />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                               <Menu.RadioItem
@@ -321,14 +324,17 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 closeOnClick
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
-                                <HugeiconsIcon
-                                  icon={AlignHorizontalJustifyEndIcon}
+                                <NotaIcon
+                                  icon={ArrowNarrowRightIcon}
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Right</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <HugeiconsIcon icon={Tick01Icon} size={14} />
+                                  <NotaIcon
+                                    icon={SimpleCheckedIcon}
+                                    size={14}
+                                  />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                             </Menu.RadioGroup>
