@@ -1,6 +1,6 @@
 # 015 — Extract shared popup motion class
 
-- **Status**: SUPERSEDED by 008
+- **Status**: DONE
 - **Commit**: 08ed1fa
 - **Severity**: LOW
 - **Category**: Cohesion & tokens (missed opportunity #4)

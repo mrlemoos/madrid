@@ -1,6 +1,6 @@
 # 008 — Add explicit duration and ease-out to popup surfaces
 
-- **Status**: DONE (`NOTA_POPUP_MOTION_CLASS` in `@nota/web-design/popup-motion`; supersedes plan 015)
+- **Status**: DONE (subsumed by plan 015; `NOTA_POPUP_MOTION_CLASS` in `@nota/web-design/popup-motion`)
 - **Commit**: 08ed1fa
 - **Severity**: MEDIUM
 - **Category**: Easing & duration
