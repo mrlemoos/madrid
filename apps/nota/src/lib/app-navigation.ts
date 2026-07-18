@@ -11,17 +11,21 @@ import {
   isClerkAuthPathname,
   screenKindForAuthPathname,
 } from './app-navigation-auth';
+import { markNavIntent, type NavIntent } from './nota-panel-motion';
 
 /** Fired after `history.pushState` / `replaceState` (same tick as `scheduleNavigationSync`). */
 export const NOTA_HASH_HISTORY_EVENT = 'nota:hash-history' as const;
 
+export type AppHashNavOptions = {
+  /**
+   * Navigation input intent. Defaults to `keyboard` (instant panel swap).
+   * Pass `pointer` for sidebar / footer clicks that should fade the main panel.
+   */
+  intent?: NavIntent;
+};
+
 export type NotesShellPanel =
-  | 'list'
-  | 'note'
-  | 'graph'
-  | 'journal'
-  | 'settings'
-  | 'shortcuts';
+  'list' | 'note' | 'graph' | 'journal' | 'settings' | 'shortcuts';
 
 export type AppNavScreen =
   | { kind: 'landing' }
@@ -183,7 +187,11 @@ function writeAppNavUrl(screen: AppNavScreen, replace: boolean): void {
   notify();
 }
 
-export function setAppHash(screen: AppNavScreen): void {
+export function setAppHash(
+  screen: AppNavScreen,
+  options?: AppHashNavOptions,
+): void {
+  markNavIntent(options?.intent ?? 'keyboard');
   if (screen.kind === 'login' || screen.kind === 'signup') {
     writeAppNavUrl(screen, true);
     return;
@@ -197,58 +205,65 @@ export function setAppHash(screen: AppNavScreen): void {
   window.location.hash = full.startsWith('#') ? full.slice(1) : full;
 }
 
-export function replaceAppHash(screen: AppNavScreen): void {
+export function replaceAppHash(
+  screen: AppNavScreen,
+  options?: AppHashNavOptions,
+): void {
+  markNavIntent(options?.intent ?? 'keyboard');
   writeAppNavUrl(screen, true);
 }
 
 /** React-router–shaped helper for code that expected `navigate("/notes/uuid")`. */
-export function navigateFromLegacyPath(to: string): void {
+export function navigateFromLegacyPath(
+  to: string,
+  options?: AppHashNavOptions,
+): void {
   const t = to.trim();
   const noteMatch = t.match(
     /^\/notes\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/?$/i,
   );
   if (noteMatch) {
-    setAppHash({ kind: 'notes', panel: 'note', noteId: noteMatch[1] });
+    setAppHash({ kind: 'notes', panel: 'note', noteId: noteMatch[1] }, options);
     return;
   }
   if (t === '/notes' || t === '/notes/') {
-    setAppHash({ kind: 'notes', panel: 'list', noteId: null });
+    setAppHash({ kind: 'notes', panel: 'list', noteId: null }, options);
     return;
   }
   if (t.startsWith('/notes/graph')) {
-    setAppHash({ kind: 'notes', panel: 'graph', noteId: null });
+    setAppHash({ kind: 'notes', panel: 'graph', noteId: null }, options);
     return;
   }
   if (t.startsWith('/notes/journal')) {
-    setAppHash({ kind: 'notes', panel: 'journal', noteId: null });
+    setAppHash({ kind: 'notes', panel: 'journal', noteId: null }, options);
     return;
   }
   if (t.startsWith('/notes/settings')) {
-    setAppHash({ kind: 'notes', panel: 'settings', noteId: null });
+    setAppHash({ kind: 'notes', panel: 'settings', noteId: null }, options);
     return;
   }
   if (t.startsWith('/notes/shortcuts')) {
-    setAppHash({ kind: 'notes', panel: 'shortcuts', noteId: null });
+    setAppHash({ kind: 'notes', panel: 'shortcuts', noteId: null }, options);
     return;
   }
   if (t === '/sign-in' || t.startsWith('/sign-in/')) {
-    setAppHash({ kind: 'login' });
+    setAppHash({ kind: 'login' }, options);
     return;
   }
   if (t === '/sign-up' || t.startsWith('/sign-up/')) {
-    setAppHash({ kind: 'signup' });
+    setAppHash({ kind: 'signup' }, options);
     return;
   }
   if (t === '/login' || t.startsWith('/login/')) {
-    setAppHash({ kind: 'login' });
+    setAppHash({ kind: 'login' }, options);
     return;
   }
   if (t === '/signup' || t.startsWith('/signup/')) {
-    setAppHash({ kind: 'signup' });
+    setAppHash({ kind: 'signup' }, options);
     return;
   }
   if (t === '/' || t === '') {
-    setAppHash({ kind: 'landing' });
+    setAppHash({ kind: 'landing' }, options);
     return;
   }
 }

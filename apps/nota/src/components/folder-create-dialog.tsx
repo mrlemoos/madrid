@@ -1,6 +1,7 @@
 import { useCallback, useId, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
 import { NotaButton } from '@nota/web-design/button';
+import { NOTA_DIALOG_MOTION_CLASS } from '@nota/web-design/popup-motion';
 import { cn } from '@/lib/utils';
 import type { Folder } from '~/types/database.types';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
@@ -93,6 +94,7 @@ export function FolderCreateDialog({
         <Dialog.Popup
           className={cn(
             'fixed top-[22%] left-1/2 z-[60] w-[min(100vw-2rem,22rem)] -translate-x-1/2 rounded-lg border border-border/60 bg-background p-4 text-foreground shadow-lg outline-none',
+            NOTA_DIALOG_MOTION_CLASS,
           )}
           aria-labelledby={titleId}
         >

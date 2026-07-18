@@ -34,6 +34,7 @@ import {
   type NoteImageLightboxImage,
 } from './note-image-lightbox';
 import { cn } from '@/lib/utils';
+import { NOTA_TRACKING_DISPLAY_CLASS } from '@/lib/notes-chrome-type';
 import type { Editor } from '@tiptap/core';
 import {
   classifyNoteAttachmentFile,
@@ -637,7 +638,8 @@ function NoteEditorImpl({
           aria-label="Note title"
           rows={1}
           className={cn(
-            'min-h-0 min-w-0 flex-1 resize-none overflow-hidden break-words border-0 bg-transparent p-0 text-4xl font-extrabold leading-tight tracking-tight text-pretty text-foreground placeholder:text-muted-foreground/70 focus:outline-none md:text-5xl',
+            'min-h-0 min-w-0 flex-1 resize-none overflow-hidden break-words border-0 bg-transparent p-0 text-4xl font-extrabold leading-tight text-pretty text-foreground placeholder:text-muted-foreground/70 focus:outline-none md:text-5xl',
+            NOTA_TRACKING_DISPLAY_CLASS,
             titleFontClassName,
           )}
         />

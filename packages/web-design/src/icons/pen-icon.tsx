@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { scaledStrokeWidth } from './types.js';
 import { motion, useAnimate } from 'motion/react';
 
@@ -66,8 +67,8 @@ const PenIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
         strokeMiterlimit="10"
         className={`cursor-pointer ${className}`}
         style={{ overflow: 'visible' }}
-        onHoverStart={start}
-        onHoverEnd={stop}
+        onHoverStart={gateIconHover(start)}
+        onHoverEnd={gateIconHover(stop)}
       >
         <motion.g
           className="pen-group"

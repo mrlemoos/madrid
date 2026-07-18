@@ -1,8 +1,20 @@
+import type { JSX, ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { NotaButton } from '@nota/web-design/button';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import { cn } from '@/lib/utils';
 import { replaceAppHash } from '@/lib/app-navigation';
+import {
+  consumeNavIntent,
+  resolvePanelMotion,
+  type NavIntent,
+} from '@/lib/nota-panel-motion';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@/lib/electron-window-chrome';
+import {
+  NOTA_CHROME_CONTROL_COMPACT_CLASS,
+  NOTA_SECTION_HEAD_CLASS,
+  NOTA_TRACKING_CHROME_XS_CLASS,
+} from '@/lib/notes-chrome-type';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 import { useIsElectron } from '@/lib/use-is-electron';
 import { useNotesSidebarStore } from '../stores/notes-sidebar';
@@ -20,7 +32,6 @@ import {
   NotaTooltipPopup,
   NotaTooltipTrigger,
 } from '@nota/web-design/tooltip';
-import type { JSX, ReactNode } from 'react';
 
 /** Avoid `fallback={null}`: paywall redirect hits Settings before the chunk loads; Electron notes root is transparent so an empty main reads as a blank screen. */
 export function LazyNotesRouteFallback({
@@ -53,10 +64,11 @@ export function SidebarToggle({
     <NotaButton
       type="button"
       variant="ghost"
-      size="icon-lg"
+      size="icon"
       onClick={toggle}
       className={cn(
         'relative z-40 text-foreground',
+        NOTA_CHROME_CONTROL_COMPACT_CLASS,
         isElectron && ELECTRON_WINDOW_NO_DRAG_CLASS,
         className,
       )}
@@ -107,10 +119,33 @@ export function ShellPanel({
   panelId: string;
   children: ReactNode;
 }): JSX.Element {
+  const wasActiveRef = useRef(active);
+  const [enterIntent, setEnterIntent] = useState<NavIntent | null>(null);
+  const [enterClassName, setEnterClassName] = useState('');
+
+  useLayoutEffect(() => {
+    const wasActive = wasActiveRef.current;
+    if (active && !wasActive) {
+      const intent = consumeNavIntent();
+      const motion = resolvePanelMotion(intent);
+      setEnterIntent(intent);
+      setEnterClassName(motion.className);
+    } else if (!active) {
+      setEnterIntent(null);
+      setEnterClassName('');
+    }
+    wasActiveRef.current = active;
+  }, [active]);
+
   return (
     <div
       id={panelId}
-      className={cn('h-full min-h-0', !active && 'hidden')}
+      data-nav-intent={enterIntent ?? undefined}
+      className={cn(
+        'h-full min-h-0',
+        !active && 'hidden',
+        active && enterClassName,
+      )}
       aria-hidden={!active}
       inert={!active ? true : undefined}
     >
@@ -155,7 +190,12 @@ export function NotesIndexPanel({
             />
           </svg>
         </div>
-        <h2 className="mb-2 font-serif text-xl font-semibold tracking-normal text-foreground">
+        <h2
+          className={cn(
+            'mb-2 text-xl text-foreground',
+            NOTA_SECTION_HEAD_CLASS,
+          )}
+        >
           {t('Select a note')}
         </h2>
         <p className="mb-6 text-muted-foreground">
@@ -173,7 +213,12 @@ export function NotesIndexPanel({
 
       {showGraph && (
         <div className="mt-10 w-full max-w-[620px] px-2">
-          <div className="mb-2 flex items-baseline justify-between text-xs text-muted-foreground">
+          <div
+            className={cn(
+              'mb-2 flex items-baseline justify-between text-xs text-muted-foreground',
+              NOTA_TRACKING_CHROME_XS_CLASS,
+            )}
+          >
             <div>
               Current streak:{' '}
               <span className="font-medium text-foreground">{current}</span>
@@ -184,11 +229,14 @@ export function NotesIndexPanel({
             </div>
             <button
               onClick={() => {
-                replaceAppHash({
-                  kind: 'notes',
-                  panel: 'settings',
-                  noteId: null,
-                });
+                replaceAppHash(
+                  {
+                    kind: 'notes',
+                    panel: 'settings',
+                    noteId: null,
+                  },
+                  { intent: 'pointer' },
+                );
               }}
               className="underline decoration-border underline-offset-2 hover:decoration-foreground"
             >

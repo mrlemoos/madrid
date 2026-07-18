@@ -60,17 +60,37 @@ describe('notes-sidebar-tree-styles', () => {
     expect(dragOver).toContain('bg-primary/15');
   });
 
-  it('uses a slimmer row height for folder rows than note rows', () => {
+  it('uses native-dense vertical padding on note and folder rows', () => {
     // Arrange
     // Act
     const folderRow = notesSidebarTreeFolderRowVariants();
     const noteRow = notesSidebarTreeRowVariants();
+    const leafRow = notesSidebarTreeLeafRowVariants();
+    const noteTokens = noteRow.split(/\s+/);
+    const leafTokens = leafRow.split(/\s+/);
+    const folderTokens = folderRow.split(/\s+/);
+
+    // Assert — note/leaf denser than former py-1.5; folders stay slimmer
+    expect(noteTokens).toContain('py-1');
+    expect(noteTokens).not.toContain('py-1.5');
+    expect(leafTokens).toContain('py-1');
+    expect(leafTokens).not.toContain('py-1.5');
+    expect(folderTokens).toContain('py-0.5');
+    expect(folderTokens).toContain('before:h-6');
+    expect(folderTokens).not.toContain('before:h-7');
+    expect(noteTokens).not.toContain('before:h-8');
+  });
+
+  it('keeps folder selection off the full row fill (icon and name tint only)', () => {
+    // Arrange
+    // Act
+    const folderRow = notesSidebarTreeFolderRowVariants();
+    const selectedNote = notesSidebarTreeRowVariants({ selected: true });
 
     // Assert
-    expect(folderRow).toContain('py-1');
-    expect(folderRow).toContain('before:h-7');
-    expect(noteRow).toContain('py-1.5');
-    expect(noteRow).not.toContain('before:h-8');
+    expect(folderRow).not.toContain('bg-muted');
+    expect(folderRow).not.toMatch(/\bselected:/);
+    expect(selectedNote).toContain('bg-muted/20');
   });
 
   it('indents leaf rows for notes under a folder branch', () => {

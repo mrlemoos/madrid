@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const MousePointer2Icon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -55,8 +56,8 @@ const MousePointer2Icon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`cursor-pointer ${className}`}
-        onHoverStart={start}
-        onHoverEnd={stop}
+        onHoverStart={gateIconHover(start)}
+        onHoverEnd={gateIconHover(stop)}
       >
         <motion.path
           className="pointer"

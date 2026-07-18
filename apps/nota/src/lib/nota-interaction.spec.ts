@@ -4,6 +4,9 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   NOTA_CMDK_ITEM_CLASS,
+  NOTA_PRESS_IN_MS,
+  NOTA_PRESS_OUT_MS,
+  NOTA_PRESS_SCALE,
   NOTA_PRESSABLE_CLASS,
   NOTA_SAVE_PULSE_CLASS,
   NOTA_SHELL_NAV_ITEM_CLASS,
@@ -12,6 +15,30 @@ import {
 
 const stylesCss = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),
+  'utf8',
+);
+
+const folderCreateDialog = readFileSync(
+  resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    '../components/folder-create-dialog.tsx',
+  ),
+  'utf8',
+);
+
+const folderDeleteDialog = readFileSync(
+  resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    '../components/folder-delete-dialog.tsx',
+  ),
+  'utf8',
+);
+
+const commandPalette = readFileSync(
+  resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    '../components/command-palette.tsx',
+  ),
   'utf8',
 );
 
@@ -26,7 +53,15 @@ describe('nota-interaction', () => {
     expect(NOTA_CMDK_ITEM_CLASS).toBe('nota-cmdk-item');
   });
 
-  it('defines press-only feedback and reduced-motion guards in styles.css', () => {
+  it('exports asymmetric press timing constants (press-in faster than release)', () => {
+    // Arrange|Act|Assert
+    expect(NOTA_PRESS_IN_MS).toBe(100);
+    expect(NOTA_PRESS_OUT_MS).toBe(160);
+    expect(NOTA_PRESS_SCALE).toBe(0.97);
+    expect(NOTA_PRESS_IN_MS).toBeLessThan(NOTA_PRESS_OUT_MS);
+  });
+
+  it('defines asymmetric press-only feedback and reduced-motion guards in styles.css', () => {
     for (const className of [
       NOTA_PRESSABLE_CLASS,
       NOTA_SHELL_NAV_ITEM_CLASS,
@@ -36,8 +71,27 @@ describe('nota-interaction', () => {
     ]) {
       expect(stylesCss).toContain(`.${className}`);
     }
+
+    // Arrange — extract .nota-pressable block before lightbox / other sections
+    const pressableBlock = stylesCss.match(
+      /\.nota-pressable\s*\{[^}]+\}[\s\S]*?@media \(prefers-reduced-motion: no-preference\)\s*\{[\s\S]*?\.nota-pressable:active\s*\{[^}]+\}/,
+    )?.[0];
+
+    // Assert — CSS uses P0 tokens; values stay asymmetric (press-in < release)
+    expect(pressableBlock).toBeDefined();
+    expect(pressableBlock).toContain(
+      'transition-duration: var(--nota-press-out-ms)',
+    );
+    expect(pressableBlock).toContain(
+      'transform: scale(var(--nota-press-scale))',
+    );
+    expect(pressableBlock).toContain(
+      'transition-duration: var(--nota-press-in-ms)',
+    );
     expect(stylesCss).toMatch(
-      new RegExp(`\\.${NOTA_PRESSABLE_CLASS}:active[\\s\\S]*scale\\(0\\.98\\)`),
+      new RegExp(
+        `\\.${NOTA_SIDEBAR_ROW_CLASS}:active[\\s\\S]*opacity:\\s*0\\.88`,
+      ),
     );
     expect(stylesCss).toContain('@media (prefers-reduced-motion: reduce)');
     expect(stylesCss).toMatch(
@@ -45,5 +99,13 @@ describe('nota-interaction', () => {
         `\\.${NOTA_SAVE_PULSE_CLASS}[\\s\\S]*@media \\(prefers-reduced-motion: reduce\\)`,
       ),
     );
+  });
+
+  it('gives folder dialogs pointer enter motion while keeping palette Mod+K instant', () => {
+    // Arrange|Act|Assert
+    expect(folderCreateDialog).toContain('NOTA_DIALOG_MOTION_CLASS');
+    expect(folderDeleteDialog).toContain('NOTA_DIALOG_MOTION_CLASS');
+    expect(commandPalette).not.toContain('NOTA_DIALOG_MOTION_CLASS');
+    expect(commandPalette).not.toContain('data-[starting-style]:scale-95');
   });
 });

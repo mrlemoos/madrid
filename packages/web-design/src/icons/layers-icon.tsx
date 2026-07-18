@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const LayersIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -41,8 +42,8 @@ const LayersIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     return (
       <motion.svg
         ref={scope}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
+        onHoverStart={gateIconHover(handleHoverStart)}
+        onHoverEnd={gateIconHover(handleHoverEnd)}
         width={size}
         height={size}
         viewBox="0 0 120 120"

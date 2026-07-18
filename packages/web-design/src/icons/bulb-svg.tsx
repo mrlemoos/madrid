@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const BulbSvg = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -68,8 +69,8 @@ const BulbSvg = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     return (
       <motion.div
         ref={scope}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
+        onHoverStart={gateIconHover(handleHoverStart)}
+        onHoverEnd={gateIconHover(handleHoverEnd)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

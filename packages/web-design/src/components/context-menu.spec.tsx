@@ -54,7 +54,7 @@ describe('NotaContextMenuPositioner (default layering)', () => {
 });
 
 describe('NotaContextMenuPopup (motion)', () => {
-  it('applies explicit duration and ease-out for enter/exit', () => {
+  it('applies trigger origin and 150–200ms ease-out enter/exit', () => {
     // Arrange
     const { baseElement } = render(
       <NotaContextMenu defaultOpen>
@@ -76,8 +76,11 @@ describe('NotaContextMenuPopup (motion)', () => {
     const popup = item.closest('[role="menu"]');
     const classes = popup?.className.split(/\s+/).filter(Boolean) ?? [];
 
-    // Assert
+    // Assert — origin from trigger; duration in the 150–200ms polish band
+    expect(classes).toContain('origin-[var(--transform-origin)]');
     expect(classes).toContain('duration-200');
     expect(classes).toContain('ease-out');
+    expect(classes).toContain('data-[starting-style]:scale-95');
+    expect(classes).toContain('data-[starting-style]:opacity-0');
   });
 });

@@ -21,3 +21,24 @@ describe('NotaButton (smoke)', () => {
     expect(el.className).toContain('bg-primary');
   });
 });
+
+describe('NotaButton press asymmetry', () => {
+  it('presses in faster and shallower than the release ease-out', () => {
+    // Arrange
+    const classes = notaButtonVariants();
+
+    // Act — parse duration tokens from the base CVA string
+    const releaseMs = Number(
+      classes.match(/(?:^|\s)duration-\[(\d+)ms\]/)?.[1] ?? NaN,
+    );
+    const pressInMs = Number(
+      classes.match(/active:duration-\[(\d+)ms\]/)?.[1] ?? NaN,
+    );
+
+    // Assert
+    expect(classes).toContain('motion-safe:active:scale-[0.97]');
+    expect(releaseMs).toBe(160);
+    expect(pressInMs).toBe(100);
+    expect(pressInMs).toBeLessThan(releaseMs);
+  });
+});

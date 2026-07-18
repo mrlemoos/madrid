@@ -2,6 +2,7 @@
 
 import { forwardRef, useImperativeHandle } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const AppleBrandLogo = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -89,8 +90,8 @@ const AppleBrandLogo = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`cursor-pointer ${className}`}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
+        onHoverStart={gateIconHover(handleHoverStart)}
+        onHoverEnd={gateIconHover(handleHoverEnd)}
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
 

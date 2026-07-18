@@ -11,6 +11,7 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 
+import { NOTA_TOOLTIP_MOTION_CLASS } from '../lib/nota-popup-motion.js';
 import { cn } from '../lib/utils.js';
 
 /** Props for {@link NotaTooltipProvider}. */
@@ -41,6 +42,7 @@ export type NotaTooltipPopupProps = ComponentProps<typeof BaseTooltip.Popup>;
 const DEFAULT_NOTA_TOOLTIP_POPUP_CLASS = cn(
   'z-100 max-w-xs rounded-md border border-border bg-popover px-2 py-1',
   'text-popover-foreground text-xs shadow-md',
+  NOTA_TOOLTIP_MOTION_CLASS,
 );
 
 /**

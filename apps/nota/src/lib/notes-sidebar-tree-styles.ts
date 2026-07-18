@@ -7,10 +7,10 @@ export const NOTA_SIDEBAR_TREE_BRANCH_CLASS = 'nota-folder-branch ml-4 pl-1';
 export const NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS = 'nota-folder-branch__inner';
 
 const treeNoteRowBase =
-  'group flex w-full min-w-0 cursor-pointer items-center gap-1.5 rounded-lg px-1.5 py-1.5 text-left transition-colors';
+  'group flex w-full min-w-0 cursor-pointer items-center gap-1 rounded-lg px-1.5 py-1 text-left transition-colors';
 
 const treeFolderRowBase =
-  'group relative flex w-full min-w-0 cursor-pointer items-center rounded-md py-1 text-left transition-colors before:absolute before:inset-y-0 before:left-0 before:-z-10 before:h-7 before:w-full before:rounded-md before:bg-accent/70 before:opacity-0 before:transition-opacity hover:before:opacity-100';
+  'group relative flex w-full min-w-0 cursor-pointer items-center rounded-md py-0.5 text-left transition-colors before:absolute before:inset-y-0 before:left-0 before:-z-10 before:h-6 before:w-full before:rounded-md before:bg-accent/70 before:opacity-0 before:transition-opacity hover:before:opacity-100';
 
 /**
  * Note row highlight :  selected state only (no hover background).

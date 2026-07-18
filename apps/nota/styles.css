@@ -18,6 +18,30 @@
   -webkit-app-region: no-drag;
 }
 
+/* Main ShellPanel enter :  pointer intent only (≤180ms). Keyboard / history = instant. */
+@keyframes nota-panel-enter-fade {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.nota-panel-enter-fade {
+  animation: nota-panel-enter-fade 180ms var(--ease-out, ease-out) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nota-panel-enter-fade {
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
 /* Auth screens — glass card entrance over landscape */
 @keyframes nota-auth-card-enter {
   from {
@@ -126,13 +150,14 @@
 .nota-pressable {
   transition-property:
     transform, opacity, color, background-color, border-color, box-shadow;
-  transition-duration: 200ms;
+  transition-duration: var(--nota-press-out-ms);
   transition-timing-function: var(--ease-out);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .nota-pressable:active {
-    transform: scale(0.98);
+    transform: scale(var(--nota-press-scale));
+    transition-duration: var(--nota-press-in-ms);
   }
 }
 
@@ -215,6 +240,17 @@
 
 :root {
   --folder-branch-dur: 180ms;
+  /* Chrome optical tracking — large titles tighten; text-xs opens slightly. */
+  --nota-tracking-display: -0.025em;
+  --nota-tracking-chrome-xs: 0.01em;
+}
+
+.nota-tracking-display {
+  letter-spacing: var(--nota-tracking-display);
+}
+
+.nota-tracking-chrome-xs {
+  letter-spacing: var(--nota-tracking-chrome-xs);
 }
 
 /* Folder branch expand/collapse — opacity fade; height snaps via grid (no height tween). */
@@ -247,18 +283,19 @@
     color 150ms var(--ease-out);
 }
 
-@keyframes nota-save-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
+/* Quiet status fade when the saving dot mounts — no looping pulse. */
+@keyframes nota-save-status-fade {
+  from {
+    opacity: 0;
   }
-  50% {
-    opacity: 0.85;
+  to {
+    opacity: 0.55;
   }
 }
 
 .nota-save-pulse {
-  animation: nota-save-pulse 1.2s var(--ease-in-out) infinite;
+  opacity: 0.55;
+  animation: nota-save-status-fade 160ms var(--ease-out) both;
 }
 
 /* Notes sidebar :  drag handle on the inner edge (right). */
@@ -1248,15 +1285,15 @@ html.nota-electron .nota-notes-root {
 }
 
 .nota-notes-root.nota-notes-root--banner .nota-notes-sidebar-chrome {
-  background-color: color-mix(in oklch, var(--sidebar) 72%, transparent);
-  -webkit-backdrop-filter: blur(34px) saturate(1.7) contrast(1.04);
-  backdrop-filter: blur(34px) saturate(1.7) contrast(1.04);
+  background-color: color-mix(in oklch, var(--sidebar) 78%, transparent);
+  -webkit-backdrop-filter: blur(48px) saturate(1.7) contrast(1.04);
+  backdrop-filter: blur(48px) saturate(1.7) contrast(1.04);
   box-shadow: inset -1px 0 0 color-mix(in oklch, var(--border) 54%, transparent);
   color: var(--foreground);
 }
 
 .dark .nota-notes-root.nota-notes-root--banner .nota-notes-sidebar-chrome {
-  background-color: rgb(0 0 0 / 50%);
+  background-color: rgb(0 0 0 / 55%);
   box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -1284,6 +1321,42 @@ html.nota-electron .nota-notes-root {
 }
 
 /*
+ * Sticky title: soft scroll-edge fade under the pill (no 1px hairline divider).
+ */
+.nota-notes-sticky-title-chrome {
+  position: relative;
+  box-shadow:
+    0 1px 0 color-mix(in oklch, var(--background) 55%, transparent),
+    0 10px 18px -10px color-mix(in oklch, var(--background) 72%, transparent);
+}
+
+.nota-notes-sticky-title-chrome::after {
+  content: '';
+  position: absolute;
+  inset-inline: -12%;
+  top: 100%;
+  height: 14px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--background) 42%, transparent),
+    transparent
+  );
+}
+
+/*
+ * Command palette sits over main glass — frostier fill so labels stay legible
+ * (avoid light-on-light stacking).
+ */
+[data-nota-command-palette] {
+  background-color: color-mix(in oklch, var(--background) 78%, transparent);
+}
+
+.dark [data-nota-command-palette] {
+  background-color: color-mix(in oklch, var(--background) 72%, transparent);
+}
+
+/*
  * Notes shell: users who disable transparency (macOS / Windows) should get solid surfaces
  * instead of backdrop blur. Unlayered so these override Tailwind backdrop utilities.
  */
@@ -1291,19 +1364,35 @@ html.nota-electron .nota-notes-root {
   .nota-notes-sidebar-chrome {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background-color: color-mix(in oklch, var(--sidebar) 94%, transparent);
+    background-color: color-mix(in oklch, var(--sidebar) 97%, transparent);
   }
 
   .nota-notes-main-chrome {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background-color: color-mix(in oklch, var(--background) 97%, transparent);
+    background-color: color-mix(in oklch, var(--background) 98%, transparent);
+  }
+
+  .nota-notes-sticky-title-chrome {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: color-mix(in oklch, var(--background) 98%, transparent);
+  }
+
+  .nota-notes-sticky-title-chrome::after {
+    display: none;
+  }
+
+  [data-nota-command-palette] {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: color-mix(in oklch, var(--background) 98%, transparent);
   }
 
   .nota-notes-root.nota-notes-root--banner .nota-notes-sidebar-chrome {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background-color: color-mix(in oklch, var(--sidebar) 96%, transparent);
+    background-color: color-mix(in oklch, var(--sidebar) 97%, transparent);
   }
 
   .nota-notes-root.nota-notes-root--banner .nota-notes-sidebar-chrome nav a {
@@ -1311,7 +1400,7 @@ html.nota-electron .nota-notes-root {
   }
 
   .nota-notes-root.nota-notes-root--banner .nota-notes-main-chrome {
-    background-color: color-mix(in oklch, var(--background) 97%, transparent);
+    background-color: color-mix(in oklch, var(--background) 98%, transparent);
   }
 }
 

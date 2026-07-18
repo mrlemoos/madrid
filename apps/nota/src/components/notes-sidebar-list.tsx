@@ -41,6 +41,7 @@ import {
   NotaTooltipTrigger,
 } from '@nota/web-design/tooltip';
 import { cn } from '@/lib/utils';
+import { NOTA_TRACKING_CHROME_XS_CLASS } from '@/lib/notes-chrome-type';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
@@ -54,6 +55,7 @@ import {
 } from '@/lib/notes-sidebar-tree-styles';
 import type { Folder, Note, UserPreferences } from '~/types/database.types';
 import type { NotesShellPanel } from '../lib/app-navigation';
+import { markNavIntent } from '../lib/nota-panel-motion';
 import { noteHashHref } from './note-detail-panel';
 import { clientCreateNote } from '../lib/create-note-client';
 import { clientDeleteNoteById } from '../lib/delete-note-client';
@@ -180,6 +182,9 @@ function NoteRow(options: {
                 href={noteHashHref(note.id)}
                 className="relative z-0 min-w-0 flex-1 truncate text-sm font-normal"
                 aria-current={isActive ? 'page' : undefined}
+                onClick={() => {
+                  markNavIntent('pointer');
+                }}
               >
                 <NotaTooltip>
                   <NotaTooltipTrigger
@@ -987,7 +992,12 @@ export function NotesSidebarList({
         >
           <div className={NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS}>
             {notesInFolder.length === 0 && children.length === 0 ? (
-              <p className="ml-5 py-2 text-muted-foreground text-xs">
+              <p
+                className={cn(
+                  'ml-5 py-2 text-muted-foreground text-xs',
+                  NOTA_TRACKING_CHROME_XS_CLASS,
+                )}
+              >
                 {t('No notes in this folder.')}
               </p>
             ) : (
@@ -1108,7 +1118,12 @@ export function NotesSidebarList({
                       ))}
                     </ul>
                   ) : draggedNoteId ? (
-                    <p className="px-3 py-2 text-xs text-muted-foreground">
+                    <p
+                      className={cn(
+                        'px-3 py-2 text-xs text-muted-foreground',
+                        NOTA_TRACKING_CHROME_XS_CLASS,
+                      )}
+                    >
                       Drop here to move to root.
                     </p>
                   ) : null}

@@ -17,7 +17,13 @@ import {
 import { NotaTooltipProvider } from '@nota/web-design/tooltip';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@/lib/electron-window-chrome';
-import { notesMainChrome, notesSidebarChrome } from '@/lib/notes-shell-chrome';
+import { NOTA_SECTION_HEAD_CLASS } from '@/lib/notes-chrome-type';
+import {
+  notesMainChrome,
+  notesSidebarChrome,
+  notesStickyTitleChrome,
+} from '@/lib/notes-shell-chrome';
+import { markNavIntent } from '@/lib/nota-panel-motion';
 import { cn } from '@/lib/utils';
 import { useStickyDocTitle } from '../context/sticky-doc-title';
 import { useIsElectron } from '../lib/use-is-electron';
@@ -29,16 +35,15 @@ import { useSettingsShortcut } from '../lib/use-settings-shortcut';
 import { useTodaysNoteShortcut } from '../lib/use-todays-note-shortcut';
 import { useSyncUserPreferences } from '../lib/use-sync-user-preferences';
 import { useNotaPreferencesStore } from '../stores/nota-preferences';
+import { gsap, useGSAP, usePrefersReducedMotion } from '@/lib/nota-motion';
 import {
-  gsap,
-  NOTA_MOTION_EASE_IN_OUT,
-  NOTA_SIDEBAR_S,
-  useGSAP,
-  usePrefersReducedMotion,
-} from '@/lib/nota-motion';
+  animateSprings,
+  type SpringAnimationHandle,
+} from '@/lib/nota-critically-damped-spring';
 import {
   getNotaSidebarClipLayout,
   getNotaSidebarRailMotionTargets,
+  getNotaSidebarShellSpringConfig,
 } from '@/lib/nota-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@/lib/use-notes-sidebar-resize';
 import { hasJournalNotes } from '@/lib/journal-notes';
@@ -110,6 +115,8 @@ export function NotesShell(): JSX.Element {
   sidebarWidthPxRef.current = widthPx;
   const prefersReducedMotion = usePrefersReducedMotion();
   const sidebarMotionReadyRef = useRef(false);
+  const sidebarSpringRef = useRef<SpringAnimationHandle | null>(null);
+  const sidebarSpringVelocityRef = useRef({ x: 0, opacity: 0 });
   const { onResizePointerDown } = useNotesSidebarResize({
     asideRef,
     railRef: sidebarRailRef,
@@ -211,6 +218,9 @@ export function NotesShell(): JSX.Element {
   useEffect(() => {
     if (!sidebarChromeMounted) {
       sidebarMotionReadyRef.current = false;
+      sidebarSpringRef.current?.stop();
+      sidebarSpringRef.current = null;
+      sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
     }
   }, [sidebarChromeMounted]);
 
@@ -241,49 +251,72 @@ export function NotesShell(): JSX.Element {
       });
 
       if (prefersReducedMotion || !sidebarMotionReadyRef.current) {
+        sidebarSpringRef.current?.stop();
+        sidebarSpringRef.current = null;
+        sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
         sidebarMotionReadyRef.current = true;
         gsap.set(clip, clipLayout);
         gsap.set(rail, railTargets);
         return;
       }
 
+      const liveX = Number(gsap.getProperty(rail, 'x'));
+      const liveOpacity = Number(gsap.getProperty(rail, 'opacity'));
+      const fromX = Number.isFinite(liveX) ? liveX : railTargets.x;
+      const fromOpacity = Number.isFinite(liveOpacity)
+        ? liveOpacity
+        : railTargets.opacity;
+
+      const previous = sidebarSpringRef.current;
+      const velocityX =
+        previous?.getVelocity('x') ?? sidebarSpringVelocityRef.current.x;
+      const velocityOpacity =
+        previous?.getVelocity('opacity') ??
+        sidebarSpringVelocityRef.current.opacity;
+      previous?.stop();
+      sidebarSpringRef.current = null;
+
       if (open) {
         gsap.set(clip, clipLayout);
-        gsap.set(
-          rail,
-          getNotaSidebarRailMotionTargets({
-            open: false,
-            prefersReducedMotion,
-          }),
-        );
-        gsap.to(rail, {
-          x: 0,
-          opacity: 1,
-          duration: NOTA_SIDEBAR_S,
-          ease: NOTA_MOTION_EASE_IN_OUT,
-          overwrite: 'auto',
-        });
-        return;
       }
 
-      gsap.to(rail, {
-        ...getNotaSidebarRailMotionTargets({
-          open: false,
-          prefersReducedMotion,
-        }),
-        duration: NOTA_SIDEBAR_S,
-        ease: NOTA_MOTION_EASE_IN_OUT,
-        overwrite: 'auto',
+      const springConfig = getNotaSidebarShellSpringConfig();
+      sidebarSpringRef.current = animateSprings({
+        from: {
+          x: { value: fromX, velocity: velocityX },
+          opacity: { value: fromOpacity, velocity: velocityOpacity },
+        },
+        to: {
+          x: railTargets.x,
+          opacity: railTargets.opacity,
+        },
+        config: springConfig,
+        onUpdate: (values) => {
+          gsap.set(rail, { x: values.x, opacity: values.opacity });
+          sidebarSpringVelocityRef.current = {
+            x: sidebarSpringRef.current?.getVelocity('x') ?? 0,
+            opacity: sidebarSpringRef.current?.getVelocity('opacity') ?? 0,
+          };
+        },
         onComplete: () => {
-          gsap.set(
-            clip,
-            getNotaSidebarClipLayout({
-              open: false,
-              widthPx: sidebarWidthPxRef.current,
-            }),
-          );
+          sidebarSpringRef.current = null;
+          sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
+          if (!open) {
+            gsap.set(
+              clip,
+              getNotaSidebarClipLayout({
+                open: false,
+                widthPx: sidebarWidthPxRef.current,
+              }),
+            );
+          }
         },
       });
+
+      return () => {
+        sidebarSpringRef.current?.stop();
+        sidebarSpringRef.current = null;
+      };
     },
     { dependencies: [open, prefersReducedMotion, sidebarChromeMounted] },
   );
@@ -331,9 +364,7 @@ export function NotesShell(): JSX.Element {
           className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-center pt-[max(0.5rem,env(safe-area-inset-top))]"
           aria-hidden
         >
-          <span className="max-w-[min(20rem,calc(100%-2rem))] truncate rounded-md bg-background/80 px-3 py-1 text-center text-sm font-medium text-foreground backdrop-blur-sm">
-            {sticky.label}
-          </span>
+          <span className={notesStickyTitleChrome}>{sticky.label}</span>
         </div>
       ) : null}
       {showVaultLoading ? (
@@ -394,7 +425,7 @@ export function NotesShell(): JSX.Element {
                         : 'pl-4 pt-4',
                     )}
                   >
-                    <h2 className="font-serif text-lg font-semibold tracking-normal">
+                    <h2 className={cn('text-lg', NOTA_SECTION_HEAD_CLASS)}>
                       Notes
                     </h2>
                     <div className="flex items-center gap-2">
@@ -442,6 +473,9 @@ export function NotesShell(): JSX.Element {
                       <div className="flex flex-col gap-3">
                         <a
                           href={graphHref}
+                          onClick={() => {
+                            markNavIntent('pointer');
+                          }}
                           className={cn(
                             NOTA_SHELL_NAV_ITEM_CLASS,
                             NOTA_PRESSABLE_CLASS,
@@ -458,6 +492,9 @@ export function NotesShell(): JSX.Element {
                         </a>
                         <a
                           href={shortcutsHref}
+                          onClick={() => {
+                            markNavIntent('pointer');
+                          }}
                           className={cn(
                             NOTA_SHELL_NAV_ITEM_CLASS,
                             NOTA_PRESSABLE_CLASS,
@@ -474,6 +511,9 @@ export function NotesShell(): JSX.Element {
                         </a>
                         <a
                           href={settingsHref}
+                          onClick={() => {
+                            markNavIntent('pointer');
+                          }}
                           className={cn(
                             NOTA_SHELL_NAV_ITEM_CLASS,
                             NOTA_PRESSABLE_CLASS,
@@ -491,6 +531,9 @@ export function NotesShell(): JSX.Element {
                         {showJournalNav ? (
                           <a
                             href={journalHref}
+                            onClick={() => {
+                              markNavIntent('pointer');
+                            }}
                             className={cn(
                               NOTA_SHELL_NAV_ITEM_CLASS,
                               NOTA_PRESSABLE_CLASS,

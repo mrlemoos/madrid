@@ -5,9 +5,16 @@
 :root,
 html.light {
   --background-hex: #ffffff;
-  /* Motion eases — keep in sync with motion-tokens.ts */
+  /* Motion eases + press — keep in sync with motion-tokens.ts */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --nota-press-in-ms: 100ms;
+  --nota-press-out-ms: 160ms;
+  --nota-press-scale: 0.97;
+  /* Spring response (seconds as time) — damping lives in motion-tokens.ts */
+  --nota-spring-shell-response: 0.3s;
+  --nota-spring-popover-response: 0.2s;
+  --nota-spring-settle-response: 0.3s;
 }
 
 html:not(.nota-electron) body {

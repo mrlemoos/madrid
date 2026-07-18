@@ -9,6 +9,7 @@ import {
 import { useNotesDataVault } from '../context/notes-data-context';
 import { useAppNavigationScreen } from '../hooks/use-app-navigation-screen';
 import { noteHashHref } from './note-detail-panel';
+import { markNavIntent } from '@/lib/nota-panel-motion';
 
 export function NoteBacklinksPanel({
   noteId,
@@ -56,6 +57,9 @@ export function NoteBacklinksPanel({
               <li key={id}>
                 <a
                   href={noteHashHref(id)}
+                  onClick={() => {
+                    markNavIntent('pointer');
+                  }}
                   className={cn(
                     NOTA_SHELL_NAV_ITEM_CLASS,
                     NOTA_PRESSABLE_CLASS,

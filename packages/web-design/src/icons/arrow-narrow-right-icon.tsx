@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const ArrowNarrowRightIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -39,8 +40,8 @@ const ArrowNarrowRightIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     return (
       <motion.div
         ref={scope}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
+        onHoverStart={gateIconHover(handleHoverStart)}
+        onHoverEnd={gateIconHover(handleHoverEnd)}
         className={`inline-flex cursor-pointer items-center justify-center ${className}`}
       >
         <svg

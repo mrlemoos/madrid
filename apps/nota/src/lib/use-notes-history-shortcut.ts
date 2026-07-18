@@ -1,4 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
+import { markNavIntent } from './nota-panel-motion';
 
 export function useNotesHistoryShortcut(
   userId: string | undefined,
@@ -24,6 +25,7 @@ export function useNotesHistoryShortcut(
     }
 
     e.preventDefault();
+    markNavIntent('keyboard');
     if (e.key === '[') {
       window.history.back();
     } else {

@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const SimpleCheckedIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -32,7 +33,11 @@ const SimpleCheckedIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     }));
 
     return (
-      <motion.div ref={scope} onHoverStart={start} onHoverEnd={stop}>
+      <motion.div
+        ref={scope}
+        onHoverStart={gateIconHover(start)}
+        onHoverEnd={gateIconHover(stop)}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={size}

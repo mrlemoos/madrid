@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const LogoutIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -49,8 +50,8 @@ const LogoutIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       <motion.div
         ref={scope}
         className={`inline-flex cursor-pointer ${className}`}
-        onHoverStart={start}
-        onHoverEnd={stop}
+        onHoverStart={gateIconHover(start)}
+        onHoverEnd={gateIconHover(stop)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

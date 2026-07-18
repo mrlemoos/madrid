@@ -3,7 +3,21 @@ import {
   useRef,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
-import { clampNotaSidebarWidthPx } from '@/lib/nota-sidebar-width';
+import {
+  animateSprings,
+  createCriticallyDampedSpringConfig,
+  type SpringAnimationHandle,
+} from '@/lib/nota-critically-damped-spring';
+import { NOTA_SPRING_PRESETS } from '@/lib/nota-motion';
+import {
+  computeSidebarResizeLiveWidth,
+  resolveSidebarResizeSettle,
+} from '@/lib/nota-sidebar-resize-settle';
+import {
+  clampNotaSidebarWidthPx,
+  NOTA_SIDEBAR_MAX_WIDTH_PX,
+  NOTA_SIDEBAR_MIN_WIDTH_PX,
+} from '@/lib/nota-sidebar-width';
 
 function setSidebarWidths(
   asideEl: HTMLElement,
@@ -31,6 +45,11 @@ export function useNotesSidebarResize(options: {
   const startXRef = useRef(0);
   const startWidthRef = useRef(options.widthPx);
   const liveWidthRef = useRef(options.widthPx);
+  const velocityPxPerSecRef = useRef(0);
+  const lastSampleRef = useRef<{ t: number; x: number } | null>(null);
+  const settleHandleRef = useRef<SpringAnimationHandle | null>(null);
+  const captureTargetRef = useRef<HTMLDivElement | null>(null);
+  const capturePointerIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     startWidthRef.current = options.widthPx;
@@ -39,19 +58,74 @@ export function useNotesSidebarResize(options: {
 
   const clearResizeSession = (): void => {
     isResizingRef.current = false;
+    lastSampleRef.current = null;
     document.body.style.removeProperty('user-select');
     document.body.style.removeProperty('cursor');
+    const target = captureTargetRef.current;
+    const pointerId = capturePointerIdRef.current;
+    if (target && pointerId != null && target.hasPointerCapture(pointerId)) {
+      target.releasePointerCapture(pointerId);
+    }
+    captureTargetRef.current = null;
+    capturePointerIdRef.current = null;
   };
 
-  const commitWidth = (clientX: number): void => {
-    const delta = clientX - startXRef.current;
-    const next = clampNotaSidebarWidthPx(startWidthRef.current + delta);
-    liveWidthRef.current = next;
+  const applyLiveWidth = (widthPx: number): void => {
+    liveWidthRef.current = widthPx;
     const el = options.asideRef.current;
     if (el) {
-      setSidebarWidths(el, options.railRef?.current ?? null, next);
+      setSidebarWidths(el, options.railRef?.current ?? null, widthPx);
     }
+  };
+
+  const commitSettledWidth = (widthPx: number): void => {
+    const next = clampNotaSidebarWidthPx(widthPx);
+    liveWidthRef.current = next;
+    applyLiveWidth(next);
     options.setSidebarWidthPx(next);
+  };
+
+  const startSettleSpring = (
+    fromWidthPx: number,
+    velocityPxPerSec: number,
+  ): void => {
+    settleHandleRef.current?.stop();
+    settleHandleRef.current = null;
+
+    const settle = resolveSidebarResizeSettle({
+      widthPx: fromWidthPx,
+      velocityPxPerSec,
+      minPx: NOTA_SIDEBAR_MIN_WIDTH_PX,
+      maxPx: NOTA_SIDEBAR_MAX_WIDTH_PX,
+    });
+
+    if (Math.abs(fromWidthPx - settle.targetWidthPx) < 0.5) {
+      commitSettledWidth(settle.targetWidthPx);
+      return;
+    }
+
+    const shell = NOTA_SPRING_PRESETS.shell;
+    const config = createCriticallyDampedSpringConfig(
+      shell.response,
+      shell.damping,
+    );
+    settleHandleRef.current = animateSprings({
+      from: {
+        width: {
+          value: fromWidthPx,
+          velocity: settle.initialVelocityPxPerSec,
+        },
+      },
+      to: { width: settle.targetWidthPx },
+      config,
+      onUpdate: (values) => {
+        applyLiveWidth(values.width!);
+      },
+      onComplete: () => {
+        settleHandleRef.current = null;
+        commitSettledWidth(settle.targetWidthPx);
+      },
+    });
   };
 
   useEffect(() => {
@@ -59,21 +133,34 @@ export function useNotesSidebarResize(options: {
       if (!isResizingRef.current) {
         return;
       }
-      const delta = event.clientX - startXRef.current;
-      const next = clampNotaSidebarWidthPx(startWidthRef.current + delta);
-      liveWidthRef.current = next;
-      const el = options.asideRef.current;
-      if (el) {
-        setSidebarWidths(el, options.railRef?.current ?? null, next);
+      const now = performance.now();
+      const last = lastSampleRef.current;
+      if (last) {
+        const dtS = (now - last.t) / 1000;
+        if (dtS > 0) {
+          velocityPxPerSecRef.current = (event.clientX - last.x) / dtS;
+        }
       }
+      lastSampleRef.current = { t: now, x: event.clientX };
+
+      const delta = event.clientX - startXRef.current;
+      const next = computeSidebarResizeLiveWidth({
+        startWidthPx: startWidthRef.current,
+        deltaPx: delta,
+        minPx: NOTA_SIDEBAR_MIN_WIDTH_PX,
+        maxPx: NOTA_SIDEBAR_MAX_WIDTH_PX,
+      });
+      applyLiveWidth(next);
     };
 
-    const onPointerUp = (event: PointerEvent): void => {
+    const onPointerUp = (): void => {
       if (!isResizingRef.current) {
         return;
       }
-      commitWidth(event.clientX);
+      const fromWidth = liveWidthRef.current;
+      const velocity = velocityPxPerSecRef.current;
       clearResizeSession();
+      startSettleSpring(fromWidth, velocity);
     };
 
     window.addEventListener('pointermove', onPointerMove);
@@ -83,10 +170,12 @@ export function useNotesSidebarResize(options: {
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerup', onPointerUp);
       window.removeEventListener('pointercancel', onPointerUp);
+      settleHandleRef.current?.stop();
+      settleHandleRef.current = null;
       clearResizeSession();
     };
-    // commitWidth reads refs + aside width; listing it would rebind window listeners every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- commitWidth
+    // applyLiveWidth / settle read refs; listing them rebinds every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- resize session
   }, [options.asideRef, options.railRef, options.setSidebarWidthPx]);
 
   const onResizePointerDown = (
@@ -96,10 +185,19 @@ export function useNotesSidebarResize(options: {
       return;
     }
     event.preventDefault();
+    settleHandleRef.current?.stop();
+    settleHandleRef.current = null;
     isResizingRef.current = true;
     startXRef.current = event.clientX;
     startWidthRef.current = options.widthPx;
     liveWidthRef.current = options.widthPx;
+    velocityPxPerSecRef.current = 0;
+    lastSampleRef.current = {
+      t: performance.now(),
+      x: event.clientX,
+    };
+    captureTargetRef.current = event.currentTarget;
+    capturePointerIdRef.current = event.pointerId;
     event.currentTarget.setPointerCapture(event.pointerId);
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'col-resize';

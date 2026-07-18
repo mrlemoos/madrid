@@ -1,5 +1,11 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { hashForScreen, parseAppNavFromLocation } from './app-navigation';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import {
+  hashForScreen,
+  parseAppNavFromLocation,
+  replaceAppHash,
+  setAppHash,
+} from './app-navigation';
+import { peekNavIntent, resetNavIntent } from './nota-panel-motion';
 
 const SAMPLE_NOTE_ID = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeeeee';
 
@@ -18,6 +24,8 @@ function stubWindowHash(hash: string, pathname = '/'): void {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  resetNavIntent();
+  document.documentElement.removeAttribute('data-nav-intent');
 });
 
 describe('parseAppNavFromLocation', () => {
@@ -324,5 +332,125 @@ describe('parseAppNavFromLocation', () => {
 
     // Assert
     expect(result).toEqual({ kind: 'notFound' });
+  });
+});
+
+describe('setAppHash / replaceAppHash nav intent', () => {
+  beforeEach(() => {
+    resetNavIntent();
+    document.documentElement.removeAttribute('data-nav-intent');
+  });
+
+  it('defaults to keyboard intent so create/paywall/history paths stay instant', () => {
+    // Arrange
+    const prevWindow = globalThis.window;
+    const location = {
+      ...prevWindow.location,
+      pathname: '/',
+      hash: '#/notes',
+      href: 'http://localhost:4200/#/notes',
+    };
+    Object.defineProperty(location, 'hash', {
+      configurable: true,
+      get() {
+        return (this as { _hash?: string })._hash ?? '#/notes';
+      },
+      set(value: string) {
+        (this as { _hash?: string })._hash = value.startsWith('#')
+          ? value
+          : `#${value}`;
+      },
+    });
+    vi.stubGlobal('window', {
+      ...prevWindow,
+      location,
+      history: {
+        ...prevWindow.history,
+        state: null,
+        replaceState: vi.fn(),
+        pushState: vi.fn(),
+      },
+    });
+
+    // Act
+    setAppHash({ kind: 'notes', panel: 'graph', noteId: null });
+
+    // Assert
+    expect(peekNavIntent()).toBe('keyboard');
+    expect(document.documentElement.getAttribute('data-nav-intent')).toBe(
+      'keyboard',
+    );
+  });
+
+  it('marks pointer intent when options.intent is pointer', () => {
+    // Arrange
+    const prevWindow = globalThis.window;
+    const location = {
+      ...prevWindow.location,
+      pathname: '/',
+      hash: '#/notes',
+      href: 'http://localhost:4200/#/notes',
+    };
+    Object.defineProperty(location, 'hash', {
+      configurable: true,
+      get() {
+        return (this as { _hash?: string })._hash ?? '#/notes';
+      },
+      set(value: string) {
+        (this as { _hash?: string })._hash = value.startsWith('#')
+          ? value
+          : `#${value}`;
+      },
+    });
+    vi.stubGlobal('window', {
+      ...prevWindow,
+      location,
+      history: {
+        ...prevWindow.history,
+        state: null,
+        replaceState: vi.fn(),
+        pushState: vi.fn(),
+      },
+    });
+
+    // Act
+    setAppHash(
+      { kind: 'notes', panel: 'journal', noteId: null },
+      { intent: 'pointer' },
+    );
+
+    // Assert
+    expect(peekNavIntent()).toBe('pointer');
+    expect(document.documentElement.getAttribute('data-nav-intent')).toBe(
+      'pointer',
+    );
+  });
+
+  it('marks keyboard intent on replaceAppHash by default (paywall redirect)', () => {
+    // Arrange
+    const prevWindow = globalThis.window;
+    const replaceState = vi.fn();
+    vi.stubGlobal('window', {
+      ...prevWindow,
+      location: {
+        ...prevWindow.location,
+        pathname: '/',
+        hash: '#/notes',
+        href: 'http://localhost:4200/#/notes',
+      },
+      history: {
+        ...prevWindow.history,
+        state: null,
+        replaceState,
+        pushState: vi.fn(),
+      },
+    });
+
+    // Act
+    replaceAppHash({ kind: 'notes', panel: 'settings', noteId: null });
+
+    // Assert
+    expect(peekNavIntent()).toBe('keyboard');
+    expect(replaceState).toHaveBeenCalled();
   });
 });

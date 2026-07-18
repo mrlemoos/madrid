@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useCallback } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 export interface TrashIconProps extends AnimatedIconProps {
@@ -106,8 +107,8 @@ const TrashIcon = forwardRef<AnimatedIconHandle, TrashIconProps>(
       <motion.svg
         ref={scope}
         className={`cursor-pointer ${className} trash-icon`}
-        onHoverStart={hoverAnimation}
-        onHoverEnd={hoverEndAnimation}
+        onHoverStart={gateIconHover(hoverAnimation)}
+        onHoverEnd={gateIconHover(hoverEndAnimation)}
         onTap={clickAnimation}
         xmlns="http://www.w3.org/2000/svg"
         width={size}

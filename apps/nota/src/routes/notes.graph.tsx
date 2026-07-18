@@ -12,7 +12,7 @@ export default function NotesGraph(): JSX.Element {
     <NotesGraphScreen
       notes={notes}
       onOpenNote={(id) => {
-        navigateFromLegacyPath(`/notes/${id}`);
+        navigateFromLegacyPath(`/notes/${id}`, { intent: 'pointer' });
       }}
       t={t}
     />

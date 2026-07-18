@@ -1,6 +1,7 @@
 import { forwardRef, useImperativeHandle } from 'react';
 
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
+import { gateIconHover } from '../lib/icon-hover-motion.js';
 import { motion, useAnimate } from 'motion/react';
 
 const ClockIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
@@ -64,8 +65,8 @@ const ClockIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
         strokeLinecap="round"
         strokeLinejoin="round"
         className={`${className} cursor-pointer`}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
+        onHoverStart={gateIconHover(handleHoverStart)}
+        onHoverEnd={gateIconHover(handleHoverEnd)}
       >
         <motion.path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <motion.path

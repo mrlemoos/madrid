@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { NOTA_SIDEBAR_SLIDE_PX } from './nota-motion';
+import { NOTA_SIDEBAR_SLIDE_PX, NOTA_SPRING_PRESETS } from './nota-motion';
+import { isCriticallyDamped } from './nota-critically-damped-spring';
 import {
   getNotaSidebarClipLayout,
   getNotaSidebarRailMotionTargets,
+  getNotaSidebarShellSpringConfig,
 } from './nota-sidebar-shell-motion';
 
 describe('getNotaSidebarClipLayout', () => {
@@ -26,6 +28,19 @@ describe('getNotaSidebarClipLayout', () => {
 
     // Assert
     expect(layout).toEqual({ width: 0, maxWidth: 'none' });
+  });
+});
+
+describe('getNotaSidebarShellSpringConfig', () => {
+  it('is critically damped at the P0 shell spring preset', () => {
+    // Arrange / Act
+    const config = getNotaSidebarShellSpringConfig();
+    const shell = NOTA_SPRING_PRESETS.shell;
+
+    // Assert
+    expect(config.responseS).toBe(shell.response);
+    expect(config.dampingRatio).toBe(shell.damping);
+    expect(isCriticallyDamped(config)).toBe(true);
   });
 });
 
