@@ -31,8 +31,8 @@ function linkPreviewHasPersistedMeta(node: {
   if (platformPreviewFromAttrs(node.attrs)) return true;
   return Boolean(
     stringifyPreviewAttr(node.attrs['title']).trim() ||
-      stringifyPreviewAttr(node.attrs['description']).trim() ||
-      stringifyPreviewAttr(node.attrs['image']).trim(),
+    stringifyPreviewAttr(node.attrs['description']).trim() ||
+    stringifyPreviewAttr(node.attrs['image']).trim(),
   );
 }
 

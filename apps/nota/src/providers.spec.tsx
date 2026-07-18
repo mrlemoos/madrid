@@ -159,9 +159,8 @@ describe('AppProviders', () => {
       return undefined;
     });
     vi.resetModules();
-    const { AppProviders: AppProvidersWithoutKey } = await import(
-      './providers'
-    );
+    const { AppProviders: AppProvidersWithoutKey } =
+      await import('./providers');
 
     // Act
     const renderWithoutKey = () =>

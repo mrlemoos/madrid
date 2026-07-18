@@ -4,41 +4,37 @@
 
 ```ts
 // src/middleware.ts
-import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/astro/server';
 
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/settings(.*)',
-  '/api/private(.*)',
-])
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/settings(.*)', '/api/private(.*)']);
 
 export const onRequest = clerkMiddleware((auth, context, next) => {
   if (isProtectedRoute(context.request) && !auth().userId) {
-    return auth().redirectToSignIn()
+    return auth().redirectToSignIn();
   }
-  return next()
-})
+  return next();
+});
 ```
 
 ## With Custom Handler
 
 ```ts
 export const onRequest = clerkMiddleware((auth, context, next) => {
-  const { userId, orgId } = auth()
+  const { userId, orgId } = auth();
 
   if (isProtectedRoute(context.request)) {
-    if (!userId) return auth().redirectToSignIn()
-    if (!orgId) return context.redirect('/select-org')
+    if (!userId) return auth().redirectToSignIn();
+    if (!orgId) return context.redirect('/select-org');
   }
 
-  return next()
-})
+  return next();
+});
 ```
 
 ## No Handler (Pass-Through)
 
 ```ts
-export const onRequest = clerkMiddleware()
+export const onRequest = clerkMiddleware();
 ```
 
 The middleware still populates `Astro.locals.auth` — you just do the redirect check per-page.
@@ -47,11 +43,11 @@ The middleware still populates `Astro.locals.auth` — you just do the redirect 
 
 ```ts
 createRouteMatcher([
-  '/dashboard',           // exact
-  '/dashboard(.*)',       // prefix match
-  '/api/private/(.*)',    // nested
-  /^\/admin/,            // regex
-])
+  '/dashboard', // exact
+  '/dashboard(.*)', // prefix match
+  '/api/private/(.*)', // nested
+  /^\/admin/, // regex
+]);
 ```
 
 ## clerkMiddleware Signature

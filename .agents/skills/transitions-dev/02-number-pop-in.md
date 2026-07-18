@@ -16,26 +16,27 @@ Counters, prices, balances, or any number that updates and should re-enter from 
 ```
 
 Replay:
-  - Remove `.is-animating`, re-render digits (or swap text),
-    force a reflow, then re-add `.is-animating`.
-  - Use data-stagger="1", "2", … to delay individual
-    digits by `n * var(--digit-stagger)`.
+
+- Remove `.is-animating`, re-render digits (or swap text),
+  force a reflow, then re-add `.is-animating`.
+- Use data-stagger="1", "2", … to delay individual
+  digits by `n * var(--digit-stagger)`.
 
 Direction:
-  --digit-dir-x / --digit-dir-y are unit-less multipliers
-  (e.g. 1, -1, 0) applied to --digit-distance.
+--digit-dir-x / --digit-dir-y are unit-less multipliers
+(e.g. 1, -1, 0) applied to --digit-distance.
 
 ## Tunable variables
 
-| Variable | Default | Notes |
-| --- | --- | --- |
-| `--digit-dur` | `500ms` | sourced from `--p9-dur` |
-| `--digit-distance` | `8px` | sourced from `--p9-distance` |
-| `--digit-stagger` | `70ms` | sourced from `--p9-stagger` |
-| `--digit-blur` | `2px` | sourced from `--p9-blur` |
-| `--digit-ease` | `cubic-bezier(0.34, 1.45, 0.64, 1)` | sourced from `--p9-ease` |
-| `--digit-dir-x` | `0` | sourced from `--p9-dir-x` |
-| `--digit-dir-y` | `1` | sourced from `--p9-dir-y` |
+| Variable           | Default                             | Notes                        |
+| ------------------ | ----------------------------------- | ---------------------------- |
+| `--digit-dur`      | `500ms`                             | sourced from `--p9-dur`      |
+| `--digit-distance` | `8px`                               | sourced from `--p9-distance` |
+| `--digit-stagger`  | `70ms`                              | sourced from `--p9-stagger`  |
+| `--digit-blur`     | `2px`                               | sourced from `--p9-blur`     |
+| `--digit-ease`     | `cubic-bezier(0.34, 1.45, 0.64, 1)` | sourced from `--p9-ease`     |
+| `--digit-dir-x`    | `0`                                 | sourced from `--p9-dir-x`    |
+| `--digit-dir-y`    | `1`                                 | sourced from `--p9-dir-y`    |
 
 The `:root` defaults below match the live tuning on [transitions.dev](https://transitions.dev). Drop them into your global stylesheet once — every transition in this skill reads from semantic names like these, so multiple transitions can share a single `:root` block.
 
@@ -55,15 +56,16 @@ The `:root` defaults below match the live tuning on [transitions.dev](https://tr
 
 ```css
 @keyframes t-digit-pop-in {
-  0%   {
-    transform: translate(
-      calc(var(--digit-distance) * var(--digit-dir-x)),
-      calc(var(--digit-distance) * var(--digit-dir-y))
-    );
+  0% {
+    transform: translate(calc(var(--digit-distance) * var(--digit-dir-x)), calc(var(--digit-distance) * var(--digit-dir-y)));
     opacity: 0;
     filter: blur(var(--digit-blur));
   }
-  100% { transform: translate(0, 0); opacity: 1; filter: blur(0); }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 .t-digit-group {
@@ -77,15 +79,17 @@ The `:root` defaults below match the live tuning on [transitions.dev](https://tr
 .t-digit-group.is-animating .t-digit {
   animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
 }
-.t-digit-group.is-animating .t-digit[data-stagger="1"] {
+.t-digit-group.is-animating .t-digit[data-stagger='1'] {
   animation-delay: var(--digit-stagger);
 }
-.t-digit-group.is-animating .t-digit[data-stagger="2"] {
+.t-digit-group.is-animating .t-digit[data-stagger='2'] {
   animation-delay: calc(var(--digit-stagger) * 2);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .t-digit-group .t-digit { animation: none !important; }
+  .t-digit-group .t-digit {
+    animation: none !important;
+  }
 }
 ```
 
@@ -98,22 +102,21 @@ The `@media (prefers-reduced-motion: reduce)` guard at the bottom of the snippet
 // force a reflow, then re-add .is-animating. Mark the last two digits
 // with data-stagger="1" / "2" so they ride in 1× / 2× --digit-stagger
 // behind the leading digits.
-const group = document.querySelector(".t-digit-group");
+const group = document.querySelector('.t-digit-group');
 
 function setDigits(str) {
-  group.classList.remove("is-animating");
+  group.classList.remove('is-animating');
   group.replaceChildren();
-  const chars = str.split("");
+  const chars = str.split('');
   chars.forEach((ch, i) => {
-    const span = document.createElement("span");
-    span.className = "t-digit";
+    const span = document.createElement('span');
+    span.className = 't-digit';
     span.textContent = ch;
-    if (i === chars.length - 2) span.dataset.stagger = "1";
-    else if (i === chars.length - 1) span.dataset.stagger = "2";
+    if (i === chars.length - 2) span.dataset.stagger = '1';
+    else if (i === chars.length - 1) span.dataset.stagger = '2';
     group.appendChild(span);
   });
   void group.offsetHeight; // force reflow
-  group.classList.add("is-animating");
+  group.classList.add('is-animating');
 }
 ```
-

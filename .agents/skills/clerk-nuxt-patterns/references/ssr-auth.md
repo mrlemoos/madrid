@@ -4,18 +4,18 @@
 
 `@clerk/nuxt` composables (`useAuth`, `useUser`) are client-reactive but the initial state is SSR-safe.
 
-| Context | How to get auth |
-|---------|----------------|
-| Vue component (`<script setup>`) | `useAuth()`, `useUser()` composables |
-| Nitro server route | `event.context.auth` |
-| Nuxt plugin (server) | `event.context.auth` via `useNitroApp` |
+| Context                          | How to get auth                        |
+| -------------------------------- | -------------------------------------- |
+| Vue component (`<script setup>`) | `useAuth()`, `useUser()` composables   |
+| Nitro server route               | `event.context.auth`                   |
+| Nuxt plugin (server)             | `event.context.auth` via `useNitroApp` |
 
 ## SSR-Safe Page Pattern
 
 ```vue
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
-const { userId, isLoaded } = useAuth()
+definePageMeta({ middleware: 'auth' });
+const { userId, isLoaded } = useAuth();
 </script>
 
 <template>
@@ -54,14 +54,14 @@ Pass the session token to server-side `useFetch` for authenticated API calls:
 
 ```vue
 <script setup lang="ts">
-const { getToken } = useAuth()
+const { getToken } = useAuth();
 
 const { data } = await useFetch('/api/protected', {
   headers: async () => {
-    const token = await getToken()
-    return token ? { Authorization: `Bearer ${token}` } : {}
+    const token = await getToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
   },
-})
+});
 </script>
 ```
 
@@ -71,12 +71,12 @@ When using Pinia with Clerk, hydrate the store with server auth state to avoid c
 
 ```ts
 // plugins/auth-hydration.ts
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth';
 
 export default defineNuxtPlugin(async () => {
-  const store = useAuthStore()
-  await until(store.isLoaded).toBeTruthy()
-})
+  const store = useAuthStore();
+  await until(store.isLoaded).toBeTruthy();
+});
 ```
 
 Stores are created per-request on the server — do NOT store sensitive data (tokens) in Pinia.

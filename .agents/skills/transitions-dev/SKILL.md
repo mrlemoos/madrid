@@ -9,20 +9,20 @@ Twelve portable CSS transitions, each namespaced under `t-*` selectors with sema
 
 ## Quick reference
 
-| Transition | When to use | Reference |
-| --- | --- | --- |
-| **Card resize** | Tween a container's width or height when its layout state changes. | [01-card-resize.md](./01-card-resize.md) |
-| **Number pop-in** | Re-enter each digit with a blurred slide when a number updates. | [02-number-pop-in.md](./02-number-pop-in.md) |
-| **Notification badge** | Slide a small badge onto a trigger and pop the dot. | [03-notification-badge.md](./03-notification-badge.md) |
-| **Text states swap** | Swap text in place with a blurred up-and-down transition. | [04-text-states-swap.md](./04-text-states-swap.md) |
-| **Menu dropdown** | Open an origin-aware dropdown that grows from its trigger. | [05-menu-dropdown.md](./05-menu-dropdown.md) |
-| **Modal open / close** | Scale-up modal dialog with a softer scale-down on close. | [06-modal.md](./06-modal.md) |
-| **Panel reveal** | Slide a panel into a region with a cross-blur. | [07-panel-reveal.md](./07-panel-reveal.md) |
-| **Page side-by-side** | Slide between two side-by-side pages (list ↔ detail, step 1 ↔ step 2). | [08-page-side-by-side.md](./08-page-side-by-side.md) |
-| **Icon swap** | Cross-fade two icons in the same slot with blur and scale. | [09-icon-swap.md](./09-icon-swap.md) |
-| **Success check** | Compose fade + rotate + Y-bob + path stroke-draw to celebrate a completed action. | [10-success-check.md](./10-success-check.md) |
-| **Avatar group hover** | Distance-falloff lift on a row of items with a bouncy spring on return. | [11-avatar-group-hover.md](./11-avatar-group-hover.md) |
-| **Error state shake** | Per-segment cubic-bezier shake with auto-reverting border + message. | [12-error-state-shake.md](./12-error-state-shake.md) |
+| Transition             | When to use                                                                       | Reference                                              |
+| ---------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| **Card resize**        | Tween a container's width or height when its layout state changes.                | [01-card-resize.md](./01-card-resize.md)               |
+| **Number pop-in**      | Re-enter each digit with a blurred slide when a number updates.                   | [02-number-pop-in.md](./02-number-pop-in.md)           |
+| **Notification badge** | Slide a small badge onto a trigger and pop the dot.                               | [03-notification-badge.md](./03-notification-badge.md) |
+| **Text states swap**   | Swap text in place with a blurred up-and-down transition.                         | [04-text-states-swap.md](./04-text-states-swap.md)     |
+| **Menu dropdown**      | Open an origin-aware dropdown that grows from its trigger.                        | [05-menu-dropdown.md](./05-menu-dropdown.md)           |
+| **Modal open / close** | Scale-up modal dialog with a softer scale-down on close.                          | [06-modal.md](./06-modal.md)                           |
+| **Panel reveal**       | Slide a panel into a region with a cross-blur.                                    | [07-panel-reveal.md](./07-panel-reveal.md)             |
+| **Page side-by-side**  | Slide between two side-by-side pages (list ↔ detail, step 1 ↔ step 2).            | [08-page-side-by-side.md](./08-page-side-by-side.md)   |
+| **Icon swap**          | Cross-fade two icons in the same slot with blur and scale.                        | [09-icon-swap.md](./09-icon-swap.md)                   |
+| **Success check**      | Compose fade + rotate + Y-bob + path stroke-draw to celebrate a completed action. | [10-success-check.md](./10-success-check.md)           |
+| **Avatar group hover** | Distance-falloff lift on a row of items with a bouncy spring on return.           | [11-avatar-group-hover.md](./11-avatar-group-hover.md) |
+| **Error state shake**  | Per-segment cubic-bezier shake with auto-reverting border + message.              | [12-error-state-shake.md](./12-error-state-shake.md)   |
 
 ## Decision rules
 
@@ -163,8 +163,8 @@ Keep the diff small: only edit the files needed to introduce the transition. Don
 - **Forgetting the reflow** in the text swap, number pop-in, success check replay, and error state shake — `void el.offsetWidth` (or `offsetHeight`) between class/attribute removal and re-addition is what guarantees the animation replays.
 - **Animating a single container** instead of the inner pieces — for the badge, animate the dot, not the trigger; for page slide, animate the page sections, not the container.
 - **Replacing `transition: …` with `transition: all`** — every snippet enumerates exact properties on purpose so unrelated style changes don't ride in for free.
-- **Hardcoding the success check's `stroke-dasharray`** — the snippet ships `20` as a placeholder. Replace it with `path.getTotalLength()` rounded up by 1 for *your* path, otherwise the stroke pre-reveals or over-draws.
-- **Setting `transition-timing-function` in CSS** for the avatar group hover — it has to be set inline in JS *before* the `--shift` / `--scale-active` writes so the bouncy ease-out only applies on `mouseleave`.
+- **Hardcoding the success check's `stroke-dasharray`** — the snippet ships `20` as a placeholder. Replace it with `path.getTotalLength()` rounded up by 1 for _your_ path, otherwise the stroke pre-reveals or over-draws.
+- **Setting `transition-timing-function` in CSS** for the avatar group hover — it has to be set inline in JS _before_ the `--shift` / `--scale-active` writes so the bouncy ease-out only applies on `mouseleave`.
 - **Mixing `.is-error` and `.is-shaking` into one class** for the error state shake — keeping them orthogonal is what allows the shake to replay (remove → reflow → re-add) without flickering the whole error treatment.
 
 ## Reference files

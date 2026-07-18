@@ -46,11 +46,7 @@ export async function updateProfile(formData: FormData) {
 
 ```typescript
 const { orgId } = await auth();
-const getOrgData = unstable_cache(
-  () => db.orgData.findMany({ where: { organizationId: orgId } }),
-  [`org-${orgId}-data`],
-  { revalidate: 300, tags: [`org-${orgId}`] }
-);
+const getOrgData = unstable_cache(() => db.orgData.findMany({ where: { organizationId: orgId } }), [`org-${orgId}-data`], { revalidate: 300, tags: [`org-${orgId}`] });
 ```
 
 [Docs](https://nextjs.org/docs/app/building-your-application/caching)

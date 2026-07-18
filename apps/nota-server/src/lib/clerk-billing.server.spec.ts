@@ -11,9 +11,8 @@ mock.module('@clerk/backend', () => ({
   }),
 }));
 
-const { getServerNotaProEntitled, invalidateServerNotaProCache } = await import(
-  './clerk-billing.server.ts'
-);
+const { getServerNotaProEntitled, invalidateServerNotaProCache } =
+  await import('./clerk-billing.server.ts');
 
 describe('getServerNotaProEntitled', () => {
   const prevSecret = process.env.CLERK_SECRET_KEY;

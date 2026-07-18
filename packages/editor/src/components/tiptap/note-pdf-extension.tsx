@@ -38,8 +38,7 @@ export type CachedSignedUrlEntry = {
 };
 
 export type SignedUrlResult =
-  | { ok: true; signedUrl: string }
-  | { ok: false; error?: string };
+  { ok: true; signedUrl: string } | { ok: false; error?: string };
 
 export type OgPreviewData = {
   title?: string | null;

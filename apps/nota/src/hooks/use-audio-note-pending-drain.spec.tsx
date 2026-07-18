@@ -262,8 +262,7 @@ describe('useAudioNotePendingDrain', () => {
     expect(drainMocks.listPendingAudioNoteJobs).toHaveBeenCalledWith('user-1');
     expect(drainMocks.postAudioToNoteStream).toHaveBeenCalledTimes(1);
     const blobArg = drainMocks.postAudioToNoteStream.mock.calls[0]?.[0] as
-      | Blob
-      | undefined;
+      Blob | undefined;
     expect(blobArg).toBeInstanceOf(Blob);
     expect(blobArg?.type).toBe('audio/webm');
     expect(drainMocks.uploadStudyRecordingAttachment).toHaveBeenCalledWith(

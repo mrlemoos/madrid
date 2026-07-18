@@ -6,7 +6,7 @@ For plain Vue (without Nuxt), protect routes using navigation guards.
 
 ```ts
 // router/index.ts
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,34 +15,34 @@ const router = createRouter({
     { path: '/sign-in', component: SignIn },
     { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } },
   ],
-})
+});
 
 router.beforeEach(async (to) => {
-  if (!to.meta.requiresAuth) return true
+  if (!to.meta.requiresAuth) return true;
 
-  const { userId } = useAuth()
+  const { userId } = useAuth();
 
-  if (!userId.value) return '/sign-in'
-  return true
-})
+  if (!userId.value) return '/sign-in';
+  return true;
+});
 ```
 
 ## Per-Route Guard with In-Component Guard
 
 ```vue
 <script setup lang="ts">
-import { useAuth } from '@clerk/vue'
-import { useRouter } from 'vue-router'
-import { watchEffect } from 'vue'
+import { useAuth } from '@clerk/vue';
+import { useRouter } from 'vue-router';
+import { watchEffect } from 'vue';
 
-const { isSignedIn, isLoaded } = useAuth()
-const router = useRouter()
+const { isSignedIn, isLoaded } = useAuth();
+const router = useRouter();
 
 watchEffect(() => {
   if (isLoaded.value && !isSignedIn.value) {
-    router.replace('/sign-in')
+    router.replace('/sign-in');
   }
-})
+});
 </script>
 ```
 
@@ -50,15 +50,15 @@ watchEffect(() => {
 
 ```ts
 router.beforeEach(async (to) => {
-  if (!to.meta.requiresOrg) return true
+  if (!to.meta.requiresOrg) return true;
 
-  const { userId } = useAuth()
-  const { organization } = useOrganization()
+  const { userId } = useAuth();
+  const { organization } = useOrganization();
 
-  if (!userId.value) return '/sign-in'
-  if (!organization.value) return '/select-org'
-  return true
-})
+  if (!userId.value) return '/sign-in';
+  if (!organization.value) return '/select-org';
+  return true;
+});
 ```
 
 ## CRITICAL

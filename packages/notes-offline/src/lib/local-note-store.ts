@@ -64,8 +64,7 @@ export async function saveLocalNoteDraft(
   const tx = db.transaction(NOTES_OBJECT_STORE, 'readwrite');
   const store = tx.objectStore(NOTES_OBJECT_STORE);
   const existing = (await idbRequest(store.get(patch.id))) as
-    | StoredNote
-    | undefined;
+    StoredNote | undefined;
 
   const title = patch.title ?? existing?.title ?? '';
   const content = patch.content ?? existing?.content ?? DEFAULT_NOTE_CONTENT;
@@ -158,8 +157,7 @@ export async function markPendingDelete(
   const tx = db.transaction(NOTES_OBJECT_STORE, 'readwrite');
   const store = tx.objectStore(NOTES_OBJECT_STORE);
   const existing = (await idbRequest(store.get(noteId))) as
-    | StoredNote
-    | undefined;
+    StoredNote | undefined;
 
   if (!wasSynced && existing?.pending_create) {
     store.delete(noteId);

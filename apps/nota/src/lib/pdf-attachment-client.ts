@@ -13,8 +13,7 @@ import type { NoteAttachment } from '~/types/database.types';
 export const ATTACHMENT_SIGNED_URL_TTL_SEC = 3600;
 
 export type GetOrFetchNoteAttachmentSignedUrlResult =
-  | { ok: true; signedUrl: string }
-  | { ok: false; error: string };
+  { ok: true; signedUrl: string } | { ok: false; error: string };
 
 /**
  * Returns a still-valid signed URL from the in-memory cache when possible,

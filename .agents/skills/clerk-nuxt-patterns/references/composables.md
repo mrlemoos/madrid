@@ -8,7 +8,7 @@ Returns reactive auth state and helpers:
 
 ```vue
 <script setup lang="ts">
-const { isSignedIn, isLoaded, userId, sessionId, orgId, orgRole, orgSlug } = useAuth()
+const { isSignedIn, isLoaded, userId, sessionId, orgId, orgRole, orgSlug } = useAuth();
 </script>
 
 <template>
@@ -24,7 +24,7 @@ Returns the full user object with profile data:
 
 ```vue
 <script setup lang="ts">
-const { isLoaded, isSignedIn, user } = useUser()
+const { isLoaded, isSignedIn, user } = useUser();
 </script>
 
 <template>
@@ -42,14 +42,14 @@ Access the Clerk instance for programmatic actions:
 
 ```vue
 <script setup lang="ts">
-const clerk = useClerk()
+const clerk = useClerk();
 
 function handleSignOut() {
-  clerk.signOut()
+  clerk.signOut();
 }
 
 function openProfile() {
-  clerk.openUserProfile()
+  clerk.openUserProfile();
 }
 </script>
 ```
@@ -60,17 +60,17 @@ For custom auth flows:
 
 ```vue
 <script setup lang="ts">
-const { signIn, setActive } = useSignIn()
+const { signIn, setActive } = useSignIn();
 
 async function handleLogin(email: string, password: string) {
   const result = await signIn.create({
     identifier: email,
     password,
-  })
+  });
 
   if (result.status === 'complete') {
-    await setActive({ session: result.createdSessionId })
-    navigateTo('/dashboard')
+    await setActive({ session: result.createdSessionId });
+    navigateTo('/dashboard');
   }
 }
 </script>
@@ -82,7 +82,7 @@ Composables return `Ref<T>` values. Access with `.value` in `<script setup>` but
 
 ```vue
 <script setup lang="ts">
-const { isSignedIn, userId } = useAuth()
+const { isSignedIn, userId } = useAuth();
 // In script: isSignedIn.value, userId.value
 </script>
 

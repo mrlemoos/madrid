@@ -4,15 +4,17 @@ import {
   SignInButton,
   SignUpButton,
   UserButton,
-} from '@clerk/chrome-extension'
+} from '@clerk/chrome-extension';
 
-import '~style.css'
+import '~style.css';
 
-const PUBLISHABLE_KEY = process.env.PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY
-const EXTENSION_URL = chrome.runtime.getURL('.')
+const PUBLISHABLE_KEY = process.env.PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const EXTENSION_URL = chrome.runtime.getURL('.');
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error('Please add the PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY to the .env.development file')
+  throw new Error(
+    'Please add the PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY to the .env.development file',
+  );
 }
 
 function IndexPopup() {
@@ -35,7 +37,7 @@ function IndexPopup() {
         </header>
       </div>
     </ClerkProvider>
-  )
+  );
 }
 
-export default IndexPopup
+export default IndexPopup;

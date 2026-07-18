@@ -23,8 +23,7 @@ function notaDesktopArtifactsPlugin(appRoot: string): Plugin {
           VITE_SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY ?? '',
           VITE_CLERK_PUBLISHABLE_KEY:
             process.env.VITE_CLERK_PUBLISHABLE_KEY ?? '',
-          VITE_NOTA_SERVER_API_URL:
-            process.env.VITE_NOTA_SERVER_API_URL ?? '',
+          VITE_NOTA_SERVER_API_URL: process.env.VITE_NOTA_SERVER_API_URL ?? '',
         }),
         'utf8',
       );

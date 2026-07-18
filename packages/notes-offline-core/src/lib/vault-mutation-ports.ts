@@ -54,8 +54,7 @@ export type PatchNoteMutationInput = {
 };
 
 export type PatchNoteMutationResult =
-  | { outcome: 'patched-remote'; note: Note }
-  | { outcome: 'patched-local' };
+  { outcome: 'patched-remote'; note: Note } | { outcome: 'patched-local' };
 
 /** Local store seam for note mutations (extends outbox drain surface). */
 export interface LocalNoteMutationStore extends LocalNoteOutboxStore {
@@ -84,8 +83,7 @@ export type CreateNoteMutationResult =
   | { outcome: 'created-local'; noteId: string };
 
 export type DeleteNoteMutationResult =
-  | { outcome: 'deleted-remote' }
-  | { outcome: 'queued-local-delete' };
+  { outcome: 'deleted-remote' } | { outcome: 'queued-local-delete' };
 
 export type VaultMutatorDeps = {
   local: LocalNoteMutationStore;

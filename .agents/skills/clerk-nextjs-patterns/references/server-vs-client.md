@@ -22,7 +22,7 @@ const { userId } = await auth();
 import { auth, currentUser } from '@clerk/nextjs/server';
 
 // Client Components
-'use client';
+('use client');
 import { useAuth, useUser } from '@clerk/nextjs';
 ```
 
@@ -78,7 +78,7 @@ export default async function ProfilePage() {
 }
 
 // Client: handle interactions
-'use client';
+('use client');
 import { useUser } from '@clerk/nextjs';
 
 export function ProfileForm({ initialData }) {
@@ -96,7 +96,7 @@ import { Show } from '@clerk/nextjs';
 
 <Show when="signed-in" fallback={<div>Please sign in</div>}>
   <Dashboard />
-</Show>
+</Show>;
 ```
 
 > **Core 2 ONLY (skip if current SDK):** Use `<SignedIn>` and `<SignedOut>` components instead of `<Show>`.

@@ -20,11 +20,7 @@ export const NOTE_THEME_OPTIONS = [
 
 /** Logical font roles shared by web Tailwind classes and native fontFamily. */
 export type NotaSurfaceFontRole =
-  | 'inter'
-  | 'instrumentSerif'
-  | 'geistSans'
-  | 'sourceSerif4'
-  | 'systemMono';
+  'inter' | 'instrumentSerif' | 'geistSans' | 'sourceSerif4' | 'systemMono';
 
 export type NotaSurfaceMeasure = 'standard' | 'narrow' | 'wide';
 

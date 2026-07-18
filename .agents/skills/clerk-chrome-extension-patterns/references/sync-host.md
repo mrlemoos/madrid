@@ -3,6 +3,7 @@
 ## When to Use
 
 Use `syncHost` when you need:
+
 - OAuth (Google, GitHub, etc.)
 - SAML
 - Email magic links
@@ -19,6 +20,7 @@ The extension reads Clerk's session cookie from your web app's domain using `hos
 Use separate files for dev vs prod so Plasmo passes the right values to each build.
 
 `.env.development`:
+
 ```
 PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
 CLERK_FRONTEND_API=https://your-app.clerk.accounts.dev
@@ -26,6 +28,7 @@ PLASMO_PUBLIC_CLERK_SYNC_HOST=http://localhost
 ```
 
 `.env.production`:
+
 ```
 PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
 CLERK_FRONTEND_API=https://clerk.your-domain.com
@@ -37,30 +40,24 @@ The production value of `PLASMO_PUBLIC_CLERK_SYNC_HOST` is the domain your Clerk
 ## Step 2 -- ClerkProvider with syncHost
 
 ```tsx
-import { ClerkProvider, Show, UserButton } from '@clerk/chrome-extension'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { ClerkProvider, Show, UserButton } from '@clerk/chrome-extension';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-const PUBLISHABLE_KEY = process.env.PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY
-const SYNC_HOST = process.env.PLASMO_PUBLIC_CLERK_SYNC_HOST
+const PUBLISHABLE_KEY = process.env.PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const SYNC_HOST = process.env.PLASMO_PUBLIC_CLERK_SYNC_HOST;
 
 if (!PUBLISHABLE_KEY || !SYNC_HOST) {
-  throw new Error('Missing PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY or PLASMO_PUBLIC_CLERK_SYNC_HOST')
+  throw new Error('Missing PLASMO_PUBLIC_CLERK_PUBLISHABLE_KEY or PLASMO_PUBLIC_CLERK_SYNC_HOST');
 }
 
 export function RootLayout() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-    <ClerkProvider
-      publishableKey={PUBLISHABLE_KEY}
-      syncHost={SYNC_HOST}
-      afterSignOutUrl="/"
-      routerPush={(to) => navigate(to)}
-      routerReplace={(to) => navigate(to, { replace: true })}
-    >
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} syncHost={SYNC_HOST} afterSignOutUrl="/" routerPush={(to) => navigate(to)} routerReplace={(to) => navigate(to, { replace: true })}>
       <Outlet />
     </ClerkProvider>
-  )
+  );
 }
 ```
 
@@ -73,10 +70,7 @@ In `package.json`, configure `host_permissions` to grant the extension access to
   "manifest": {
     "key": "$CRX_PUBLIC_KEY",
     "permissions": ["cookies", "storage"],
-    "host_permissions": [
-      "$PLASMO_PUBLIC_CLERK_SYNC_HOST/*",
-      "$CLERK_FRONTEND_API/*"
-    ]
+    "host_permissions": ["$PLASMO_PUBLIC_CLERK_SYNC_HOST/*", "$CLERK_FRONTEND_API/*"]
   }
 }
 ```
@@ -103,7 +97,7 @@ If your extension ID changes (unstable key), you must re-run this command. Confi
 When using `syncHost`, your web app may have OAuth enabled but the popup itself can't do OAuth flows. Hide those buttons in the popup:
 
 ```tsx
-import { SignIn, SignUp } from '@clerk/chrome-extension'
+import { SignIn, SignUp } from '@clerk/chrome-extension';
 
 function SignInPage() {
   return (
@@ -115,7 +109,7 @@ function SignInPage() {
         },
       }}
     />
-  )
+  );
 }
 
 function SignUpPage() {
@@ -128,7 +122,7 @@ function SignUpPage() {
         },
       }}
     />
-  )
+  );
 }
 ```
 

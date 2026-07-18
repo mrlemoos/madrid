@@ -19,12 +19,12 @@ and scale.
 
 ## Tunable variables
 
-| Variable | Default | Notes |
-| --- | --- | --- |
-| `--icon-swap-dur` | `200ms` | sourced from `--p5-dur` |
-| `--icon-swap-blur` | `2px` | sourced from `--p5-blur` |
-| `--icon-swap-start-scale` | `0.25` | sourced from `--p5-start-scale` |
-| `--icon-swap-ease` | `ease-in-out` | sourced from `--p5-ease` |
+| Variable                  | Default       | Notes                           |
+| ------------------------- | ------------- | ------------------------------- |
+| `--icon-swap-dur`         | `200ms`       | sourced from `--p5-dur`         |
+| `--icon-swap-blur`        | `2px`         | sourced from `--p5-blur`        |
+| `--icon-swap-start-scale` | `0.25`        | sourced from `--p5-start-scale` |
+| `--icon-swap-ease`        | `ease-in-out` | sourced from `--p5-ease`        |
 
 The `:root` defaults below match the live tuning on [transitions.dev](https://transitions.dev). Drop them into your global stylesheet once — every transition in this skill reads from semantic names like these, so multiple transitions can share a single `:root` block.
 
@@ -47,26 +47,28 @@ The `:root` defaults below match the live tuning on [transitions.dev](https://tr
 .t-icon-swap .t-icon {
   grid-area: 1 / 1;
   transition:
-    opacity   var(--icon-swap-dur) var(--icon-swap-ease),
-    filter    var(--icon-swap-dur) var(--icon-swap-ease),
+    opacity var(--icon-swap-dur) var(--icon-swap-ease),
+    filter var(--icon-swap-dur) var(--icon-swap-ease),
     transform var(--icon-swap-dur) var(--icon-swap-ease);
   will-change: opacity, filter, transform;
 }
-.t-icon-swap[data-state="a"] .t-icon[data-icon="a"],
-.t-icon-swap[data-state="b"] .t-icon[data-icon="b"] {
+.t-icon-swap[data-state='a'] .t-icon[data-icon='a'],
+.t-icon-swap[data-state='b'] .t-icon[data-icon='b'] {
   opacity: 1;
   filter: blur(0);
   transform: scale(1);
 }
-.t-icon-swap[data-state="a"] .t-icon[data-icon="b"],
-.t-icon-swap[data-state="b"] .t-icon[data-icon="a"] {
+.t-icon-swap[data-state='a'] .t-icon[data-icon='b'],
+.t-icon-swap[data-state='b'] .t-icon[data-icon='a'] {
   opacity: 0;
   filter: blur(var(--icon-swap-blur));
   transform: scale(var(--icon-swap-start-scale));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .t-icon-swap .t-icon { transition: none !important; }
+  .t-icon-swap .t-icon {
+    transition: none !important;
+  }
 }
 ```
 
@@ -75,4 +77,3 @@ The `@media (prefers-reduced-motion: reduce)` guard at the bottom of the snippet
 ## JavaScript orchestration
 
 None — pure CSS. Toggle the documented HTML attributes or class names from whatever already drives state in your app.
-

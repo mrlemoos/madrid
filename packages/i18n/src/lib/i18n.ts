@@ -386,9 +386,7 @@ function getNavigator(): {
 } | null {
   try {
     const nav = globalThis.navigator as
-      | { languages: readonly string[]; language: string }
-      | undefined
-      | null;
+      { languages: readonly string[]; language: string } | undefined | null;
     return nav ?? null;
   } catch {
     return null;
