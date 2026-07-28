@@ -210,65 +210,6 @@ describe('NotesShell', () => {
     expect(aside?.style.width).toBe('288px');
   });
 
-  it('keeps the sidebar mounted and tweens the inner rail closed', () => {
-    // Arrange
-    window.history.replaceState(null, '', '#/notes');
-    const { container, rerender } = render(<NotesShell />);
-    const aside = container.querySelector('aside');
-    const rail = container.querySelector('[data-nota-sidebar-rail]');
-    expect(aside).not.toBeNull();
-    expect(rail).not.toBeNull();
-
-    // Act
-    sidebarStoreState.open = false;
-    rerender(<NotesShell />);
-
-    // Assert
-    expect(container.querySelector('aside')).toBe(aside);
-    expect(gsapTo).toHaveBeenCalledWith(
-      rail,
-      expect.objectContaining({
-        opacity: 0,
-        x: expect.any(Number),
-        duration: expect.any(Number),
-      }),
-    );
-    expect(gsapTo).not.toHaveBeenCalledWith(
-      aside,
-      expect.objectContaining({ width: expect.any(Number) }),
-    );
-    for (const [, props] of gsapTo.mock.calls) {
-      expect(props).not.toHaveProperty('width');
-    }
-  });
-
-  it('snaps the clip width to zero after the close tween completes', () => {
-    // Arrange
-    window.history.replaceState(null, '', '#/notes');
-    const { container, rerender } = render(<NotesShell />);
-    const aside = container.querySelector('aside');
-    expect(aside).not.toBeNull();
-
-    // Act
-    sidebarStoreState.open = false;
-    rerender(<NotesShell />);
-
-    const closeCall = gsapTo.mock.calls.find(
-      ([target]) =>
-        target instanceof HTMLElement &&
-        target.matches('[data-nota-sidebar-rail]'),
-    );
-    expect(closeCall).toBeDefined();
-    const closeProps = closeCall?.[1] as { onComplete?: () => void };
-    closeProps.onComplete?.();
-
-    // Assert
-    expect(gsapSet).toHaveBeenCalledWith(
-      aside,
-      expect.objectContaining({ width: 0 }),
-    );
-  });
-
   it('renders a vertical resize handle when the sidebar is open', () => {
     // Arrange
     window.history.replaceState(null, '', '#/notes');

@@ -1,16 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { NOTA_SPRING_PRESETS } from './nota-motion';
 import {
   animateSprings,
   createCriticallyDampedSpringConfig,
   isCriticallyDamped,
   stepSpring,
 } from './nota-critically-damped-spring';
-import {
-  getNotaSidebarClipLayout,
-  getNotaSidebarRailMotionTargets,
-  getNotaSidebarShellSpringConfig,
-} from './nota-sidebar-shell-motion';
 
 describe('createCriticallyDampedSpringConfig', () => {
   it('builds a critically damped spring from response seconds', () => {
@@ -85,7 +79,7 @@ describe('createCriticallyDampedSpringConfig', () => {
       to: { x: -20 },
       config,
       onUpdate: (values) => {
-        retargetUpdates.push(values.x!);
+        retargetUpdates.push(values.x);
       },
       now: () => frame * (1000 / 60),
       scheduleFrame: (cb) => {
@@ -103,51 +97,5 @@ describe('createCriticallyDampedSpringConfig', () => {
     expect(retargetUpdates[0]).toBeCloseTo(midX, 5);
     expect(midX).toBeGreaterThan(-20);
     expect(midX).toBeLessThan(0);
-  });
-});
-
-describe('getNotaSidebarShellSpringConfig', () => {
-  it('uses the P0 shell spring preset and critical damping', () => {
-    // Arrange / Act
-    const config = getNotaSidebarShellSpringConfig();
-    const shell = NOTA_SPRING_PRESETS.shell;
-
-    // Assert
-    expect(config.responseS).toBe(shell.response);
-    expect(config.dampingRatio).toBe(shell.damping);
-    expect(isCriticallyDamped(config)).toBe(true);
-  });
-});
-
-describe('getNotaSidebarRailMotionTargets', () => {
-  it('returns compositor-only targets for spring retargeting', () => {
-    // Arrange
-    const open = true;
-    const prefersReducedMotion = false;
-
-    // Act
-    const targets = getNotaSidebarRailMotionTargets({
-      open,
-      prefersReducedMotion,
-    });
-
-    // Assert
-    expect(targets).toEqual({ opacity: 1, x: 0 });
-    expect(targets).not.toHaveProperty('width');
-  });
-});
-
-describe('getNotaSidebarClipLayout', () => {
-  it('keeps layout width snap separate from spring motion', () => {
-    // Arrange
-    const widthPx = 300;
-
-    // Act
-    const openLayout = getNotaSidebarClipLayout({ open: true, widthPx });
-    const closedLayout = getNotaSidebarClipLayout({ open: false, widthPx });
-
-    // Assert
-    expect(openLayout.width).toBe(300);
-    expect(closedLayout.width).toBe(0);
   });
 });

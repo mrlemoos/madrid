@@ -1,7 +1,6 @@
 import {
   useEffect,
   useLayoutEffect,
-  useRef,
   useState,
   lazy,
   Suspense,
@@ -35,16 +34,7 @@ import { useSettingsShortcut } from '../lib/use-settings-shortcut';
 import { useTodaysNoteShortcut } from '../lib/use-todays-note-shortcut';
 import { useSyncUserPreferences } from '../lib/use-sync-user-preferences';
 import { useNotaPreferencesStore } from '../stores/nota-preferences';
-import { gsap, useGSAP, usePrefersReducedMotion } from '@/lib/nota-motion';
-import {
-  animateSprings,
-  type SpringAnimationHandle,
-} from '@/lib/nota-critically-damped-spring';
-import {
-  getNotaSidebarClipLayout,
-  getNotaSidebarRailMotionTargets,
-  getNotaSidebarShellSpringConfig,
-} from '@/lib/nota-sidebar-shell-motion';
+import { useNotesSidebarShellMotion } from '@/lib/use-notes-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@/lib/use-notes-sidebar-resize';
 import { hasJournalNotes } from '@/lib/journal-notes';
 import {
@@ -110,24 +100,23 @@ export function NotesShell(): JSX.Element {
     setUserPreferencesInState,
   } = useNotesData();
   const { open, widthPx, setSidebarWidthPx } = useNotesSidebarStore();
-  const asideRef = useRef<HTMLElement>(null);
-  const sidebarRailRef = useRef<HTMLDivElement>(null);
-  const sidebarWidthPxRef = useRef(widthPx);
-  sidebarWidthPxRef.current = widthPx;
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const sidebarMotionReadyRef = useRef(false);
-  const sidebarSpringRef = useRef<SpringAnimationHandle | null>(null);
-  const sidebarSpringVelocityRef = useRef({ x: 0, opacity: 0 });
+  const { user } = useRootLoaderData();
+  const shellReady = !loading;
+  const paywalled = Boolean(user && shellReady && !notaProEntitled);
+  const showVaultLoading = Boolean(user?.id && loading);
+  const sidebarChromeMounted = !paywalled && !showVaultLoading;
+  const { asideRef, railRef } = useNotesSidebarShellMotion({
+    open,
+    widthPx,
+    mounted: sidebarChromeMounted,
+  });
   const { onResizePointerDown } = useNotesSidebarResize({
     asideRef,
-    railRef: sidebarRailRef,
+    railRef,
     open,
     widthPx,
     setSidebarWidthPx,
   });
-  const { user } = useRootLoaderData();
-  const shellReady = !loading;
-  const paywalled = Boolean(user && shellReady && !notaProEntitled);
   const { registerScrollRoot, resetSticky, sticky } = useStickyDocTitle();
   const isElectron = useIsElectron();
   const openTodaysNoteShortcut = useNotaPreferencesStore(
@@ -212,115 +201,6 @@ export function NotesShell(): JSX.Element {
       resetSticky();
     };
   }, [registerScrollRoot, resetSticky]);
-
-  const showVaultLoading = Boolean(user?.id && loading);
-  const sidebarChromeMounted = !paywalled && !showVaultLoading;
-
-  useEffect(() => {
-    if (!sidebarChromeMounted) {
-      sidebarMotionReadyRef.current = false;
-      sidebarSpringRef.current?.stop();
-      sidebarSpringRef.current = null;
-      sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
-    }
-  }, [sidebarChromeMounted]);
-
-  useLayoutEffect(() => {
-    const clip = asideRef.current;
-    if (!clip || !sidebarChromeMounted || !open) {
-      return;
-    }
-    gsap.set(clip, getNotaSidebarClipLayout({ open: true, widthPx }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- widthPx + mount: not open toggle
-  }, [sidebarChromeMounted, widthPx]);
-
-  useGSAP(
-    () => {
-      const clip = asideRef.current;
-      const rail = sidebarRailRef.current;
-      if (!clip || !rail) {
-        return;
-      }
-
-      const clipLayout = getNotaSidebarClipLayout({
-        open,
-        widthPx: sidebarWidthPxRef.current,
-      });
-      const railTargets = getNotaSidebarRailMotionTargets({
-        open,
-        prefersReducedMotion,
-      });
-
-      if (prefersReducedMotion || !sidebarMotionReadyRef.current) {
-        sidebarSpringRef.current?.stop();
-        sidebarSpringRef.current = null;
-        sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
-        sidebarMotionReadyRef.current = true;
-        gsap.set(clip, clipLayout);
-        gsap.set(rail, railTargets);
-        return;
-      }
-
-      const liveX = Number(gsap.getProperty(rail, 'x'));
-      const liveOpacity = Number(gsap.getProperty(rail, 'opacity'));
-      const fromX = Number.isFinite(liveX) ? liveX : railTargets.x;
-      const fromOpacity = Number.isFinite(liveOpacity)
-        ? liveOpacity
-        : railTargets.opacity;
-
-      const previous = sidebarSpringRef.current;
-      const velocityX =
-        previous?.getVelocity('x') ?? sidebarSpringVelocityRef.current.x;
-      const velocityOpacity =
-        previous?.getVelocity('opacity') ??
-        sidebarSpringVelocityRef.current.opacity;
-      previous?.stop();
-      sidebarSpringRef.current = null;
-
-      if (open) {
-        gsap.set(clip, clipLayout);
-      }
-
-      const springConfig = getNotaSidebarShellSpringConfig();
-      sidebarSpringRef.current = animateSprings({
-        from: {
-          x: { value: fromX, velocity: velocityX },
-          opacity: { value: fromOpacity, velocity: velocityOpacity },
-        },
-        to: {
-          x: railTargets.x,
-          opacity: railTargets.opacity,
-        },
-        config: springConfig,
-        onUpdate: (values) => {
-          gsap.set(rail, { x: values.x, opacity: values.opacity });
-          sidebarSpringVelocityRef.current = {
-            x: sidebarSpringRef.current?.getVelocity('x') ?? 0,
-            opacity: sidebarSpringRef.current?.getVelocity('opacity') ?? 0,
-          };
-        },
-        onComplete: () => {
-          sidebarSpringRef.current = null;
-          sidebarSpringVelocityRef.current = { x: 0, opacity: 0 };
-          if (!open) {
-            gsap.set(
-              clip,
-              getNotaSidebarClipLayout({
-                open: false,
-                widthPx: sidebarWidthPxRef.current,
-              }),
-            );
-          }
-        },
-      });
-
-      return () => {
-        sidebarSpringRef.current?.stop();
-        sidebarSpringRef.current = null;
-      };
-    },
-    { dependencies: [open, prefersReducedMotion, sidebarChromeMounted] },
-  );
 
   const onCreateNote = (): void => {
     if (!user?.id) {
@@ -410,7 +290,7 @@ export function NotesShell(): JSX.Element {
               aria-hidden={!open}
             >
               <div
-                ref={sidebarRailRef}
+                ref={railRef}
                 data-nota-sidebar-rail
                 className="flex h-full min-h-0 w-full min-w-0 flex-col"
                 style={{ width: widthPx }}
