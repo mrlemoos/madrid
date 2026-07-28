@@ -16,11 +16,10 @@ import {
 import {
   isLikelyOnline,
   listStoredNotes,
-  mergeNoteLists,
   putServerNoteIfNotDirty,
-  storedNoteToListRow,
 } from '@/lib/notes-offline';
 import { syncServerNotesToIdbInChunks } from '../lib/sync-server-notes-to-idb';
+import { loadVault, type VaultLoadPorts } from '../lib/notes-vault-load';
 import { listFolders } from '../models/folders';
 import { listNotes } from '../models/notes';
 import { getUserPreferences } from '../models/user-preferences';
@@ -166,148 +165,69 @@ export function NotesDataProvider({ children }: { children: ReactNode }) {
       const silent = options?.silent === true;
 
       const perform = async (): Promise<void> => {
-        if (!userId) {
+        if (userId) {
+          await waitForClerkBridge();
           if (!silent) {
-            setLoading(false);
+            setLoading(true);
           }
-          setNotaProEntitled(false);
-          setNotes([]);
-          setFolders([]);
-          setUserPreferences(null);
-          return;
+          setLoadError(undefined);
         }
 
-        await waitForClerkBridge();
-
-        if (!silent) {
-          setLoading(true);
-        }
-        setLoadError(undefined);
-
-        const defaultPrefs = (): UserPreferences => ({
-          user_id: userId,
-          locale: null,
-          open_todays_note_shortcut: false,
-          show_note_backlinks: true,
-          semantic_search_enabled: true,
-          emoji_replacer_enabled: true,
-          welcome_seeded: false,
-          delete_empty_folders: true,
-          updated_at: new Date(0).toISOString(),
-        });
-
-        const bootstrapVaultFromIdb = async (): Promise<void> => {
-          const stored = await listStoredNotes(userId);
-          const active = stored.filter((r) => !r.pending_delete);
-          const merged = active
-            .map(storedNoteToListRow)
-            .sort((a, b) => b.updated_at.localeCompare(a.updated_at));
-          setNotes(merged);
-          setFolders([]);
-          setUserPreferences(null);
-        };
-
-        const recoverAfterEntitlementFetchFailure = async (): Promise<void> => {
-          const online = isLikelyOnline();
-          const sessionSaysEntitled = readNotaServerEntitledSession();
-          if (!online) {
-            setLoadError(undefined);
-            setNotaProEntitled(sessionSaysEntitled);
-            if (sessionSaysEntitled) {
-              await bootstrapVaultFromIdb();
-            } else {
-              setNotes([]);
-              setFolders([]);
-              setUserPreferences(null);
-            }
-            return;
-          }
-          if (sessionSaysEntitled) {
-            setNotaProEntitled(true);
-            await bootstrapVaultFromIdb();
-            setLoadError('Failed to load notes');
-          } else {
-            setNotaProEntitled(false);
-            setNotes([]);
-            setFolders([]);
-            setUserPreferences(null);
-            setLoadError('Failed to load notes');
-          }
+        const ports: VaultLoadPorts = {
+          entitlement: {
+            fetchEntitled: async () => {
+              const res = await fetchNotaProEntitled();
+              if (!res.ok) {
+                throw new Error(`Entitlement fetch failed: ${res.status}`);
+              }
+              const json = (await res.json()) as { entitled?: boolean };
+              return json.entitled === true;
+            },
+            readSession: readNotaServerEntitledSession,
+            syncSession: syncNotaServerEntitledSession,
+          },
+          remote: {
+            listNotes: () => listNotes(getBrowserClient()),
+            listFolders: () => listFolders(getBrowserClient()),
+            getPrefs: (uid) => getUserPreferences(getBrowserClient(), uid),
+          },
+          local: {
+            listStoredNotes,
+            syncServerNotes: (uid, serverNotes) =>
+              syncServerNotesToIdbInChunks(
+                uid,
+                serverNotes,
+                putServerNoteIfNotDirty,
+              ),
+          },
+          isLikelyOnline,
         };
 
         try {
-          let entRes: Response;
-          try {
-            entRes = await fetchNotaProEntitled();
-          } catch {
-            await recoverAfterEntitlementFetchFailure();
-            if (!silent) {
-              setLoading(false);
-            }
-            return;
+          const result = await loadVault({ userId, ports });
+          switch (result.kind) {
+            case 'signed-out':
+            case 'not-entitled':
+              setNotaProEntitled(false);
+              setNotes([]);
+              setFolders([]);
+              setUserPreferences(null);
+              break;
+            case 'loaded':
+              setNotaProEntitled(true);
+              setNotes(result.notes);
+              setFolders(result.folders);
+              setUserPreferences(result.prefs);
+              setLoadError(result.loadError);
+              break;
+            case 'recovered':
+              setNotaProEntitled(result.entitled);
+              setNotes(result.notes);
+              setFolders([]);
+              setUserPreferences(null);
+              setLoadError(result.loadError);
+              break;
           }
-
-          if (!entRes.ok) {
-            await recoverAfterEntitlementFetchFailure();
-            if (!silent) {
-              setLoading(false);
-            }
-            return;
-          }
-
-          const entJson = (await entRes.json()) as { entitled?: boolean };
-          const entitled = entJson.entitled === true;
-          syncNotaServerEntitledSession(entitled);
-
-          if (!entitled) {
-            setNotaProEntitled(false);
-            setNotes([]);
-            setFolders([]);
-            setUserPreferences(null);
-            if (!silent) {
-              setLoading(false);
-            }
-            return;
-          }
-
-          setNotaProEntitled(true);
-
-          const client = getBrowserClient();
-          let serverNotes: Note[] = [];
-          try {
-            serverNotes = await listNotes(client);
-          } catch (e) {
-            console.error('Failed to load notes:', e);
-            setLoadError('Failed to load notes');
-          }
-
-          let serverFolders: Folder[] = [];
-          try {
-            serverFolders = await listFolders(client);
-          } catch (e) {
-            console.error('Failed to load folders:', e);
-          }
-          setFolders(serverFolders);
-
-          let prefs: UserPreferences;
-          try {
-            prefs = await getUserPreferences(client, userId);
-          } catch (e) {
-            console.error('Failed to load user preferences:', e);
-            prefs = defaultPrefs();
-          }
-          setUserPreferences(prefs);
-
-          await syncServerNotesToIdbInChunks(
-            userId,
-            serverNotes,
-            putServerNoteIfNotDirty,
-          );
-          const stored = await listStoredNotes(userId);
-          setNotes(mergeNoteLists(serverNotes, stored));
-        } catch (e) {
-          console.error(e);
-          await recoverAfterEntitlementFetchFailure();
         } finally {
           if (!silent) {
             setLoading(false);
