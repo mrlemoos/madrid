@@ -67,6 +67,7 @@ import { FolderCreateDialog } from './folder-create-dialog';
 import { NotesSidebarList } from './notes-sidebar-list';
 import { AudioToNoteDock } from './audio-to-note-dock';
 import { ElectronMenubarBridge } from './electron-menubar-bridge';
+import { ElectronTrafficLightsController } from './electron-traffic-lights-controller';
 import { StudyRecordingUploadWarningBanner } from './study-recording-upload-warning-banner';
 import { useAudioNotePendingDrain } from '../hooks/use-audio-note-pending-drain';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
@@ -359,6 +360,7 @@ export function NotesShell(): JSX.Element {
   return (
     <>
       <ElectronMenubarBridge />
+      <ElectronTrafficLightsController />
       {sticky.visible && sticky.label ? (
         <div
           className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-center pt-[max(0.5rem,env(safe-area-inset-top))]"

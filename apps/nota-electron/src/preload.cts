@@ -7,6 +7,8 @@ const NOTA_UPDATES_QUIT_INSTALL_CHANNEL = 'nota-updates:quit-install';
 
 const NOTA_MENUBAR_ACTION_CHANNEL = 'nota-menubar-action';
 
+const NOTA_WINDOW_BUTTONS_SET_VISIBLE_CHANNEL = 'nota-window-buttons:set-visible';
+
 const pending: unknown[] = [];
 const listeners = new Set<(payload: unknown) => void>();
 
@@ -77,5 +79,9 @@ contextBridge.exposeInMainWorld('nota', {
 
   quitAndInstall(): Promise<boolean> {
     return ipcRenderer.invoke(NOTA_UPDATES_QUIT_INSTALL_CHANNEL);
+  },
+
+  setWindowButtonVisibility(visible: boolean): Promise<void> {
+    return ipcRenderer.invoke(NOTA_WINDOW_BUTTONS_SET_VISIBLE_CHANNEL, visible);
   },
 });

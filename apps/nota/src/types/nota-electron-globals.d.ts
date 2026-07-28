@@ -11,6 +11,8 @@ declare global {
         reason?: 'development' | 'not-initialised' | 'check-failed';
       }>;
       quitAndInstall(): Promise<boolean>;
+      /** macOS only: show/hide the native traffic-light buttons (no-op elsewhere). */
+      setWindowButtonVisibility?(visible: boolean): Promise<void>;
     };
   }
 }

@@ -3,6 +3,7 @@ import {
   BrowserWindow,
   clipboard,
   dialog,
+  ipcMain,
   Menu,
   nativeImage,
   nativeTheme,
@@ -48,6 +49,20 @@ const isDarwin = process.platform === 'darwin';
 
 /** IPC channel; keep in sync with `apps/nota-electron/src/preload.cts`. */
 const NOTA_MENUBAR_ACTION_CHANNEL = 'nota-menubar-action';
+
+/** IPC channel; keep in sync with `apps/nota-electron/src/preload.cts`. */
+const NOTA_WINDOW_BUTTONS_SET_VISIBLE_CHANNEL =
+  'nota-window-buttons:set-visible';
+
+ipcMain.handle(
+  NOTA_WINDOW_BUTTONS_SET_VISIBLE_CHANNEL,
+  (_event, visible: unknown) => {
+    if (!isDarwin || !mainWindow || mainWindow.isDestroyed()) {
+      return;
+    }
+    mainWindow.setWindowButtonVisibility(visible === true);
+  },
+);
 
 /** Same cap as `IMAGE_MAX_BYTES` in nota (`pdf-attachment-client`). */
 const CLIPBOARD_IMAGE_MAX_BYTES = 25 * 1024 * 1024;
