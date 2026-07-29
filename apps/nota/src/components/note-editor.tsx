@@ -24,9 +24,8 @@ import {
   useNotesDataMeta,
   useNotesDataActions,
 } from '../context/notes-data-context';
-import { editorDraftContext } from '../lib/note-editor-draft-context';
-import { noteAfterPatchMutation } from '../lib/note-patch-result';
 import { vaultMutator } from '../lib/notes-vault-runtime';
+import { createNoteFieldSaver } from '../lib/save-note-fields';
 import type { Json, Note, NoteAttachment } from '~/types/database.types';
 import { NoteLayoutMenu } from './note-layout-menu';
 import {
@@ -177,6 +176,21 @@ function NoteEditorImpl({
   onNoteUpdatedRef.current = onNoteUpdated;
   userIdRef.current = user?.id;
   notaProEntitledRef.current = notaProEntitled;
+
+  const saveNoteFields = useMemo(
+    () =>
+      createNoteFieldSaver({
+        patchNote: (userId, input) => vaultMutator.patchNote(userId, input),
+        getNote: () => noteRef.current,
+        getUserId: () => userIdRef.current,
+        getTitle: () => titleRef.current,
+        getPendingContent: () => pendingContentRef.current,
+        getEntitled: () => notaProEntitledRef.current,
+        getOnNoteUpdated: () => onNoteUpdatedRef.current,
+        setSaveStatus,
+      }),
+    [],
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -332,35 +346,18 @@ function NoteEditorImpl({
         if (!user?.id) {
           return;
         }
-        setSaveStatus('saving');
-        try {
-          const result = await vaultMutator.patchNote(user.id, {
-            noteId: note.id,
-            fields: { title: next },
-            draftContext: editorDraftContext(noteRef.current, {
-              title: next,
-              content: lastSavedContent.current as Json,
-            }),
-            allowRemote: notaProEntitledRef.current,
-          });
-          setSaveStatus('saved');
+        const result = await saveNoteFields({
+          fields: { title: next },
+          draftContent: lastSavedContent.current,
+          fallbackContent: lastSavedContent.current,
+          errorMessage: 'Failed to save title:',
+        });
+        if (result.ok) {
           lastSavedTitle.current = next;
-          onNoteUpdated?.(
-            noteAfterPatchMutation(
-              result,
-              noteRef.current,
-              { title: next },
-              pendingContentRef.current,
-              lastSavedContent.current as Json,
-            ),
-          );
-        } catch (error) {
-          console.error('Failed to save title:', error);
-          setSaveStatus('error');
         }
       })();
     }, SAVE_DEBOUNCE_MS);
-  }, [note, onNoteUpdated, user?.id]);
+  }, [saveNoteFields, user?.id]);
 
   const handleTitleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -470,37 +467,19 @@ function NoteEditorImpl({
         if (!user?.id) {
           return;
         }
-        setSaveStatus('saving');
-        try {
-          const titleForRow = persistedDisplayTitle(titleRef.current);
-          const result = await vaultMutator.patchNote(user.id, {
-            noteId: note.id,
-            fields: { content: toSave as Json },
-            draftContext: editorDraftContext(noteRef.current, {
-              title: titleForRow,
-              content: toSave as Json,
-            }),
-            allowRemote: notaProEntitledRef.current,
-          });
-          const mergedBody = (pendingContentRef.current ?? toSave) as Json;
-          lastSavedContent.current = mergedBody;
-          setSaveStatus('saved');
-          onNoteUpdated?.(
-            noteAfterPatchMutation(
-              result,
-              noteRef.current,
-              { title: titleForRow, content: mergedBody },
-              pendingContentRef.current,
-              toSave as Json,
-            ),
-          );
-        } catch (error) {
-          console.error('Failed to save note:', error);
-          setSaveStatus('error');
+        const result = await saveNoteFields({
+          fields: { content: toSave as Json },
+          draftContent: toSave as Json,
+          fallbackContent: toSave as Json,
+          errorMessage: 'Failed to save note:',
+        });
+        if (result.ok) {
+          lastSavedContent.current = (pendingContentRef.current ??
+            toSave) as Json;
         }
       })();
     }, SAVE_DEBOUNCE_MS);
-  }, [note, onNoteUpdated, user?.id]);
+  }, [saveNoteFields, user?.id]);
 
   const handleUpdate = useCallback(
     (content: unknown) => {
@@ -514,79 +493,30 @@ function NoteEditorImpl({
 
   const persistEditorSettings = useCallback(
     async (next: NoteEditorSettings) => {
-      const userId = userIdRef.current;
-      if (!userId) {
-        return;
-      }
-      const n = noteRef.current;
       const json = noteEditorSettingsToJson(next);
-      const titleForRow = persistedDisplayTitle(titleRef.current);
-      const contentForRow = (pendingContentRef.current ??
-        lastSavedContent.current) as Json;
-      setSaveStatus('saving');
-      try {
-        const result = await vaultMutator.patchNote(userId, {
-          noteId: n.id,
-          fields: { editor_settings: json },
-          draftContext: editorDraftContext(n, {
-            title: titleForRow,
-            content: contentForRow,
-            editor_settings: json,
-          }),
-          allowRemote: notaProEntitledRef.current,
-        });
-        onNoteUpdatedRef.current?.(
-          noteAfterPatchMutation(
-            result,
-            n,
-            { editor_settings: json },
-            pendingContentRef.current,
-            lastSavedContent.current as Json,
-          ),
-        );
-        setSaveStatus('saved');
-      } catch (error) {
-        console.error('Failed to save note layout:', error);
-        setSaveStatus('error');
-      }
+      await saveNoteFields({
+        fields: { editor_settings: json },
+        draftContent: (pendingContentRef.current ??
+          lastSavedContent.current) as Json,
+        fallbackContent: lastSavedContent.current,
+        errorMessage: 'Failed to save note layout:',
+      });
     },
-    [],
+    [saveNoteFields],
   );
 
-  const persistBanner = useCallback(async (attachmentId: string | null) => {
-    const userId = userIdRef.current;
-    if (!userId) return;
-    const n = noteRef.current;
-    const titleForRow = persistedDisplayTitle(titleRef.current);
-    const contentForRow = (pendingContentRef.current ??
-      lastSavedContent.current) as Json;
-    setSaveStatus('saving');
-    try {
-      const result = await vaultMutator.patchNote(userId, {
-        noteId: n.id,
+  const persistBanner = useCallback(
+    async (attachmentId: string | null) => {
+      await saveNoteFields({
         fields: { banner_attachment_id: attachmentId },
-        draftContext: editorDraftContext(n, {
-          title: titleForRow,
-          content: contentForRow,
-          banner_attachment_id: attachmentId,
-        }),
-        allowRemote: notaProEntitledRef.current,
+        draftContent: (pendingContentRef.current ??
+          lastSavedContent.current) as Json,
+        fallbackContent: lastSavedContent.current,
+        errorMessage: 'Failed to save banner:',
       });
-      onNoteUpdatedRef.current?.(
-        noteAfterPatchMutation(
-          result,
-          n,
-          { banner_attachment_id: attachmentId },
-          pendingContentRef.current,
-          lastSavedContent.current as Json,
-        ),
-      );
-      setSaveStatus('saved');
-    } catch (error) {
-      console.error('Failed to save banner:', error);
-      setSaveStatus('error');
-    }
-  }, []);
+    },
+    [saveNoteFields],
+  );
 
   const handleBannerUpload = useCallback(
     async (file: File): Promise<string> => {
