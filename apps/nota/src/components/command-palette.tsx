@@ -3,6 +3,7 @@ import {
   useEffect,
   useEffectEvent,
   useMemo,
+  useReducer,
   useRef,
   useState,
   type ComponentProps,
@@ -48,7 +49,6 @@ import {
   parseMovePickNoteId,
   readHighlightedCmdkItemValue,
   readMovePickNoteIdFromHighlightedItem,
-  toggleIdInSet,
 } from '../lib/move-pick-helpers';
 import type { Folder } from '~/types/database.types';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
@@ -71,6 +71,14 @@ import { useTheme } from '@nota/web-design/theme';
 import { NotaTintCircle } from '@nota/web-design/nota-tint-circle';
 import { CommandPaletteSemanticSync } from './command-palette-semantic-sync';
 import { NOTA_CMDK_ITEM_CLASS } from '@/lib/nota-interaction';
+import {
+  initialPaletteMode,
+  moveCommandGroupHeading as selectMoveHeading,
+  moveTargetNoteIds as selectMoveTargetNoteIds,
+  paletteModeReducer,
+} from '@/lib/palette-mode';
+
+const PALETTE_EMPTY_ID_SET: ReadonlySet<string> = new Set();
 
 const groupHeadingClassName =
   'px-1 py-1 text-muted-foreground text-xs [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5';
@@ -177,22 +185,37 @@ export function CommandPalette(): JSX.Element {
   const [folderDeleteTarget, setFolderDeleteTarget] = useState<Folder | null>(
     null,
   );
-  const [moveFlow, setMoveFlow] = useState<'idle' | 'pickNote' | 'pickFolder'>(
-    'idle',
+  const [paletteMode, dispatchPaletteMode] = useReducer(
+    paletteModeReducer,
+    initialPaletteMode,
   );
-  const [moveTargetNoteIds, setMoveTargetNoteIds] = useState<string[]>([]);
-  const [moveMultiSelectActive, setMoveMultiSelectActive] = useState(false);
-  const [moveSelectedNoteIds, setMoveSelectedNoteIds] = useState<Set<string>>(
-    () => new Set(),
-  );
+  // Derive the legacy flag names from the single exclusive mode so read sites
+  // stay untouched; only mode transitions go through `dispatchPaletteMode`.
+  const moveFlow: 'idle' | 'pickNote' | 'pickFolder' =
+    paletteMode.kind === 'movePickNote'
+      ? 'pickNote'
+      : paletteMode.kind === 'movePickFolder'
+        ? 'pickFolder'
+        : 'idle';
+  const moveMultiSelectActive =
+    paletteMode.kind === 'movePickNote' ? paletteMode.multiSelect : false;
+  const moveSelectedNoteIds =
+    paletteMode.kind === 'movePickNote'
+      ? paletteMode.selected
+      : PALETTE_EMPTY_ID_SET;
+  const moveTargetNoteIds = selectMoveTargetNoteIds(paletteMode);
+  const deleteFolderPickerOpen = paletteMode.kind === 'deleteFolderPick';
+  const renameFolderPickerOpen = paletteMode.kind === 'renameFolderPick';
+  const tintFolderFlow: 'idle' | 'pickFolder' | 'pickColour' =
+    paletteMode.kind === 'tintFolderPick'
+      ? 'pickFolder'
+      : paletteMode.kind === 'tintColourPick'
+        ? 'pickColour'
+        : 'idle';
+  const tintFolderId =
+    paletteMode.kind === 'tintColourPick' ? paletteMode.folderId : null;
   const moveSelectedNoteIdsRef = useRef(moveSelectedNoteIds);
   moveSelectedNoteIdsRef.current = moveSelectedNoteIds;
-  const [deleteFolderPickerOpen, setDeleteFolderPickerOpen] = useState(false);
-  const [renameFolderPickerOpen, setRenameFolderPickerOpen] = useState(false);
-  const [tintFolderFlow, setTintFolderFlow] = useState<
-    'idle' | 'pickFolder' | 'pickColour'
-  >('idle');
-  const [tintFolderId, setTintFolderId] = useState<string | null>(null);
   const [releaseNotesOpen, setReleaseNotesOpen] = useState(false);
 
   useEffect(() => {
@@ -205,13 +228,7 @@ export function CommandPalette(): JSX.Element {
       setNewNoteFolderPickerOpen(false);
       setFolderCreateDlgOpen(false);
       setFolderDeleteTarget(null);
-      setRenameFolderPickerOpen(false);
-      setTintFolderFlow('idle');
-      setTintFolderId(null);
-      setMoveFlow('pickNote');
-      setMoveTargetNoteIds([]);
-      setMoveMultiSelectActive(false);
-      setMoveSelectedNoteIds(new Set());
+      dispatchPaletteMode({ type: 'startMovePickNote' });
       setPaletteValue('');
       setPaletteSearch('');
     }
@@ -253,23 +270,12 @@ export function CommandPalette(): JSX.Element {
       setNewNoteFolderPickerOpen(false);
       setPaletteValue('');
       setPaletteSearch('');
-      setMoveFlow('idle');
-      setMoveTargetNoteIds([]);
-      setMoveMultiSelectActive(false);
-      setMoveSelectedNoteIds(new Set());
+      dispatchPaletteMode({ type: 'reset' });
       setFolderDeleteTarget(null);
-      setDeleteFolderPickerOpen(false);
-      setRenameFolderPickerOpen(false);
-      setTintFolderFlow('idle');
-      setTintFolderId(null);
     }
   }, [open]);
 
   useEffect(() => {
-    if (moveFlow === 'pickFolder') {
-      setMoveMultiSelectActive(false);
-      setMoveSelectedNoteIds(new Set());
-    }
     if (moveFlow === 'pickNote' || moveFlow === 'pickFolder') {
       setPaletteValue('');
       setPaletteSearch('');
@@ -292,19 +298,10 @@ export function CommandPalette(): JSX.Element {
       .filter((n): n is (typeof notes)[number] => Boolean(n));
   }, [notes, semanticOrderedIds]);
 
-  const moveCommandGroupHeading = useMemo(() => {
-    if (moveFlow === 'pickFolder' && busyAction === 'moveNotes') {
-      return 'Moving notes…';
-    }
-    if (moveFlow === 'pickNote') {
-      return moveMultiSelectActive
-        ? 'Move notes: pick notes'
-        : 'Move note: pick note';
-    }
-    return moveTargetNoteIds.length > 1
-      ? `Move ${String(moveTargetNoteIds.length)} notes: destination`
-      : 'Move note: destination';
-  }, [busyAction, moveFlow, moveMultiSelectActive, moveTargetNoteIds.length]);
+  const moveCommandGroupHeading = selectMoveHeading(
+    paletteMode,
+    busyAction === 'moveNotes',
+  );
 
   const commandFilter = useCallback(
     (value: string, search: string, keywords?: string[]) => {
@@ -346,8 +343,7 @@ export function CommandPalette(): JSX.Element {
             refreshNotesList,
           });
         }
-        setMoveFlow('idle');
-        setMoveTargetNoteIds([]);
+        dispatchPaletteMode({ type: 'reset' });
         closePalette();
       } finally {
         setBusyAction(null);
@@ -437,10 +433,7 @@ export function CommandPalette(): JSX.Element {
       ) {
         return;
       }
-      setMoveMultiSelectActive(false);
-      setMoveSelectedNoteIds(new Set());
-      setMoveTargetNoteIds([]);
-      setMoveFlow('pickNote');
+      dispatchPaletteMode({ type: 'startMovePickNote' });
       return;
     }
 
@@ -479,10 +472,7 @@ export function CommandPalette(): JSX.Element {
         if (noteId) {
           e.preventDefault();
           e.stopPropagation();
-          if (!moveMultiSelectActiveRef.current) {
-            setMoveMultiSelectActive(true);
-          }
-          setMoveSelectedNoteIds((prev) => toggleIdInSet(prev, noteId));
+          dispatchPaletteMode({ type: 'moveToggleSelect', noteId });
           return;
         }
       }
@@ -516,8 +506,10 @@ export function CommandPalette(): JSX.Element {
         if (action.kind === 'advanceToFolder') {
           e.preventDefault();
           e.stopPropagation();
-          setMoveTargetNoteIds(Array.from(moveSelectedNoteIdsRef.current));
-          setMoveFlow('pickFolder');
+          dispatchPaletteMode({
+            type: 'moveAdvanceToFolder',
+            targetNoteIds: Array.from(moveSelectedNoteIdsRef.current),
+          });
           return;
         }
         if (action.kind === 'noop') {
@@ -604,8 +596,10 @@ export function CommandPalette(): JSX.Element {
                                 if (moveMultiSelectActive) {
                                   return;
                                 }
-                                setMoveTargetNoteIds([n.id]);
-                                setMoveFlow('pickFolder');
+                                dispatchPaletteMode({
+                                  type: 'moveAdvanceToFolder',
+                                  targetNoteIds: [n.id],
+                                });
                               }}
                               aria-checked={
                                 moveMultiSelectActive ? selected : undefined
@@ -629,9 +623,10 @@ export function CommandPalette(): JSX.Element {
                                   )}
                                   onClick={(ev) => {
                                     ev.stopPropagation();
-                                    setMoveSelectedNoteIds((prev) =>
-                                      toggleIdInSet(prev, n.id),
-                                    );
+                                    dispatchPaletteMode({
+                                      type: 'moveToggleSelect',
+                                      noteId: n.id,
+                                    });
                                   }}
                                   onPointerDown={(ev) => {
                                     ev.stopPropagation();
@@ -664,8 +659,10 @@ export function CommandPalette(): JSX.Element {
                           'next',
                         ]}
                         onSelect={() => {
-                          setMoveTargetNoteIds(Array.from(moveSelectedNoteIds));
-                          setMoveFlow('pickFolder');
+                          dispatchPaletteMode({
+                            type: 'moveAdvanceToFolder',
+                            targetNoteIds: Array.from(moveSelectedNoteIds),
+                          });
                         }}
                         className={cn(
                           commandItemRowClass,
@@ -735,10 +732,7 @@ export function CommandPalette(): JSX.Element {
                       }
                       keywords={['cancel', 'back']}
                       onSelect={() => {
-                        setMoveFlow('idle');
-                        setMoveTargetNoteIds([]);
-                        setMoveMultiSelectActive(false);
-                        setMoveSelectedNoteIds(new Set());
+                        dispatchPaletteMode({ type: 'reset' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -769,7 +763,7 @@ export function CommandPalette(): JSX.Element {
                         ]}
                         onSelect={() => {
                           setFolderDeleteTarget(f);
-                          setDeleteFolderPickerOpen(false);
+                          dispatchPaletteMode({ type: 'reset' });
                         }}
                         className={cn(
                           commandItemRowClass,
@@ -786,7 +780,7 @@ export function CommandPalette(): JSX.Element {
                       value="del-pick-cancel"
                       keywords={['cancel']}
                       onSelect={() => {
-                        setDeleteFolderPickerOpen(false);
+                        dispatchPaletteMode({ type: 'reset' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -815,7 +809,7 @@ export function CommandPalette(): JSX.Element {
                           ...pathLabel.split(pathSep).map((s) => s.trim()),
                         ]}
                         onSelect={() => {
-                          setRenameFolderPickerOpen(false);
+                          dispatchPaletteMode({ type: 'reset' });
                           closePalette();
                           dispatchRenameFolderRequest(f.id);
                         }}
@@ -834,7 +828,7 @@ export function CommandPalette(): JSX.Element {
                       value="rename-pick-cancel"
                       keywords={['cancel']}
                       onSelect={() => {
-                        setRenameFolderPickerOpen(false);
+                        dispatchPaletteMode({ type: 'reset' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -865,8 +859,10 @@ export function CommandPalette(): JSX.Element {
                           ...pathLabel.split(pathSep).map((s) => s.trim()),
                         ]}
                         onSelect={() => {
-                          setTintFolderId(f.id);
-                          setTintFolderFlow('pickColour');
+                          dispatchPaletteMode({
+                            type: 'tintChooseFolder',
+                            folderId: f.id,
+                          });
                         }}
                         className={cn(
                           commandItemRowClass,
@@ -883,8 +879,7 @@ export function CommandPalette(): JSX.Element {
                       value="tint-pick-cancel"
                       keywords={['cancel']}
                       onSelect={() => {
-                        setTintFolderFlow('idle');
-                        setTintFolderId(null);
+                        dispatchPaletteMode({ type: 'reset' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -926,8 +921,7 @@ export function CommandPalette(): JSX.Element {
                             notaProEntitled,
                             patchFolderInList,
                           });
-                          setTintFolderFlow('idle');
-                          setTintFolderId(null);
+                          dispatchPaletteMode({ type: 'reset' });
                         }}
                         className={cn(
                           commandItemRowClass,
@@ -949,8 +943,7 @@ export function CommandPalette(): JSX.Element {
                       value="tint-colour-back"
                       keywords={['back', 'cancel']}
                       onSelect={() => {
-                        setTintFolderFlow('pickFolder');
-                        setTintFolderId(null);
+                        dispatchPaletteMode({ type: 'startTintFolderPick' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -995,14 +988,7 @@ export function CommandPalette(): JSX.Element {
                       disabled={notesForOpenPalette.length === 0}
                       keywords={['move note', 'folder', 'organise']}
                       onSelect={() => {
-                        setMoveMultiSelectActive(false);
-                        setMoveSelectedNoteIds(new Set());
-                        setMoveTargetNoteIds([]);
-                        setRenameFolderPickerOpen(false);
-                        setDeleteFolderPickerOpen(false);
-                        setTintFolderFlow('idle');
-                        setTintFolderId(null);
-                        setMoveFlow('pickNote');
+                        dispatchPaletteMode({ type: 'startMovePickNote' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -1025,10 +1011,7 @@ export function CommandPalette(): JSX.Element {
                         'change folder name',
                       ]}
                       onSelect={() => {
-                        setDeleteFolderPickerOpen(false);
-                        setTintFolderFlow('idle');
-                        setTintFolderId(null);
-                        setRenameFolderPickerOpen(true);
+                        dispatchPaletteMode({ type: 'startRenameFolderPick' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -1050,9 +1033,7 @@ export function CommandPalette(): JSX.Element {
                         'folder colour',
                       ]}
                       onSelect={() => {
-                        setRenameFolderPickerOpen(false);
-                        setDeleteFolderPickerOpen(false);
-                        setTintFolderFlow('pickFolder');
+                        dispatchPaletteMode({ type: 'startTintFolderPick' });
                       }}
                       className={cn(
                         commandItemRowClass,
@@ -1070,10 +1051,7 @@ export function CommandPalette(): JSX.Element {
                       disabled={folders.length === 0}
                       keywords={['delete folder', 'remove folder']}
                       onSelect={() => {
-                        setRenameFolderPickerOpen(false);
-                        setTintFolderFlow('idle');
-                        setTintFolderId(null);
-                        setDeleteFolderPickerOpen(true);
+                        dispatchPaletteMode({ type: 'startDeleteFolderPick' });
                       }}
                       className={cn(
                         commandItemRowClass,
