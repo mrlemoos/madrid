@@ -1,9 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   NOTA_PANEL_FADE_BLUR_PX,
   NOTA_PANEL_FADE_MS,
   NOTA_PANEL_FADE_CLASS,
   consumeNavIntent,
+  createNavIntentRegister,
   markNavIntent,
   peekNavIntent,
   resetNavIntent,
@@ -91,5 +92,122 @@ describe('nav intent markers', () => {
     expect(document.documentElement.getAttribute('data-nav-intent')).toBe(
       'keyboard',
     );
+  });
+});
+
+describe('createNavIntentRegister', () => {
+  it('defaults to keyboard and writes the DOM marker on mark', () => {
+    // Arrange
+    const setAttribute = vi.fn();
+    const register = createNavIntentRegister({
+      requestAnimationFrame: null,
+      getDocumentElement: () => ({ setAttribute }),
+    });
+
+    // Act
+    const before = register.peek();
+    register.mark('pointer');
+
+    // Assert
+    expect(before).toBe('keyboard');
+    expect(register.peek()).toBe('pointer');
+    expect(setAttribute).toHaveBeenLastCalledWith('data-nav-intent', 'pointer');
+  });
+
+  it('consume returns the pending intent then resets to keyboard', () => {
+    // Arrange
+    const register = createNavIntentRegister({
+      requestAnimationFrame: null,
+      getDocumentElement: () => null,
+    });
+    register.mark('pointer');
+
+    // Act
+    const consumed = register.consume();
+
+    // Assert
+    expect(consumed).toBe('pointer');
+    expect(register.peek()).toBe('keyboard');
+  });
+
+  it('auto-resets to keyboard on the next animation frame', () => {
+    // Arrange
+    const frames: Array<() => void> = [];
+    const register = createNavIntentRegister({
+      requestAnimationFrame: (cb) => {
+        frames.push(cb);
+      },
+      getDocumentElement: () => null,
+    });
+
+    // Act
+    register.mark('pointer');
+    const midFrame = register.peek();
+    frames.forEach((run) => {
+      run();
+    });
+
+    // Assert
+    expect(midFrame).toBe('pointer');
+    expect(register.peek()).toBe('keyboard');
+  });
+
+  it('a later mark cancels an earlier frame reset via the epoch guard', () => {
+    // Arrange
+    const frames: Array<() => void> = [];
+    const register = createNavIntentRegister({
+      requestAnimationFrame: (cb) => {
+        frames.push(cb);
+      },
+      getDocumentElement: () => null,
+    });
+
+    // Act
+    register.mark('pointer');
+    register.mark('pointer');
+    // Run only the first (stale) scheduled reset.
+    frames[0]?.();
+
+    // Assert
+    expect(register.peek()).toBe('pointer');
+  });
+
+  it('reset restores the keyboard default and DOM marker', () => {
+    // Arrange
+    const setAttribute = vi.fn();
+    const register = createNavIntentRegister({
+      requestAnimationFrame: null,
+      getDocumentElement: () => ({ setAttribute }),
+    });
+    register.mark('pointer');
+
+    // Act
+    register.reset();
+
+    // Assert
+    expect(register.peek()).toBe('keyboard');
+    expect(setAttribute).toHaveBeenLastCalledWith(
+      'data-nav-intent',
+      'keyboard',
+    );
+  });
+
+  it('isolates state between instances', () => {
+    // Arrange
+    const a = createNavIntentRegister({
+      requestAnimationFrame: null,
+      getDocumentElement: () => null,
+    });
+    const b = createNavIntentRegister({
+      requestAnimationFrame: null,
+      getDocumentElement: () => null,
+    });
+
+    // Act
+    a.mark('pointer');
+
+    // Assert
+    expect(a.peek()).toBe('pointer');
+    expect(b.peek()).toBe('keyboard');
   });
 });

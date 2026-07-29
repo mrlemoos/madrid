@@ -31,32 +31,101 @@ export const NOTA_PANEL_FADE_CLASS = 'nota-panel-enter-fade';
 
 const NAV_INTENT_ATTR = 'data-nav-intent';
 
-let pendingNavIntent: NavIntent = 'keyboard';
-let navIntentEpoch = 0;
+/**
+ * Owns the pending nav-intent: the mutable value, its epoch-guarded
+ * next-frame auto-reset, and the `data-nav-intent` DOM marker — behind a
+ * small interface. A producer `mark`s intent; the consumer reads it once with
+ * `consume` (which resets to the safe `keyboard` default). Environment access
+ * (`requestAnimationFrame`, `document`) is injected so each instance is
+ * unit-testable in isolation.
+ */
+export type NavIntentRegister = {
+  mark(intent: NavIntent): void;
+  peek(): NavIntent;
+  consume(): NavIntent;
+  reset(): void;
+};
 
-function syncDocumentNavIntent(intent: NavIntent): void {
-  if (typeof document === 'undefined') {
-    return;
+type NavIntentRegisterEnv = {
+  requestAnimationFrame?: ((callback: () => void) => unknown) | null;
+  getDocumentElement?: () => {
+    setAttribute(name: string, value: string): void;
+  } | null;
+};
+
+function defaultRequestAnimationFrame():
+  | ((callback: () => void) => unknown)
+  | null {
+  if (typeof window === 'undefined') {
+    return null;
   }
-  document.documentElement.setAttribute(NAV_INTENT_ATTR, intent);
+  return window.requestAnimationFrame.bind(window);
 }
 
-function scheduleNavIntentReset(epoch: number): void {
-  if (typeof window === 'undefined') {
-    return;
+function defaultGetDocumentElement(): {
+  setAttribute(name: string, value: string): void;
+} | null {
+  if (typeof document === 'undefined') {
+    return null;
   }
-  const raf = window.requestAnimationFrame?.bind(window);
-  if (!raf) {
-    return;
+  return document.documentElement;
+}
+
+export function createNavIntentRegister(
+  env: NavIntentRegisterEnv = {},
+): NavIntentRegister {
+  const requestAnimationFrame =
+    env.requestAnimationFrame === undefined
+      ? defaultRequestAnimationFrame()
+      : env.requestAnimationFrame;
+  const getDocumentElement =
+    env.getDocumentElement ?? defaultGetDocumentElement;
+
+  let pendingNavIntent: NavIntent = 'keyboard';
+  let epoch = 0;
+
+  function syncDocument(intent: NavIntent): void {
+    getDocumentElement()?.setAttribute(NAV_INTENT_ATTR, intent);
   }
-  raf(() => {
-    if (epoch !== navIntentEpoch) {
+
+  function scheduleReset(scheduledEpoch: number): void {
+    if (!requestAnimationFrame) {
       return;
     }
-    pendingNavIntent = 'keyboard';
-    syncDocumentNavIntent('keyboard');
-  });
+    requestAnimationFrame(() => {
+      if (scheduledEpoch !== epoch) {
+        return;
+      }
+      pendingNavIntent = 'keyboard';
+      syncDocument('keyboard');
+    });
+  }
+
+  return {
+    mark(intent: NavIntent): void {
+      pendingNavIntent = intent;
+      syncDocument(intent);
+      scheduleReset(++epoch);
+    },
+    peek(): NavIntent {
+      return pendingNavIntent;
+    },
+    consume(): NavIntent {
+      const intent = pendingNavIntent;
+      pendingNavIntent = 'keyboard';
+      syncDocument('keyboard');
+      return intent;
+    },
+    reset(): void {
+      pendingNavIntent = 'keyboard';
+      epoch += 1;
+      syncDocument('keyboard');
+    },
+  };
 }
+
+/** Shared app-wide register instance (producers stamp, ShellPanel consumes). */
+export const navIntentRegister = createNavIntentRegister();
 
 /**
  * Pure: keyboard → no motion; pointer → short opacity (+ optional blur) fade.
@@ -85,29 +154,19 @@ export function resolvePanelMotion(intent: NavIntent): PanelMotion {
 
 /** Stamp intent before `setAppHash` / `replaceAppHash` / hash `<a>` clicks / history chords. */
 export function markNavIntent(intent: NavIntent): void {
-  pendingNavIntent = intent;
-  syncDocumentNavIntent(intent);
-  const epoch = ++navIntentEpoch;
-  scheduleNavIntentReset(epoch);
+  navIntentRegister.mark(intent);
 }
 
 export function peekNavIntent(): NavIntent {
-  return pendingNavIntent;
+  return navIntentRegister.peek();
 }
 
 /** Read pending intent and reset to keyboard (safe default for the next nav). */
 export function consumeNavIntent(): NavIntent {
-  const intent = pendingNavIntent;
-  pendingNavIntent = 'keyboard';
-  syncDocumentNavIntent('keyboard');
-  return intent;
+  return navIntentRegister.consume();
 }
 
-/** Test helper — reset module + DOM marker. */
+/** Test helper — reset the shared register + DOM marker. */
 export function resetNavIntent(): void {
-  pendingNavIntent = 'keyboard';
-  navIntentEpoch += 1;
-  if (typeof document !== 'undefined') {
-    document.documentElement.setAttribute(NAV_INTENT_ATTR, 'keyboard');
-  }
+  navIntentRegister.reset();
 }
