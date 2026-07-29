@@ -15,14 +15,11 @@ import { Command, defaultFilter } from 'cmdk';
 import { NotaIcon } from '@nota/web-design/icon';
 import {
   BrainCircuitIcon,
-  BulbIcon,
   ChartBarIcon,
   ClockIcon,
-  CpuIcon,
   FileDescriptionIcon,
   HistoryCircleIcon,
   LogoutIcon,
-  MoonIcon,
   SimpleCheckedIcon,
   SparklesIcon,
   TrashIcon,
@@ -77,6 +74,10 @@ import {
   moveTargetNoteIds as selectMoveTargetNoteIds,
   paletteModeReducer,
 } from '@/lib/palette-mode';
+import {
+  buildAppearanceCommands,
+  type PaletteActionCommand,
+} from '@/lib/palette-commands';
 
 const PALETTE_EMPTY_ID_SET: ReadonlySet<string> = new Set();
 
@@ -122,6 +123,44 @@ function PaletteItemIcon({
     <span aria-hidden className={cn('inline-flex shrink-0', className)}>
       <NotaIcon icon={icon} size={16} />
     </span>
+  );
+}
+
+/** Renders one flat palette command (see `PaletteActionCommand`). */
+function PaletteActionItem({
+  command,
+}: {
+  command: PaletteActionCommand;
+}): JSX.Element {
+  const destructive = command.tone === 'destructive';
+  return (
+    <Command.Item
+      value={command.value}
+      keywords={command.keywords}
+      onSelect={command.run}
+      className={cn(
+        commandItemRowClass,
+        destructive ? 'group text-destructive' : 'group text-foreground',
+        destructive
+          ? 'aria-selected:bg-destructive/15 aria-selected:text-destructive'
+          : 'aria-selected:bg-accent aria-selected:text-accent-foreground',
+      )}
+    >
+      <PaletteItemIcon
+        icon={command.icon}
+        className={
+          destructive
+            ? 'text-destructive group-aria-selected:text-destructive'
+            : 'text-muted-foreground group-aria-selected:text-accent-foreground'
+        }
+      />
+      <span className="min-w-0 flex-1">{command.label}</span>
+      {command.current ? (
+        <span className="shrink-0 text-muted-foreground text-xs">
+          (current)
+        </span>
+      ) : null}
+    </Command.Item>
   );
 }
 
@@ -323,6 +362,12 @@ export function CommandPalette(): JSX.Element {
   const closePalette = useCallback((): void => {
     dialogActionsRef.current?.close();
   }, []);
+
+  const appearanceCommands = buildAppearanceCommands({
+    theme,
+    setTheme,
+    close: closePalette,
+  });
 
   const completeMoveToTarget = useCallback(
     async (targetFolderId: string | null): Promise<void> => {
@@ -1638,99 +1683,9 @@ export function CommandPalette(): JSX.Element {
                   heading="Appearance"
                   className={groupHeadingClassName}
                 >
-                  <Command.Item
-                    value="use-light-theme"
-                    keywords={[
-                      'light',
-                      'appearance',
-                      'theme',
-                      'color scheme',
-                      'mode',
-                    ]}
-                    onSelect={() => {
-                      setTheme('light');
-                      closePalette();
-                    }}
-                    className={cn(
-                      commandItemRowClass,
-                      'group text-foreground',
-                      'aria-selected:bg-accent aria-selected:text-accent-foreground',
-                    )}
-                  >
-                    <PaletteItemIcon
-                      icon={BulbIcon}
-                      className="text-muted-foreground group-aria-selected:text-accent-foreground"
-                    />
-                    <span className="min-w-0 flex-1">Use light theme</span>
-                    {theme === 'light' ? (
-                      <span className="shrink-0 text-muted-foreground text-xs">
-                        (current)
-                      </span>
-                    ) : null}
-                  </Command.Item>
-                  <Command.Item
-                    value="use-dark-theme"
-                    keywords={[
-                      'dark',
-                      'appearance',
-                      'theme',
-                      'color scheme',
-                      'mode',
-                    ]}
-                    onSelect={() => {
-                      setTheme('dark');
-                      closePalette();
-                    }}
-                    className={cn(
-                      commandItemRowClass,
-                      'group text-foreground',
-                      'aria-selected:bg-accent aria-selected:text-accent-foreground',
-                    )}
-                  >
-                    <PaletteItemIcon
-                      icon={MoonIcon}
-                      className="text-muted-foreground group-aria-selected:text-accent-foreground"
-                    />
-                    <span className="min-w-0 flex-1">Use dark theme</span>
-                    {theme === 'dark' ? (
-                      <span className="shrink-0 text-muted-foreground text-xs">
-                        (current)
-                      </span>
-                    ) : null}
-                  </Command.Item>
-                  <Command.Item
-                    value="use-system-theme"
-                    keywords={[
-                      'system',
-                      'auto',
-                      'os',
-                      'default',
-                      'appearance',
-                      'theme',
-                      'color scheme',
-                      'mode',
-                    ]}
-                    onSelect={() => {
-                      setTheme('system');
-                      closePalette();
-                    }}
-                    className={cn(
-                      commandItemRowClass,
-                      'group text-foreground',
-                      'aria-selected:bg-accent aria-selected:text-accent-foreground',
-                    )}
-                  >
-                    <PaletteItemIcon
-                      icon={CpuIcon}
-                      className="text-muted-foreground group-aria-selected:text-accent-foreground"
-                    />
-                    <span className="min-w-0 flex-1">Use system theme</span>
-                    {theme === 'system' ? (
-                      <span className="shrink-0 text-muted-foreground text-xs">
-                        (current)
-                      </span>
-                    ) : null}
-                  </Command.Item>
+                  {appearanceCommands.map((command) => (
+                    <PaletteActionItem key={command.value} command={command} />
+                  ))}
                 </Command.Group>
                 <Command.Group
                   heading="Account"
