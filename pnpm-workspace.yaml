@@ -11,6 +11,10 @@ catalog:
   react-dom: 19.2.5
   zod: ^3.23.0
   '@supabase/supabase-js': ^2.103.3
+  yjs: ^13.6.20
+  y-prosemirror: ^1.2.15
+  y-indexeddb: ^9.0.12
+  prosemirror-model: ^1.24.1
   typescript: ~5.9.2
   '@types/node': 20.19.9
   tailwindcss: ^4.0.0

@@ -60,6 +60,7 @@ import { useNotaPreferencesStore } from '../stores/nota-preferences';
 import { createTypewriterScrollUserGuard } from '@/lib/nota-typewriter-scroll-guard';
 import { NOTA_SAVE_PULSE_CLASS } from '@/lib/nota-interaction';
 import { createWritingActivitySessionRecorder } from '@/lib/writing-activity-tracking';
+import { useNoteYjsDoc } from '../lib/notes-yjs/use-note-yjs-doc';
 
 function buildStorageOps(
   noteId: string,
@@ -141,6 +142,15 @@ function NoteEditorImpl({
   const [lightboxImage, setLightboxImage] =
     useState<NoteImageLightboxImage | null>(null);
   const [title, setTitle] = useState(() => note.title || '');
+
+  // Local-first note body: bind the editor to a Yjs doc so the caret is never
+  // clobbered by remote sync. Gated on entitlement; unentitled falls back to
+  // the legacy content path below (ydoc null).
+  const { ydoc, synced: yjsSynced } = useNoteYjsDoc(
+    note.id,
+    user?.id ?? null,
+    notaProEntitled,
+  );
 
   const { t } = useNotaTranslator();
   const storageOps = useMemo(
@@ -613,6 +623,9 @@ function NoteEditorImpl({
           placeholder="Start writing your note..."
           noteId={note.id}
           contentRevision={note.updated_at}
+          ydoc={ydoc ?? undefined}
+          seedContentIfEmpty={note.content}
+          canSeed={yjsSynced}
           userId={user?.id ?? ''}
           noteMentionCandidates={noteMentionCandidates}
           attachments={attachments}

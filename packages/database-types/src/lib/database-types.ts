@@ -135,6 +135,38 @@ export interface Database {
           },
         ];
       };
+      note_yjs_updates: {
+        Row: {
+          seq: number;
+          note_id: string;
+          update: string;
+          is_snapshot: boolean;
+          actor: string;
+          created_at: string;
+        };
+        Insert: {
+          note_id: string;
+          update: string;
+          is_snapshot?: boolean;
+          actor: string;
+          created_at?: string;
+        };
+        Update: {
+          note_id?: string;
+          update?: string;
+          is_snapshot?: boolean;
+          actor?: string;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'note_yjs_updates_note_id_fkey';
+            columns: ['note_id'];
+            referencedRelation: 'notes';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       supabase_clerk_account_link: {
         Row: {
           legacy_supabase_user_id: string;

@@ -4,7 +4,10 @@ import { Node as PMNode } from '@tiptap/pm/model';
 import type { EditorView } from '@tiptap/pm/view';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import Collaboration from '@tiptap/extension-collaboration';
 import Placeholder from '@tiptap/extension-placeholder';
+import { NOTA_YDOC_FIELD } from '@nota/notes-yjs-core';
+import type * as Y from 'yjs';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
@@ -94,6 +97,26 @@ export interface TipTapEditorProps {
   placeholder?: string;
   noteId: string;
   contentRevision?: string;
+  /**
+   * When provided, the note body binds to this Yjs doc (local-first CRDT):
+   * remote edits merge instead of replacing the document, so the caret is never
+   * clobbered mid-typing. The caller owns the doc's lifecycle (persistence +
+   * sync provider). When omitted, the editor uses the legacy `content` /
+   * `contentRevision` replace-on-sync path unchanged.
+   */
+  ydoc?: Y.Doc;
+  /**
+   * ProseMirror JSON to seed into `ydoc` the first time it is opened empty
+   * (e.g. an existing note whose body has no CRDT log yet). Seeded via a single
+   * `setContent` into the bound doc — not a sync clobber. Ignored once the doc
+   * has content. Only acted on when `canSeed` is true.
+   */
+  seedContentIfEmpty?: unknown;
+  /**
+   * Set true by the caller once the doc's true state is known (local IndexedDB
+   * + server log both loaded), so seeding never races an about-to-arrive doc.
+   */
+  canSeed?: boolean;
   userId: string;
   noteMentionCandidates: Note[];
   attachments: NoteAttachment[];
@@ -117,6 +140,9 @@ export function TipTapEditor({
   placeholder = 'Start writing...',
   noteId,
   contentRevision,
+  ydoc,
+  seedContentIfEmpty,
+  canSeed = false,
   userId,
   noteMentionCandidates,
   attachments,
@@ -214,7 +240,12 @@ export function TipTapEditor({
 
   const extensions = useMemo(
     () => [
-      StarterKit.configure({ codeBlock: false }),
+      // Yjs owns undo/redo when collaborative — StarterKit history must be off
+      // or the two history stacks corrupt each other.
+      StarterKit.configure({
+        codeBlock: false,
+        history: ydoc ? false : undefined,
+      }),
       NotaCodeBlock,
       TaskList.configure({ HTMLAttributes: { class: 'nota-task-list' } }),
       TaskItem.configure({
@@ -250,8 +281,11 @@ export function TipTapEditor({
       TableRow,
       TableHeader,
       TableCell,
+      ...(ydoc
+        ? [Collaboration.configure({ document: ydoc, field: NOTA_YDOC_FIELD })]
+        : []),
     ],
-    [placeholder],
+    [placeholder, ydoc],
   );
 
   const stableEditorProps = useMemo(
@@ -428,7 +462,11 @@ export function TipTapEditor({
   const editor = useEditor(
     {
       extensions,
-      content: content || { type: 'doc', content: [{ type: 'paragraph' }] },
+      // When collaborative, the Yjs doc is the source of truth — seeding
+      // `content` here would double-apply on top of the bound doc.
+      content: ydoc
+        ? undefined
+        : content || { type: 'doc', content: [{ type: 'paragraph' }] },
       onUpdate: ({ editor: ed }) => {
         onUpdate(ed.getJSON());
       },
@@ -461,6 +499,9 @@ export function TipTapEditor({
   }, []);
 
   useEffect(() => {
+    // Collaborative mode never force-replaces the doc — remote edits merge via
+    // Yjs, so the caret is never reset. This effect is the legacy path only.
+    if (ydoc) return;
     if (!editor || !content) return;
     if (noteId !== prevNoteIdRef.current) {
       prevNoteIdRef.current = noteId;
@@ -479,7 +520,21 @@ export function TipTapEditor({
         editor.commands.setContent(content, false);
       }
     }
-  }, [editor, content, contentRevision, noteId]);
+  }, [editor, content, contentRevision, noteId, ydoc]);
+
+  // One-time seed of an empty collaborative doc from the note's existing
+  // `content` jsonb (lazy migration). Runs once per doc, only after the caller
+  // confirms the doc's true state is loaded, and only if it is actually empty.
+  const seededDocRef = useRef<Y.Doc | null>(null);
+  useEffect(() => {
+    if (!editor || !ydoc || !canSeed) return;
+    if (seededDocRef.current === ydoc) return;
+    seededDocRef.current = ydoc;
+    const fragment = ydoc.getXmlFragment(NOTA_YDOC_FIELD);
+    if (fragment.length === 0 && seedContentIfEmpty) {
+      editor.commands.setContent(seedContentIfEmpty, false);
+    }
+  }, [editor, ydoc, canSeed, seedContentIfEmpty]);
 
   useEffect(() => {
     if (!editor) return;

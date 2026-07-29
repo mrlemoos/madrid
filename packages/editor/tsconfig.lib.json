@@ -29,16 +29,19 @@
       "path": "../web-design/tsconfig.lib.json"
     },
     {
+      "path": "../notes-yjs-core/tsconfig.lib.json"
+    },
+    {
       "path": "../link-platform-preview/tsconfig.lib.json"
     },
     {
       "path": "../internal-note-link/tsconfig.lib.json"
     },
     {
-      "path": "../database-types/tsconfig.lib.json"
+      "path": "../note-editor-settings/tsconfig.lib.json"
     },
     {
-      "path": "../note-editor-settings/tsconfig.lib.json"
+      "path": "../database-types/tsconfig.lib.json"
     }
   ]
 }

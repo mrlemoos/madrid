@@ -3,6 +3,7 @@
     "appleid",
     "chrono",
     "cmdk",
+    "CRDT",
     "cssmodule",
     "distributables",
     "EBUSY",
@@ -18,6 +19,7 @@
     "Hugeicons",
     "iconset",
     "iconutil",
+    "indexeddb",
     "isbot",
     "mousedown",
     "mrlemoos",
@@ -42,7 +44,8 @@
     "vercel",
     "winstaller",
     "xlink",
-    "xyflow"
+    "xyflow",
+    "ydoc"
   ],
   "tailwindcss.configPath": "./apps/nota/styles.css"
 }

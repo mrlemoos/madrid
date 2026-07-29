@@ -66,6 +66,9 @@ catalogs:
     postcss:
       specifier: 8.4.38
       version: 8.4.38
+    prosemirror-model:
+      specifier: ^1.24.1
+      version: 1.25.4
     tailwindcss:
       specifier: ^4.0.0
       version: 4.2.4
@@ -81,6 +84,15 @@ catalogs:
     vitest:
       specifier: ~4.1.0
       version: 4.1.5
+    y-indexeddb:
+      specifier: ^9.0.12
+      version: 9.0.12
+    y-prosemirror:
+      specifier: ^1.2.15
+      version: 1.3.7
+    yjs:
+      specifier: ^13.6.20
+      version: 13.6.31
     zod:
       specifier: ^3.23.0
       version: 3.25.76
@@ -381,6 +393,9 @@ importers:
       '@nota/notes-offline-core':
         specifier: workspace:*
         version: link:../../packages/notes-offline-core
+      '@nota/notes-yjs-core':
+        specifier: workspace:*
+        version: link:../../packages/notes-yjs-core
       '@nota/validation':
         specifier: workspace:*
         version: link:../../packages/validation
@@ -429,6 +444,15 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      y-indexeddb:
+        specifier: 'catalog:'
+        version: 9.0.12(yjs@13.6.31)
+      y-prosemirror:
+        specifier: 'catalog:'
+        version: 1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31)
+      yjs:
+        specifier: 'catalog:'
+        version: 13.6.31
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -758,6 +782,9 @@ importers:
       '@nota/note-editor-settings':
         specifier: workspace:*
         version: link:../note-editor-settings
+      '@nota/notes-yjs-core':
+        specifier: workspace:*
+        version: link:../notes-yjs-core
       '@nota/web-design':
         specifier: workspace:*
         version: link:../web-design
@@ -767,6 +794,9 @@ importers:
       '@tiptap/extension-code-block-lowlight':
         specifier: 2.11.5
         version: 2.11.5(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/extension-code-block@2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2)(highlight.js@11.11.1)(lowlight@3.3.0)
+      '@tiptap/extension-collaboration':
+        specifier: ^2.11.5
+        version: 2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2)(y-prosemirror@1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31))
       '@tiptap/extension-emoji':
         specifier: ^2.27.2
         version: 2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2)(@tiptap/suggestion@2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2))(emojibase@17.0.0)
@@ -824,6 +854,9 @@ importers:
       react-dom:
         specifier: 19.2.5
         version: 19.2.5(react@19.2.5)
+      yjs:
+        specifier: 'catalog:'
+        version: 13.6.31
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -1054,6 +1087,28 @@ importers:
       '@nota/database-types':
         specifier: workspace:*
         version: link:../database-types
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/notes-yjs-core:
+    dependencies:
+      prosemirror-model:
+        specifier: 'catalog:'
+        version: 1.25.4
+      y-prosemirror:
+        specifier: 'catalog:'
+        version: 1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31)
+      yjs:
+        specifier: 'catalog:'
+        version: 13.6.31
     devDependencies:
       typescript:
         specifier: 'catalog:'
@@ -7827,6 +7882,16 @@ packages:
       }
     peerDependencies:
       '@tiptap/core': ^2.7.0
+
+  '@tiptap/extension-collaboration@2.27.2':
+    resolution:
+      {
+        integrity: sha512-Y61ItHxQ1uc/Ir27mBQRI/wY9JkOui194V+awNv+1YHeaKArTjC2cdSvNzj9+h8JIh5MyfvslSf8hBa7t7PzAg==,
+      }
+    peerDependencies:
+      '@tiptap/core': ^2.7.0
+      '@tiptap/pm': ^2.7.0
+      y-prosemirror: ^1.2.11
 
   '@tiptap/extension-color@2.27.2':
     resolution:
@@ -15234,6 +15299,12 @@ packages:
     peerDependencies:
       ws: '>=8.20.1'
 
+  isomorphic.js@0.2.5:
+    resolution:
+      {
+        integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==,
+      }
+
   isows@1.0.7:
     resolution:
       {
@@ -15950,6 +16021,14 @@ packages:
         integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==,
       }
     engines: { node: '>= 0.8.0' }
+
+  lib0@0.2.117:
+    resolution:
+      {
+        integrity: sha512-DeXj9X5xDCjgKLU/7RR+/HQEVzuuEUiwldwOGsHK/sfAfELGWEyTcf0x+uOvCvK3O2zPmZePXWL85vtia6GyZw==,
+      }
+    engines: { node: '>=16' }
+    hasBin: true
 
   lighthouse-logger@1.4.2:
     resolution:
@@ -22107,6 +22186,37 @@ packages:
         integrity: sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA==,
       }
 
+  y-indexeddb@9.0.12:
+    resolution:
+      {
+        integrity: sha512-9oCFRSPPzBK7/w5vOkJBaVCQZKHXB/v6SIT+WYhnJxlEC61juqG0hBrAf+y3gmSMLFLwICNH9nQ53uscuse6Hg==,
+      }
+    engines: { node: '>=16.0.0', npm: '>=8.0.0' }
+    peerDependencies:
+      yjs: ^13.0.0
+
+  y-prosemirror@1.3.7:
+    resolution:
+      {
+        integrity: sha512-NpM99WSdD4Fx4if5xOMDpPtU3oAmTSjlzh5U4353ABbRHl1HtAFUx6HlebLZfyFxXN9jzKMDkVbcRjqOZVkYQg==,
+      }
+    engines: { node: '>=16.0.0', npm: '>=8.0.0' }
+    peerDependencies:
+      prosemirror-model: ^1.7.1
+      prosemirror-state: ^1.2.3
+      prosemirror-view: ^1.9.10
+      y-protocols: ^1.0.1
+      yjs: ^13.5.38
+
+  y-protocols@1.0.7:
+    resolution:
+      {
+        integrity: sha512-YSVsLoXxO67J6eE/nV4AtFtT3QEotZf5sK5BHxFBXso7VDUT3Tx07IfA6hsu5Q5OmBdMkQVmFZ9QOA7fikWvnw==,
+      }
+    engines: { node: '>=16.0.0', npm: '>=8.0.0' }
+    peerDependencies:
+      yjs: ^13.0.0
+
   y18n@4.0.3:
     resolution:
       {
@@ -22208,6 +22318,13 @@ packages:
         integrity: sha512-PtGEvEP30p7sbIBJKUBjUnqgTVOyMURc4dLo9iNyAJnNIEz9pm88cCXF21w94Kg3k6RXkeZh5DHOGS0qEONvNQ==,
       }
     engines: { node: '>=12' }
+
+  yjs@13.6.31:
+    resolution:
+      {
+        integrity: sha512-Eq+5BRfbeGyqGVrTJL3bEcr8gKkxPuyuoHmAwpk52fDb8kOVMrfVSTRPd6yiGgX5Fskb96qCRjzjbRjrL4YEnw==,
+      }
+    engines: { node: '>=16.0.0', npm: '>=8.0.0' }
 
   yocto-queue@0.1.0:
     resolution:
@@ -28768,6 +28885,12 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.27.2(@tiptap/pm@2.27.2)
 
+  '@tiptap/extension-collaboration@2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/pm@2.27.2)(y-prosemirror@1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31))':
+    dependencies:
+      '@tiptap/core': 2.27.2(@tiptap/pm@2.27.2)
+      '@tiptap/pm': 2.27.2
+      y-prosemirror: 1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31)
+
   '@tiptap/extension-color@2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2))(@tiptap/extension-text-style@2.27.2(@tiptap/core@2.27.2(@tiptap/pm@2.27.2)))':
     dependencies:
       '@tiptap/core': 2.27.2(@tiptap/pm@2.27.2)
@@ -34123,6 +34246,8 @@ snapshots:
     dependencies:
       ws: 8.21.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
 
+  isomorphic.js@0.2.5: {}
+
   isows@1.0.7(ws@8.20.1(bufferutil@4.1.0)):
     dependencies:
       ws: 8.20.1(bufferutil@4.1.0)
@@ -34809,6 +34934,10 @@ snapshots:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  lib0@0.2.117:
+    dependencies:
+      isomorphic.js: 0.2.5
 
   lighthouse-logger@1.4.2:
     dependencies:
@@ -39630,6 +39759,25 @@ snapshots:
 
   xxhash-wasm@1.1.0: {}
 
+  y-indexeddb@9.0.12(yjs@13.6.31):
+    dependencies:
+      lib0: 0.2.117
+      yjs: 13.6.31
+
+  y-prosemirror@1.3.7(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.31))(yjs@13.6.31):
+    dependencies:
+      lib0: 0.2.117
+      prosemirror-model: 1.25.4
+      prosemirror-state: 1.4.4
+      prosemirror-view: 1.41.8
+      y-protocols: 1.0.7(yjs@13.6.31)
+      yjs: 13.6.31
+
+  y-protocols@1.0.7(yjs@13.6.31):
+    dependencies:
+      lib0: 0.2.117
+      yjs: 13.6.31
+
   y18n@4.0.3: {}
 
   y18n@5.0.8: {}
@@ -39694,6 +39842,10 @@ snapshots:
     dependencies:
       buffer-crc32: 0.2.13
       pend: 1.2.0
+
+  yjs@13.6.31:
+    dependencies:
+      lib0: 0.2.117
 
   yocto-queue@0.1.0: {}
 

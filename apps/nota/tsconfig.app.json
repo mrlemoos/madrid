@@ -47,19 +47,19 @@
   ],
   "references": [
     {
-      "path": "../../packages/link-platform-preview/tsconfig.lib.json"
-    },
-    {
       "path": "../../packages/web-design/tsconfig.lib.json"
     },
     {
       "path": "../../packages/validation/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/notes-offline/tsconfig.lib.json"
+      "path": "../../packages/notes-yjs-core/tsconfig.lib.json"
     },
     {
       "path": "../../packages/notes-offline-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/notes-offline/tsconfig.lib.json"
     },
     {
       "path": "../../packages/note-link-graph/tsconfig.lib.json"
@@ -71,6 +71,9 @@
       "path": "../../packages/nota-server-client/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/link-platform-preview/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/internal-note-link/tsconfig.lib.json"
     },
     {
@@ -80,13 +83,13 @@
       "path": "../../packages/helper-hooks/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/editor/tsconfig.lib.json"
+      "path": "../../packages/clerk-oauth-protocol/tsconfig.lib.json"
     },
     {
       "path": "../../packages/database-types/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/clerk-oauth-protocol/tsconfig.lib.json"
+      "path": "../../packages/editor/tsconfig.lib.json"
     }
   ]
 }
