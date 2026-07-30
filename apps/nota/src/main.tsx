@@ -6,6 +6,7 @@ import '@fontsource-variable/inter/index.css';
 import '@fontsource/instrument-serif/400.css';
 import '@fontsource-variable/source-serif-4/index.css';
 import '@fontsource/geist-sans/latin.css';
+import '@fontsource-variable/nunito/index.css';
 import '../styles.css';
 import { bootstrapAppNavigation } from './lib/app-navigation';
 import { repairClerkAuthLocationHash } from './lib/clerk-hash-navigation';

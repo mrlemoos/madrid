@@ -149,6 +149,7 @@ describe('note theme copy', () => {
       'York',
       'Ottawa',
       'San Francisco',
+      'Oviedo',
     ]);
   });
 });
@@ -159,6 +160,24 @@ describe('noteEditorFontFromThemeSelectValue', () => {
     expect(noteEditorFontFromThemeSelectValue('sans')).toBe('sans');
     expect(noteEditorFontFromThemeSelectValue('mono')).toBe('mono');
     expect(noteEditorFontFromThemeSelectValue('york')).toBe('york');
+    expect(noteEditorFontFromThemeSelectValue('oviedo')).toBe('oviedo');
+  });
+});
+
+describe('noteSurfaceFonts Oviedo', () => {
+  it('maps Oviedo to Nunito title and body', () => {
+    // Arrange
+    const settings = { font: 'oviedo' as const };
+
+    // Act
+    const result = noteSurfaceFonts(settings);
+
+    // Assert
+    expect(result).toEqual({
+      title: 'nunito',
+      body: 'nunito',
+      measure: 'standard',
+    });
   });
 });
 

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { Json, Note } from '@nota/database-types';
 
 const noteEditorSettingsSchema = z.object({
-  font: z.enum(['sans', 'serif', 'mono', 'york']).optional(),
+  font: z.enum(['sans', 'serif', 'mono', 'york', 'oviedo']).optional(),
   measure: z.enum(['narrow', 'wide']).optional(),
   showInNoteGraph: z.boolean().optional(),
 });
@@ -16,11 +16,17 @@ export const NOTE_THEME_OPTIONS = [
   { value: 'york' as const, label: 'York' },
   { value: 'sans' as const, label: 'Ottawa' },
   { value: 'mono' as const, label: 'San Francisco' },
+  { value: 'oviedo' as const, label: 'Oviedo' },
 ] as const;
 
 /** Logical font roles shared by web Tailwind classes and native fontFamily. */
 export type NotaSurfaceFontRole =
-  'inter' | 'instrumentSerif' | 'geistSans' | 'sourceSerif4' | 'systemMono';
+  | 'inter'
+  | 'instrumentSerif'
+  | 'geistSans'
+  | 'sourceSerif4'
+  | 'systemMono'
+  | 'nunito';
 
 export type NotaSurfaceMeasure = 'standard' | 'narrow' | 'wide';
 
@@ -44,6 +50,9 @@ export function noteThemeSelectValue(
   if (settings.font === 'york') {
     return 'york';
   }
+  if (settings.font === 'oviedo') {
+    return 'oviedo';
+  }
   return '';
 }
 
@@ -63,6 +72,8 @@ export function noteEditorFontFromThemeSelectValue(
       return 'mono';
     case 'york':
       return 'york';
+    case 'oviedo':
+      return 'oviedo';
     default:
       return undefined;
   }
@@ -88,7 +99,8 @@ export function noteEditorSettingsToJson(settings: NoteEditorSettings): Json {
   if (
     settings.font === 'sans' ||
     settings.font === 'mono' ||
-    settings.font === 'york'
+    settings.font === 'york' ||
+    settings.font === 'oviedo'
   ) {
     o.font = settings.font;
   }
@@ -141,6 +153,9 @@ export function noteSurfaceFonts(settings: NoteEditorSettings): {
   if (settings.font === 'york') {
     return { title: 'instrumentSerif', body: 'sourceSerif4', measure };
   }
+  if (settings.font === 'oviedo') {
+    return { title: 'nunito', body: 'nunito', measure };
+  }
   return { title: 'instrumentSerif', body: 'geistSans', measure };
 }
 
@@ -154,6 +169,7 @@ const TITLE_FONT_CLASS: Record<NotaSurfaceFontRole, string> = {
   geistSans: 'font-serif',
   sourceSerif4: 'font-serif',
   systemMono: 'font-mono',
+  nunito: 'font-nunito',
 };
 
 const BODY_FONT_CLASS: Record<NotaSurfaceFontRole, string> = {
@@ -162,6 +178,7 @@ const BODY_FONT_CLASS: Record<NotaSurfaceFontRole, string> = {
   geistSans: 'font-london-body',
   sourceSerif4: 'font-note-body',
   systemMono: 'font-mono',
+  nunito: 'font-nunito',
 };
 
 const MEASURE_CLASS: Record<NotaSurfaceMeasure, string> = {

@@ -1130,6 +1130,8 @@
   /* Marketing / legacy long-form serif (nota London body uses --font-london-body). */
   --font-note-body:
     'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  /* Oviedo theme: Nunito for both title and body. */
+  --font-nunito: 'Nunito Variable', ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

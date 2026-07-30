@@ -13,6 +13,7 @@ export const NOTA_FONT_FAMILY = {
   instrumentSerif: 'NotaInstrumentSerif',
   geistSans: 'NotaGeistSans',
   sourceSerif4: 'NotaSourceSerif4',
+  nunito: 'NotaNunito',
 } as const;
 
 const NOTA_FONT_SOURCES = {
@@ -20,6 +21,7 @@ const NOTA_FONT_SOURCES = {
   [NOTA_FONT_FAMILY.instrumentSerif]: require('@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff'),
   [NOTA_FONT_FAMILY.geistSans]: require('@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff'),
   [NOTA_FONT_FAMILY.sourceSerif4]: require('@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2'),
+  [NOTA_FONT_FAMILY.nunito]: require('@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2'),
 } as const;
 
 const SYSTEM_MONO =
