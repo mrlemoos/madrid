@@ -105,13 +105,13 @@ Store these as **repository** secrets or under the same **Production** environme
 
 | Secret                        | Purpose                                                    |
 | ----------------------------- | ---------------------------------------------------------- |
-| `APPLE_CERTIFICATE_BASE64`    | Base64-encoded `.p12` (Developer ID Application)           |
-| `APPLE_CERTIFICATE_PASSWORD`  | `.p12` password; also **`CSC_KEY_PASSWORD`** for the build |
+| `MAC_CSC_LINK`                | Base64-encoded `.p12` (Developer ID Application)           |
+| `MAC_CSC_KEY_PASSWORD`        | `.p12` password; also **`CSC_KEY_PASSWORD`** for the build |
 | `APPLE_ID`                    | Apple ID email (for notarisation, when enabled)            |
 | `APPLE_APP_SPECIFIC_PASSWORD` | App-specific password                                      |
 | `APPLE_TEAM_ID`               | Team ID                                                    |
 
-With `APPLE_CERTIFICATE_BASE64` unset, CI still produces **unsigned** artefacts. Set **`mac.notarize: true`** in `electron-builder.yml` when the Apple ID secrets above are configured.
+With `MAC_CSC_LINK` unset, CI still produces **unsigned** artefacts. Set **`mac.notarize: true`** in `electron-builder.yml` when the Apple ID secrets above are configured.
 
 ## macOS Dock icon
 
