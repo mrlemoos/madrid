@@ -454,7 +454,11 @@ async function startServer(): Promise<void> {
   const waitOn = (await import('wait-on')).default;
   await waitOn({
     resources: [`http://localhost:${String(DEV_PORT)}`],
-    timeout: 30_000,
+    // Cold `nx run-many -t dev` builds all dependency libs before Vite serves
+    // 4200; that can exceed 30s on a fresh cache, timing out electron and
+    // quitting the app. Give the cold build room — warm starts still connect in
+    // seconds.
+    timeout: 120_000,
   });
 }
 
