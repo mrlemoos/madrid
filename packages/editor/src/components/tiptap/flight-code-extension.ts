@@ -5,7 +5,7 @@ import type { Node as PMNode } from '@tiptap/pm/model';
 import { findFlightCodes } from '../../lib/flight-code';
 
 export type FlightCodeHandlers = {
-  onHover: (code: string, rect: DOMRect) => void;
+  onHover: (code: string, anchor: HTMLElement) => void;
   onHoverEnd: () => void;
   onOpen: (code: string) => void;
 };
@@ -73,7 +73,7 @@ export const FlightCode = Extension.create<FlightCodeOptions>({
               if (!el) return false;
               const code = el.dataset['flightCode'];
               if (code) {
-                getHandlers()?.onHover(code, el.getBoundingClientRect());
+                getHandlers()?.onHover(code, el);
               }
               return false;
             },

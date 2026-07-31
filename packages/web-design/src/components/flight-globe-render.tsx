@@ -1,3 +1,18 @@
+/**
+ * Internal renderer for {@link FlightGlobe} — the tile-less d3-geo visual for an
+ * aircraft's position. `variant="flat"` draws a static equirectangular map (for
+ * compact surfaces like a hover card); `variant="globe"` draws a draggable
+ * orthographic globe (for a dialog). No map-tile provider, so it works offline
+ * and adds no CSP origin.
+ *
+ * @remarks
+ * Not a public entry point — consumers import `FlightGlobe` from
+ * `@nota/web-design/flight-globe`, which lazy-loads this module (d3-geo + world
+ * atlas) into its own chunk.
+ *
+ * @packageDocumentation
+ */
+
 import {
   geoOrthographic,
   geoEquirectangular,
@@ -17,38 +32,37 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from 'react';
 
-// Land polygons, computed once. Cast: world-atlas ships a valid Topology.
+// Land polygons, computed once from the bundled world atlas.
 const land = feature(
-  worldTopo as never,
-  (worldTopo as never as { objects: { countries: unknown } }).objects
-    .countries as never,
-) as unknown as GeoJSON.FeatureCollection;
+  worldTopo,
+  worldTopo.objects.countries,
+) as GeoJSON.FeatureCollection;
 
-type Coords = { lat: number; lng: number };
+export type FlightGlobeCoords = { lat: number; lng: number };
 
-type FlightGlobeProps = {
-  /** 'flat' = static equirectangular (hover card); 'globe' = draggable orthographic (dialog). */
+export interface FlightGlobeProps {
+  /** 'flat' = static equirectangular map; 'globe' = draggable orthographic globe. */
   variant: 'flat' | 'globe';
   width: number;
   height: number;
-  /** Live aircraft position, or null when only a route/no position is known. */
-  position: Coords | null;
+  /** Live aircraft position, or null when no position is known (route only). */
+  position: FlightGlobeCoords | null;
   /** Heading in degrees for the plane glyph. */
   heading?: number | null;
-};
+}
 
-/** Small plane glyph pointing "up"; caller rotates by heading. */
-function PlaneGlyph({
-  x,
-  y,
-  heading,
-}: {
+interface PlaneGlyphProps {
   x: number;
   y: number;
   heading: number;
-}): JSX.Element {
+}
+
+/** Small plane glyph pointing "up"; caller rotates by heading. */
+function PlaneGlyph({ x, y, heading }: PlaneGlyphProps): JSX.Element {
   return (
-    <g transform={`translate(${x} ${y}) rotate(${heading})`}>
+    <g
+      transform={`translate(${String(x)} ${String(y)}) rotate(${String(heading)})`}
+    >
       <circle r={9} className="fill-primary/25" />
       <path
         d="M0,-7 L2,-1 L7,3 L7,5 L1,3 L1,6 L3,8 L3,9 L0,8 L-3,9 L-3,8 L-1,6 L-1,3 L-7,5 L-7,3 L-2,-1 Z"
@@ -154,7 +168,7 @@ export function FlightGlobe({
     <svg
       width={width}
       height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 ${String(width)} ${String(height)}`}
       className={variant === 'globe' ? 'cursor-grab touch-none' : undefined}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

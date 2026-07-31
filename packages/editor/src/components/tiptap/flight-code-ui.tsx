@@ -1,24 +1,24 @@
+import { useCallback, useEffect, useRef, useState, type JSX } from 'react';
+import { Dialog } from '@base-ui/react/dialog';
 import {
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type JSX,
-} from 'react';
+  NotaHoverCard,
+  NotaHoverCardPortal,
+  NotaHoverCardPositioner,
+  NotaHoverCardPopup,
+} from '@nota/web-design/hover-card';
+// FlightGlobe is a light wrapper that lazy-loads its own d3-geo + atlas chunk,
+// so a static import here doesn't pull that weight into the editor's chunk.
+import { FlightGlobe } from '@nota/web-design/flight-globe';
 import { fetchFlightInfo, type FlightInfo } from '../../lib/flight-client';
 import type {
   FlightCodeHandlers,
   FlightCodeHandlersRef,
 } from './flight-code-extension';
 
-const FlightGlobe = lazy(() => import('./flight-globe'));
-
 const HOVER_HIDE_DELAY_MS = 160;
 const DIALOG_POLL_MS = 20_000;
 
-type HoverState = { code: string; rect: DOMRect };
+type HoverState = { code: string; anchor: HTMLElement };
 
 type FlightFetch =
   | { status: 'loading' }
@@ -38,7 +38,7 @@ function useFlightInfo(code: string | null, poll: boolean): FlightFetch {
     const load = async () => {
       try {
         const info = await fetchFlightInfo(code, controller.signal);
-        if (!active) return;
+        if (!active) return null;
         setState(info ? { status: 'ready', info } : { status: 'missing' });
         return info;
       } catch {
@@ -76,7 +76,11 @@ function statusLabel(info: FlightInfo): string {
   return [info.status ?? 'Scheduled', route, when].filter(Boolean).join(' · ');
 }
 
-function CodeHeading({ code }: { code: string }): JSX.Element {
+interface CodeHeadingProps {
+  code: string;
+}
+
+function CodeHeading({ code }: CodeHeadingProps): JSX.Element {
   return (
     <span className="inline-flex items-center gap-1.5 font-semibold">
       <span aria-hidden>✈</span>
@@ -85,17 +89,19 @@ function CodeHeading({ code }: { code: string }): JSX.Element {
   );
 }
 
+interface FlightBodyProps {
+  fetch: FlightFetch;
+  variant: 'flat' | 'globe';
+  width: number;
+  height: number;
+}
+
 function FlightBody({
   fetch,
   variant,
   width,
   height,
-}: {
-  fetch: FlightFetch;
-  variant: 'flat' | 'globe';
-  width: number;
-  height: number;
-}): JSX.Element {
+}: FlightBodyProps): JSX.Element {
   if (fetch.status === 'loading') {
     return <p className="text-sm text-muted-foreground">Locating flight…</p>;
   }
@@ -116,127 +122,111 @@ function FlightBody({
     <div className="space-y-2">
       <p className="text-xs text-muted-foreground">{statusLabel(info)}</p>
       <div className="overflow-hidden rounded-md border border-border/50">
-        <Suspense
-          fallback={<div style={{ width, height }} className="bg-muted/30" />}
-        >
-          <FlightGlobe
-            variant={variant}
-            width={width}
-            height={height}
-            position={
-              info.lat != null && info.lng != null
-                ? { lat: info.lat, lng: info.lng }
-                : null
-            }
-            heading={info.dir}
-          />
-        </Suspense>
+        <FlightGlobe
+          variant={variant}
+          width={width}
+          height={height}
+          position={
+            info.lat != null && info.lng != null
+              ? { lat: info.lat, lng: info.lng }
+              : null
+          }
+          heading={info.dir}
+        />
       </div>
     </div>
   );
+}
+
+interface HoverCardProps {
+  hover: HoverState;
+  onCardEnter: () => void;
+  onCardLeave: () => void;
+  onDismiss: () => void;
+  onOpen: (code: string) => void;
 }
 
 function HoverCard({
   hover,
-  onEnter,
-  onLeave,
+  onCardEnter,
+  onCardLeave,
+  onDismiss,
   onOpen,
-}: {
-  hover: HoverState;
-  onEnter: () => void;
-  onLeave: () => void;
-  onOpen: (code: string) => void;
-}): JSX.Element {
+}: HoverCardProps): JSX.Element {
   const fetch = useFlightInfo(hover.code, false);
-  const width = 300;
-  const left = Math.max(
-    8,
-    Math.min(hover.rect.left, window.innerWidth - width - 8),
-  );
-  const top = hover.rect.bottom + 8;
 
   return (
-    <div
-      className="fixed z-50 w-[300px] cursor-pointer rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-lg"
-      style={{ left, top }}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      onClick={() => {
-        onOpen(hover.code);
+    <NotaHoverCard
+      open
+      onOpenChange={(next) => {
+        if (!next) onDismiss();
       }}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') onOpen(hover.code);
-      }}
-      role="button"
-      tabIndex={0}
     >
-      <div className="mb-2 flex items-center justify-between">
-        <CodeHeading code={hover.code} />
-        <span className="text-[11px] text-muted-foreground">
-          Click to expand
-        </span>
-      </div>
-      <FlightBody fetch={fetch} variant="flat" width={276} height={150} />
-    </div>
+      <NotaHoverCardPortal>
+        <NotaHoverCardPositioner
+          anchor={hover.anchor}
+          side="bottom"
+          align="start"
+          sideOffset={8}
+        >
+          <NotaHoverCardPopup
+            className="w-[300px] cursor-pointer p-3"
+            onMouseEnter={onCardEnter}
+            onMouseLeave={onCardLeave}
+            onClick={() => {
+              onOpen(hover.code);
+            }}
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <CodeHeading code={hover.code} />
+              <span className="text-[11px] text-muted-foreground">
+                Click to expand
+              </span>
+            </div>
+            <FlightBody fetch={fetch} variant="flat" width={276} height={150} />
+          </NotaHoverCardPopup>
+        </NotaHoverCardPositioner>
+      </NotaHoverCardPortal>
+    </NotaHoverCard>
   );
 }
 
-function FlightDialog({
-  code,
-  onClose,
-}: {
+interface FlightDialogProps {
   code: string;
   onClose: () => void;
-}): JSX.Element {
+}
+
+function FlightDialog({ code, onClose }: FlightDialogProps): JSX.Element {
   const fetch = useFlightInfo(code, true);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => {
-      window.removeEventListener('keydown', onKey);
-    };
-  }, [onClose]);
-
   return (
-    <div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4"
-      onClick={onClose}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose();
+    <Dialog.Root
+      open
+      onOpenChange={(next) => {
+        if (!next) onClose();
       }}
-      role="presentation"
     >
-      <div
-        className="w-full max-w-xl rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        onKeyDown={(e) => {
-          e.stopPropagation();
-        }}
-        role="dialog"
-        aria-modal="true"
-        aria-label={`Flight ${code}`}
-      >
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-lg">
-            <CodeHeading code={code} />
-          </span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
-        <FlightBody fetch={fetch} variant="globe" width={440} height={440} />
-      </div>
-    </div>
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 z-[60] bg-black/50" />
+        <Dialog.Popup className="fixed top-1/2 left-1/2 z-[60] w-[min(100vw-2rem,36rem)] -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-popover p-5 text-popover-foreground shadow-2xl outline-none">
+          <div className="mb-3 flex items-center justify-between">
+            <Dialog.Title className="text-lg">
+              <CodeHeading code={code} />
+            </Dialog.Title>
+            <Dialog.Close
+              className="rounded-md px-2 py-1 text-sm text-muted-foreground hover:bg-muted"
+              aria-label="Close"
+            >
+              ✕
+            </Dialog.Close>
+          </div>
+          <Dialog.Description className="sr-only">
+            Live flight tracking for {code}
+          </Dialog.Description>
+          <FlightBody fetch={fetch} variant="globe" width={440} height={440} />
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
@@ -267,22 +257,23 @@ export function useFlightCode(): {
     }, HOVER_HIDE_DELAY_MS);
   }, [cancelHide]);
 
-  const handlersRef = useRef<FlightCodeHandlers>({
-    onHover: () => {},
-    onHoverEnd: () => {},
-    onOpen: () => {},
-  });
-  handlersRef.current = {
-    onHover: (code, rect) => {
-      cancelHide();
-      setHover({ code, rect });
-    },
-    onHoverEnd: scheduleHide,
-    onOpen: (code) => {
+  const openDialog = useCallback(
+    (code: string) => {
       cancelHide();
       setHover(null);
       setDialogCode(code);
     },
+    [cancelHide],
+  );
+
+  const handlersRef = useRef<FlightCodeHandlers | null>(null);
+  handlersRef.current = {
+    onHover: (code, anchor) => {
+      cancelHide();
+      setHover({ code, anchor });
+    },
+    onHoverEnd: scheduleHide,
+    onOpen: openDialog,
   };
 
   const overlay = (
@@ -290,13 +281,12 @@ export function useFlightCode(): {
       {hover ? (
         <HoverCard
           hover={hover}
-          onEnter={cancelHide}
-          onLeave={scheduleHide}
-          onOpen={(code) => {
-            cancelHide();
+          onCardEnter={cancelHide}
+          onCardLeave={scheduleHide}
+          onDismiss={() => {
             setHover(null);
-            setDialogCode(code);
           }}
+          onOpen={openDialog}
         />
       ) : null}
       {dialogCode ? (
