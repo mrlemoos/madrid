@@ -595,7 +595,7 @@ describe('NotesSidebarList', () => {
     );
   });
 
-  it('rotates the folder chevron when the folder is expanded', () => {
+  it('marks the folder branch expanded by default', () => {
     // Arrange
     render(
       <NotesSidebarList
@@ -625,16 +625,14 @@ describe('NotesSidebarList', () => {
         refreshNotesList={vi.fn(() => Promise.resolve())}
       />,
     );
+    // Act
     const expandButton = screen.getByRole('button', {
       name: 'Collapse folder Expanded folder',
     });
-
-    // Act
-    const chevron = expandButton.querySelector('[class*="rotate-90"]');
     const branch = document.getElementById('sidebar-folder-folder-1');
 
     // Assert
-    expect(chevron?.getAttribute('class') ?? '').toContain('rotate-90');
+    expect(expandButton).toBeTruthy();
     expect(branch).toBeTruthy();
     expect(branch?.getAttribute('data-expanded')).toBe('true');
     expect(branch?.getAttribute('aria-hidden')).toBe('false');

@@ -46,7 +46,6 @@ import { useNotaTranslator } from '@/lib/use-nota-translator';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
   NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS,
-  notesSidebarTreeChevronClass,
   notesSidebarTreeFolderLabelClass,
   notesSidebarTreeFolderRowVariants,
   notesSidebarTreeFolderTriggerClass,
@@ -441,16 +440,6 @@ function FolderRow(options: {
                   startRenamingFolder(folder);
                 }}
               >
-                <NotaIcon
-                  icon={ArrowNarrowRightIcon}
-                  size={14}
-                  strokeWidth={1.5}
-                  aria-hidden
-                  className={cn(
-                    notesSidebarTreeChevronClass,
-                    !isCollapsed && 'rotate-90',
-                  )}
-                />
                 <span
                   className={cn(
                     'inline-flex shrink-0',
