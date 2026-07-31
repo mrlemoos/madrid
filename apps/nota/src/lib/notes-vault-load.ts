@@ -71,9 +71,9 @@ async function listActiveStoredNotes(
 ): Promise<Note[]> {
   const stored = await ports.local.listStoredNotes(userId);
   return stored
-    .filter((row) => !row.pending_delete)
+    .filter(({ pending_delete }) => !pending_delete)
     .map(storedNoteToListRow)
-    .sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+    .sort((left, right) => right.updated_at.localeCompare(left.updated_at));
 }
 
 async function recoverAfterEntitlementFetchFailure(

@@ -10,10 +10,7 @@ export function shouldRefetchOpenNoteFromVaultList(
   panelNote: Note | null,
   listRow: Note | null,
 ): boolean {
-  if (!listRow) {
-    return false;
-  }
-  if (!panelNote || panelNote.id !== listRow.id) {
+  if (!listRow || !panelNote || panelNote.id !== listRow.id) {
     return false;
   }
   return listRow.updated_at.localeCompare(panelNote.updated_at) > 0;

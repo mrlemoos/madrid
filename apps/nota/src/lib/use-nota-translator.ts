@@ -6,7 +6,7 @@ export function useNotaTranslator(): {
   locale: SupportedLocale;
   t: ReturnType<typeof createTranslator>['t'];
 } {
-  const preference = useNotaPreferencesStore((s) => s.locale);
+  const preference = useNotaPreferencesStore(({ locale }) => locale);
   return useMemo(() => {
     const { locale, t } = createTranslator(preference);
     return { locale, t };
