@@ -45,7 +45,7 @@ export function readRequestOriginHeader(
     return undefined;
   }
   for (const [key, value] of Object.entries(requestHeaders)) {
-    if (key.toLowerCase() !== 'origin' || value == null) {
+    if (key.toLowerCase() !== 'origin') {
       continue;
     }
     const candidate = Array.isArray(value) ? value[0] : value;

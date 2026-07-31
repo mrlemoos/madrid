@@ -43,7 +43,7 @@ describe('shouldOpenInAppOAuthPopupWindow', () => {
     const results = previewTargets.map(shouldOpenInAppOAuthPopupWindow);
 
     // Assert
-    expect(results.every((r) => r === false)).toBe(true);
+    expect(results.every((r) => !r)).toBe(true);
   });
 });
 

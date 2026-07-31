@@ -29,8 +29,12 @@ export default function SlideArrowDownloadButton({
     <motion.a
       href={href}
       data-nota-download-mac
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
       whileHover={reduceMotion ? undefined : { scale: 1.02 }}
       whileTap={reduceMotion ? undefined : { scale: 0.96 }}
       className={[
