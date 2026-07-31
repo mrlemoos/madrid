@@ -28,6 +28,8 @@ import {
   type MutableRefObject,
 } from 'react';
 import { LinkPreview } from './tiptap/link-preview-extension';
+import { FlightCode } from './tiptap/flight-code-extension';
+import { useFlightCode } from './tiptap/flight-code-ui';
 import { NotaLink } from './tiptap/nota-link';
 import { convertLinkOnlyParagraphs } from './tiptap/link-preview-scan';
 import {
@@ -236,6 +238,8 @@ export function TipTapEditor({
 
   const editorRef = useRef<Editor | null>(null);
 
+  const flightCode = useFlightCode();
+
   const mentionConfirmRefs: NoteMentionConfirmRefs = {
     canInsertAttachmentsRef,
     filterNoteCandidatesRef,
@@ -279,6 +283,7 @@ export function TipTapEditor({
       NotaSmilieReplacer,
       Placeholder.configure({ placeholder }),
       LinkPreview,
+      FlightCode.configure({ handlersRef: flightCode.handlersRef }),
       NotePdf,
       NoteImage,
       NoteAudio,
@@ -293,7 +298,7 @@ export function TipTapEditor({
         ? [Collaboration.configure({ document: ydoc, field: NOTA_YDOC_FIELD })]
         : []),
     ],
-    [placeholder, ydoc],
+    [placeholder, ydoc, flightCode.handlersRef],
   );
 
   const stableEditorProps = useMemo(
@@ -732,6 +737,7 @@ export function TipTapEditor({
           <TableEditorMenu editor={editor} />
           <EditorContent editor={editor} />
         </div>
+        {flightCode.overlay}
         <NoteLinkMentionMenu
           open={Boolean(mention && canInsertAttachments)}
           anchor={mentionAnchor}

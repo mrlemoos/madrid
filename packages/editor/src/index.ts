@@ -37,6 +37,7 @@ export { findNoteMentionTrigger } from './lib/tiptap-note-mention';
 export { NotaCodeBlock } from './components/tiptap/nota-code-block';
 export { NotaLink } from './components/tiptap/nota-link';
 export { convertLinkOnlyParagraphs } from './components/tiptap/link-preview-scan';
+export { findFlightCodes, type FlightCodeMatch } from './lib/flight-code';
 
 export {
   NotePdfThumbnailFrame,

@@ -59,6 +59,9 @@
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
     "@tiptap/suggestion": "2.27.2",
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2",
     "lowlight": "^3.3.0",
     "mermaid": "^11.12.0",
     "pdfjs-dist": "^5.5.207",
@@ -70,6 +73,8 @@
     "react-dom": "^19.0.3"
   },
   "devDependencies": {
+    "@types/d3-geo": "^3.1.0",
+    "@types/topojson-client": "^3.1.4",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "typescript": "catalog:",

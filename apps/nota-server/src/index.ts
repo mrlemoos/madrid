@@ -11,7 +11,9 @@ import {
   sendWebResponse,
 } from './http-utils.ts';
 import { audioToNoteHandler } from './routes/audio-to-note.ts';
+import { flightHandler } from './routes/flight.ts';
 import { ogPreviewHandler } from './routes/og-preview.ts';
+import { createUserRateLimiter } from './lib/user-rate-limit.server.ts';
 import {
   notaProEntitledHandler,
   notaProInvalidateHandler,
@@ -125,6 +127,38 @@ app.get('/api/og-preview', (req, res, next) => {
   void (async () => {
     try {
       const r = await ogPreviewHandler(expressToWebRequest(req));
+      await sendWebResponse(res, r);
+    } catch (e) {
+      next(e);
+    }
+  })();
+});
+
+// Public (no Bearer): the shared /s/ page calls this too. Guarded by CORS
+// allowlist + a per-IP rate limit. Flight codes aren't sensitive; the only risk
+// is AirLabs quota abuse, which the limit + 15s server cache cover.
+const rateLimitFlight = createUserRateLimiter({
+  key: 'flight',
+  max: 60,
+  windowMs: 60_000,
+});
+app.get('/api/flight', (req, res, next) => {
+  // Client key from X-Forwarded-For (first hop) since we run behind a proxy and
+  // don't set global `trust proxy`; fall back to the socket IP locally.
+  // ponytail: XFF is spoofable, but this limit is coarse quota protection, not
+  // security. Set `trust proxy` + use req.ip if it must be unspoofable.
+  const forwarded = req.headers['x-forwarded-for'];
+  const ip =
+    (typeof forwarded === 'string' ? forwarded.split(',')[0]?.trim() : '') ||
+    req.ip ||
+    'unknown';
+  if (!rateLimitFlight(ip)) {
+    res.status(429).json({ error: 'Too many requests' });
+    return;
+  }
+  void (async () => {
+    try {
+      const r = await flightHandler(expressToWebRequest(req));
       await sendWebResponse(res, r);
     } catch (e) {
       next(e);

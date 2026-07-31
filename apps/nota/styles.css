@@ -874,6 +874,20 @@
   color: color-mix(in oklch, var(--primary) 88%, var(--foreground));
 }
 
+/* Detected flight codes: subtle dotted underline, hover/click opens tracking. */
+.tiptap-editor .ProseMirror .nota-flight-code {
+  text-decoration: underline dotted;
+  text-decoration-color: color-mix(in oklch, var(--primary) 60%, transparent);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tiptap-editor .ProseMirror .nota-flight-code:hover {
+  text-decoration-color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  border-radius: 3px;
+}
+
 .tiptap-editor .ProseMirror a[data-platform-link-preview],
 .tiptap-editor .ProseMirror a[data-platform-link-preview]:hover {
   color: var(--foreground);

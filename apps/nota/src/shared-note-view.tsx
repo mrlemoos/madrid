@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
+import { TipTapEditor } from '@nota/editor';
 
 import {
   fetchSharedNote,
@@ -8,10 +9,8 @@ import {
 } from './lib/note-share-client';
 
 // Reuse the real editor in read-only mode so the preview matches the app
-// exactly. Lazy so the heavy editor bundle doesn't block first paint.
-const TipTapEditor = lazy(() =>
-  import('@nota/editor').then((m) => ({ default: m.TipTapEditor })),
-);
+// exactly. Imported statically like the rest of the app (the editor is already
+// in the main chunk; a lazy import here would trip the module-boundary rule).
 
 type LoadState =
   | { status: 'loading' }
@@ -111,17 +110,13 @@ export function SharedNoteView(): JSX.Element {
             <h1 className="text-4xl font-extrabold leading-tight text-pretty md:text-5xl">
               {state.note.title || 'Untitled'}
             </h1>
-            <Suspense
-              fallback={<p className="text-muted-foreground">Loading…</p>}
-            >
-              <TipTapEditor
-                readOnly
-                content={state.note.content}
-                noteId={state.note.id}
-                contentRevision={state.note.updatedAt ?? undefined}
-                placeholder=""
-              />
-            </Suspense>
+            <TipTapEditor
+              readOnly
+              content={state.note.content}
+              noteId={state.note.id}
+              contentRevision={state.note.updatedAt ?? undefined}
+              placeholder=""
+            />
           </article>
         )}
 
