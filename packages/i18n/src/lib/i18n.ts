@@ -292,6 +292,13 @@ const TRANSLATIONS: Record<
     ...NOTE_BACKLINKS_ES,
     ...ELECTRON_UPDATE_ES,
     ...PLATFORM_LINK_PREVIEW_ES,
+    Share: 'Compartir',
+    Shared: 'Compartido',
+    'Sharing…': 'Compartiendo…',
+    'Link copied': 'Enlace copiado',
+    'Copy link again': 'Copiar enlace de nuevo',
+    'Anyone with the link can view this note.':
+      'Cualquiera con el enlace puede ver esta nota.',
   },
   'pt-BR': {
     ...SHORTCUT_TRANSLATIONS_PT,
@@ -301,6 +308,13 @@ const TRANSLATIONS: Record<
     ...NOTE_BACKLINKS_PT,
     ...ELECTRON_UPDATE_PT,
     ...PLATFORM_LINK_PREVIEW_PT,
+    Share: 'Compartilhar',
+    Shared: 'Compartilhada',
+    'Sharing…': 'Compartilhando…',
+    'Link copied': 'Link copiado',
+    'Copy link again': 'Copiar link novamente',
+    'Anyone with the link can view this note.':
+      'Qualquer pessoa com o link pode ver esta nota.',
   },
   'fr-CA': {
     ...SHORTCUT_TRANSLATIONS_FR,
@@ -310,6 +324,13 @@ const TRANSLATIONS: Record<
     ...NOTE_BACKLINKS_FR,
     ...ELECTRON_UPDATE_FR,
     ...PLATFORM_LINK_PREVIEW_FR,
+    Share: 'Partager',
+    Shared: 'Partagée',
+    'Sharing…': 'Partage…',
+    'Link copied': 'Lien copié',
+    'Copy link again': 'Copier le lien à nouveau',
+    'Anyone with the link can view this note.':
+      'Toute personne disposant du lien peut voir cette note.',
   },
 };
 
@@ -386,7 +407,9 @@ function getNavigator(): {
 } | null {
   try {
     const nav = globalThis.navigator as
-      { languages: readonly string[]; language: string } | undefined | null;
+      | { languages: readonly string[]; language: string }
+      | undefined
+      | null;
     return nav ?? null;
   } catch {
     return null;

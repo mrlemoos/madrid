@@ -10,6 +10,8 @@ import '@fontsource-variable/nunito/index.css';
 import '../styles.css';
 import { bootstrapAppNavigation } from './lib/app-navigation';
 import { repairClerkAuthLocationHash } from './lib/clerk-hash-navigation';
+import { SHARED_NOTE_PATH_PREFIX } from './lib/note-share-client';
+import { SharedNoteView } from './shared-note-view';
 import { NotaApp } from './app-root';
 import { AppProviders } from './providers';
 
@@ -18,33 +20,43 @@ if (!rootEl) {
   throw new Error('Missing #root element');
 }
 
-/** Hash may not be visible on the first synchronous tick; re-run through the document lifecycle. */
-repairClerkAuthLocationHash();
-queueMicrotask(() => {
-  repairClerkAuthLocationHash();
-});
-if (document.readyState !== 'loading') {
-  repairClerkAuthLocationHash();
+// Public shared-note page: a standalone, unauthenticated read-only view. Mounted
+// before Clerk/providers/navigation so anonymous viewers never touch auth.
+if (window.location.pathname.startsWith(SHARED_NOTE_PATH_PREFIX)) {
+  createRoot(rootEl).render(<SharedNoteView />);
+} else {
+  bootstrapMainApp(rootEl);
 }
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-    repairClerkAuthLocationHash();
-  },
-  { once: true },
-);
-window.addEventListener(
-  'load',
-  () => {
-    repairClerkAuthLocationHash();
-  },
-  { once: true },
-);
 
-bootstrapAppNavigation();
+function bootstrapMainApp(el: HTMLElement): void {
+  /** Hash may not be visible on the first synchronous tick; re-run through the document lifecycle. */
+  repairClerkAuthLocationHash();
+  queueMicrotask(() => {
+    repairClerkAuthLocationHash();
+  });
+  if (document.readyState !== 'loading') {
+    repairClerkAuthLocationHash();
+  }
+  document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      repairClerkAuthLocationHash();
+    },
+    { once: true },
+  );
+  window.addEventListener(
+    'load',
+    () => {
+      repairClerkAuthLocationHash();
+    },
+    { once: true },
+  );
 
-createRoot(rootEl).render(
-  <AppProviders>
-    <NotaApp />
-  </AppProviders>,
-);
+  bootstrapAppNavigation();
+
+  createRoot(el).render(
+    <AppProviders>
+      <NotaApp />
+    </AppProviders>,
+  );
+}

@@ -93,7 +93,13 @@ function isDocContentEqual(editor: Editor, content: unknown): boolean {
 
 export interface TipTapEditorProps {
   content: unknown;
-  onUpdate: (content: unknown) => void;
+  onUpdate?: (content: unknown) => void;
+  /**
+   * Render the note without editing: `editable: false`, no `onUpdate` calls, no
+   * writes. Used by the public shared-note page so the preview matches the app
+   * exactly (task lists, tables, code blocks) without a separate renderer.
+   */
+  readOnly?: boolean;
   placeholder?: string;
   noteId: string;
   contentRevision?: string;
@@ -117,9 +123,10 @@ export interface TipTapEditorProps {
    * + server log both loaded), so seeding never races an about-to-arrive doc.
    */
   canSeed?: boolean;
-  userId: string;
-  noteMentionCandidates: Note[];
-  attachments: NoteAttachment[];
+  /** Optional so the read-only viewer can omit editing-only props. */
+  userId?: string;
+  noteMentionCandidates?: Note[];
+  attachments?: NoteAttachment[];
   bodyEditorRef?: MutableRefObject<Editor | null>;
 
   proEntitled?: boolean;
@@ -137,15 +144,16 @@ export interface TipTapEditorProps {
 export function TipTapEditor({
   content,
   onUpdate,
+  readOnly = false,
   placeholder = 'Start writing...',
   noteId,
   contentRevision,
   ydoc,
   seedContentIfEmpty,
   canSeed = false,
-  userId,
-  noteMentionCandidates,
-  attachments,
+  userId = '',
+  noteMentionCandidates = [],
+  attachments = [],
   bodyEditorRef,
   proEntitled = false,
   emojiReplacerEnabled = false,
@@ -462,13 +470,14 @@ export function TipTapEditor({
   const editor = useEditor(
     {
       extensions,
+      editable: !readOnly,
       // When collaborative, the Yjs doc is the source of truth — seeding
       // `content` here would double-apply on top of the bound doc.
       content: ydoc
         ? undefined
         : content || { type: 'doc', content: [{ type: 'paragraph' }] },
       onUpdate: ({ editor: ed }) => {
-        onUpdate(ed.getJSON());
+        onUpdate?.(ed.getJSON());
       },
       editorProps: stableEditorProps,
     },

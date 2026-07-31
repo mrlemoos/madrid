@@ -22,6 +22,7 @@ export interface Database {
           editor_settings: Json;
           banner_attachment_id: string | null;
           folder_id: string | null;
+          share_token: string | null;
         };
         Insert: {
           id?: string;
@@ -35,6 +36,7 @@ export interface Database {
           editor_settings?: Json;
           banner_attachment_id?: string | null;
           folder_id?: string | null;
+          share_token?: string | null;
         };
         Update: {
           id?: string;
@@ -48,6 +50,7 @@ export interface Database {
           editor_settings?: Json;
           banner_attachment_id?: string | null;
           folder_id?: string | null;
+          share_token?: string | null;
         };
         Relationships: [
           {

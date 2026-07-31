@@ -28,6 +28,7 @@ import { vaultMutator } from '../lib/notes-vault-runtime';
 import { createNoteFieldSaver } from '../lib/save-note-fields';
 import type { Json, Note, NoteAttachment } from '~/types/database.types';
 import { NoteLayoutMenu } from './note-layout-menu';
+import { NoteShareButton } from './note-share-button';
 import {
   NoteImageLightbox,
   type NoteImageLightboxImage,
@@ -142,6 +143,12 @@ function NoteEditorImpl({
   const [lightboxImage, setLightboxImage] =
     useState<NoteImageLightboxImage | null>(null);
   const [title, setTitle] = useState(() => note.title || '');
+  const [shareToken, setShareToken] = useState<string | null>(
+    note.share_token ?? null,
+  );
+  useEffect(() => {
+    setShareToken(note.share_token ?? null);
+  }, [note.id, note.share_token]);
 
   // Local-first note body: bind the editor to a Yjs doc so the caret is never
   // clobbered by remote sync. Gated on entitlement; unentitled falls back to
@@ -587,6 +594,12 @@ function NoteEditorImpl({
           className="flex shrink-0 items-start justify-end gap-2 pt-3 md:pt-4"
           aria-live="polite"
         >
+          <NoteShareButton
+            noteId={note.id}
+            shareToken={shareToken}
+            disabled={!user?.id || !notaProEntitled}
+            onShared={setShareToken}
+          />
           <NoteLayoutMenu
             settings={parseNoteEditorSettings(note.editor_settings)}
             onSettingsChange={(next) => {

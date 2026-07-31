@@ -64,7 +64,8 @@ export async function saveLocalNoteDraft(
   const tx = db.transaction(NOTES_OBJECT_STORE, 'readwrite');
   const store = tx.objectStore(NOTES_OBJECT_STORE);
   const existing = (await idbRequest(store.get(patch.id))) as
-    StoredNote | undefined;
+    | StoredNote
+    | undefined;
 
   const title = patch.title ?? existing?.title ?? '';
   const content = patch.content ?? existing?.content ?? DEFAULT_NOTE_CONTENT;
@@ -94,6 +95,7 @@ export async function saveLocalNoteDraft(
       patch.folder_id !== undefined
         ? patch.folder_id
         : (existing?.folder_id ?? null),
+    share_token: existing?.share_token ?? null,
     dirty: true,
     pending_create: options.pendingCreate ?? existing?.pending_create ?? false,
     pending_delete: false,
@@ -157,7 +159,8 @@ export async function markPendingDelete(
   const tx = db.transaction(NOTES_OBJECT_STORE, 'readwrite');
   const store = tx.objectStore(NOTES_OBJECT_STORE);
   const existing = (await idbRequest(store.get(noteId))) as
-    StoredNote | undefined;
+    | StoredNote
+    | undefined;
 
   if (!wasSynced && existing?.pending_create) {
     store.delete(noteId);
@@ -186,6 +189,7 @@ export async function markPendingDelete(
       editor_settings: {} as Json,
       banner_attachment_id: null,
       folder_id: null,
+      share_token: null,
       dirty: true,
       pending_create: false,
       pending_delete: true,
@@ -218,6 +222,7 @@ export async function createLocalOnlyNote(
     editor_settings: {},
     banner_attachment_id: null,
     folder_id: folderId,
+    share_token: null,
     dirty: true,
     pending_create: true,
     pending_delete: false,
