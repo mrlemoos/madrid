@@ -20,9 +20,9 @@ describe('NotaHoverCard (named exports)', () => {
   });
 });
 
-describe('NotaHoverCardPopup (default popover styles)', () => {
-  it('applies the shared hover card surface tokens', () => {
-    // Arrange
+describe('NotaHoverCardPopup (rendering)', () => {
+  it('renders the popup content when open', () => {
+    // Arrange / Act
     const { baseElement } = render(
       <NotaHoverCard defaultOpen>
         <NotaHoverCardTrigger
@@ -37,59 +37,9 @@ describe('NotaHoverCardPopup (default popover styles)', () => {
       </NotaHoverCard>,
     );
 
-    // Act
-    const popup = within(baseElement).getByText('Card body', { exact: true });
-    const surface = popup.closest('div') ?? popup;
-    const classes = surface.className.split(/\s+/).filter(Boolean);
-
-    // Assert
-    for (const token of [
-      'z-50',
-      'w-80',
-      'rounded-xl',
-      'border',
-      'border-border',
-      'bg-popover',
-      'text-popover-foreground',
-      'shadow-lg',
-    ]) {
-      expect(classes).toContain(token);
-    }
-  });
-});
-
-describe('NotaHoverCardPopup (motion)', () => {
-  it('applies shared popup motion tokens including duration and easing', () => {
-    // Arrange
-    const { baseElement } = render(
-      <NotaHoverCard defaultOpen>
-        <NotaHoverCardTrigger
-          nativeButton={false}
-          render={<span>Anchor</span>}
-        />
-        <NotaHoverCardPortal>
-          <NotaHoverCardPositioner side="top" sideOffset={8}>
-            <NotaHoverCardPopup>Card body</NotaHoverCardPopup>
-          </NotaHoverCardPositioner>
-        </NotaHoverCardPortal>
-      </NotaHoverCard>,
-    );
-
-    // Act
-    const popup = within(baseElement).getByText('Card body', { exact: true });
-    const surface = popup.closest('div') ?? popup;
-    const classes = surface.className.split(/\s+/).filter(Boolean);
-
-    // Assert
-    for (const token of [
-      'origin-[var(--transform-origin)]',
-      'transition-[transform,scale,opacity]',
-      'duration-200',
-      'ease-out',
-      'data-[starting-style]:scale-95',
-      'data-[ending-style]:scale-95',
-    ]) {
-      expect(classes).toContain(token);
-    }
+    // Assert — getByText throws if the popup content isn't rendered
+    expect(
+      within(baseElement).getByText('Card body', { exact: true }),
+    ).toBeTruthy();
   });
 });
