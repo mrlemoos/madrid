@@ -14,8 +14,8 @@ import { NotaIcon } from '@nota/web-design/icon';
 import {
   ArrowNarrowRightIcon,
   FileDescriptionIcon,
+  FolderIcon,
   HomeIcon,
-  LibraryIcon,
   PenIcon,
   TrashIcon,
   UserPlusIcon,
@@ -209,7 +209,7 @@ function NoteRow(options: {
                   <NotaContextMenuSubmenuTrigger label={t('Move to')}>
                     <span className="inline-flex min-w-0 flex-1 items-center gap-2">
                       <NotaIcon
-                        icon={LibraryIcon}
+                        icon={FolderIcon}
                         size={16}
                         className="shrink-0 text-muted-foreground"
                       />
@@ -251,7 +251,7 @@ function NoteRow(options: {
                               }}
                             >
                               <NotaIcon
-                                icon={LibraryIcon}
+                                icon={FolderIcon}
                                 size={16}
                                 className="shrink-0 text-muted-foreground"
                               />
@@ -458,7 +458,7 @@ function FolderRow(options: {
                   )}
                   aria-hidden
                 >
-                  <NotaIcon icon={LibraryIcon} size={14} strokeWidth={1.5} />
+                  <NotaIcon icon={FolderIcon} size={14} strokeWidth={1.5} />
                 </span>
                 {renamingFolderId === folder.id ? (
                   <input
@@ -575,7 +575,7 @@ function FolderRow(options: {
                     <NotaContextMenuSubmenuTrigger label={t('Tint folder')}>
                       <span className="inline-flex min-w-0 flex-1 items-center gap-2">
                         <NotaIcon
-                          icon={LibraryIcon}
+                          icon={FolderIcon}
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />

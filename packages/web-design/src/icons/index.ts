@@ -18,6 +18,7 @@ export { default as ChartBarIcon } from './chart-bar-icon.js';
 export { default as ClockIcon } from './clock-icon.js';
 export { default as CpuIcon } from './cpu-icon.js';
 export { default as FileDescriptionIcon } from './file-description-icon.js';
+export { default as FolderIcon } from './folder-icon.js';
 export { default as GearIcon } from './gear-icon.js';
 export { default as GithubIcon } from './github-icon.js';
 export { default as HistoryCircleIcon } from './history-circle-icon.js';
