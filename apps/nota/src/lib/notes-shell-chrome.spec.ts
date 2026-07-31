@@ -37,7 +37,7 @@ function backdropBlurPx(classString: string): number {
   if (!match) {
     throw new Error(`No backdrop-blur token in: ${classString}`);
   }
-  return BACKDROP_BLUR_PX[match]!;
+  return BACKDROP_BLUR_PX[match];
 }
 
 function opacityFraction(classString: string, prefix: string): number {
@@ -124,7 +124,7 @@ describe('notes shell chrome CSS contracts', () => {
 
     // Act
     expect(reduceBlock).not.toBeNull();
-    const body = reduceBlock![1]!;
+    const body = reduceBlock?.[1] ?? '';
 
     // Assert — blur off; near-solid fills for structure + content
     expect(body).toContain(`.${NOTA_NOTES_SIDEBAR_CHROME_CLASS}`);
@@ -163,7 +163,7 @@ describe('notes shell chrome CSS contracts', () => {
 
     // Assert
     expect(match).not.toBeNull();
-    const rule = match![0]!;
+    const rule = match?.[0] ?? '';
     expect(rule).toMatch(/linear-gradient|mask-image|box-shadow/);
     expect(rule).not.toMatch(/border-bottom:\s*1px/);
   });
@@ -180,7 +180,7 @@ describe('notes shell chrome CSS contracts', () => {
     // Assert
     expect(bannerSidebar).not.toBeNull();
     expect(bannerMain).not.toBeNull();
-    expect(bannerSidebar![1]).toMatch(/blur\(([4-9]\d|[1-9]\d{2,})px\)/);
-    expect(bannerMain![1]).toMatch(/backdrop-filter:\s*none/);
+    expect(bannerSidebar?.[1] ?? '').toMatch(/blur\(([4-9]\d|[1-9]\d{2,})px\)/);
+    expect(bannerMain?.[1] ?? '').toMatch(/backdrop-filter:\s*none/);
   });
 });

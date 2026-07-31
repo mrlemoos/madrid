@@ -119,7 +119,7 @@ export function useNotesSidebarResize(options: {
       to: { width: settle.targetWidthPx },
       config,
       onUpdate: (values) => {
-        applyLiveWidth(values.width!);
+        applyLiveWidth(values.width);
       },
       onComplete: () => {
         settleHandleRef.current = null;

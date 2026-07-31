@@ -103,7 +103,11 @@ export function animateSprings(options: {
   const now = options.now ?? (() => performance.now());
   const scheduleFrame =
     options.scheduleFrame ?? ((cb) => requestAnimationFrame(cb));
-  const cancelFrame = options.cancelFrame ?? ((id) => cancelAnimationFrame(id));
+  const cancelFrame =
+    options.cancelFrame ??
+    ((id) => {
+      cancelAnimationFrame(id);
+    });
 
   const keys = Object.keys(options.to);
   const state: Record<string, SpringSample> = {};
@@ -122,7 +126,7 @@ export function animateSprings(options: {
   const emit = (): void => {
     const values: Record<string, number> = {};
     for (const key of keys) {
-      values[key] = state[key]!.value;
+      values[key] = state[key].value;
     }
     options.onUpdate(values);
   };
@@ -136,10 +140,10 @@ export function animateSprings(options: {
 
     let allRest = true;
     for (const key of keys) {
-      const target = options.to[key]!;
+      const target = options.to[key];
       const next = stepSpring({
-        value: state[key]!.value,
-        velocity: state[key]!.velocity,
+        value: state[key].value,
+        velocity: state[key].velocity,
         target,
         config: options.config,
         dtS,
@@ -154,7 +158,7 @@ export function animateSprings(options: {
 
     if (allRest) {
       for (const key of keys) {
-        state[key] = { value: options.to[key]!, velocity: 0 };
+        state[key] = { value: options.to[key], velocity: 0 };
       }
       emit();
       stopped = true;

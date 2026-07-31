@@ -7,7 +7,7 @@ export function noteAfterPatchMutation(
   result: PatchNoteMutationResult,
   localNote: Note,
   localPatch: Partial<Note>,
-  pendingContent: unknown | undefined,
+  pendingContent: unknown,
   fallbackContent: Json,
 ): Note {
   if (result.outcome === 'patched-remote') {

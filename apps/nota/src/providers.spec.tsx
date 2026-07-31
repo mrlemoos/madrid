@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
+import { clerkFullNotesUrl } from './lib/clerk-hash-navigation';
+import { AppProviders } from './providers';
 
 const viteEnvStringMock = vi.hoisted(() =>
   vi.fn((key: string): string | undefined => {
@@ -103,9 +105,6 @@ vi.mock('./components/app-error-boundary', () => ({
   ),
 }));
 
-import { clerkFullNotesUrl } from './lib/clerk-hash-navigation';
-import { AppProviders } from './providers';
-
 describe('AppProviders', () => {
   beforeEach(() => {
     clerkProviderProps.current = null;
@@ -159,8 +158,9 @@ describe('AppProviders', () => {
       return undefined;
     });
     vi.resetModules();
-    const { AppProviders: AppProvidersWithoutKey } =
-      await import('./providers');
+    const { AppProviders: AppProvidersWithoutKey } = await import(
+      './providers'
+    );
 
     // Act
     const renderWithoutKey = () =>
