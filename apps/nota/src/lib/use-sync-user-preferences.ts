@@ -3,7 +3,10 @@ import type { UserPreferences } from '~/types/database.types';
 import { isLikelyOnline } from './notes-offline';
 import { useNotaPreferencesStore } from '../stores/nota-preferences';
 import { getBrowserClient } from './supabase/browser';
-import { upsertUserPreferences } from '../models/user-preferences';
+import {
+  upsertUserPreferences,
+  type UserPreferencesUpsertPatch,
+} from '../models/user-preferences';
 
 /**
  * Hydrates shortcut preference from server data, flushes pending toggles when online,
@@ -106,17 +109,9 @@ export function useSyncUserPreferences(
   }, [userId, markPreferencesSynced, onServerRowCommitted, cloudSyncEnabled]);
 }
 
-export type UserPreferencesSyncPatch = Pick<
-  UserPreferences,
-  | 'locale'
-  | 'open_todays_note_shortcut'
-  | 'show_note_backlinks'
-  | 'semantic_search_enabled'
-  | 'emoji_replacer_enabled'
-  | 'delete_empty_folders'
-  | 'show_writing_activity_graph'
-  | 'writing_activity_color'
-  | 'writing_activity_days'
+export type UserPreferencesSyncPatch = Omit<
+  UserPreferencesUpsertPatch,
+  'welcome_seeded'
 >;
 
 /**

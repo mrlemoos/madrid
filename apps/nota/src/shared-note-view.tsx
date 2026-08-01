@@ -1,5 +1,11 @@
 import { useEffect, useState, type JSX } from 'react';
-import { TipTapEditor } from '@nota/editor';
+import {
+  TipTapEditor,
+  noteSurfaceClassNames,
+  parseNoteEditorSettings,
+} from '@nota/editor';
+import { cn } from './lib/utils';
+import { useNotaTranslator } from './lib/use-nota-translator';
 
 import {
   fetchSharedNote,
@@ -46,6 +52,7 @@ function useSystemTheme(): void {
 
 export function SharedNoteView(): JSX.Element {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
+  const { t } = useNotaTranslator();
   useSystemTheme();
 
   useEffect(() => {
@@ -105,20 +112,37 @@ export function SharedNoteView(): JSX.Element {
           </div>
         )}
 
-        {state.status === 'ready' && (
-          <article className="space-y-6">
-            <h1 className="text-4xl font-extrabold leading-tight text-pretty md:text-5xl">
-              {state.note.title || 'Untitled'}
-            </h1>
-            <TipTapEditor
-              readOnly
-              content={state.note.content}
-              noteId={state.note.id}
-              contentRevision={state.note.updatedAt ?? undefined}
-              placeholder=""
-            />
-          </article>
-        )}
+        {state.status === 'ready' &&
+          (() => {
+            const { titleFontClass, bodyFontClass } = noteSurfaceClassNames(
+              parseNoteEditorSettings(
+                state.note.editorSettings as Parameters<
+                  typeof parseNoteEditorSettings
+                >[0],
+              ),
+            );
+            return (
+              <article className="space-y-6">
+                <h1
+                  className={cn(
+                    'text-4xl font-extrabold leading-tight text-pretty md:text-5xl',
+                    titleFontClass,
+                  )}
+                >
+                  {state.note.title || t('Untitled Note')}
+                </h1>
+                <div className={bodyFontClass}>
+                  <TipTapEditor
+                    readOnly
+                    content={state.note.content}
+                    noteId={state.note.id}
+                    contentRevision={state.note.updatedAt ?? undefined}
+                    placeholder=""
+                  />
+                </div>
+              </article>
+            );
+          })()}
 
         <footer className="mt-16 border-t border-border/60 pt-6 text-sm text-muted-foreground">
           Shared with{' '}

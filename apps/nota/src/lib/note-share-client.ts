@@ -64,6 +64,7 @@ export interface SharedNote {
   id: string;
   title: string;
   content: unknown;
+  editorSettings: unknown;
   updatedAt: string | null;
 }
 
@@ -84,12 +85,14 @@ export async function fetchSharedNote(
     id: string;
     title: string;
     content: unknown;
+    editor_settings: unknown;
     updated_at: string | null;
   };
   return {
     id: row.id,
     title: row.title,
     content: row.content,
+    editorSettings: row.editor_settings,
     updatedAt: row.updated_at,
   };
 }
