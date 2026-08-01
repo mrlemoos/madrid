@@ -5,6 +5,7 @@ import {
   parseNoteEditorSettings,
 } from '@nota/editor';
 import { cn } from './lib/utils';
+import { useNotaTranslator } from './lib/use-nota-translator';
 
 import {
   fetchSharedNote,
@@ -51,6 +52,7 @@ function useSystemTheme(): void {
 
 export function SharedNoteView(): JSX.Element {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
+  const { t } = useNotaTranslator();
   useSystemTheme();
 
   useEffect(() => {
@@ -127,7 +129,7 @@ export function SharedNoteView(): JSX.Element {
                     titleFontClass,
                   )}
                 >
-                  {state.note.title || 'Untitled'}
+                  {state.note.title || t('Untitled Note')}
                 </h1>
                 <div className={bodyFontClass}>
                   <TipTapEditor
