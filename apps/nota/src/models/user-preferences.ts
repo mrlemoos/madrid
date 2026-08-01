@@ -35,21 +35,23 @@ export async function getUserPreferences(
   };
 }
 
+export type UserPreferencesUpsertPatch = {
+  locale?: string | null;
+  open_todays_note_shortcut?: boolean;
+  show_note_backlinks?: boolean;
+  semantic_search_enabled?: boolean;
+  emoji_replacer_enabled?: boolean;
+  welcome_seeded?: boolean;
+  delete_empty_folders?: boolean;
+  show_writing_activity_graph?: boolean;
+  writing_activity_color?: string;
+  writing_activity_days?: Record<string, number>;
+};
+
 export async function upsertUserPreferences(
   client: TypedSupabaseClient,
   userId: string,
-  patch: {
-    locale?: string | null;
-    open_todays_note_shortcut?: boolean;
-    show_note_backlinks?: boolean;
-    semantic_search_enabled?: boolean;
-    emoji_replacer_enabled?: boolean;
-    welcome_seeded?: boolean;
-    delete_empty_folders?: boolean;
-    show_writing_activity_graph?: boolean;
-    writing_activity_color?: string;
-    writing_activity_days?: Record<string, number>;
-  },
+  patch: UserPreferencesUpsertPatch,
 ): Promise<UserPreferences> {
   const current = await getUserPreferences(client, userId);
   const row = {
