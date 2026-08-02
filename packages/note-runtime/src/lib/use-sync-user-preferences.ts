@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useUser } from '@clerk/react';
 import type { UserPreferences } from '@nota/database-types';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
 import { useNotaPreferencesStore } from '../stores/nota-preferences.js';
@@ -107,6 +108,89 @@ export function useSyncUserPreferences(
       window.clearInterval(intervalId);
     };
   }, [userId, markPreferencesSynced, onServerRowCommitted, cloudSyncEnabled]);
+}
+
+/** Minimal Clerk user shape the display-name snapshot needs. */
+export type ClerkDisplayNameSource = {
+  fullName?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  username?: string | null;
+};
+
+/**
+ * Resolve the author display name from Clerk: `fullName` → first+last →
+ * username. Returns null when nothing usable is set. Pure (unit-tested).
+ */
+export function resolveClerkDisplayName(
+  user: ClerkDisplayNameSource | null | undefined,
+): string | null {
+  if (!user) {
+    return null;
+  }
+  const full = user.fullName?.trim();
+  if (full) {
+    return full;
+  }
+  const firstLast = [user.firstName, user.lastName]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(' ');
+  if (firstLast) {
+    return firstLast;
+  }
+  const username = user.username?.trim();
+  return username || null;
+}
+
+/**
+ * Snapshots the signed-in Clerk user's display name onto `user_preferences` so
+ * the anon Share Card RPC can render `{author} shared {title}` without a Clerk
+ * Backend call. Writes only when the resolved name differs from the server row.
+ */
+export function useSyncClerkDisplayName(
+  userPreferencesFromServer: UserPreferences | null,
+  userId: string | undefined,
+  onServerRowCommitted?: (row: UserPreferences) => void,
+  cloudSyncEnabled = true,
+): void {
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (
+      !userId ||
+      !userPreferencesFromServer ||
+      !isLikelyOnline() ||
+      !cloudSyncEnabled
+    ) {
+      return;
+    }
+    const displayName = resolveClerkDisplayName(user);
+    if (
+      !displayName ||
+      displayName === userPreferencesFromServer.display_name
+    ) {
+      return;
+    }
+    void (async () => {
+      try {
+        const client = getBrowserClient();
+        const row = await upsertUserPreferences(client, userId, {
+          display_name: displayName,
+        });
+        useNotaPreferencesStore.getState().markPreferencesSynced(row);
+        onServerRowCommitted?.(row);
+      } catch {
+        /* keep trying on next render/session */
+      }
+    })();
+  }, [
+    user,
+    userId,
+    userPreferencesFromServer,
+    onServerRowCommitted,
+    cloudSyncEnabled,
+  ]);
 }
 
 export type UserPreferencesSyncPatch = Omit<

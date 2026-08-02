@@ -21,6 +21,7 @@ export async function getUserPreferences(
 
   return {
     user_id: userId,
+    display_name: null,
     locale: null,
     open_todays_note_shortcut: false,
     show_note_backlinks: true,
@@ -36,6 +37,7 @@ export async function getUserPreferences(
 }
 
 export type UserPreferencesUpsertPatch = {
+  display_name?: string | null;
   locale?: string | null;
   open_todays_note_shortcut?: boolean;
   show_note_backlinks?: boolean;
@@ -56,6 +58,10 @@ export async function upsertUserPreferences(
   const current = await getUserPreferences(client, userId);
   const row = {
     user_id: userId,
+    display_name:
+      patch.display_name !== undefined
+        ? patch.display_name
+        : current.display_name,
     locale: patch.locale !== undefined ? patch.locale : current.locale,
     open_todays_note_shortcut:
       patch.open_todays_note_shortcut !== undefined

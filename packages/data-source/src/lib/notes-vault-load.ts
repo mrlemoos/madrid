@@ -51,6 +51,7 @@ const LOAD_ERROR = 'Failed to load notes';
 function defaultPrefs(userId: string): UserPreferences {
   return {
     user_id: userId,
+    display_name: null,
     locale: null,
     open_todays_note_shortcut: false,
     show_note_backlinks: true,

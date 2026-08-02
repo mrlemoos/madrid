@@ -31,7 +31,10 @@ import { useNotesSidebarShortcut } from '@nota/app-navigation-ui/use-notes-sideb
 import { useCreateFolderShortcut } from '@nota/note-folders-ui/use-create-folder-shortcut';
 import { useSettingsShortcut } from '@nota/app-navigation-ui/use-settings-shortcut';
 import { useTodaysNoteShortcut } from '@nota/app-navigation-ui/use-todays-note-shortcut';
-import { useSyncUserPreferences } from '@nota/note-runtime/use-sync-user-preferences';
+import {
+  useSyncUserPreferences,
+  useSyncClerkDisplayName,
+} from '@nota/note-runtime/use-sync-user-preferences';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { useNotesSidebarShellMotion } from '@nota/nota-motion-ui/use-notes-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@nota/nota-motion-ui/use-notes-sidebar-resize';
@@ -144,6 +147,13 @@ export function NotesShell({
   const { t } = useNotesChromeTranslator();
 
   useSyncUserPreferences(
+    userPreferences,
+    user?.id,
+    setUserPreferencesInState,
+    notaProEntitled,
+  );
+
+  useSyncClerkDisplayName(
     userPreferences,
     user?.id,
     setUserPreferencesInState,

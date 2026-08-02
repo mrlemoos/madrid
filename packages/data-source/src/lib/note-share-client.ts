@@ -65,6 +65,8 @@ export interface SharedNote {
   title: string;
   content: unknown;
   editorSettings: unknown;
+  /** Author's snapshot display name for the Share Card; null when unset. */
+  authorDisplayName: string | null;
   updatedAt: string | null;
 }
 
@@ -86,6 +88,7 @@ export async function fetchSharedNote(
     title: string;
     content: unknown;
     editor_settings: unknown;
+    author_display_name: string | null;
     updated_at: string | null;
   };
   return {
@@ -93,6 +96,7 @@ export async function fetchSharedNote(
     title: row.title,
     content: row.content,
     editorSettings: row.editor_settings,
+    authorDisplayName: row.author_display_name ?? null,
     updatedAt: row.updated_at,
   };
 }
