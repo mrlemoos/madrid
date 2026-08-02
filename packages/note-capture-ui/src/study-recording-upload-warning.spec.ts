@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning';
+import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning.js';
 
 describe('formatStudyRecordingUploadWarning', () => {
   it('includes Error message detail when present', () => {

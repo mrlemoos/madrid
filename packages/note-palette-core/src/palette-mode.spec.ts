@@ -5,7 +5,7 @@ import {
   moveTargetNoteIds,
   paletteModeReducer,
   type PaletteMode,
-} from './palette-mode';
+} from './palette-mode.js';
 
 describe('paletteModeReducer', () => {
   it('starts idle', () => {

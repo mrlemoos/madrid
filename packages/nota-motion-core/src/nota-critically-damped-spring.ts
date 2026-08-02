@@ -181,7 +181,7 @@ export function animateSprings(options: {
         frameId = null;
       }
     },
-    getValue: (key) => state[key]?.value ?? 0,
-    getVelocity: (key) => state[key]?.velocity ?? 0,
+    getValue: (key) => state[key].value,
+    getVelocity: (key) => state[key].velocity,
   };
 }

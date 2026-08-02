@@ -34,6 +34,12 @@
       "import": "./dist/hover-card.js",
       "default": "./dist/hover-card.js"
     },
+    "./dialog": {
+      "@nota/source": "./src/components/dialog.tsx",
+      "types": "./dist/components/dialog.d.ts",
+      "import": "./dist/dialog.js",
+      "default": "./dist/dialog.js"
+    },
     "./flight-globe": {
       "@nota/source": "./src/components/flight-globe.tsx",
       "types": "./dist/components/flight-globe.d.ts",

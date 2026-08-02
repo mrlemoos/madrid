@@ -8,7 +8,7 @@ import {
   postSemanticSearch as postSemanticSearchRequest,
   postSearchReindexAll as postSearchReindexAllRequest,
 } from '@nota/nota-server-client';
-import { getClerkAccessToken } from './clerk-token-ref';
+import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
 import { notaServerBaseUrl } from './vite-env';
 
 /** `GET` on nota-server; Bearer Clerk session JWT. Missing `VITE_NOTA_SERVER_API_URL` → 401 without calling the network. */

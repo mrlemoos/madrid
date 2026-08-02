@@ -1,7 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { viteEnvString } from './vite-env';
-import { getSupabaseAnonClient } from './supabase/anon';
+import { viteEnvString } from './vite-env.js';
+import { getSupabaseAnonClient } from './supabase/anon.js';
 
 /** Path prefix for the public shared-note page (matched in `main.tsx`). */
 export const SHARED_NOTE_PATH_PREFIX = '/s/';

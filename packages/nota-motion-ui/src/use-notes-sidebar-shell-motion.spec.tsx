@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { gsap } from '@/lib/nota-motion';
+import { gsap } from './nota-motion.js';
 import { useNotesSidebarShellMotion } from './use-notes-sidebar-shell-motion';
 
 type FrameCallback = FrameRequestCallback;

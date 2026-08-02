@@ -3,7 +3,7 @@ import {
   studyNotesBlocksToTiptapNodes,
   studyNotesResultToTiptapDoc,
   type AudioNoteStudyResult,
-} from './audio-note-blocks-to-doc';
+} from './audio-note-blocks-to-doc.js';
 
 describe('studyNotesResultToTiptapDoc', () => {
   it('builds heading, paragraph, and bullet list', () => {

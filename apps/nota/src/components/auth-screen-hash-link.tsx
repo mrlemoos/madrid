@@ -1,8 +1,11 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX, ReactNode } from 'react';
 import { notaButtonVariants } from '@nota/web-design/button';
-import { replaceAppHash, type AppNavScreen } from '@/lib/app-navigation';
-import { authPathnameForScreenKind } from '@/lib/app-navigation-auth';
+import {
+  replaceAppHash,
+  type AppNavScreen,
+} from '@nota/app-navigation-core/navigation';
+import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
 import { cn } from '@/lib/utils';
 
 type AuthHashTarget = 'login' | 'signup';

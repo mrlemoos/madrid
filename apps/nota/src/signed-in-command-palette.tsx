@@ -1,6 +1,6 @@
 import { CommandPalette } from './components/command-palette';
-import { useRootLoaderData } from './context/session-context';
-import { useOptionalNotesDataMeta } from './context/notes-data-context';
+import { useRootLoaderData } from '@nota/note-runtime/session-context';
+import { useOptionalNotesDataMeta } from '@nota/note-runtime/notes-data-context';
 
 export function SignedInCommandPalette() {
   const { user } = useRootLoaderData();

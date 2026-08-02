@@ -1,4 +1,4 @@
-import type { Note } from '~/types/database.types';
+import type { Note } from '@nota/database-types';
 
 export const NOTES_IDB_PUT_CHUNK_SIZE = 16;
 

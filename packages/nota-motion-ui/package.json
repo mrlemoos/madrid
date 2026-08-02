@@ -1,0 +1,121 @@
+{
+  "name": "@nota/nota-motion-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./interaction": {
+      "@nota/source": {
+        "types": "./src/nota-interaction.ts",
+        "import": "./src/nota-interaction.ts",
+        "default": "./src/nota-interaction.ts"
+      },
+      "types": "./src/nota-interaction.ts",
+      "import": "./src/nota-interaction.ts",
+      "default": "./src/nota-interaction.ts"
+    },
+    "./motion-contract": {
+      "@nota/source": {
+        "types": "./src/nota-motion-contract.ts",
+        "import": "./src/nota-motion-contract.ts",
+        "default": "./src/nota-motion-contract.ts"
+      },
+      "types": "./src/nota-motion-contract.ts",
+      "import": "./src/nota-motion-contract.ts",
+      "default": "./src/nota-motion-contract.ts"
+    },
+    "./motion": {
+      "@nota/source": {
+        "types": "./src/nota-motion.ts",
+        "import": "./src/nota-motion.ts",
+        "default": "./src/nota-motion.ts"
+      },
+      "types": "./src/nota-motion.ts",
+      "import": "./src/nota-motion.ts",
+      "default": "./src/nota-motion.ts"
+    },
+    "./panel-motion": {
+      "@nota/source": {
+        "types": "./src/nota-panel-motion.ts",
+        "import": "./src/nota-panel-motion.ts",
+        "default": "./src/nota-panel-motion.ts"
+      },
+      "types": "./src/nota-panel-motion.ts",
+      "import": "./src/nota-panel-motion.ts",
+      "default": "./src/nota-panel-motion.ts"
+    },
+    "./use-notes-sidebar-shell-motion": {
+      "@nota/source": {
+        "types": "./src/use-notes-sidebar-shell-motion.ts",
+        "import": "./src/use-notes-sidebar-shell-motion.ts",
+        "default": "./src/use-notes-sidebar-shell-motion.ts"
+      },
+      "types": "./src/use-notes-sidebar-shell-motion.ts",
+      "import": "./src/use-notes-sidebar-shell-motion.ts",
+      "default": "./src/use-notes-sidebar-shell-motion.ts"
+    },
+    "./use-notes-sidebar-resize": {
+      "@nota/source": {
+        "types": "./src/use-notes-sidebar-resize.ts",
+        "import": "./src/use-notes-sidebar-resize.ts",
+        "default": "./src/use-notes-sidebar-resize.ts"
+      },
+      "types": "./src/use-notes-sidebar-resize.ts",
+      "import": "./src/use-notes-sidebar-resize.ts",
+      "default": "./src/use-notes-sidebar-resize.ts"
+    },
+    "./use-prefers-reduced-motion": {
+      "@nota/source": {
+        "types": "./src/use-prefers-reduced-motion.ts",
+        "import": "./src/use-prefers-reduced-motion.ts",
+        "default": "./src/use-prefers-reduced-motion.ts"
+      },
+      "types": "./src/use-prefers-reduced-motion.ts",
+      "import": "./src/use-prefers-reduced-motion.ts",
+      "default": "./src/use-prefers-reduced-motion.ts"
+    },
+    "./notes-sidebar-resize-handle": {
+      "@nota/source": {
+        "types": "./src/notes-sidebar-resize-handle.tsx",
+        "import": "./src/notes-sidebar-resize-handle.tsx",
+        "default": "./src/notes-sidebar-resize-handle.tsx"
+      },
+      "types": "./src/notes-sidebar-resize-handle.tsx",
+      "import": "./src/notes-sidebar-resize-handle.tsx",
+      "default": "./src/notes-sidebar-resize-handle.tsx"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/nota-motion-ui",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@gsap/react": "catalog:",
+    "@nota/nota-motion-core": "workspace:*",
+    "@nota/web-design": "workspace:*",
+    "gsap": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

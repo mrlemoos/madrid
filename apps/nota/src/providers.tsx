@@ -4,17 +4,17 @@ import { StrictMode, type ReactNode } from 'react';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
 import { AppErrorBoundary } from './components/app-error-boundary';
 import { ThemeProvider } from '@nota/web-design/theme';
-import { ClerkSupabaseBridge } from './context/clerk-supabase-bridge';
+import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
 import { NoteEditorCommandsProvider } from '@nota/editor';
-import { StickyDocTitleProvider } from './context/sticky-doc-title';
-import { AppSessionProvider } from './context/session-context';
+import { StickyDocTitleProvider } from '@nota/note-runtime/sticky-doc-title';
+import { AppSessionProvider } from '@nota/note-runtime/session-context';
 import {
   clerkFullNotesUrl,
   clerkFullSignInUrl,
   clerkFullSignUpUrl,
   clerkRouterPush,
   clerkRouterReplace,
-} from './lib/clerk-hash-navigation';
+} from '@nota/app-navigation-core/clerk-hash';
 import { ClerkSsoCallbackRoute } from './components/clerk-sso-callback-route';
 import { viteEnvString } from './lib/vite-env';
 

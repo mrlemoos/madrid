@@ -1,0 +1,133 @@
+{
+  "name": "@nota/note-runtime",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./notes-data-context": {
+      "@nota/source": {
+        "types": "./src/context/notes-data-context.tsx",
+        "import": "./src/context/notes-data-context.tsx",
+        "default": "./src/context/notes-data-context.tsx"
+      },
+      "types": "./src/context/notes-data-context.tsx",
+      "import": "./src/context/notes-data-context.tsx",
+      "default": "./src/context/notes-data-context.tsx"
+    },
+    "./session-context": {
+      "@nota/source": {
+        "types": "./src/context/session-context.tsx",
+        "import": "./src/context/session-context.tsx",
+        "default": "./src/context/session-context.tsx"
+      },
+      "types": "./src/context/session-context.tsx",
+      "import": "./src/context/session-context.tsx",
+      "default": "./src/context/session-context.tsx"
+    },
+    "./clerk-supabase-bridge": {
+      "@nota/source": {
+        "types": "./src/context/clerk-supabase-bridge.tsx",
+        "import": "./src/context/clerk-supabase-bridge.tsx",
+        "default": "./src/context/clerk-supabase-bridge.tsx"
+      },
+      "types": "./src/context/clerk-supabase-bridge.tsx",
+      "import": "./src/context/clerk-supabase-bridge.tsx",
+      "default": "./src/context/clerk-supabase-bridge.tsx"
+    },
+    "./sticky-doc-title": {
+      "@nota/source": {
+        "types": "./src/context/sticky-doc-title.tsx",
+        "import": "./src/context/sticky-doc-title.tsx",
+        "default": "./src/context/sticky-doc-title.tsx"
+      },
+      "types": "./src/context/sticky-doc-title.tsx",
+      "import": "./src/context/sticky-doc-title.tsx",
+      "default": "./src/context/sticky-doc-title.tsx"
+    },
+    "./stores/preferences": {
+      "@nota/source": {
+        "types": "./src/stores/nota-preferences.ts",
+        "import": "./src/stores/nota-preferences.ts",
+        "default": "./src/stores/nota-preferences.ts"
+      },
+      "types": "./src/stores/nota-preferences.ts",
+      "import": "./src/stores/nota-preferences.ts",
+      "default": "./src/stores/nota-preferences.ts"
+    },
+    "./stores/sidebar": {
+      "@nota/source": {
+        "types": "./src/stores/notes-sidebar.ts",
+        "import": "./src/stores/notes-sidebar.ts",
+        "default": "./src/stores/notes-sidebar.ts"
+      },
+      "types": "./src/stores/notes-sidebar.ts",
+      "import": "./src/stores/notes-sidebar.ts",
+      "default": "./src/stores/notes-sidebar.ts"
+    },
+    "./stores/audio-session": {
+      "@nota/source": {
+        "types": "./src/stores/audio-to-note-session.ts",
+        "import": "./src/stores/audio-to-note-session.ts",
+        "default": "./src/stores/audio-to-note-session.ts"
+      },
+      "types": "./src/stores/audio-to-note-session.ts",
+      "import": "./src/stores/audio-to-note-session.ts",
+      "default": "./src/stores/audio-to-note-session.ts"
+    },
+    "./use-sync-user-preferences": {
+      "@nota/source": {
+        "types": "./src/lib/use-sync-user-preferences.ts",
+        "import": "./src/lib/use-sync-user-preferences.ts",
+        "default": "./src/lib/use-sync-user-preferences.ts"
+      },
+      "types": "./src/lib/use-sync-user-preferences.ts",
+      "import": "./src/lib/use-sync-user-preferences.ts",
+      "default": "./src/lib/use-sync-user-preferences.ts"
+    },
+    "./use-notes-offline-sync": {
+      "@nota/source": {
+        "types": "./src/lib/use-notes-offline-sync.ts",
+        "import": "./src/lib/use-notes-offline-sync.ts",
+        "default": "./src/lib/use-notes-offline-sync.ts"
+      },
+      "types": "./src/lib/use-notes-offline-sync.ts",
+      "import": "./src/lib/use-notes-offline-sync.ts",
+      "default": "./src/lib/use-notes-offline-sync.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-runtime",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@clerk/react": "^6.1.2",
+    "@nota/data-source": "workspace:*",
+    "@nota/database-types": "workspace:*",
+    "@nota/helper-hooks": "workspace:*",
+    "@nota/notes-offline": "workspace:*",
+    "react": "catalog:",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -4,7 +4,7 @@ import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
 import { NotaLogo } from '@/components/nota-logo';
 import { notaButtonVariants } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
-import { hashForScreen } from '@/lib/app-navigation';
+import { hashForScreen } from '@nota/app-navigation-core/navigation';
 
 export function NotFoundScreen({
   signedIn,

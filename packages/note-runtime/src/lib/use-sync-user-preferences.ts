@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
-import type { UserPreferences } from '~/types/database.types';
-import { isLikelyOnline } from './notes-offline';
-import { useNotaPreferencesStore } from '../stores/nota-preferences';
-import { getBrowserClient } from './supabase/browser';
+import type { UserPreferences } from '@nota/database-types';
+import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import { useNotaPreferencesStore } from '../stores/nota-preferences.js';
+import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import {
   upsertUserPreferences,
   type UserPreferencesUpsertPatch,
-} from '../models/user-preferences';
+} from '@nota/data-source/models/user-preferences';
 
 /**
  * Hydrates shortcut preference from server data, flushes pending toggles when online,

@@ -1,4 +1,4 @@
-import { parseMovePickNoteId } from './move-pick-helpers';
+import { parseMovePickNoteId } from './move-pick-helpers.js';
 
 export type MovePickEnterAction =
   | { kind: 'cmdkDefault' }

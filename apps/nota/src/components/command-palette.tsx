@@ -27,57 +27,63 @@ import {
   Volume2Icon,
 } from '@nota/web-design/icons';
 import { cn } from '@/lib/utils';
-import { notaKbdFooterClass, notaKbdHintClass } from '@/lib/nota-kbd-styles';
+import {
+  notaKbdFooterClass,
+  notaKbdHintClass,
+} from '@nota/note-palette-core/nota-kbd-styles';
 import { useNoteEditorCommands } from '@nota/editor';
-import { useRootLoaderData } from '../context/session-context';
-import { useNotesData } from '../context/notes-data-context';
-import { useAppNavigationScreen } from '../hooks/use-app-navigation-screen';
-import { openTodaysNoteClient } from '../lib/open-todays-note';
-import { navigateFromLegacyPath, setAppHash } from '../lib/app-navigation';
-import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '../lib/electron-menubar-events';
+import { useRootLoaderData } from '@nota/note-runtime/session-context';
+import { useNotesData } from '@nota/note-runtime/notes-data-context';
+import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
+import { openTodaysNoteClient } from '@nota/app-navigation-ui/open-todays-note';
+import {
+  navigateFromLegacyPath,
+  setAppHash,
+} from '@nota/app-navigation-core/navigation';
+import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { useClerk } from '@clerk/react';
-import { clientCreateNote } from '../lib/create-note-client';
-import { clientDeleteNoteById } from '../lib/delete-note-client';
-import { clientMoveNoteToFolder } from '../lib/move-note-folder-client';
-import { dispatchRenameFolderRequest } from '../lib/folder-rename-request';
+import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
+import { clientDeleteNoteById } from '@nota/note-folders-ui/delete-note-client';
+import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';
+import { dispatchRenameFolderRequest } from '@nota/note-folders-ui/folder-rename-request';
 import { useMetaShortcutKey } from '@nota/helper-hooks';
-import { movePickEnterAction } from '../lib/move-pick-enter';
+import { movePickEnterAction } from '@nota/note-palette-core/move-pick-enter';
 import {
   parseMovePickNoteId,
   readHighlightedCmdkItemValue,
   readMovePickNoteIdFromHighlightedItem,
-} from '../lib/move-pick-helpers';
+} from '@nota/note-palette-core/move-pick-helpers';
 import type { Folder } from '~/types/database.types';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
-import { flattenFoldersWithPathLabels } from '../lib/folder-tree';
-import { hasJournalNotes } from '../lib/journal-notes';
+import { flattenFoldersWithPathLabels } from '@nota/note-folders-core/folder-tree';
+import { hasJournalNotes } from '@nota/note-journal-core/notes';
 import {
   FOLDER_TINT_PALETTE_PRESETS,
   FOLDER_TINT_PRESET_LABEL_KEY,
-} from '../lib/folder-tint-presets';
-import { clientUpdateFolderTint } from '../lib/update-folder-tint-client';
-import { FolderCreateDialog } from './folder-create-dialog';
-import { FolderDeleteDialog } from './folder-delete-dialog';
-import { ReleaseNotesDialog } from './release-notes-dialog';
+} from '@nota/note-folders-core/folder-tint-presets';
+import { clientUpdateFolderTint } from '@nota/note-folders-ui/update-folder-tint-client';
+import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
+import { FolderDeleteDialog } from '@nota/note-folders-ui/folder-delete-dialog';
+import { ReleaseNotesDialog } from '@nota/electron-bridge-ui/release-notes-dialog';
 import {
   startStudyNotesAppendToOpenNote,
   startStudyNotesFromRecording,
-} from '../lib/audio-to-note-start';
-import { useNotaPreferencesStore } from '../stores/nota-preferences';
+} from '@nota/note-capture-ui/audio-to-note-start';
+import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { useTheme } from '@nota/web-design/theme';
 import { NotaTintCircle } from '@nota/web-design/nota-tint-circle';
 import { CommandPaletteSemanticSync } from './command-palette-semantic-sync';
-import { NOTA_CMDK_ITEM_CLASS } from '@/lib/nota-interaction';
+import { NOTA_CMDK_ITEM_CLASS } from '@nota/nota-motion-ui/interaction';
 import {
   initialPaletteMode,
   moveCommandGroupHeading as selectMoveHeading,
   moveTargetNoteIds as selectMoveTargetNoteIds,
   paletteModeReducer,
-} from '@/lib/palette-mode';
+} from '@nota/note-palette-core/palette-mode';
 import {
   buildAppearanceCommands,
   type PaletteActionCommand,
-} from '@/lib/palette-commands';
+} from '@nota/note-palette-core/palette-commands';
 
 const PALETTE_EMPTY_ID_SET: ReadonlySet<string> = new Set();
 

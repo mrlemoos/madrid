@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import {
@@ -10,6 +9,8 @@ import {
   NOTA_SPRING_SETTLE,
   NOTA_SPRING_SHELL,
 } from '@nota/web-design/motion-tokens';
+import { NOTA_SIDEBAR_DEFAULT_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion.js';
 
 gsap.registerPlugin(useGSAP);
 
@@ -25,7 +26,8 @@ export const NOTA_MOTION_EASE_IN_OUT = 'sine.inOut';
 
 /** Crisp shell chrome band — mirrors `NOTA_SPRING_PRESETS.shell.response`. */
 export const NOTA_SIDEBAR_S = NOTA_SPRING_SHELL.response;
-export const NOTA_SIDEBAR_WIDTH_PX = 288;
+/** Default notes sidebar width (px) — canonical value lives in `@nota/nota-motion-core`. */
+export const NOTA_SIDEBAR_WIDTH_PX = NOTA_SIDEBAR_DEFAULT_WIDTH_PX;
 /** Horizontal slide (px) when the notes sidebar closes :  content exits to the left. */
 export const NOTA_SIDEBAR_SLIDE_PX = 20;
 
@@ -40,25 +42,6 @@ export {
   NOTA_SPRING_PRESETS,
 };
 
-export function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReduced(mq.matches);
-    const onChange = (): void => {
-      setReduced(mq.matches);
-    };
-    mq.addEventListener('change', onChange);
-    return () => {
-      mq.removeEventListener('change', onChange);
-    };
-  }, []);
-
-  return reduced;
-}
+export { usePrefersReducedMotion };
 
 export { gsap, useGSAP };

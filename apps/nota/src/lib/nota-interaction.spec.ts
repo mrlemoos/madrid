@@ -11,7 +11,7 @@ import {
   NOTA_SAVE_PULSE_CLASS,
   NOTA_SHELL_NAV_ITEM_CLASS,
   NOTA_SIDEBAR_ROW_CLASS,
-} from './nota-interaction';
+} from '@nota/nota-motion-ui/interaction';
 
 const stylesCss = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),
@@ -21,7 +21,7 @@ const stylesCss = readFileSync(
 const folderCreateDialog = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../components/folder-create-dialog.tsx',
+    '../../../../packages/note-folders-ui/src/folder-create-dialog.tsx',
   ),
   'utf8',
 );
@@ -29,7 +29,7 @@ const folderCreateDialog = readFileSync(
 const folderDeleteDialog = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../components/folder-delete-dialog.tsx',
+    '../../../../packages/note-folders-ui/src/folder-delete-dialog.tsx',
   ),
   'utf8',
 );

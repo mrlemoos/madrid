@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   audioBufferToWav,
   shouldPassThroughToXaiStt,
-} from './audio-to-xai-stt-format';
+} from './audio-to-xai-stt-format.js';
 
 function blobToArrayBuffer(blob: Blob): Promise<ArrayBuffer> {
   if (typeof blob.arrayBuffer === 'function') {

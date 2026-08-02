@@ -1,0 +1,103 @@
+{
+  "name": "@nota/app-navigation-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./use-app-navigation-screen": {
+      "@nota/source": {
+        "types": "./src/use-app-navigation-screen.ts",
+        "import": "./src/use-app-navigation-screen.ts",
+        "default": "./src/use-app-navigation-screen.ts"
+      },
+      "types": "./src/use-app-navigation-screen.ts",
+      "import": "./src/use-app-navigation-screen.ts",
+      "default": "./src/use-app-navigation-screen.ts"
+    },
+    "./use-settings-shortcut": {
+      "@nota/source": {
+        "types": "./src/use-settings-shortcut.ts",
+        "import": "./src/use-settings-shortcut.ts",
+        "default": "./src/use-settings-shortcut.ts"
+      },
+      "types": "./src/use-settings-shortcut.ts",
+      "import": "./src/use-settings-shortcut.ts",
+      "default": "./src/use-settings-shortcut.ts"
+    },
+    "./use-notes-history-shortcut": {
+      "@nota/source": {
+        "types": "./src/use-notes-history-shortcut.ts",
+        "import": "./src/use-notes-history-shortcut.ts",
+        "default": "./src/use-notes-history-shortcut.ts"
+      },
+      "types": "./src/use-notes-history-shortcut.ts",
+      "import": "./src/use-notes-history-shortcut.ts",
+      "default": "./src/use-notes-history-shortcut.ts"
+    },
+    "./use-notes-sidebar-shortcut": {
+      "@nota/source": {
+        "types": "./src/use-notes-sidebar-shortcut.ts",
+        "import": "./src/use-notes-sidebar-shortcut.ts",
+        "default": "./src/use-notes-sidebar-shortcut.ts"
+      },
+      "types": "./src/use-notes-sidebar-shortcut.ts",
+      "import": "./src/use-notes-sidebar-shortcut.ts",
+      "default": "./src/use-notes-sidebar-shortcut.ts"
+    },
+    "./use-todays-note-shortcut": {
+      "@nota/source": {
+        "types": "./src/use-todays-note-shortcut.ts",
+        "import": "./src/use-todays-note-shortcut.ts",
+        "default": "./src/use-todays-note-shortcut.ts"
+      },
+      "types": "./src/use-todays-note-shortcut.ts",
+      "import": "./src/use-todays-note-shortcut.ts",
+      "default": "./src/use-todays-note-shortcut.ts"
+    },
+    "./open-todays-note": {
+      "@nota/source": {
+        "types": "./src/open-todays-note.ts",
+        "import": "./src/open-todays-note.ts",
+        "default": "./src/open-todays-note.ts"
+      },
+      "types": "./src/open-todays-note.ts",
+      "import": "./src/open-todays-note.ts",
+      "default": "./src/open-todays-note.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/app-navigation-ui",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/app-navigation-core": "workspace:*",
+    "@nota/data-source": "workspace:*",
+    "@nota/database-types": "workspace:*",
+    "@nota/nota-motion-ui": "workspace:*",
+    "@nota/note-runtime": "workspace:*",
+    "@nota/notes-offline": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "@nota/notes-chrome-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./notes-shell": {
+      "@nota/source": {
+        "types": "./src/notes-shell.tsx",
+        "import": "./src/notes-shell.tsx",
+        "default": "./src/notes-shell.tsx"
+      },
+      "types": "./src/notes-shell.tsx",
+      "import": "./src/notes-shell.tsx",
+      "default": "./src/notes-shell.tsx"
+    },
+    "./notes-shell-parts": {
+      "@nota/source": {
+        "types": "./src/notes-shell-parts.tsx",
+        "import": "./src/notes-shell-parts.tsx",
+        "default": "./src/notes-shell-parts.tsx"
+      },
+      "types": "./src/notes-shell-parts.tsx",
+      "import": "./src/notes-shell-parts.tsx",
+      "default": "./src/notes-shell-parts.tsx"
+    },
+    "./notes-sidebar-list": {
+      "@nota/source": {
+        "types": "./src/notes-sidebar-list.tsx",
+        "import": "./src/notes-sidebar-list.tsx",
+        "default": "./src/notes-sidebar-list.tsx"
+      },
+      "types": "./src/notes-sidebar-list.tsx",
+      "import": "./src/notes-sidebar-list.tsx",
+      "default": "./src/notes-sidebar-list.tsx"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/notes-chrome-ui",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/app-navigation-core": "workspace:*",
+    "@nota/app-navigation-ui": "workspace:*",
+    "@nota/database-types": "workspace:*",
+    "@nota/electron-bridge-core": "workspace:*",
+    "@nota/electron-bridge-ui": "workspace:*",
+    "@nota/i18n": "workspace:*",
+    "@nota/note-capture-ui": "workspace:*",
+    "@nota/note-editor-core": "workspace:*",
+    "@nota/note-editor-ui": "workspace:*",
+    "@nota/note-folders-core": "workspace:*",
+    "@nota/note-folders-ui": "workspace:*",
+    "@nota/note-journal-core": "workspace:*",
+    "@nota/note-runtime": "workspace:*",
+    "@nota/nota-motion-ui": "workspace:*",
+    "@nota/notes-chrome-core": "workspace:*",
+    "@nota/web-design": "workspace:*",
+    "@nota/writing-activity-core": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/react": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

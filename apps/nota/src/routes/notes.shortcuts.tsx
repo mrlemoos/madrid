@@ -1,14 +1,14 @@
 import { useLayoutEffect, useState, type JSX } from 'react';
 import { cn } from '@/lib/utils';
-import { notaKbdReferenceValueClass } from '@/lib/nota-kbd-styles';
+import { notaKbdReferenceValueClass } from '@nota/note-palette-core/nota-kbd-styles';
 import {
   filterShortcutCatalogSections,
   NOTA_SHORTCUT_PLACEHOLDER_KEY,
   NOTA_SHORTCUT_SECTIONS,
-} from '@/lib/nota-shortcuts-catalogue';
+} from '@nota/note-palette-core/nota-shortcuts-catalogue';
 import { navigatorLooksLikeApplePlatform } from '@/lib/navigator-apple-platform';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
-import { useNotaPreferencesStore } from '@/stores/nota-preferences';
+import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 
 export default function NotesShortcuts(): JSX.Element {
   const openTodaysNoteShortcut = useNotaPreferencesStore(

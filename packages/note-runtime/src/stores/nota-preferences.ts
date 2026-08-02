@@ -1,11 +1,49 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UserPreferences } from '~/types/database.types';
-import {
-  parseWritingActivityColor,
-  parseWritingActivityDays,
-  type WritingActivityColor,
-} from '@/lib/writing-activity';
+import type { UserPreferences } from '@nota/database-types';
+
+/**
+ * Supported colour families for the writing-activity graph (Tailwind ramps).
+ *
+ * NOTE: the graph-rendering side of this (level classes, grid math) still lives in
+ * the app's `writing-activity` helper; only the preference-persistence parsers are
+ * duplicated here so the store stays a leaf of the runtime spine. Reunify when a
+ * dedicated `writing-activity-core` package is extracted.
+ */
+export type WritingActivityColor = 'blue' | 'red' | 'pink' | 'rose';
+
+const WRITING_ACTIVITY_COLORS: readonly WritingActivityColor[] = [
+  'blue',
+  'red',
+  'pink',
+  'rose',
+];
+
+function parseWritingActivityColor(
+  value: string | null | undefined,
+): WritingActivityColor {
+  if (
+    value !== undefined &&
+    value !== null &&
+    (WRITING_ACTIVITY_COLORS as readonly string[]).includes(value)
+  ) {
+    return value as WritingActivityColor;
+  }
+  return 'blue';
+}
+
+function parseWritingActivityDays(value: unknown): Record<string, number> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+  const out: Record<string, number> = {};
+  for (const [key, count] of Object.entries(value)) {
+    if (typeof count === 'number') {
+      out[key] = count;
+    }
+  }
+  return out;
+}
 
 export type CursorVisualStyle = 'line' | 'block';
 

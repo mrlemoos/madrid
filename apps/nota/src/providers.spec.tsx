@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
-import { clerkFullNotesUrl } from './lib/clerk-hash-navigation';
+import { clerkFullNotesUrl } from '@nota/app-navigation-core/clerk-hash';
 import { AppProviders } from './providers';
 
 const viteEnvStringMock = vi.hoisted(() =>
@@ -51,7 +51,7 @@ vi.mock('./components/deferred-posthog-root', () => ({
   ),
 }));
 
-vi.mock('./context/clerk-supabase-bridge', () => ({
+vi.mock('@nota/note-runtime/clerk-supabase-bridge', () => ({
   ClerkSupabaseBridge: ({ children }: { children: ReactNode }) => (
     <>{children}</>
   ),
@@ -81,13 +81,13 @@ vi.mock('@nota/web-design/theme', () => ({
   ),
 }));
 
-vi.mock('./context/session-context', () => ({
+vi.mock('@nota/note-runtime/session-context', () => ({
   AppSessionProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="app-session-provider">{children}</div>
   ),
 }));
 
-vi.mock('./context/sticky-doc-title', () => ({
+vi.mock('@nota/note-runtime/sticky-doc-title', () => ({
   StickyDocTitleProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="sticky-doc-title-provider">{children}</div>
   ),

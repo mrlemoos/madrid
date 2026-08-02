@@ -1,10 +1,10 @@
-import { getClerkAccessToken } from './clerk-token-ref';
-import type { AudioNoteStudyResult } from './audio-note-blocks-to-doc';
+import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
+import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
 import {
   ensureBlobForXaiStt,
   filenameForSttUpload,
-} from './audio-to-xai-stt-format';
-import { notaServerBaseUrl } from './vite-env';
+} from './audio-to-xai-stt-format.js';
+import { notaServerBaseUrl } from './vite-env.js';
 
 export type AudioToNoteSseEvent =
   | { event: 'transcript'; data: { text: string; duration: number } }

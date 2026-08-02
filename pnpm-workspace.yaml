@@ -38,3 +38,5 @@ catalog:
   '@vitejs/plugin-react': ^4.2.0
   vite-plugin-dts: ~4.5.0
   motion: ^12.23.12
+  gsap: ^3.13.0
+  '@gsap/react': ^2.1.2

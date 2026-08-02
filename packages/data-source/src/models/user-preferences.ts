@@ -1,5 +1,5 @@
-import type { UserPreferences } from '~/types/database.types';
-import type { TypedSupabaseClient } from './notes';
+import type { UserPreferences } from '@nota/database-types';
+import type { TypedSupabaseClient } from './notes.js';
 
 export async function getUserPreferences(
   client: TypedSupabaseClient,

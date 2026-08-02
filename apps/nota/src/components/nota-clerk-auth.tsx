@@ -7,7 +7,7 @@ import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import {
   clerkFullSignInUrl,
   clerkFullSignUpUrl,
-} from '@/lib/clerk-hash-navigation';
+} from '@nota/app-navigation-core/clerk-hash';
 import { cn } from '@/lib/utils';
 
 const authFallback = (

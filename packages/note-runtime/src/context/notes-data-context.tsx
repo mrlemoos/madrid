@@ -8,31 +8,45 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { Folder, Note, UserPreferences } from '~/types/database.types';
+import type { Folder, Note, UserPreferences } from '@nota/database-types';
 import {
   getBrowserClient,
   isSupabaseClerkGetTokenRegistered,
-} from '../lib/supabase/browser';
-import {
-  isLikelyOnline,
-  listStoredNotes,
-  putServerNoteIfNotDirty,
-} from '@/lib/notes-offline';
-import { syncServerNotesToIdbInChunks } from '../lib/sync-server-notes-to-idb';
-import { loadVault, type VaultLoadPorts } from '../lib/notes-vault-load';
-import { listFolders } from '../models/folders';
-import { listNotes } from '../models/notes';
-import { getUserPreferences } from '../models/user-preferences';
-import { isClerkAccessTokenGetterRegistered } from '../lib/clerk-token-ref';
-import { fetchNotaProEntitled } from '../lib/nota-server-client';
+} from '@nota/data-source/supabase/browser';
+import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import { listStoredNotes, putServerNoteIfNotDirty } from '@nota/notes-offline';
+import { syncServerNotesToIdbInChunks } from '@nota/data-source/sync-server-notes-to-idb';
+import { loadVault, type VaultLoadPorts } from '@nota/data-source/vault-load';
+import { listFolders } from '@nota/data-source/models/folders';
+import { listNotes } from '@nota/data-source/models/notes';
+import { getUserPreferences } from '@nota/data-source/models/user-preferences';
+import { isClerkAccessTokenGetterRegistered } from '@nota/data-source/clerk-token-ref';
 import {
   readNotaServerEntitledSession,
   syncNotaServerEntitledSession,
-} from '../lib/nota-pro-entitled-session';
-import { setAppHash } from '../lib/app-navigation';
-import { runWelcomeNoteSeedIfNeeded } from '../lib/welcome-note-seed';
-import { clearNoteAttachmentSignedUrlCache } from '../lib/note-attachment-signed-url-cache';
-import { useAppSession } from './session-context';
+} from '@nota/data-source/nota-pro-entitled-session';
+import { useAppSession } from './session-context.js';
+
+/**
+ * App-owned collaborators injected at composition time. These live in feature
+ * clusters that must not become upward package dependencies of the runtime spine
+ * (nota-server entitlement client, hash navigation, welcome-note seeding, the
+ * attachment signed-URL cache), so the app passes them in.
+ */
+export type NotesDataProviderPorts = {
+  /** Fetch the Nota Pro entitlement response from nota-server (Bearer). */
+  fetchNotaProEntitled: () => Promise<Response>;
+  /** Seed the welcome note when the vault is empty; returns the new note id or null. */
+  runWelcomeNoteSeedIfNeeded: (args: {
+    userId: string;
+    welcomeSeeded: boolean;
+    notesCount: number;
+  }) => Promise<string | null>;
+  /** Navigate the app to the freshly seeded welcome note. */
+  navigateToNote: (noteId: string) => void;
+  /** Clear the per-session attachment signed-URL cache on user change. */
+  clearNoteAttachmentSignedUrlCache: () => void;
+};
 
 export type RefreshNotesListOptions = {
   /**
@@ -138,9 +152,18 @@ async function waitForClerkBridge(maxMs = 600): Promise<void> {
   }
 }
 
-export function NotesDataProvider({ children }: { children: ReactNode }) {
+export function NotesDataProvider({
+  children,
+  ports,
+}: {
+  children: ReactNode;
+  ports: NotesDataProviderPorts;
+}) {
   const { user } = useAppSession();
   const userId = user?.id;
+
+  const portsRef = useRef(ports);
+  portsRef.current = ports;
 
   const [notaProEntitled, setNotaProEntitled] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
@@ -157,7 +180,7 @@ export function NotesDataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     didRetryEmptyVaultAfterWelcomeSeededRef.current = false;
     refreshChainRef.current = Promise.resolve();
-    clearNoteAttachmentSignedUrlCache();
+    portsRef.current.clearNoteAttachmentSignedUrlCache();
   }, [userId]);
 
   const refreshNotesList = useCallback(
@@ -176,9 +199,11 @@ export function NotesDataProvider({ children }: { children: ReactNode }) {
         const ports: VaultLoadPorts = {
           entitlement: {
             fetchEntitled: async () => {
-              const res = await fetchNotaProEntitled();
+              const res = await portsRef.current.fetchNotaProEntitled();
               if (!res.ok) {
-                throw new Error(`Entitlement fetch failed: ${res.status}`);
+                throw new Error(
+                  `Entitlement fetch failed: ${String(res.status)}`,
+                );
               }
               const json = (await res.json()) as { entitled?: boolean };
               return json.entitled === true;
@@ -268,7 +293,7 @@ export function NotesDataProvider({ children }: { children: ReactNode }) {
     }
     const gen = ++welcomeSeedGenerationRef.current;
     void (async () => {
-      const id = await runWelcomeNoteSeedIfNeeded({
+      const id = await portsRef.current.runWelcomeNoteSeedIfNeeded({
         userId,
         welcomeSeeded,
         notesCount: notes.length,
@@ -282,7 +307,7 @@ export function NotesDataProvider({ children }: { children: ReactNode }) {
         if (gen !== welcomeSeedGenerationRef.current) {
           return;
         }
-        setAppHash({ kind: 'notes', panel: 'note', noteId: id });
+        portsRef.current.navigateToNote(id);
         return;
       }
       if (

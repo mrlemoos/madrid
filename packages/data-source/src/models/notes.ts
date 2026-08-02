@@ -5,9 +5,9 @@ import type {
   Json,
   NoteInsert,
   NoteUpdate,
-} from '~/types/database.types';
-import { subtreeFolderIds } from '../lib/folder-tree';
-import { listNoteAttachments, NOTE_PDFS_BUCKET } from './note-attachments';
+} from '@nota/database-types';
+import { subtreeFolderIds } from '../lib/folder-subtree.js';
+import { listNoteAttachments, NOTE_PDFS_BUCKET } from './note-attachments.js';
 
 /** Browser and tests use the generated `Database` shape. */
 export type TypedSupabaseClient = SupabaseClient<Database>;

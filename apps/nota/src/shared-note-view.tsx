@@ -12,7 +12,7 @@ import {
   subscribeSharedNote,
   SHARED_NOTE_PATH_PREFIX,
   type SharedNote,
-} from './lib/note-share-client';
+} from '@nota/data-source/note-share-client';
 
 // Reuse the real editor in read-only mode so the preview matches the app
 // exactly. Imported statically like the rest of the app (the editor is already

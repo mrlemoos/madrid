@@ -1,0 +1,135 @@
+{
+  "name": "@nota/note-capture-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./audio-to-xai-stt-format": {
+      "@nota/source": {
+        "types": "./src/audio-to-xai-stt-format.ts",
+        "import": "./src/audio-to-xai-stt-format.ts",
+        "default": "./src/audio-to-xai-stt-format.ts"
+      },
+      "types": "./src/audio-to-xai-stt-format.ts",
+      "import": "./src/audio-to-xai-stt-format.ts",
+      "default": "./src/audio-to-xai-stt-format.ts"
+    },
+    "./audio-to-note-client": {
+      "@nota/source": {
+        "types": "./src/audio-to-note-client.ts",
+        "import": "./src/audio-to-note-client.ts",
+        "default": "./src/audio-to-note-client.ts"
+      },
+      "types": "./src/audio-to-note-client.ts",
+      "import": "./src/audio-to-note-client.ts",
+      "default": "./src/audio-to-note-client.ts"
+    },
+    "./audio-to-note-apply": {
+      "@nota/source": {
+        "types": "./src/audio-to-note-apply.ts",
+        "import": "./src/audio-to-note-apply.ts",
+        "default": "./src/audio-to-note-apply.ts"
+      },
+      "types": "./src/audio-to-note-apply.ts",
+      "import": "./src/audio-to-note-apply.ts",
+      "default": "./src/audio-to-note-apply.ts"
+    },
+    "./audio-note-pending-idb": {
+      "@nota/source": {
+        "types": "./src/audio-note-pending-idb.ts",
+        "import": "./src/audio-note-pending-idb.ts",
+        "default": "./src/audio-note-pending-idb.ts"
+      },
+      "types": "./src/audio-note-pending-idb.ts",
+      "import": "./src/audio-note-pending-idb.ts",
+      "default": "./src/audio-note-pending-idb.ts"
+    },
+    "./study-recording-upload-warning": {
+      "@nota/source": {
+        "types": "./src/study-recording-upload-warning.ts",
+        "import": "./src/study-recording-upload-warning.ts",
+        "default": "./src/study-recording-upload-warning.ts"
+      },
+      "types": "./src/study-recording-upload-warning.ts",
+      "import": "./src/study-recording-upload-warning.ts",
+      "default": "./src/study-recording-upload-warning.ts"
+    },
+    "./study-recording-upload-warning-banner": {
+      "@nota/source": {
+        "types": "./src/study-recording-upload-warning-banner.tsx",
+        "import": "./src/study-recording-upload-warning-banner.tsx",
+        "default": "./src/study-recording-upload-warning-banner.tsx"
+      },
+      "types": "./src/study-recording-upload-warning-banner.tsx",
+      "import": "./src/study-recording-upload-warning-banner.tsx",
+      "default": "./src/study-recording-upload-warning-banner.tsx"
+    },
+    "./audio-to-note-start": {
+      "@nota/source": {
+        "types": "./src/audio-to-note-start.ts",
+        "import": "./src/audio-to-note-start.ts",
+        "default": "./src/audio-to-note-start.ts"
+      },
+      "types": "./src/audio-to-note-start.ts",
+      "import": "./src/audio-to-note-start.ts",
+      "default": "./src/audio-to-note-start.ts"
+    },
+    "./audio-to-note-dock": {
+      "@nota/source": {
+        "types": "./src/audio-to-note-dock.tsx",
+        "import": "./src/audio-to-note-dock.tsx",
+        "default": "./src/audio-to-note-dock.tsx"
+      },
+      "types": "./src/audio-to-note-dock.tsx",
+      "import": "./src/audio-to-note-dock.tsx",
+      "default": "./src/audio-to-note-dock.tsx"
+    },
+    "./use-audio-note-pending-drain": {
+      "@nota/source": {
+        "types": "./src/use-audio-note-pending-drain.ts",
+        "import": "./src/use-audio-note-pending-drain.ts",
+        "default": "./src/use-audio-note-pending-drain.ts"
+      },
+      "types": "./src/use-audio-note-pending-drain.ts",
+      "import": "./src/use-audio-note-pending-drain.ts",
+      "default": "./src/use-audio-note-pending-drain.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-capture-ui",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/app-navigation-core": "workspace:*",
+    "@nota/data-source": "workspace:*",
+    "@nota/database-types": "workspace:*",
+    "@nota/note-capture-core": "workspace:*",
+    "@nota/note-runtime": "workspace:*",
+    "@nota/notes-offline": "workspace:*",
+    "@nota/web-design": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,9 +1,24 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import {
-  clampNotaSidebarWidthPx,
-  NOTA_SIDEBAR_DEFAULT_WIDTH_PX,
-} from '@/lib/nota-sidebar-width';
+
+/**
+ * Sidebar width band. Kept local to the store so it stays a leaf of the runtime
+ * spine; the app's `nota-sidebar-width` helper mirrors these values for the resize
+ * interaction (default width originates from the motion design token, 288px).
+ */
+const NOTA_SIDEBAR_DEFAULT_WIDTH_PX = 288;
+const NOTA_SIDEBAR_MIN_WIDTH_PX = 240;
+const NOTA_SIDEBAR_MAX_WIDTH_PX = 480;
+
+function clampNotaSidebarWidthPx(widthPx: number): number {
+  if (!Number.isFinite(widthPx)) {
+    return NOTA_SIDEBAR_DEFAULT_WIDTH_PX;
+  }
+  return Math.min(
+    NOTA_SIDEBAR_MAX_WIDTH_PX,
+    Math.max(NOTA_SIDEBAR_MIN_WIDTH_PX, Math.round(widthPx)),
+  );
+}
 
 export interface NotesSidebarState {
   open: boolean;

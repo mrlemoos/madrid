@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@/lib/utils';
-import { useAudioToNoteSession } from '../stores/audio-to-note-session';
+import { cn } from '@nota/web-design/utils';
+import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
 
 /**
  * Dismissible notice when study-note generation succeeded but the original recording

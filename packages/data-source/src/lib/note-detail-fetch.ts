@@ -1,5 +1,5 @@
-import type { Note, NoteAttachment } from '~/types/database.types';
-import type { TypedSupabaseClient } from '../models/notes';
+import type { Note, NoteAttachment } from '@nota/database-types';
+import type { TypedSupabaseClient } from '../models/notes.js';
 
 export type NoteDetailFetchDeps = {
   getNote: (client: TypedSupabaseClient, id: string) => Promise<Note | null>;

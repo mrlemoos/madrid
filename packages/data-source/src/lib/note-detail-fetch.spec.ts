@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fetchNoteRowAndAttachmentsParallel } from './note-detail-fetch';
 import type { TypedSupabaseClient } from '../models/notes';
-import type { Note } from '~/types/database.types';
+import type { Note } from '@nota/database-types';
 
 describe('fetchNoteRowAndAttachmentsParallel', () => {
   it('starts listing attachments before getNote resolves', async () => {

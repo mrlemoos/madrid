@@ -1,8 +1,8 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef, type JSX } from 'react';
-import { cn } from '@/lib/utils';
-import type { JournalEntry } from '@/lib/journal-notes';
-import { useNotaTranslator } from '@/lib/use-nota-translator';
+import { cn } from '@nota/web-design/utils';
+import type { JournalEntry } from '@nota/note-journal-core/notes';
+import { useJournalTranslator } from './use-journal-translator.js';
 
 /** Initial row height before `measureElement` runs (title-only vs title + preview). */
 function estimateJournalRowHeight(entry: JournalEntry | undefined): number {
@@ -19,7 +19,7 @@ export function JournalNotesList({
   entries: readonly JournalEntry[];
   onOpenNote: (noteId: string) => void;
 }): JSX.Element {
-  const { t } = useNotaTranslator();
+  const { t } = useJournalTranslator();
   const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({

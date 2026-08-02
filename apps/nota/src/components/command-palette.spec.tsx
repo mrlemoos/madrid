@@ -2,19 +2,19 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { CommandPalette } from './command-palette';
 import { ThemeProvider } from '@nota/web-design/theme';
-import { dispatchRenameFolderRequest } from '../lib/folder-rename-request';
-import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '../lib/electron-menubar-events';
-import { clientUpdateFolderTint } from '../lib/update-folder-tint-client';
+import { dispatchRenameFolderRequest } from '@nota/note-folders-ui/folder-rename-request';
+import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
+import { clientUpdateFolderTint } from '@nota/note-folders-ui/update-folder-tint-client';
 
-vi.mock('../lib/update-folder-tint-client', () => ({
+vi.mock('@nota/note-folders-ui/update-folder-tint-client', () => ({
   clientUpdateFolderTint: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('../lib/folder-rename-request', () => ({
+vi.mock('@nota/note-folders-ui/folder-rename-request', () => ({
   dispatchRenameFolderRequest: vi.fn(),
 }));
 
-vi.mock('../context/notes-data-context', () => ({
+vi.mock('@nota/note-runtime/notes-data-context', () => ({
   useNotesData: () => ({
     notes: [
       {
@@ -54,7 +54,7 @@ vi.mock('../context/notes-data-context', () => ({
   }),
 }));
 
-vi.mock('../hooks/use-app-navigation-screen', () => ({
+vi.mock('@nota/app-navigation-ui/use-app-navigation-screen', () => ({
   useAppNavigationScreen: () => ({
     kind: 'notes',
     panel: 'list',
@@ -62,7 +62,7 @@ vi.mock('../hooks/use-app-navigation-screen', () => ({
   }),
 }));
 
-vi.mock('../context/session-context', () => ({
+vi.mock('@nota/note-runtime/session-context', () => ({
   useRootLoaderData: () => ({
     user: { id: 'user-1', email: 'test@example.com' },
   }),
@@ -72,7 +72,7 @@ vi.mock('@clerk/react', () => ({
   useClerk: () => ({ signOut: vi.fn() }),
 }));
 
-vi.mock('../stores/nota-preferences', () => ({
+vi.mock('@nota/note-runtime/stores/preferences', () => ({
   useNotaPreferencesStore: <T,>(
     selector: (s: {
       openTodaysNoteShortcut: boolean;

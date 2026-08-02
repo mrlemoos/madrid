@@ -34,11 +34,11 @@ const StickyDocTitleContext = createContext<StickyDocTitleContextValue | null>(
 /** Used when `Layout` / `StickyDocTitleProvider` is not in the tree (e.g. route stubs in tests). */
 const fallbackScrollRootRef: RefObject<HTMLElement | null> = { current: null };
 
-function noopRegisterScrollRoot(_el: HTMLElement | null): undefined {
+function noopRegisterScrollRoot(): undefined {
   return undefined;
 }
 
-function noopSetSticky(_partial: Partial<StickyDocTitleState>): undefined {
+function noopSetSticky(): undefined {
   return undefined;
 }
 

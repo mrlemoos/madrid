@@ -7,7 +7,7 @@ import {
   createNoteFieldSaver,
   type NoteFieldSaverDeps,
 } from './save-note-fields';
-import type { Note } from '~/types/database.types';
+import type { Note } from '@nota/database-types';
 
 function makeNote(overrides: Partial<Note> = {}): Note {
   return {

@@ -1,0 +1,46 @@
+{
+  "name": "@nota/note-editor-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./note-hash-href": {
+      "@nota/source": {
+        "types": "./src/note-hash-href.ts",
+        "import": "./src/note-hash-href.ts",
+        "default": "./src/note-hash-href.ts"
+      },
+      "types": "./src/note-hash-href.ts",
+      "import": "./src/note-hash-href.ts",
+      "default": "./src/note-hash-href.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-editor-core",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/app-navigation-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

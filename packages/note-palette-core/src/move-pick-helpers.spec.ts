@@ -5,7 +5,7 @@ import {
   readHighlightedCmdkItemValue,
   readMovePickNoteIdFromHighlightedItem,
   toggleIdInSet,
-} from './move-pick-helpers';
+} from './move-pick-helpers.js';
 
 describe('parseMovePickNoteId', () => {
   it('returns the note id for a valid move-pick value', () => {

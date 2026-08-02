@@ -1,14 +1,14 @@
 import { useMemo, type JSX } from 'react';
 import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@/lib/utils';
+import { cn } from '@nota/web-design/utils';
 import {
   buildJournalCalendarCells,
   type JournalCalendarCell,
-} from '@/lib/journal-calendar';
-import { useJournalMonthGridCrossfade } from '@/lib/journal-month-grid-transition';
-import { usePrefersReducedMotion } from '@/lib/nota-motion';
-import { localDateKey } from '@/lib/todays-note';
-import { useNotaTranslator } from '@/lib/use-nota-translator';
+} from '@nota/note-journal-core/calendar';
+import { useJournalMonthGridCrossfade } from '@nota/note-journal-core/month-grid-transition';
+import { localDateKey } from '@nota/note-journal-core/local-date-key';
+import { usePrefersReducedMotion } from '@nota/nota-motion-ui/use-prefers-reduced-motion';
+import { useJournalTranslator } from './use-journal-translator.js';
 
 const WEEKDAY_KEYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 
@@ -35,7 +35,7 @@ export function JournalCalendar({
   onMonthChange: (year: number, month: number) => void;
   onJumpToToday: () => void;
 }): JSX.Element {
-  const { t } = useNotaTranslator();
+  const { t } = useJournalTranslator();
   const cells = useMemo(
     () => buildJournalCalendarCells(year, month),
     [month, year],

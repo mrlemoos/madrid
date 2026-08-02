@@ -1,0 +1,83 @@
+{
+  "name": "@nota/nota-motion-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./critically-damped-spring": {
+      "@nota/source": {
+        "types": "./src/nota-critically-damped-spring.ts",
+        "import": "./src/nota-critically-damped-spring.ts",
+        "default": "./src/nota-critically-damped-spring.ts"
+      },
+      "types": "./src/nota-critically-damped-spring.ts",
+      "import": "./src/nota-critically-damped-spring.ts",
+      "default": "./src/nota-critically-damped-spring.ts"
+    },
+    "./rubberband": {
+      "@nota/source": {
+        "types": "./src/nota-rubberband.ts",
+        "import": "./src/nota-rubberband.ts",
+        "default": "./src/nota-rubberband.ts"
+      },
+      "types": "./src/nota-rubberband.ts",
+      "import": "./src/nota-rubberband.ts",
+      "default": "./src/nota-rubberband.ts"
+    },
+    "./sidebar-resize-settle": {
+      "@nota/source": {
+        "types": "./src/nota-sidebar-resize-settle.ts",
+        "import": "./src/nota-sidebar-resize-settle.ts",
+        "default": "./src/nota-sidebar-resize-settle.ts"
+      },
+      "types": "./src/nota-sidebar-resize-settle.ts",
+      "import": "./src/nota-sidebar-resize-settle.ts",
+      "default": "./src/nota-sidebar-resize-settle.ts"
+    },
+    "./typewriter-scroll-guard": {
+      "@nota/source": {
+        "types": "./src/nota-typewriter-scroll-guard.ts",
+        "import": "./src/nota-typewriter-scroll-guard.ts",
+        "default": "./src/nota-typewriter-scroll-guard.ts"
+      },
+      "types": "./src/nota-typewriter-scroll-guard.ts",
+      "import": "./src/nota-typewriter-scroll-guard.ts",
+      "default": "./src/nota-typewriter-scroll-guard.ts"
+    },
+    "./sidebar-width": {
+      "@nota/source": {
+        "types": "./src/nota-sidebar-width.ts",
+        "import": "./src/nota-sidebar-width.ts",
+        "default": "./src/nota-sidebar-width.ts"
+      },
+      "types": "./src/nota-sidebar-width.ts",
+      "import": "./src/nota-sidebar-width.ts",
+      "default": "./src/nota-sidebar-width.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:shared"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/nota-motion-core",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

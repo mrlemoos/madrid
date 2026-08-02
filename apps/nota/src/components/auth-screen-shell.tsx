@@ -7,7 +7,7 @@ import {
 } from '@nota/web-design/card';
 import { AuthCardEpigraph } from '@/components/auth-card-epigraph';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
-import { useIsElectron } from '@/lib/use-is-electron';
+import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
 import { cn } from '@/lib/utils';
 
 /** Drag band height in `electron-window-drag-band.tsx` — half used to optically centre the card. */

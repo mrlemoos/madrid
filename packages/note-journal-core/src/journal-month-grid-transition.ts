@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import type { JournalCalendarCell } from './journal-calendar';
+import type { JournalCalendarCell } from './journal-calendar.js';
 
 export const JOURNAL_MONTH_GRID_CROSSFADE_MS = 150;
 
@@ -31,7 +31,6 @@ export function shouldAnimateJournalMonthGrid(
 }
 
 export function resolveJournalMonthGridLayers({
-  incoming: _incoming,
   outgoing,
   prefersReducedMotion,
   isCrossfading,

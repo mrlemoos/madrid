@@ -1,0 +1,133 @@
+{
+  "name": "@nota/note-editor-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./note-editor": {
+      "@nota/source": {
+        "types": "./src/note-editor.tsx",
+        "import": "./src/note-editor.tsx",
+        "default": "./src/note-editor.tsx"
+      },
+      "types": "./src/note-editor.tsx",
+      "import": "./src/note-editor.tsx",
+      "default": "./src/note-editor.tsx"
+    },
+    "./note-detail-panel": {
+      "@nota/source": {
+        "types": "./src/note-detail-panel.tsx",
+        "import": "./src/note-detail-panel.tsx",
+        "default": "./src/note-detail-panel.tsx"
+      },
+      "types": "./src/note-detail-panel.tsx",
+      "import": "./src/note-detail-panel.tsx",
+      "default": "./src/note-detail-panel.tsx"
+    },
+    "./note-backlinks-panel": {
+      "@nota/source": {
+        "types": "./src/note-backlinks-panel.tsx",
+        "import": "./src/note-backlinks-panel.tsx",
+        "default": "./src/note-backlinks-panel.tsx"
+      },
+      "types": "./src/note-backlinks-panel.tsx",
+      "import": "./src/note-backlinks-panel.tsx",
+      "default": "./src/note-backlinks-panel.tsx"
+    },
+    "./note-layout-menu": {
+      "@nota/source": {
+        "types": "./src/note-layout-menu.tsx",
+        "import": "./src/note-layout-menu.tsx",
+        "default": "./src/note-layout-menu.tsx"
+      },
+      "types": "./src/note-layout-menu.tsx",
+      "import": "./src/note-layout-menu.tsx",
+      "default": "./src/note-layout-menu.tsx"
+    },
+    "./note-image-lightbox": {
+      "@nota/source": {
+        "types": "./src/note-image-lightbox.tsx",
+        "import": "./src/note-image-lightbox.tsx",
+        "default": "./src/note-image-lightbox.tsx"
+      },
+      "types": "./src/note-image-lightbox.tsx",
+      "import": "./src/note-image-lightbox.tsx",
+      "default": "./src/note-image-lightbox.tsx"
+    },
+    "./note-share-button": {
+      "@nota/source": {
+        "types": "./src/note-share-button.tsx",
+        "import": "./src/note-share-button.tsx",
+        "default": "./src/note-share-button.tsx"
+      },
+      "types": "./src/note-share-button.tsx",
+      "import": "./src/note-share-button.tsx",
+      "default": "./src/note-share-button.tsx"
+    },
+    "./og-preview-client": {
+      "@nota/source": {
+        "types": "./src/og-preview-client.ts",
+        "import": "./src/og-preview-client.ts",
+        "default": "./src/og-preview-client.ts"
+      },
+      "types": "./src/og-preview-client.ts",
+      "import": "./src/og-preview-client.ts",
+      "default": "./src/og-preview-client.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-editor-ui",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/app-navigation-core": "workspace:*",
+    "@nota/app-navigation-ui": "workspace:*",
+    "@nota/data-source": "workspace:*",
+    "@nota/database-types": "workspace:*",
+    "@nota/editor": "workspace:*",
+    "@nota/electron-bridge-ui": "workspace:*",
+    "@nota/i18n": "workspace:*",
+    "@nota/internal-note-link": "workspace:*",
+    "@nota/link-platform-preview": "workspace:*",
+    "@nota/note-editor-core": "workspace:*",
+    "@nota/note-link-graph": "workspace:*",
+    "@nota/note-runtime": "workspace:*",
+    "@nota/nota-motion-core": "workspace:*",
+    "@nota/nota-motion-ui": "workspace:*",
+    "@nota/nota-server-client": "workspace:*",
+    "@nota/notes-chrome-core": "workspace:*",
+    "@nota/notes-offline": "workspace:*",
+    "@nota/notes-yjs-core": "workspace:*",
+    "@nota/web-design": "workspace:*",
+    "@nota/writing-activity-ui": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
+    "@tiptap/core": "^2.11.5",
+    "react": "catalog:",
+    "y-indexeddb": "catalog:",
+    "yjs": "catalog:"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/react": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import type { Json } from '~/types/database.types';
-import { buildAudioNoteApplyPatch } from './audio-to-note-apply';
-import type { AudioNoteStudyResult } from './audio-note-blocks-to-doc';
+import type { Json } from '@nota/database-types';
+import { buildAudioNoteApplyPatch } from './audio-to-note-apply.js';
+import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
 
 describe('buildAudioNoteApplyPatch', () => {
   it('replace mode formats title and puts recording before generated blocks', () => {

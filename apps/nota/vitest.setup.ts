@@ -1,8 +1,8 @@
 // Runs before Vitest tests
 import { vi } from 'vitest';
 
-import { setClerkAccessTokenGetter } from './src/lib/clerk-token-ref';
-import { setSupabaseClerkGetToken } from './src/lib/supabase/browser';
+import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
+import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
 
 // Node 25+ / the test runtime can provide a `localStorage` that lacks `setItem`; Zustand `persist`
 // needs a full `Storage` shape (e.g. notes sidebar folder collapse state).

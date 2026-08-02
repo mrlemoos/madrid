@@ -1,19 +1,19 @@
-import type { Json, Note } from '~/types/database.types';
-import { getBrowserClient } from './supabase/browser';
+import type { Json, Note } from '@nota/database-types';
+import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import {
   getStoredNote,
   mergeNoteWithLocal,
   saveLocalNoteDraft,
   storedNoteToListRow,
-} from './notes-offline';
-import { getNote, updateNote } from '../models/notes';
+} from '@nota/notes-offline';
+import { getNote, updateNote } from '@nota/data-source/models/notes';
 import {
   noteAudioContentNode,
   studyNotesBlocksToTiptapNodes,
   studyNotesResultToTiptapDoc,
   type AudioNoteStudyResult,
-} from './audio-note-blocks-to-doc';
-import { formatStudyNoteTitle } from './study-note-title';
+} from '@nota/note-capture-core/audio-note-blocks-to-doc';
+import { formatStudyNoteTitle } from '@nota/note-capture-core/study-note-title';
 
 async function resolveNoteCreatedAtIso(
   noteId: string,
@@ -118,7 +118,12 @@ export async function applyAudioNoteStudyResult(options: {
 
   let patch: { title: string; content: Json };
   if (mode === 'append') {
-    const merged = await resolveMergedNoteRow(options.noteId, options.userId);
+    // Append targets the note already open in the shell, so the merged row is
+    // always present here; cast keeps the original (non-null) access behaviour.
+    const merged = (await resolveMergedNoteRow(
+      options.noteId,
+      options.userId,
+    )) as Note;
     patch = buildAudioNoteApplyPatch({
       mode: 'append',
       existingTitle: merged.title.trim() ? merged.title : 'Untitled Note',

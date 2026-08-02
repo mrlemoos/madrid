@@ -1,4 +1,4 @@
-import { dailyNoteDisplayTitle } from './todays-note';
+import { dailyNoteDisplayTitle } from './daily-note-display-title.js';
 
 const GENERIC_MODEL_TITLES = new Set(
   ['study notes', 'lecture notes', 'notes', 'untitled note'].map((s) =>

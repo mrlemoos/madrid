@@ -1,19 +1,76 @@
-import { useEffect, useLayoutEffect, type JSX, type ReactNode } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  lazy,
+  type JSX,
+  type ReactNode,
+} from 'react';
 import { LandingPage } from './components/landing-page';
-import { NotesShell } from './components/notes-shell';
+import {
+  NotesShell,
+  type NotesShellRouteComponents,
+} from '@nota/notes-chrome-ui/notes-shell';
 import Login from './routes/login';
 import Signup from './routes/signup';
-import { useAppSession } from './context/session-context';
-import { NotesDataProvider } from './context/notes-data-context';
+import { useAppSession } from '@nota/note-runtime/session-context';
+import {
+  NotesDataProvider,
+  type NotesDataProviderPorts,
+} from '@nota/note-runtime/notes-data-context';
 import { SignedInCommandPalette } from './signed-in-command-palette';
-import { useAppNavigationScreen } from './hooks/use-app-navigation-screen';
-import { ElectronWindowDragBand } from './components/electron-window-drag-band';
+import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
+import { ElectronWindowDragBand } from '@nota/electron-bridge-ui/window-drag-band';
 import { NotFoundScreen } from './components/not-found-screen';
-import { replaceAppHash, syncAppNavigation } from './lib/app-navigation';
-import { repairClerkAuthLocationHash } from './lib/clerk-hash-navigation';
+import {
+  replaceAppHash,
+  setAppHash,
+  syncAppNavigation,
+} from '@nota/app-navigation-core/navigation';
+import { fetchNotaProEntitled } from './lib/nota-server-client';
+import { runWelcomeNoteSeedIfNeeded } from './lib/welcome-note-seed';
+import { clearNoteAttachmentSignedUrlCache } from '@nota/data-source/attachment-signed-url-cache';
+import { repairClerkAuthLocationHash } from '@nota/app-navigation-core/clerk-hash';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
-import { useIsElectron } from './lib/use-is-electron';
+import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
 import { cn } from './lib/utils';
+
+/**
+ * App-owned collaborators for the notes-data runtime spine. Defined at module scope
+ * so the ports object identity is stable across renders (see `NotesDataProviderPorts`).
+ */
+const notesDataPorts: NotesDataProviderPorts = {
+  fetchNotaProEntitled,
+  runWelcomeNoteSeedIfNeeded,
+  navigateToNote: (noteId) => {
+    setAppHash({ kind: 'notes', panel: 'note', noteId });
+  },
+  clearNoteAttachmentSignedUrlCache,
+};
+
+/**
+ * App-owned lazy route components for `NotesShell`. The shell lives in `@nota/notes-chrome-ui`
+ * and cannot import app-local route files directly, so they are injected as a prop (mirrors
+ * `notesDataPorts` above). Defined at module scope so identity is stable across renders.
+ */
+const notesShellRoutes: NotesShellRouteComponents = {
+  NotesGraphRoute: lazy(async () => import('./routes/notes.graph')),
+  NotesJournalRoute: lazy(async () => import('./routes/notes.journal')),
+  NotesSettingsRoute: lazy(async () => import('./routes/notes.settings')),
+  NotesShortcutsRoute: lazy(async () => import('./routes/notes.shortcuts')),
+};
+
+function prefetchNotesShellRoutes(): void {
+  // Vitest: prefetch completes after jsdom teardown and triggers EnvironmentTeardownError
+  // on nested imports (e.g. notes.shortcuts → nota-kbd-styles). NotaApp is not rendered in
+  // tests today, but guard anyway since this runs from module-scope app code.
+  if (import.meta.env.MODE === 'test') {
+    return;
+  }
+  void import('./routes/notes.settings');
+  void import('./routes/notes.shortcuts');
+  void import('./routes/notes.graph');
+  void import('./routes/notes.journal');
+}
 
 interface AppShellProps {
   children: ReactNode;
@@ -166,9 +223,12 @@ export function NotaApp(): JSX.Element {
         {signupActive && <Signup />}
       </AppShellPanel>
       <AppShellPanel active={notesActive} panelId="screen-notes">
-        <NotesDataProvider>
+        <NotesDataProvider ports={notesDataPorts}>
           <SignedInCommandPalette />
-          <NotesShell />
+          <NotesShell
+            routes={notesShellRoutes}
+            prefetchRoutes={prefetchNotesShellRoutes}
+          />
         </NotesDataProvider>
       </AppShellPanel>
     </div>

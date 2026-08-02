@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import {
   clerkFullSignInUrl,
   clerkFullSignUpUrl,
-} from '@/lib/clerk-hash-navigation';
+} from '@nota/app-navigation-core/clerk-hash';
 import { isNotaClerkSsoCallbackPathname } from '@nota/clerk-oauth-protocol';
 
 /**

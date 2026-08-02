@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatRecordingDuration } from './format-recording-duration';
+import { formatRecordingDuration } from './format-recording-duration.js';
 
 describe('formatRecordingDuration', () => {
   it('formats zero as 00:00', () => {

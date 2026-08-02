@@ -3,20 +3,20 @@ import { useLayoutEffect, useMemo, useState, type JSX } from 'react';
 import { cn } from '@/lib/utils';
 import { LOCALE_OPTIONS } from '@nota/i18n';
 import { ThemeMenu } from '../components/theme-menu';
-import { useRootLoaderData } from '../context/session-context';
+import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '../context/notes-data-context';
-import { submitUserPreferencesPatch } from '../lib/use-sync-user-preferences';
+} from '@nota/note-runtime/notes-data-context';
+import { submitUserPreferencesPatch } from '@nota/note-runtime/use-sync-user-preferences';
 import {
   useNotaPreferencesStore,
   type CursorVisualStyle,
-} from '../stores/nota-preferences';
-import { ElectronUpdateSettingsSection } from '../components/electron-update-settings-section';
+} from '@nota/note-runtime/stores/preferences';
+import { ElectronUpdateSettingsSection } from '@nota/electron-bridge-ui/update-settings-section';
 import { NotaProSettingsSection } from '../components/nota-pro-settings-section';
-import { useIsElectron } from '../lib/use-is-electron';
-import { hashForScreen } from '../lib/app-navigation';
+import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
+import { hashForScreen } from '@nota/app-navigation-core/navigation';
 import { navigatorLooksLikeApplePlatform } from '../lib/navigator-apple-platform';
 import { useNotaTranslator } from '../lib/use-nota-translator';
 

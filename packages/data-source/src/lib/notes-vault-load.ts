@@ -1,9 +1,9 @@
-import type { Folder, Note, UserPreferences } from '~/types/database.types';
+import type { Folder, Note, UserPreferences } from '@nota/database-types';
 import {
   mergeNoteLists,
   storedNoteToListRow,
   type StoredNote,
-} from '@/lib/notes-offline';
+} from '@nota/notes-offline';
 
 /**
  * Everything the vault load decision tree needs from the outside world.

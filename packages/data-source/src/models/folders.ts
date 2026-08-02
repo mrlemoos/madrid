@@ -1,9 +1,5 @@
-import type {
-  Folder,
-  FolderInsert,
-  FolderUpdate,
-} from '~/types/database.types';
-import type { TypedSupabaseClient } from './notes';
+import type { Folder, FolderInsert, FolderUpdate } from '@nota/database-types';
+import type { TypedSupabaseClient } from './notes.js';
 
 export async function listFolders(
   client: TypedSupabaseClient,

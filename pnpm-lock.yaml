@@ -12,6 +12,9 @@ catalogs:
     '@fontsource/instrument-serif':
       specifier: ^5.2.8
       version: 5.2.8
+    '@gsap/react':
+      specifier: ^2.1.2
+      version: 2.1.2
     '@nx/eslint':
       specifier: 22.6.5
       version: 22.6.5
@@ -57,6 +60,9 @@ catalogs:
     esbuild:
       specifier: ^0.25.0
       version: 0.25.12
+    gsap:
+      specifier: ^3.13.0
+      version: 3.15.0
     jsdom:
       specifier: ^29.0.2
       version: 29.0.2
@@ -358,17 +364,32 @@ importers:
         specifier: 'catalog:'
         version: 5.2.8
       '@gsap/react':
-        specifier: ^2.1.2
+        specifier: 'catalog:'
         version: 2.1.2(gsap@3.15.0)(react@19.2.5)
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../../packages/app-navigation-core
+      '@nota/app-navigation-ui':
+        specifier: workspace:*
+        version: link:../../packages/app-navigation-ui
       '@nota/clerk-oauth-protocol':
         specifier: workspace:*
         version: link:../../packages/clerk-oauth-protocol
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../../packages/data-source
       '@nota/database-types':
         specifier: workspace:*
         version: link:../../packages/database-types
       '@nota/editor':
         specifier: workspace:*
         version: link:../../packages/editor
+      '@nota/electron-bridge-core':
+        specifier: workspace:*
+        version: link:../../packages/electron-bridge-core
+      '@nota/electron-bridge-ui':
+        specifier: workspace:*
+        version: link:../../packages/electron-bridge-ui
       '@nota/helper-hooks':
         specifier: workspace:*
         version: link:../../packages/helper-hooks
@@ -381,15 +402,60 @@ importers:
       '@nota/link-platform-preview':
         specifier: workspace:*
         version: link:../../packages/link-platform-preview
+      '@nota/nota-motion-core':
+        specifier: workspace:*
+        version: link:../../packages/nota-motion-core
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../../packages/nota-motion-ui
       '@nota/nota-server-client':
         specifier: workspace:*
         version: link:../../packages/nota-server-client
+      '@nota/note-capture-core':
+        specifier: workspace:*
+        version: link:../../packages/note-capture-core
+      '@nota/note-capture-ui':
+        specifier: workspace:*
+        version: link:../../packages/note-capture-ui
+      '@nota/note-doc-plain-text':
+        specifier: workspace:*
+        version: link:../../packages/note-doc-plain-text
+      '@nota/note-editor-core':
+        specifier: workspace:*
+        version: link:../../packages/note-editor-core
+      '@nota/note-editor-ui':
+        specifier: workspace:*
+        version: link:../../packages/note-editor-ui
+      '@nota/note-folders-core':
+        specifier: workspace:*
+        version: link:../../packages/note-folders-core
+      '@nota/note-folders-ui':
+        specifier: workspace:*
+        version: link:../../packages/note-folders-ui
       '@nota/note-graph':
         specifier: workspace:*
         version: link:../../packages/note-graph
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../../packages/note-journal-core
+      '@nota/note-journal-ui':
+        specifier: workspace:*
+        version: link:../../packages/note-journal-ui
       '@nota/note-link-graph':
         specifier: workspace:*
         version: link:../../packages/note-link-graph
+      '@nota/note-palette-core':
+        specifier: workspace:*
+        version: link:../../packages/note-palette-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../../packages/note-runtime
+      '@nota/notes-chrome-core':
+        specifier: workspace:*
+        version: link:../../packages/notes-chrome-core
+      '@nota/notes-chrome-ui':
+        specifier: workspace:*
+        version: link:../../packages/notes-chrome-ui
       '@nota/notes-offline':
         specifier: workspace:*
         version: link:../../packages/notes-offline
@@ -405,6 +471,12 @@ importers:
       '@nota/web-design':
         specifier: workspace:*
         version: link:../../packages/web-design
+      '@nota/writing-activity-core':
+        specifier: workspace:*
+        version: link:../../packages/writing-activity-core
+      '@nota/writing-activity-ui':
+        specifier: workspace:*
+        version: link:../../packages/writing-activity-ui
       '@posthog/react':
         specifier: ^1.8.2
         version: 1.9.0(@types/react@19.2.14)(posthog-js@1.372.1)(react@19.2.5)
@@ -430,7 +502,7 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       gsap:
-        specifier: ^3.13.0
+        specifier: 'catalog:'
         version: 3.15.0
       react:
         specifier: 19.2.5
@@ -539,6 +611,9 @@ importers:
       '@microsoft/clarity':
         specifier: ^1.0.2
         version: 1.0.2
+      '@nota/note-doc-plain-text':
+        specifier: workspace:*
+        version: link:../../packages/note-doc-plain-text
       '@nota/web-design':
         specifier: workspace:*
         version: link:../../packages/web-design
@@ -762,11 +837,95 @@ importers:
         specifier: 'catalog:'
         version: 0.25.12
 
+  packages/app-navigation-core:
+    dependencies:
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../nota-motion-ui
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../note-journal-core
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/app-navigation-ui:
+    dependencies:
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../nota-motion-ui
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
   packages/clerk-oauth-protocol:
     devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+
+  packages/data-source:
+    dependencies:
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      '@nota/notes-offline-core':
+        specifier: workspace:*
+        version: link:../notes-offline-core
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.104.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
 
   packages/database-types:
     devDependencies:
@@ -883,6 +1042,80 @@ importers:
         specifier: 'catalog:'
         version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
 
+  packages/electron-bridge-core:
+    dependencies:
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/electron-bridge-ui:
+    dependencies:
+      '@base-ui/react':
+        specifier: ^1.3.0
+        version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/electron-bridge-core':
+        specifier: workspace:*
+        version: link:../electron-bridge-core
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/nota-server-client':
+        specifier: workspace:*
+        version: link:../nota-server-client
+      '@nota/note-capture-ui':
+        specifier: workspace:*
+        version: link:../note-capture-ui
+      '@nota/note-folders-ui':
+        specifier: workspace:*
+        version: link:../note-folders-ui
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
   packages/helper-hooks:
     devDependencies:
       '@testing-library/react':
@@ -979,11 +1212,141 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  packages/nota-motion-core:
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/nota-motion-ui:
+    dependencies:
+      '@gsap/react':
+        specifier: 'catalog:'
+        version: 2.1.2(gsap@3.15.0)(react@19.2.5)
+      '@nota/nota-motion-core':
+        specifier: workspace:*
+        version: link:../nota-motion-core
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      gsap:
+        specifier: 'catalog:'
+        version: 3.15.0
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
   packages/nota-server-client:
     devDependencies:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-capture-core:
+    dependencies:
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-capture-ui:
+    dependencies:
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/note-capture-core':
+        specifier: workspace:*
+        version: link:../note-capture-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-doc-plain-text:
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-editor-core:
+    dependencies:
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
       vitest:
         specifier: 'catalog:'
         version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
@@ -997,6 +1360,168 @@ importers:
         specifier: 'catalog:'
         version: 3.25.76
     devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-editor-ui:
+    dependencies:
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/app-navigation-ui':
+        specifier: workspace:*
+        version: link:../app-navigation-ui
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/editor':
+        specifier: workspace:*
+        version: link:../editor
+      '@nota/electron-bridge-ui':
+        specifier: workspace:*
+        version: link:../electron-bridge-ui
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/internal-note-link':
+        specifier: workspace:*
+        version: link:../internal-note-link
+      '@nota/link-platform-preview':
+        specifier: workspace:*
+        version: link:../link-platform-preview
+      '@nota/nota-motion-core':
+        specifier: workspace:*
+        version: link:../nota-motion-core
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../nota-motion-ui
+      '@nota/nota-server-client':
+        specifier: workspace:*
+        version: link:../nota-server-client
+      '@nota/note-editor-core':
+        specifier: workspace:*
+        version: link:../note-editor-core
+      '@nota/note-link-graph':
+        specifier: workspace:*
+        version: link:../note-link-graph
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/notes-chrome-core':
+        specifier: workspace:*
+        version: link:../notes-chrome-core
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      '@nota/notes-yjs-core':
+        specifier: workspace:*
+        version: link:../notes-yjs-core
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      '@nota/writing-activity-ui':
+        specifier: workspace:*
+        version: link:../writing-activity-ui
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.104.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      '@tiptap/core':
+        specifier: ^2.11.5
+        version: 2.27.2(@tiptap/pm@2.27.2)
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+      y-indexeddb:
+        specifier: 'catalog:'
+        version: 9.0.12(yjs@13.6.31)
+      yjs:
+        specifier: 'catalog:'
+        version: 13.6.31
+    devDependencies:
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      jsdom:
+        specifier: 'catalog:'
+        version: 29.0.2(@noble/hashes@1.8.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-folders-core:
+    dependencies:
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-folders-ui:
+    dependencies:
+      '@base-ui/react':
+        specifier: ^1.3.0
+        version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/note-folders-core':
+        specifier: workspace:*
+        version: link:../note-folders-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      '@nota/writing-activity-ui':
+        specifier: workspace:*
+        version: link:../writing-activity-ui
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -1059,6 +1584,68 @@ importers:
         specifier: 'catalog:'
         version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
 
+  packages/note-journal-core:
+    dependencies:
+      '@nota/note-doc-plain-text':
+        specifier: workspace:*
+        version: link:../note-doc-plain-text
+      chrono-node:
+        specifier: ^2.9.1
+        version: 2.9.1
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-journal-ui:
+    dependencies:
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../nota-motion-ui
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../note-journal-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      '@tanstack/react-virtual':
+        specifier: ^3.13.24
+        version: 3.13.24(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
   packages/note-link-graph:
     dependencies:
       '@nota/database-types':
@@ -1068,6 +1655,160 @@ importers:
         specifier: workspace:*
         version: link:../internal-note-link
     devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-palette-core:
+    dependencies:
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/note-runtime:
+    dependencies:
+      '@clerk/react':
+        specifier: ^6.1.2
+        version: 6.7.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@nota/data-source':
+        specifier: workspace:*
+        version: link:../data-source
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/helper-hooks':
+        specifier: workspace:*
+        version: link:../helper-hooks
+      '@nota/notes-offline':
+        specifier: workspace:*
+        version: link:../notes-offline
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+      zustand:
+        specifier: ^5.0.0
+        version: 5.0.12(@types/react@19.2.14)(react@19.2.5)(use-sync-external-store@1.6.0(react@19.2.5))
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/notes-chrome-core:
+    dependencies:
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/notes-chrome-ui:
+    dependencies:
+      '@nota/app-navigation-core':
+        specifier: workspace:*
+        version: link:../app-navigation-core
+      '@nota/app-navigation-ui':
+        specifier: workspace:*
+        version: link:../app-navigation-ui
+      '@nota/database-types':
+        specifier: workspace:*
+        version: link:../database-types
+      '@nota/electron-bridge-core':
+        specifier: workspace:*
+        version: link:../electron-bridge-core
+      '@nota/electron-bridge-ui':
+        specifier: workspace:*
+        version: link:../electron-bridge-ui
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/nota-motion-ui':
+        specifier: workspace:*
+        version: link:../nota-motion-ui
+      '@nota/note-capture-ui':
+        specifier: workspace:*
+        version: link:../note-capture-ui
+      '@nota/note-editor-core':
+        specifier: workspace:*
+        version: link:../note-editor-core
+      '@nota/note-editor-ui':
+        specifier: workspace:*
+        version: link:../note-editor-ui
+      '@nota/note-folders-core':
+        specifier: workspace:*
+        version: link:../note-folders-core
+      '@nota/note-folders-ui':
+        specifier: workspace:*
+        version: link:../note-folders-ui
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../note-journal-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/notes-chrome-core':
+        specifier: workspace:*
+        version: link:../notes-chrome-core
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      '@nota/writing-activity-core':
+        specifier: workspace:*
+        version: link:../writing-activity-core
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      jsdom:
+        specifier: 'catalog:'
+        version: 29.0.2(@noble/hashes@1.8.0)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -1204,6 +1945,56 @@ importers:
       vite-plugin-dts:
         specifier: 'catalog:'
         version: 4.5.4(@types/node@25.6.0)(rollup@4.60.2)(typescript@5.9.3)(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/writing-activity-core:
+    dependencies:
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../note-journal-core
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))
+
+  packages/writing-activity-ui:
+    dependencies:
+      '@nota/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@nota/note-journal-core':
+        specifier: workspace:*
+        version: link:../note-journal-core
+      '@nota/note-runtime':
+        specifier: workspace:*
+        version: link:../note-runtime
+      '@nota/web-design':
+        specifier: workspace:*
+        version: link:../web-design
+      '@nota/writing-activity-core':
+        specifier: workspace:*
+        version: link:../writing-activity-core
+      react:
+        specifier: 19.2.5
+        version: 19.2.5
+    devDependencies:
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.14
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vite:
+        specifier: 'catalog:'
+        version: 7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3)
       vitest:
         specifier: 'catalog:'
         version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@1.8.0))(msw@2.13.6(@types/node@25.6.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.2)(yaml@2.8.3))

@@ -56,6 +56,72 @@
     },
     {
       "path": "./packages/notes-yjs-core"
+    },
+    {
+      "path": "./packages/data-source"
+    },
+    {
+      "path": "./packages/note-runtime"
+    },
+    {
+      "path": "./packages/note-doc-plain-text"
+    },
+    {
+      "path": "./packages/note-journal-core"
+    },
+    {
+      "path": "./packages/note-journal-ui"
+    },
+    {
+      "path": "./packages/note-capture-core"
+    },
+    {
+      "path": "./packages/note-capture-ui"
+    },
+    {
+      "path": "./packages/note-palette-core"
+    },
+    {
+      "path": "./packages/nota-motion-core"
+    },
+    {
+      "path": "./packages/nota-motion-ui"
+    },
+    {
+      "path": "./packages/writing-activity-core"
+    },
+    {
+      "path": "./packages/writing-activity-ui"
+    },
+    {
+      "path": "./packages/note-folders-core"
+    },
+    {
+      "path": "./packages/note-folders-ui"
+    },
+    {
+      "path": "./packages/notes-chrome-core"
+    },
+    {
+      "path": "./packages/notes-chrome-ui"
+    },
+    {
+      "path": "./packages/app-navigation-core"
+    },
+    {
+      "path": "./packages/app-navigation-ui"
+    },
+    {
+      "path": "./packages/electron-bridge-core"
+    },
+    {
+      "path": "./packages/electron-bridge-ui"
+    },
+    {
+      "path": "./packages/note-editor-core"
+    },
+    {
+      "path": "./packages/note-editor-ui"
     }
   ]
 }

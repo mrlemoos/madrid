@@ -1,4 +1,4 @@
-import { toggleIdInSet } from './move-pick-helpers';
+import { toggleIdInSet } from './move-pick-helpers.js';
 
 /**
  * The command palette's mutually-exclusive interaction mode. Replaces the eight

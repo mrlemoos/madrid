@@ -26,6 +26,7 @@ export { default as HomeIcon } from './home-icon.js';
 export { default as LayersIcon } from './layers-icon.js';
 export { default as LayoutDashboardIcon } from './layout-dashboard-icon.js';
 export { default as LibraryIcon } from './library-icon.js';
+export { default as LinkIcon } from './link-icon.js';
 export { default as LogoutIcon } from './logout-icon.js';
 export { default as MoonIcon } from './moon-icon.js';
 export { default as MousePointer2Icon } from './mouse-pointer-2-icon.js';

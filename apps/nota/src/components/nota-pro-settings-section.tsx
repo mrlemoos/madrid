@@ -5,7 +5,7 @@ import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '../context/notes-data-context';
+} from '@nota/note-runtime/notes-data-context';
 import { postNotaProInvalidate } from '../lib/nota-server-client';
 
 export function NotaProSettingsSection(): JSX.Element {
