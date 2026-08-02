@@ -1,7 +1,9 @@
 import { parseMovePickNoteId } from './move-pick-helpers';
 
 export type MovePickEnterAction =
-  { kind: 'cmdkDefault' } | { kind: 'advanceToFolder' } | { kind: 'noop' };
+  | { kind: 'cmdkDefault' }
+  | { kind: 'advanceToFolder' }
+  | { kind: 'noop' };
 
 /**
  * When move pick-note multi-select is active, decides how Enter should behave

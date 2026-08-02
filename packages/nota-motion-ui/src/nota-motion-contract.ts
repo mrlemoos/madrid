@@ -15,7 +15,12 @@ export type NotaMotionInputPath = 'keyboard' | 'pointer';
  * Palette and history stay instant on every path (high frequency).
  */
 export type NotaMotionSurface =
-  'palette' | 'history' | 'panel' | 'press' | 'shell' | 'popover';
+  | 'palette'
+  | 'history'
+  | 'panel'
+  | 'press'
+  | 'shell'
+  | 'popover';
 
 export type NotaMotionKind = 'none' | 'ease-out' | 'spring';
 
