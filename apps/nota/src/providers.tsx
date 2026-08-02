@@ -19,10 +19,10 @@ import { ClerkSsoCallbackRoute } from './components/clerk-sso-callback-route';
 import { viteEnvString } from './lib/vite-env';
 
 const POSTHOG_PROJECT_TOKEN = viteEnvString(
-  'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN',
+  'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN',
 );
 const clerkPublishableKey =
-  viteEnvString('VITE_CLERK_PUBLISHABLE_KEY')?.trim() ?? '';
+  viteEnvString('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY')?.trim() ?? '';
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -30,7 +30,7 @@ interface AppProvidersProps {
 
 export function AppProviders({ children }: AppProvidersProps) {
   if (!clerkPublishableKey) {
-    throw new Error('Missing VITE_CLERK_PUBLISHABLE_KEY');
+    throw new Error('Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY');
   }
 
   return (

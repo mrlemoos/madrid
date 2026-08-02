@@ -12,7 +12,7 @@ export const SHARED_NOTE_PATH_PREFIX = '/s/';
  * current origin in the browser (dev + web).
  */
 function shareOrigin(): string {
-  const configured = viteEnvString('VITE_NOTA_WEB_APP_ORIGIN');
+  const configured = viteEnvString('NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN');
   if (configured) {
     return configured.replace(/\/$/, '');
   }
@@ -23,7 +23,7 @@ function shareOrigin(): string {
     return window.location.origin;
   }
   // ponytail: hardcoded prod fallback for packaged Electron (file: origin);
-  // set VITE_NOTA_WEB_APP_ORIGIN to override per environment.
+  // set NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN to override per environment.
   return 'https://app.nota.mrlemoos.dev';
 }
 

@@ -11,7 +11,7 @@ import {
 import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
 import { notaServerBaseUrl } from './vite-env';
 
-/** `GET` on nota-server; Bearer Clerk session JWT. Missing `VITE_NOTA_SERVER_API_URL` → 401 without calling the network. */
+/** `GET` on nota-server; Bearer Clerk session JWT. Missing `NEXT_PUBLIC_NOTA_SERVER_API_URL` → 401 without calling the network. */
 export async function fetchNotaProEntitled(): Promise<Response> {
   return fetchNotaProEntitledRequest(
     notaServerBaseUrl(),
@@ -27,7 +27,7 @@ export async function postNotaProInvalidate(): Promise<Response> {
   );
 }
 
-/** Semantic search (`POST /api/semantic-search`). Requires Nota Pro and `VITE_NOTA_SERVER_API_URL`. */
+/** Semantic search (`POST /api/semantic-search`). Requires Nota Pro and `NEXT_PUBLIC_NOTA_SERVER_API_URL`. */
 export async function postSemanticSearch(body: {
   query: string;
 }): Promise<Response> {

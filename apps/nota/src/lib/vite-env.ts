@@ -4,8 +4,8 @@ export function viteEnvString(key: string): string | undefined {
   return typeof raw === 'string' ? raw : undefined;
 }
 
-/** Trimmed `VITE_NOTA_SERVER_API_URL` without a trailing slash, or `undefined` when unset. */
+/** Trimmed `NEXT_PUBLIC_NOTA_SERVER_API_URL` without a trailing slash, or `undefined` when unset. */
 export function notaServerBaseUrl(): string | undefined {
-  const base = viteEnvString('VITE_NOTA_SERVER_API_URL')?.trim();
+  const base = viteEnvString('NEXT_PUBLIC_NOTA_SERVER_API_URL')?.trim();
   return base ? base.replace(/\/$/, '') : undefined;
 }

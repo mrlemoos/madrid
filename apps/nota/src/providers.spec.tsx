@@ -6,10 +6,10 @@ import { AppProviders } from './providers';
 
 const viteEnvStringMock = vi.hoisted(() =>
   vi.fn((key: string): string | undefined => {
-    if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+    if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
       return 'pk_test_placeholder';
     }
-    if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+    if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
       return 'ph_test_token';
     }
     return undefined;
@@ -109,10 +109,10 @@ describe('AppProviders', () => {
   beforeEach(() => {
     clerkProviderProps.current = null;
     viteEnvStringMock.mockImplementation((key: string) => {
-      if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+      if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
         return 'pk_test_placeholder';
       }
-      if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+      if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
         return 'ph_test_token';
       }
       return undefined;
@@ -146,13 +146,13 @@ describe('AppProviders', () => {
     expect(screen.getByTestId('clerk-sso-callback-route')).toBeTruthy();
   });
 
-  it('throws when VITE_CLERK_PUBLISHABLE_KEY is missing', async () => {
+  it('throws when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing', async () => {
     // Arrange
     viteEnvStringMock.mockImplementation((key: string) => {
-      if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+      if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
         return undefined;
       }
-      if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+      if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
         return 'ph_test_token';
       }
       return undefined;
@@ -171,7 +171,9 @@ describe('AppProviders', () => {
       );
 
     // Assert
-    expect(renderWithoutKey).toThrow('Missing VITE_CLERK_PUBLISHABLE_KEY');
+    expect(renderWithoutKey).toThrow(
+      'Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY',
+    );
   });
 
   it('configures ClerkProvider for hash routing and Mac deep links', () => {

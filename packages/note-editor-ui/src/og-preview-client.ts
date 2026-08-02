@@ -19,7 +19,7 @@ function notaServerBase(): string {
   const base = notaServerBaseUrl();
   if (!base) {
     throw new Error(
-      'Link previews require VITE_NOTA_SERVER_API_URL (apps/nota-server) to be set.',
+      'Link previews require NEXT_PUBLIC_NOTA_SERVER_API_URL (apps/nota-server) to be set.',
     );
   }
   return base;
@@ -28,7 +28,7 @@ function notaServerBase(): string {
 /**
  * Fetches Open Graph metadata for link previews via **`apps/nota-server`**
  * (`GET /api/og-preview`) with Bearer auth. The SPA does not implement OG fetch;
- * set `VITE_NOTA_SERVER_API_URL` in local and hosted environments.
+ * set `NEXT_PUBLIC_NOTA_SERVER_API_URL` in local and hosted environments.
  */
 export async function fetchOgPreviewForEditor(
   href: string,

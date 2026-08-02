@@ -20,7 +20,7 @@ describe('nota-server-client app binding', () => {
 
   it('forwards env + Clerk token to package fetchNotaProEntitled', async () => {
     // Arrange
-    vi.stubEnv('VITE_NOTA_SERVER_API_URL', 'https://ns.example');
+    vi.stubEnv('NEXT_PUBLIC_NOTA_SERVER_API_URL', 'https://ns.example');
     vi.resetModules();
     const { getClerkAccessToken } = await import(
       '@nota/data-source/clerk-token-ref'

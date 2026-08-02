@@ -294,8 +294,8 @@ export function CommandPalette(): JSX.Element {
     (s) => s.semanticSearchEnabled,
   );
   const notaServerUrl =
-    typeof import.meta.env.VITE_NOTA_SERVER_API_URL === 'string'
-      ? import.meta.env.VITE_NOTA_SERVER_API_URL.trim()
+    typeof import.meta.env.NEXT_PUBLIC_NOTA_SERVER_API_URL === 'string'
+      ? import.meta.env.NEXT_PUBLIC_NOTA_SERVER_API_URL.trim()
       : '';
   const semanticSearchEnabled =
     notaProEntitled && notaServerUrl.length > 0 && semanticSearchUserPref;

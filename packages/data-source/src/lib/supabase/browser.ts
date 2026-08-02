@@ -3,8 +3,8 @@ import type { Database } from '@nota/database-types';
 
 import { viteEnvString } from '../vite-env.js';
 
-const supabaseUrl = viteEnvString('VITE_SUPABASE_URL');
-const supabaseAnonKey = viteEnvString('VITE_SUPABASE_ANON_KEY');
+const supabaseUrl = viteEnvString('NEXT_PUBLIC_SUPABASE_URL');
+const supabaseAnonKey = viteEnvString('NEXT_PUBLIC_SUPABASE_ANON_KEY');
 
 export type TypedSupabaseBrowserClient = SupabaseClient<Database>;
 

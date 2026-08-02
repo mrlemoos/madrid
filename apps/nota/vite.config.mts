@@ -19,11 +19,13 @@ function notaDesktopArtifactsPlugin(appRoot: string): Plugin {
       await fsPromises.writeFile(
         path.join(outDir, 'nota-public-env.json'),
         JSON.stringify({
-          VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL ?? '',
-          VITE_SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY ?? '',
-          VITE_CLERK_PUBLISHABLE_KEY:
-            process.env.VITE_CLERK_PUBLISHABLE_KEY ?? '',
-          VITE_NOTA_SERVER_API_URL: process.env.VITE_NOTA_SERVER_API_URL ?? '',
+          NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+          NEXT_PUBLIC_SUPABASE_ANON_KEY:
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+            process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? '',
+          NEXT_PUBLIC_NOTA_SERVER_API_URL:
+            process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL ?? '',
         }),
         'utf8',
       );
@@ -45,6 +47,9 @@ export default defineConfig(({ mode }) => {
   return {
     root: import.meta.dirname,
     publicDir: 'public',
+    // Env vars use the Next.js convention ahead of the Vite -> Next cutover
+    // (ADR 0003). Only NEXT_PUBLIC_* is exposed to client `import.meta.env`.
+    envPrefix: ['NEXT_PUBLIC_'],
     resolve: {
       conditions: ['@nota/source', 'import', 'module', 'browser', 'default'],
       // Prefer the hoisted `@clerk/shared` v4 (same React context as `ClerkProvider` from `@clerk/react`).

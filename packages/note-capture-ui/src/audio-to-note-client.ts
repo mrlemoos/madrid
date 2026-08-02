@@ -28,7 +28,7 @@ export async function postAudioToNoteStream(
   const base = notaServerBaseUrl();
   if (!base) {
     throw new Error(
-      'Audio-to-note requires VITE_NOTA_SERVER_API_URL (apps/nota-server).',
+      'Audio-to-note requires NEXT_PUBLIC_NOTA_SERVER_API_URL (apps/nota-server).',
     );
   }
   const token = await getClerkAccessToken();

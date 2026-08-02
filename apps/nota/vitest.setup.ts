@@ -64,10 +64,10 @@ if (canvasCtor) {
   };
 }
 
-process.env.VITE_SUPABASE_URL = 'http://localhost:54321';
-process.env.VITE_SUPABASE_ANON_KEY = 'test-anon-key';
-process.env.VITE_CLERK_PUBLISHABLE_KEY = 'pk_test_placeholder';
-process.env.VITE_NOTA_SERVER_API_URL = 'http://127.0.0.1:9';
+process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321';
+process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
+process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = 'pk_test_placeholder';
+process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL = 'http://127.0.0.1:9';
 
 setSupabaseClerkGetToken(async () => 'test-clerk-jwt');
 setClerkAccessTokenGetter(async () => 'test-clerk-jwt');
@@ -75,10 +75,10 @@ setClerkAccessTokenGetter(async () => 'test-clerk-jwt');
 vi.stubGlobal('import', {
   meta: {
     env: {
-      VITE_SUPABASE_URL: 'http://localhost:54321',
-      VITE_SUPABASE_ANON_KEY: 'test-anon-key',
-      VITE_CLERK_PUBLISHABLE_KEY: 'pk_test_placeholder',
-      VITE_NOTA_SERVER_API_URL: 'http://127.0.0.1:9',
+      NEXT_PUBLIC_SUPABASE_URL: 'http://localhost:54321',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'test-anon-key',
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_placeholder',
+      NEXT_PUBLIC_NOTA_SERVER_API_URL: 'http://127.0.0.1:9',
     },
   },
 });

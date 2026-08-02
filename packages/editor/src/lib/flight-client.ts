@@ -1,6 +1,6 @@
 // Client for the public flight lookup on apps/nota-server. No auth header: the
 // route is public so this same call works in the editor AND on the anon shared
-// `/s/` page. Reads VITE_NOTA_SERVER_API_URL from the bundling app's env.
+// `/s/` page. Reads NEXT_PUBLIC_NOTA_SERVER_API_URL from the bundling app's env.
 
 export type FlightInfo = {
   code: string;
@@ -23,7 +23,7 @@ function notaServerBase(): string | undefined {
   const env = (
     import.meta as unknown as { env?: Record<string, string | undefined> }
   ).env;
-  return env?.['VITE_NOTA_SERVER_API_URL']?.trim() || undefined;
+  return env?.['NEXT_PUBLIC_NOTA_SERVER_API_URL']?.trim() || undefined;
 }
 
 /**
