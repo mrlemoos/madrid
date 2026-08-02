@@ -25,7 +25,7 @@ import {
   readNotaServerEntitledSession,
   syncNotaServerEntitledSession,
 } from '@nota/data-source/nota-pro-entitled-session';
-import { useAppSession } from './session-context.js';
+import { useAppSession } from './session-context';
 
 /**
  * App-owned collaborators injected at composition time. These live in feature

@@ -4,7 +4,7 @@ import {
   mapClerkToHashFragment,
   repairClerkAuthLocationHash,
   sanitizeClerkAuthHashFragment,
-} from './clerk-hash-navigation.js';
+} from './clerk-hash-navigation';
 
 function stubWindowLocation(opts: {
   origin: string;

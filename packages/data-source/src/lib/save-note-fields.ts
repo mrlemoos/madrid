@@ -3,9 +3,9 @@ import type {
   PatchNoteMutationInput,
   PatchNoteMutationResult,
 } from '@nota/notes-offline-core';
-import { editorDraftContext } from './note-editor-draft-context.js';
-import { noteAfterPatchMutation } from './note-patch-result.js';
-import { persistedDisplayTitle } from './note-title.js';
+import { editorDraftContext } from './note-editor-draft-context';
+import { noteAfterPatchMutation } from './note-patch-result';
+import { persistedDisplayTitle } from './note-title';
 import type { Json, Note } from '@nota/database-types';
 
 type DraftOverrides = Parameters<typeof editorDraftContext>[1];

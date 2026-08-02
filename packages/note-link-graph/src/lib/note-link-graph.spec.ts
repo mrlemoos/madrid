@@ -3,7 +3,7 @@ import type { Note } from '@nota/database-types';
 import {
   buildNoteLinkGraph,
   extractOutgoingNoteIdsFromContent,
-} from './note-link-graph.js';
+} from './note-link-graph';
 
 const NOTE_A = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const NOTE_B = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';

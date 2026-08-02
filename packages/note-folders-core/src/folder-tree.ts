@@ -1,5 +1,5 @@
 import type { Folder } from '@nota/database-types';
-import { compareFolderNames } from './note-sidebar-groups.js';
+import { compareFolderNames } from './note-sidebar-groups';
 
 export type FolderTreeNode = {
   folder: Folder;

@@ -63,7 +63,7 @@ function prefetchNotesShellRoutes(): void {
   // Vitest: prefetch completes after jsdom teardown and triggers EnvironmentTeardownError
   // on nested imports (e.g. notes.shortcuts → nota-kbd-styles). NotaApp is not rendered in
   // tests today, but guard anyway since this runs from module-scope app code.
-  if (import.meta.env.MODE === 'test') {
+  if (process.env.NODE_ENV === 'test') {
     return;
   }
   void import('./routes/notes.settings');

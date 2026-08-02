@@ -176,10 +176,7 @@ describe('AppProviders', () => {
     );
   });
 
-  it('configures ClerkProvider for hash routing and Mac deep links', () => {
-    // Arrange
-    const origin = window.location.origin;
-
+  it('configures ClerkProvider for path-routed auth and Mac deep links', () => {
     // Act
     render(
       <AppProviders>
@@ -191,8 +188,8 @@ describe('AppProviders', () => {
     expect(clerkProviderProps.current).toMatchObject({
       ui: 'mock-clerk-ui',
       publishableKey: 'pk_test_placeholder',
-      signInUrl: `${origin}/sign-in`,
-      signUpUrl: `${origin}/sign-up`,
+      signInUrl: '/signin',
+      signUpUrl: '/signup',
       signInForceRedirectUrl: clerkFullNotesUrl(),
       signUpForceRedirectUrl: clerkFullNotesUrl(),
       allowedRedirectProtocols: ['nota:'],

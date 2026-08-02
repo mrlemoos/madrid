@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Note } from '@nota/database-types';
-import { mergeNoteLists } from './merge-note-with-local.js';
-import type { StoredNote } from './types.js';
+import { mergeNoteLists } from './merge-note-with-local';
+import type { StoredNote } from './types';
 import golden from './fixtures/merge-note-lists-golden.json' with { type: 'json' };
 
 describe('mergeNoteLists golden fixture', () => {

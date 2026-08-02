@@ -1,14 +1,14 @@
-import { getBrowserClient } from './supabase/browser.js';
+import { getBrowserClient } from './supabase/browser';
 import {
   getValidNoteAttachmentSignedUrlCacheEntry,
   setCachedNoteAttachmentSignedUrl,
-} from './note-attachment-signed-url-cache.js';
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl.js';
+} from './note-attachment-signed-url-cache';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl';
 import {
   NOTE_PDFS_BUCKET,
   createNoteAttachmentRecord,
   noteAttachmentStoragePath,
-} from '../models/note-attachments.js';
+} from '../models/note-attachments';
 import type { NoteAttachment } from '@nota/database-types';
 
 export type GetOrFetchNoteAttachmentSignedUrlResult =

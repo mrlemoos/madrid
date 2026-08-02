@@ -3,7 +3,7 @@ import {
   dailyNoteDisplayTitle,
   localDateKey,
   resolveTodaysNoteId,
-} from './todays-note.js';
+} from './todays-note';
 
 describe('dailyNoteDisplayTitle', () => {
   it('formats as day, full month, year (en-GB)', () => {

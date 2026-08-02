@@ -4,7 +4,7 @@ import { NotaButton } from '@nota/web-design/button';
 import { NOTA_DIALOG_MOTION_CLASS } from '@nota/web-design/popup-motion';
 import { cn } from '@nota/web-design/utils';
 import type { Folder } from '@nota/database-types';
-import { useFolderTranslator } from './use-folder-translator.js';
+import { useFolderTranslator } from './use-folder-translator';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { createFolder } from '@nota/data-source/models/folders';
 

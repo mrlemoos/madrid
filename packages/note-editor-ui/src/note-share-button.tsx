@@ -4,7 +4,7 @@ import { NotaIcon } from '@nota/web-design/icon';
 import { LinkIcon } from '@nota/web-design/icons';
 import { cn } from '@nota/web-design/utils';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { useNoteEditorTranslator } from './use-note-editor-translator.js';
+import { useNoteEditorTranslator } from './use-note-editor-translator';
 import { buildShareUrl, shareNote } from '@nota/data-source/note-share-client';
 
 interface NoteShareButtonProps {

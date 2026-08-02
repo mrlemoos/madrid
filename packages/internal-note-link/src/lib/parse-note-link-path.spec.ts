@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hrefForNote, parseNoteLinkPath } from './parse-note-link-path.js';
+import { hrefForNote, parseNoteLinkPath } from './parse-note-link-path';
 
 const NOTE_ID = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 

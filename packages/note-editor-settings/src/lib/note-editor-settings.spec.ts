@@ -13,7 +13,7 @@ import {
   noteSurfaceMaxWidthPx,
   noteThemeSelectValue,
   parseNoteEditorSettings,
-} from './note-editor-settings.js';
+} from './note-editor-settings';
 
 describe('parseNoteEditorSettings', () => {
   it('returns empty object for null', () => {

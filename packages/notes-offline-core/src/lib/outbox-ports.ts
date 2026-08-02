@@ -1,5 +1,5 @@
 import type { Json, Note } from '@nota/database-types';
-import type { OutboxEntry, StoredNote } from './types.js';
+import type { OutboxEntry, StoredNote } from './types';
 
 /** Fields replayed to the remote note store on outbox upsert. */
 export type RemoteNoteUpsertInput = {

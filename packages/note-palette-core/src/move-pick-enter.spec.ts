@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { MOVE_PICK_VALUE_PREFIX } from './move-pick-helpers.js';
-import { movePickEnterAction } from './move-pick-enter.js';
+import { MOVE_PICK_VALUE_PREFIX } from './move-pick-helpers';
+import { movePickEnterAction } from './move-pick-enter';
 
 describe('movePickEnterAction', () => {
   it('delegates when not on pick-note step', () => {

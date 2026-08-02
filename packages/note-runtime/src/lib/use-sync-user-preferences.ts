@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useUser } from '@clerk/react';
 import type { UserPreferences } from '@nota/database-types';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { useNotaPreferencesStore } from '../stores/nota-preferences.js';
+import { useNotaPreferencesStore } from '../stores/nota-preferences';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import {
   upsertUserPreferences,

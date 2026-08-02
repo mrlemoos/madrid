@@ -78,3 +78,7 @@ npm-debug.*
 web-build/
 cache/
 
+
+# Next.js
+apps/nota/.next/
+apps/nota/next-env.d.ts

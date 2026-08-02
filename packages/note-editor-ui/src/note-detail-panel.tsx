@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Note, NoteAttachment } from '@nota/database-types';
-import { NoteEditor } from './note-editor.js';
-import { NoteBacklinksPanel } from './note-backlinks-panel.js';
+import { NoteEditor } from './note-editor';
+import { NoteBacklinksPanel } from './note-backlinks-panel';
 import { cn } from '@nota/web-design/utils';
 import { noteSurfaceClassNames, parseNoteEditorSettings } from '@nota/editor';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
@@ -36,7 +36,7 @@ import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { postSearchIndexNote } from '@nota/nota-server-client';
 import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
-import { notaServerBaseUrl } from './vite-env.js';
+import { notaServerBaseUrl } from './vite-env';
 import { noteBannerNoteSurfaceClass } from '@nota/notes-chrome-core/banner-chrome';
 
 export function NoteDetailPanel({
@@ -395,7 +395,7 @@ export function NoteDetailPanel({
             await getClerkAccessToken(),
             { noteId: updatedNote.id },
           );
-          if (!res.ok && import.meta.env.DEV) {
+          if (!res.ok && process.env.NODE_ENV !== 'production') {
             console.warn('[semantic-index]', res.status, await res.text());
           }
         })();

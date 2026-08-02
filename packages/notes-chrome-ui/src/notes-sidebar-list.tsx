@@ -44,7 +44,7 @@ import {
 } from '@nota/web-design/tooltip';
 import { cn } from '@nota/web-design/utils';
 import { NOTA_TRACKING_CHROME_XS_CLASS } from '@nota/notes-chrome-core/chrome-type';
-import { useNotesChromeTranslator } from './use-notes-chrome-translator.js';
+import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
   NOTA_SIDEBAR_TREE_BRANCH_INNER_CLASS,

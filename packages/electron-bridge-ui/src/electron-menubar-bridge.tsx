@@ -11,7 +11,7 @@ import {
   isNotaMenubarActionPayload,
   type NotaMenubarActionPayload,
 } from '@nota/electron-bridge-core/menubar-payload';
-import { createNoteFromMenubarClipboard } from './electron-clipboard-note.js';
+import { createNoteFromMenubarClipboard } from './electron-clipboard-note';
 
 /**
  * Subscribes to Electron menu IPC and runs the corresponding SPA flows.

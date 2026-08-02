@@ -4,7 +4,7 @@ import {
   folderTintRowBackground,
   folderTintSwatchColour,
   folderTintOptionForPersisted,
-} from './folder-tint-presets.js';
+} from './folder-tint-presets';
 
 describe('folder-tint-presets', () => {
   it('treats null and empty as default swatch', () => {

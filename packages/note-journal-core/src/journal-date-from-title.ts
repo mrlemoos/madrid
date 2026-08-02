@@ -1,5 +1,5 @@
 import * as chrono from 'chrono-node';
-import { localDateKey } from './local-date-key.js';
+import { localDateKey } from './local-date-key';
 
 const UNTITLED = 'Untitled Note';
 

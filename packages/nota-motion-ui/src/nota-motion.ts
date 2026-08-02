@@ -10,7 +10,7 @@ import {
   NOTA_SPRING_SHELL,
 } from '@nota/web-design/motion-tokens';
 import { NOTA_SIDEBAR_DEFAULT_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
-import { usePrefersReducedMotion } from './use-prefers-reduced-motion.js';
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 gsap.registerPlugin(useGSAP);
 

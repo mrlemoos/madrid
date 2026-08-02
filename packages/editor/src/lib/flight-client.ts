@@ -19,31 +19,18 @@ export type FlightInfo = {
   updated: number | null;
 };
 
-function notaServerBase(): string | undefined {
-  const env = (
-    import.meta as unknown as { env?: Record<string, string | undefined> }
-  ).env;
-  return env?.['NEXT_PUBLIC_NOTA_SERVER_API_URL']?.trim() || undefined;
-}
-
 /**
- * Fetches flight info by IATA code. Returns null when the server has no data
- * (404) or when the server URL isn't configured. Throws only on network/5xx so
- * the UI can distinguish "no such flight" from "lookup failed".
+ * Fetches flight info by IATA code via the same-origin public Next route
+ * `GET /api/flight`. Returns null when the server has no data (404). Throws only
+ * on network/5xx so the UI can distinguish "no such flight" from "lookup failed".
  */
 export async function fetchFlightInfo(
   code: string,
   signal?: AbortSignal,
 ): Promise<FlightInfo | null> {
-  const base = notaServerBase();
-  if (!base) return null;
-
-  const res = await fetch(
-    `${base}/api/flight?code=${encodeURIComponent(code)}`,
-    {
-      signal,
-    },
-  );
+  const res = await fetch(`/api/flight?code=${encodeURIComponent(code)}`, {
+    signal,
+  });
   if (res.status === 404) return null;
   if (!res.ok) {
     throw new Error(`Flight lookup failed (${res.status})`);

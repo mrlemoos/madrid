@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Note } from '@nota/database-types';
-import { shouldRefetchOpenNoteFromVaultList } from './open-note-vault-list-sync.js';
+import { shouldRefetchOpenNoteFromVaultList } from './open-note-vault-list-sync';
 
 function makeNote(
   partial: Partial<Note> & Pick<Note, 'id' | 'updated_at'>,

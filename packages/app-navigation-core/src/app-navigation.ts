@@ -10,7 +10,7 @@ import {
   authPathnameForScreenKind,
   isClerkAuthPathname,
   screenKindForAuthPathname,
-} from './app-navigation-auth.js';
+} from './app-navigation-auth';
 import {
   markNavIntent,
   type NavIntent,

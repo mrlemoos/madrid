@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { clientDeleteNoteById } from './delete-note-client.js';
+import { clientDeleteNoteById } from './delete-note-client';
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 
 const removeNoteFromList = vi.fn();
@@ -16,7 +16,7 @@ vi.mock('@nota/app-navigation-core/navigation', () => ({
   setAppHash: vi.fn(),
 }));
 
-vi.mock('./maybe-prune-empty-folder.js', () => ({
+vi.mock('./maybe-prune-empty-folder', () => ({
   maybePruneEmptyFolder: vi.fn(() => Promise.resolve()),
 }));
 

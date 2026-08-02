@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { dailyNoteDisplayTitle } from './daily-note-display-title.js';
+import { dailyNoteDisplayTitle } from './daily-note-display-title';
 import {
   formatStudyNoteTitle,
   studyNotePlaceholderQueuedTitle,
   studyNotePlaceholderRecordingTitle,
-} from './study-note-title.js';
+} from './study-note-title';
 
 describe('formatStudyNoteTitle', () => {
   it('formats base title from note created_at', () => {

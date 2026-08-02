@@ -20,7 +20,7 @@ import {
   NOTA_SECTION_HEAD_CLASS,
   NOTA_TRACKING_CHROME_XS_CLASS,
 } from '@nota/notes-chrome-core/chrome-type';
-import { useNotesChromeTranslator } from './use-notes-chrome-translator.js';
+import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';

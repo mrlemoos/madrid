@@ -1,5 +1,5 @@
 import { setAppHash } from '@nota/app-navigation-core/navigation';
-import { maybePruneEmptyFolder } from './maybe-prune-empty-folder.js';
+import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 import type { UserPreferences } from '@nota/database-types';
 

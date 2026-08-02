@@ -1,1 +1,1 @@
-export * from './lib/database-types.js';
+export * from './lib/database-types';

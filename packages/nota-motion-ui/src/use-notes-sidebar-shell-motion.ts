@@ -4,8 +4,8 @@ import {
   NOTA_SIDEBAR_SLIDE_PX,
   NOTA_SPRING_PRESETS,
   useGSAP,
-} from './nota-motion.js';
-import { usePrefersReducedMotion } from './use-prefers-reduced-motion.js';
+} from './nota-motion';
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 import {
   animateSprings,
   createCriticallyDampedSpringConfig,

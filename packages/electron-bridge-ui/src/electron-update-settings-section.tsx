@@ -4,7 +4,7 @@ import {
   parseNotaUpdateStatusPayload,
   type NotaUpdateStatusPayload,
 } from '@nota/electron-bridge-core/update-status';
-import { useElectronBridgeTranslator } from './use-electron-bridge-translator.js';
+import { useElectronBridgeTranslator } from './use-electron-bridge-translator';
 
 function statusMessage(
   status: NotaUpdateStatusPayload,

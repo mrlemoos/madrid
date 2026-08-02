@@ -30,7 +30,12 @@ import { PdfJsModalPreview } from '../pdf-js-modal-preview';
 import { NotePdfThumbnailFrame } from './note-pdf-thumbnail-frame';
 import type { NoteAttachment } from '@nota/database-types';
 import type { PlatformLinkPreview } from '@nota/link-platform-preview';
-import pdfjsWorkerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+// Asset URL for the PDF.js worker. `new URL(..., import.meta.url)` is the
+// bundler-native way to emit and reference the asset (replaces Vite's `?url`).
+const pdfjsWorkerUrl = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export type CachedSignedUrlEntry = {
   signedUrl: string;
@@ -38,7 +43,8 @@ export type CachedSignedUrlEntry = {
 };
 
 export type SignedUrlResult =
-  { ok: true; signedUrl: string } | { ok: false; error?: string };
+  | { ok: true; signedUrl: string }
+  | { ok: false; error?: string };
 
 export type OgPreviewData = {
   title?: string | null;

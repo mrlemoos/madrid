@@ -56,19 +56,19 @@ import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-cor
 import { NoteDetailPanel } from '@nota/note-editor-ui/note-detail-panel';
 import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
 import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
-import { NotesSidebarList } from './notes-sidebar-list.js';
+import { NotesSidebarList } from './notes-sidebar-list';
 import { AudioToNoteDock } from '@nota/note-capture-ui/audio-to-note-dock';
 import { ElectronMenubarBridge } from '@nota/electron-bridge-ui/menubar-bridge';
 import { ElectronTrafficLightsController } from '@nota/electron-bridge-ui/traffic-lights-controller';
 import { StudyRecordingUploadWarningBanner } from '@nota/note-capture-ui/study-recording-upload-warning-banner';
 import { useAudioNotePendingDrain } from '@nota/note-capture-ui/use-audio-note-pending-drain';
-import { useNotesChromeTranslator } from './use-notes-chrome-translator.js';
+import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
   LazyNotesRouteFallback,
   NotesIndexPanel,
   ShellPanel,
   SidebarToggle,
-} from './notes-shell-parts.js';
+} from './notes-shell-parts';
 import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-resize-handle';
 
 /**

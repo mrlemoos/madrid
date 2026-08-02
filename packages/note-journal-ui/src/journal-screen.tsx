@@ -8,9 +8,9 @@ import {
 import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
 import { parseDateKey } from '@nota/note-journal-core/calendar';
 import { localDateKey } from '@nota/note-journal-core/local-date-key';
-import { useJournalTranslator } from './use-journal-translator.js';
-import { JournalCalendar } from './journal-calendar.js';
-import { JournalNotesList } from './journal-notes-list.js';
+import { useJournalTranslator } from './use-journal-translator';
+import { JournalCalendar } from './journal-calendar';
+import { JournalNotesList } from './journal-notes-list';
 
 function initialVisibleMonth(
   entries: ReturnType<typeof buildJournalEntriesFromNotes>,

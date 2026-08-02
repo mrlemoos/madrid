@@ -1,6 +1,24 @@
 // Runs before Vitest tests
 import { vi } from 'vitest';
 
+// Next App Router hooks need a router context that jsdom lacks; stub them so
+// client components (providers, shell) render under test.
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    prefetch: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+  useParams: () => ({}),
+  redirect: vi.fn(),
+  notFound: vi.fn(),
+}));
+
 import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
 import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
 

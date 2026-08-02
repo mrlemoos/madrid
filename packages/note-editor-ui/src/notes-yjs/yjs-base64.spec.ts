@@ -1,4 +1,4 @@
-import { base64ToUint8, uint8ToBase64 } from './yjs-base64.js';
+import { base64ToUint8, uint8ToBase64 } from './yjs-base64';
 
 describe('yjs-base64 round-trip', () => {
   it('restores the original bytes', () => {

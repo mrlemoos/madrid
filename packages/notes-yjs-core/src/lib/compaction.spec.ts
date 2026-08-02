@@ -1,4 +1,4 @@
-import { DEFAULT_COMPACTION_THRESHOLD, shouldCompact } from './compaction.js';
+import { DEFAULT_COMPACTION_THRESHOLD, shouldCompact } from './compaction';
 
 describe('shouldCompact', () => {
   it('does not compact at or below the threshold', () => {

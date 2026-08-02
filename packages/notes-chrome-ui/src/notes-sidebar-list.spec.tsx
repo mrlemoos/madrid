@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { NotesSidebarList } from './notes-sidebar-list.js';
+import { NotesSidebarList } from './notes-sidebar-list';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import { clientRenameFolder } from '@nota/note-folders-ui/rename-folder-client';
 import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';

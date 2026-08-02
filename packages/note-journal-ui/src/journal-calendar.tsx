@@ -8,7 +8,7 @@ import {
 import { useJournalMonthGridCrossfade } from '@nota/note-journal-core/month-grid-transition';
 import { localDateKey } from '@nota/note-journal-core/local-date-key';
 import { usePrefersReducedMotion } from '@nota/nota-motion-ui/use-prefers-reduced-motion';
-import { useJournalTranslator } from './use-journal-translator.js';
+import { useJournalTranslator } from './use-journal-translator';
 
 const WEEKDAY_KEYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 

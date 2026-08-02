@@ -1,5 +1,8 @@
+'use client';
+
 import { ClerkProvider } from '@clerk/react';
 import { ui } from '@clerk/ui';
+import { useRouter } from 'next/navigation';
 import { StrictMode, type ReactNode } from 'react';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
 import { AppErrorBoundary } from './components/app-error-boundary';
@@ -8,13 +11,7 @@ import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
 import { NoteEditorCommandsProvider } from '@nota/editor';
 import { StickyDocTitleProvider } from '@nota/note-runtime/sticky-doc-title';
 import { AppSessionProvider } from '@nota/note-runtime/session-context';
-import {
-  clerkFullNotesUrl,
-  clerkFullSignInUrl,
-  clerkFullSignUpUrl,
-  clerkRouterPush,
-  clerkRouterReplace,
-} from '@nota/app-navigation-core/clerk-hash';
+import { clerkFullNotesUrl } from '@nota/app-navigation-core/clerk-hash';
 import { ClerkSsoCallbackRoute } from './components/clerk-sso-callback-route';
 import { viteEnvString } from './lib/vite-env';
 
@@ -29,6 +26,7 @@ interface AppProvidersProps {
 }
 
 export function AppProviders({ children }: AppProvidersProps) {
+  const router = useRouter();
   if (!clerkPublishableKey) {
     throw new Error('Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY');
   }
@@ -37,12 +35,13 @@ export function AppProviders({ children }: AppProvidersProps) {
     <ClerkProvider
       ui={ui}
       publishableKey={clerkPublishableKey}
-      signInUrl={clerkFullSignInUrl()}
-      signUpUrl={clerkFullSignUpUrl()}
+      signInUrl="/signin"
+      signUpUrl="/signup"
+      // Notes still use hash navigation until Stage B/C; keep redirects there.
       signInForceRedirectUrl={clerkFullNotesUrl()}
       signUpForceRedirectUrl={clerkFullNotesUrl()}
-      routerPush={clerkRouterPush}
-      routerReplace={clerkRouterReplace}
+      routerPush={(to) => router.push(to)}
+      routerReplace={(to) => router.replace(to)}
       allowedRedirectProtocols={['nota:']}
     >
       <StrictMode>

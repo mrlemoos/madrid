@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Json } from '@nota/database-types';
-import { buildAudioNoteApplyPatch } from './audio-to-note-apply.js';
+import { buildAudioNoteApplyPatch } from './audio-to-note-apply';
 import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
 
 describe('buildAudioNoteApplyPatch', () => {

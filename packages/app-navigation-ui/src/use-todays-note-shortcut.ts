@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent, useRef } from 'react';
-import { openTodaysNoteClient } from './open-todays-note.js';
+import { openTodaysNoteClient } from './open-todays-note';
 import type { Note } from '@nota/database-types';
 import { navigateFromLegacyPath } from '@nota/app-navigation-core/navigation';
 import { useOptionalNotesDataActions } from '@nota/note-runtime/notes-data-context';

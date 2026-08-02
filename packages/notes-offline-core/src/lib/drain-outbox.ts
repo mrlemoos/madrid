@@ -1,13 +1,13 @@
 import type { Note } from '@nota/database-types';
-import { sortOutboxForProcessing } from './sort-outbox-for-processing.js';
-import type { StoredNote } from './types.js';
+import { sortOutboxForProcessing } from './sort-outbox-for-processing';
+import type { StoredNote } from './types';
 import type {
   OutboxDrainDeps,
   RemoteNoteCreateInput,
   RemoteNoteUpsertInput,
-} from './outbox-ports.js';
+} from './outbox-ports';
 
-export type { OutboxDrainDeps } from './outbox-ports.js';
+export type { OutboxDrainDeps } from './outbox-ports';
 export type OutboxDrainer = {
   drain(userId: string): Promise<boolean>;
 };

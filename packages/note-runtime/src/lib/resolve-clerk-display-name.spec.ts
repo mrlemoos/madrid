@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveClerkDisplayName } from './use-sync-user-preferences.js';
+import { resolveClerkDisplayName } from './use-sync-user-preferences';
 
 describe('resolveClerkDisplayName', () => {
   it('prefers fullName when present', () => {

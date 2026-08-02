@@ -1,4 +1,4 @@
 export {
   extractPlainTextFromDocJson,
   extractJournalNoteListPreviewFromDocJson,
-} from './note-doc-plain-text.js';
+} from './note-doc-plain-text';

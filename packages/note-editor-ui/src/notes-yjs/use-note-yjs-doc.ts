@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import type * as Y from 'yjs';
 
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { createNoteYjsDoc } from './note-yjs-doc.js';
-import { SupabaseYjsProvider } from './supabase-yjs-provider.js';
+import { createNoteYjsDoc } from './note-yjs-doc';
+import { SupabaseYjsProvider } from './supabase-yjs-provider';
 
 interface NoteYjsDocState {
   /** Live Yjs doc for the note, or null when not collaborative (unentitled / no note). */

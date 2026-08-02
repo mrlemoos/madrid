@@ -27,12 +27,12 @@ import {
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 import { createNoteFieldSaver } from '@nota/data-source/save-note-fields';
 import type { Json, Note, NoteAttachment } from '@nota/database-types';
-import { NoteLayoutMenu } from './note-layout-menu.js';
-import { NoteShareButton } from './note-share-button.js';
+import { NoteLayoutMenu } from './note-layout-menu';
+import { NoteShareButton } from './note-share-button';
 import {
   NoteImageLightbox,
   type NoteImageLightboxImage,
-} from './note-image-lightbox.js';
+} from './note-image-lightbox';
 import { cn } from '@nota/web-design/utils';
 import { NOTA_TRACKING_DISPLAY_CLASS } from '@nota/notes-chrome-core/chrome-type';
 import type { Editor } from '@tiptap/core';
@@ -50,8 +50,8 @@ import {
   deleteNoteAttachment,
   updateNoteAttachmentFilename,
 } from '@nota/data-source/models/note-attachments';
-import { fetchOgPreviewForEditor } from './og-preview-client.js';
-import { useNoteEditorTranslator } from './use-note-editor-translator.js';
+import { fetchOgPreviewForEditor } from './og-preview-client';
+import { useNoteEditorTranslator } from './use-note-editor-translator';
 import { parseNoteLinkPath, hrefForNote } from '@nota/internal-note-link';
 import {
   absoluteUrlForNote,
@@ -61,7 +61,7 @@ import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { createTypewriterScrollUserGuard } from '@nota/nota-motion-core/typewriter-scroll-guard';
 import { NOTA_SAVE_PULSE_CLASS } from '@nota/nota-motion-ui/interaction';
 import { createWritingActivitySessionRecorder } from '@nota/writing-activity-ui/tracking';
-import { useNoteYjsDoc } from './notes-yjs/use-note-yjs-doc.js';
+import { useNoteYjsDoc } from './notes-yjs/use-note-yjs-doc';
 
 function buildStorageOps(
   noteId: string,

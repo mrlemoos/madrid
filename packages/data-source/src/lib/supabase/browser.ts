@@ -1,7 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@nota/database-types';
 
-import { viteEnvString } from '../vite-env.js';
+import { viteEnvString } from '../vite-env';
 
 const supabaseUrl = viteEnvString('NEXT_PUBLIC_SUPABASE_URL');
 const supabaseAnonKey = viteEnvString('NEXT_PUBLIC_SUPABASE_ANON_KEY');

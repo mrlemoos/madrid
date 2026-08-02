@@ -1,4 +1,4 @@
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl.js';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl';
 
 export type NoteAttachmentSignedUrlCacheEntry = {
   signedUrl: string;

@@ -4,8 +4,8 @@
  * hash. Notes/landing keep hash routing (`#/notes`). Legacy `#/sign-in` bookmarks migrate at boot.
  */
 
-import { isClerkAuthPathname } from './app-navigation-auth.js';
-import { NOTA_HASH_HISTORY_EVENT, replaceAppHash } from './app-navigation.js';
+import { isClerkAuthPathname } from './app-navigation-auth';
+import { NOTA_HASH_HISTORY_EVENT, replaceAppHash } from './app-navigation';
 
 const AUTH_HASH_PATH = /^\/(?:sign-in|sign-up|login|signup)(?:\/|$)/;
 

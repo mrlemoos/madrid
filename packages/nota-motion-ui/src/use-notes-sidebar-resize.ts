@@ -8,7 +8,7 @@ import {
   createCriticallyDampedSpringConfig,
   type SpringAnimationHandle,
 } from '@nota/nota-motion-core/critically-damped-spring';
-import { NOTA_SPRING_PRESETS } from './nota-motion.js';
+import { NOTA_SPRING_PRESETS } from './nota-motion';
 import {
   computeSidebarResizeLiveWidth,
   resolveSidebarResizeSettle,

@@ -2,7 +2,7 @@ import { useEffect, useRef, type JSX } from 'react';
 import { cn } from '@nota/web-design/utils';
 import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
-import { useIsElectron } from './use-is-electron.js';
+import { useIsElectron } from './use-is-electron';
 
 const HIDE_GRACE_MS = 400;
 

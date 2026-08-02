@@ -5,7 +5,7 @@ import {
   buildWikipediaArticlePreview,
   stripYoutubeChannelTitleSuffix,
   WIKIPEDIA_ARTICLE_SUFFIX_I18N_KEY,
-} from './build-platform-preview.js';
+} from './build-platform-preview';
 
 describe('buildRedditPostPreview', () => {
   it('formats op, bold title, and subreddit suffix', () => {

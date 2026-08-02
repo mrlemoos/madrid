@@ -2,7 +2,7 @@
  * Sidebar resize release: project momentum, then spring-settle to the clamp band.
  */
 
-import { rubberbandBeyondClamp } from './nota-rubberband.js';
+import { rubberbandBeyondClamp } from './nota-rubberband';
 
 /** Projection window (seconds) for release velocity. */
 export const NOTA_SIDEBAR_RESIZE_PROJECT_S = 0.16;

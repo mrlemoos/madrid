@@ -4,7 +4,7 @@ import {
   buildSidebarFolderSections,
   compareFolderNames,
   compareNoteTitles,
-} from './note-sidebar-groups.js';
+} from './note-sidebar-groups';
 
 const folderBase = {
   user_id: 'u1',

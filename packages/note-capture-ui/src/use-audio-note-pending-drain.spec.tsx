@@ -1,8 +1,8 @@
 import { act, render, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { PendingAudioNoteJob } from './audio-note-pending-idb.js';
+import type { PendingAudioNoteJob } from './audio-note-pending-idb';
 import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
-import { useAudioNotePendingDrain } from './use-audio-note-pending-drain.js';
+import { useAudioNotePendingDrain } from './use-audio-note-pending-drain';
 import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
 
 const studyResult: AudioNoteStudyResult = {
@@ -87,18 +87,18 @@ vi.mock('@nota/data-source/notes-offline-sync', () => ({
   isLikelyOnline: () => drainMocks.isLikelyOnline(),
 }));
 
-vi.mock('./audio-note-pending-idb.js', () => ({
+vi.mock('./audio-note-pending-idb', () => ({
   listPendingAudioNoteJobs: (userId: string) =>
     drainMocks.listPendingAudioNoteJobs(userId),
   removePendingAudioNoteJob: (id: string) =>
     drainMocks.removePendingAudioNoteJob(id),
 }));
 
-vi.mock('./audio-to-note-client.js', () => ({
+vi.mock('./audio-to-note-client', () => ({
   postAudioToNoteStream: (blob: Blob) => drainMocks.postAudioToNoteStream(blob),
 }));
 
-vi.mock('./audio-to-note-apply.js', () => ({
+vi.mock('./audio-to-note-apply', () => ({
   applyAudioNoteStudyResult: (opts: unknown) =>
     drainMocks.applyAudioNoteStudyResult(opts),
 }));
@@ -112,7 +112,7 @@ vi.mock('@nota/data-source/pdf-attachment-client', () => ({
   ) => drainMocks.uploadStudyRecordingAttachment(noteId, userId, blob, mime),
 }));
 
-vi.mock('./study-recording-upload-warning.js', () => ({
+vi.mock('./study-recording-upload-warning', () => ({
   formatStudyRecordingUploadWarning: (err: unknown) =>
     drainMocks.formatStudyRecordingUploadWarning(err),
 }));

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { noteHashHref } from './note-hash-href.js';
+import { noteHashHref } from './note-hash-href';
 
 describe('noteHashHref', () => {
   it('builds a notes/note hash for the given note id', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { buildAppearanceCommands } from './palette-commands.js';
+import { buildAppearanceCommands } from './palette-commands';
 
 describe('buildAppearanceCommands', () => {
   it('lists the three theme choices with stable values', () => {

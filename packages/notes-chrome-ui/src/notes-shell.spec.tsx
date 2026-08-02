@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { NotesShell, type NotesShellRouteComponents } from './notes-shell.js';
+import { NotesShell, type NotesShellRouteComponents } from './notes-shell';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
 

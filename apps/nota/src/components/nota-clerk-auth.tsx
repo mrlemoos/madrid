@@ -4,10 +4,6 @@ import type { JSX } from 'react';
 
 import { notaButtonVariants } from '@nota/web-design/button';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
-import {
-  clerkFullSignInUrl,
-  clerkFullSignUpUrl,
-} from '@nota/app-navigation-core/clerk-hash';
 import { cn } from '@/lib/utils';
 
 const authFallback = (
@@ -116,24 +112,24 @@ export const notaClerkAuthAppearance = {
   },
 };
 
-/** Default Clerk `<SignIn />` on pathname `/sign-in` (empty hash — required for PathRouter). */
+/** Clerk `<SignIn />` on the App Router path route `/signin` (path routing). */
 export function NotaClerkSignIn(): JSX.Element {
   return (
     <SignIn
-      path="/sign-in"
-      signUpUrl={clerkFullSignUpUrl()}
+      path="/signin"
+      signUpUrl="/signup"
       appearance={notaClerkAuthAppearance}
       fallback={authFallback}
     />
   );
 }
 
-/** Default Clerk `<SignUp />`; path routing + hash bridge in `clerk-hash-navigation`. */
+/** Clerk `<SignUp />` on the App Router path route `/signup` (path routing). */
 export function NotaClerkSignUp(): JSX.Element {
   return (
     <SignUp
-      path="/sign-up"
-      signInUrl={clerkFullSignInUrl()}
+      path="/signup"
+      signInUrl="/signin"
       appearance={notaClerkAuthAppearance}
       fallback={authFallback}
     />

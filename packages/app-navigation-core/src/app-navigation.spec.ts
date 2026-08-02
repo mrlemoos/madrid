@@ -4,7 +4,7 @@ import {
   parseAppNavFromLocation,
   replaceAppHash,
   setAppHash,
-} from './app-navigation.js';
+} from './app-navigation';
 import {
   peekNavIntent,
   resetNavIntent,

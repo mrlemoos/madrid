@@ -1,1 +1,1 @@
-export * from './lib/nota-server-client.js';
+export * from './lib/nota-server-client';

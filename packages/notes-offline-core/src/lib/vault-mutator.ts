@@ -1,4 +1,4 @@
-import type { RemoteNotePatchInput } from './outbox-ports.js';
+import type { RemoteNotePatchInput } from './outbox-ports';
 import type {
   CreateNoteMutationInput,
   CreateNoteMutationResult,
@@ -8,9 +8,9 @@ import type {
   PatchNoteMutationResult,
   VaultMutator,
   VaultMutatorDeps,
-} from './vault-mutation-ports.js';
+} from './vault-mutation-ports';
 
-export type { VaultMutator, VaultMutatorDeps } from './vault-mutation-ports.js';
+export type { VaultMutator, VaultMutatorDeps } from './vault-mutation-ports';
 export type {
   CreateNoteMutationInput,
   CreateNoteMutationResult,
@@ -19,7 +19,7 @@ export type {
   NotePatchFields,
   PatchNoteMutationInput,
   PatchNoteMutationResult,
-} from './vault-mutation-ports.js';
+} from './vault-mutation-ports';
 
 const DEFAULT_CREATE_TITLE = 'Untitled Note';
 

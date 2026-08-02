@@ -1,18 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import { DEFAULT_NOTE_CONTENT } from './types.js';
+import { DEFAULT_NOTE_CONTENT } from './types';
 import type { Note } from '@nota/database-types';
-import type { OutboxEntry, StoredNote } from './types.js';
+import type { OutboxEntry, StoredNote } from './types';
 import {
   createOutboxDrainer,
   drainOutbox,
   storedNoteToRemoteUpsertInput,
-} from './drain-outbox.js';
+} from './drain-outbox';
 import type {
   LocalNoteOutboxStore,
   OutboxDrainDeps,
   RemoteNoteSync,
   VaultConnectivity,
-} from './outbox-ports.js';
+} from './outbox-ports';
 
 function makeNote(overrides: Partial<Note> & { id: string }): Note {
   return {

@@ -1,1 +1,1 @@
-export { hrefForNote, parseNoteLinkPath } from './lib/parse-note-link-path.js';
+export { hrefForNote, parseNoteLinkPath } from './lib/parse-note-link-path';

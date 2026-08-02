@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { Note } from '@nota/database-types';
-import { DEFAULT_NOTE_CONTENT } from './types.js';
-import type { StoredNote } from './types.js';
-import { createVaultMutator } from './vault-mutator.js';
+import { DEFAULT_NOTE_CONTENT } from './types';
+import type { StoredNote } from './types';
+import { createVaultMutator } from './vault-mutator';
 import type {
   LocalNoteMutationStore,
   VaultMutatorDeps,
-} from './vault-mutation-ports.js';
-import type { RemoteNoteSync, VaultConnectivity } from './outbox-ports.js';
+} from './vault-mutation-ports';
+import type { RemoteNoteSync, VaultConnectivity } from './outbox-ports';
 
 function makeStoredNote(
   overrides: Partial<StoredNote> & { id: string },

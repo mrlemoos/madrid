@@ -6,7 +6,7 @@ import {
   flattenFoldersWithPathLabels,
   folderPathLabel,
   subtreeFolderIds,
-} from './folder-tree.js';
+} from './folder-tree';
 
 const base = {
   user_id: 'u1',

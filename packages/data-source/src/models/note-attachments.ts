@@ -1,4 +1,4 @@
-import type { TypedSupabaseClient } from './notes.js';
+import type { TypedSupabaseClient } from './notes';
 import type {
   NoteAttachment,
   NoteAttachmentInsert,

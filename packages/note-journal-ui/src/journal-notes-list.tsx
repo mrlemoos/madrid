@@ -2,7 +2,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef, type JSX } from 'react';
 import { cn } from '@nota/web-design/utils';
 import type { JournalEntry } from '@nota/note-journal-core/notes';
-import { useJournalTranslator } from './use-journal-translator.js';
+import { useJournalTranslator } from './use-journal-translator';
 
 /** Initial row height before `measureElement` runs (title-only vs title + preview). */
 function estimateJournalRowHeight(entry: JournalEntry | undefined): number {

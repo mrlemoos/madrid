@@ -3,7 +3,7 @@ import {
   filterShortcutCatalogSections,
   NOTA_SHORTCUT_SECTIONS,
   type ShortcutCatalogSection,
-} from './nota-shortcuts-catalogue.js';
+} from './nota-shortcuts-catalogue';
 
 describe('filterShortcutCatalogSections', () => {
   it('keeps every row when today’s note rows are included', () => {

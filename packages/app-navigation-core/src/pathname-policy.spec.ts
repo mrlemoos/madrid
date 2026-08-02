@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isShellPathnameAllowed } from './pathname-policy.js';
+import { isShellPathnameAllowed } from './pathname-policy';
 
 describe('isShellPathnameAllowed', () => {
   it('allows the SPA shell and static prefixes', () => {

@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { NoteImageLightbox } from './note-image-lightbox.js';
+import { NoteImageLightbox } from './note-image-lightbox';
 
 const { isElectronMock } = vi.hoisted(() => ({
   isElectronMock: vi.fn(() => false),

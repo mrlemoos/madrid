@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import type { JournalCalendarCell } from './journal-calendar.js';
+import type { JournalCalendarCell } from './journal-calendar';
 
 export const JOURNAL_MONTH_GRID_CROSSFADE_MS = 150;
 

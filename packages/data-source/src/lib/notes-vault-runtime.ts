@@ -11,9 +11,9 @@ import {
   createNote as createNoteOnServer,
   deleteNote as deleteNoteOnServer,
   updateNote as updateNoteOnServer,
-} from '../models/notes.js';
-import { getClerkAccessToken } from './clerk-token-ref.js';
-import { getBrowserClient } from './supabase/browser.js';
+} from '../models/notes';
+import { getClerkAccessToken } from './clerk-token-ref';
+import { getBrowserClient } from './supabase/browser';
 import {
   createLocalOnlyNote,
   getStoredNote,

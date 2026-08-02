@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl.js';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl';
 import {
   clearNoteAttachmentSignedUrlCache,
   getCachedNoteAttachmentSignedUrl,
   getValidNoteAttachmentSignedUrlCacheEntry,
   setCachedNoteAttachmentSignedUrl,
-} from './note-attachment-signed-url-cache.js';
+} from './note-attachment-signed-url-cache';
 
 describe('note-attachment-signed-url-cache', () => {
   beforeEach(() => {

@@ -3,14 +3,14 @@ import { NotaButton } from '@nota/web-design/button';
 import { cn } from '@nota/web-design/utils';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useNotesDataActions } from '@nota/note-runtime/notes-data-context';
-import { postAudioToNoteStream } from './audio-to-note-client.js';
-import { applyAudioNoteStudyResult } from './audio-to-note-apply.js';
+import { postAudioToNoteStream } from './audio-to-note-client';
+import { applyAudioNoteStudyResult } from './audio-to-note-apply';
 import { uploadStudyRecordingAttachment } from '@nota/data-source/pdf-attachment-client';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
 import { saveLocalNoteDraft } from '@nota/notes-offline';
-import { enqueuePendingAudioNoteJob } from './audio-note-pending-idb.js';
+import { enqueuePendingAudioNoteJob } from './audio-note-pending-idb';
 import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
-import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning.js';
+import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning';
 import { formatRecordingDuration } from '@nota/note-capture-core/format-recording-duration';
 import { studyNotePlaceholderQueuedTitle } from '@nota/note-capture-core/study-note-title';
 

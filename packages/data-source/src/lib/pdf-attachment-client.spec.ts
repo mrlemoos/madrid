@@ -2,20 +2,20 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   clearNoteAttachmentSignedUrlCache,
   setCachedNoteAttachmentSignedUrl,
-} from './note-attachment-signed-url-cache.js';
+} from './note-attachment-signed-url-cache';
 import {
   classifyNoteAttachmentFile,
   getOrFetchNoteAttachmentSignedUrl,
   isImageFile,
   isPdfFile,
-} from './pdf-attachment-client.js';
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl.js';
+} from './pdf-attachment-client';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from './attachment-signed-url-ttl';
 
 const { createSignedUrlMock } = vi.hoisted(() => ({
   createSignedUrlMock: vi.fn(),
 }));
 
-vi.mock('./supabase/browser.js', () => ({
+vi.mock('./supabase/browser', () => ({
   getBrowserClient: () => ({
     storage: {
       from: () => ({

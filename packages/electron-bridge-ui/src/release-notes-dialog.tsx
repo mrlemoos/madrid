@@ -4,7 +4,7 @@ import { NotaButton } from '@nota/web-design/button';
 import { cn } from '@nota/web-design/utils';
 import { fetchReleases } from '@nota/nota-server-client';
 import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
-import { notaServerBaseUrl } from './vite-env.js';
+import { notaServerBaseUrl } from './vite-env';
 
 type Release = {
   tagName: string;

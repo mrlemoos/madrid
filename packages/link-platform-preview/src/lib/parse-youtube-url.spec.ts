@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseYoutubeUrl } from './parse-youtube-url.js';
+import { parseYoutubeUrl } from './parse-youtube-url';
 
 describe('parseYoutubeUrl', () => {
   it('detects watch URLs', () => {

@@ -5,7 +5,7 @@ import {
   authPathnameForScreenKind,
   isClerkAuthPathname,
   screenKindForAuthPathname,
-} from './app-navigation-auth.js';
+} from './app-navigation-auth';
 
 describe('app-navigation-auth', () => {
   it('recognises Clerk auth pathnames including legacy aliases', () => {

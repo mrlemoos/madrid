@@ -4,7 +4,7 @@
  * Pointer panel swaps may fade ≤180ms; keyboard / history / create-and-open stay instant.
  */
 
-import { resolveNotaMotion } from './nota-motion-contract.js';
+import { resolveNotaMotion } from './nota-motion-contract';
 
 export type NavIntent = 'pointer' | 'keyboard';
 

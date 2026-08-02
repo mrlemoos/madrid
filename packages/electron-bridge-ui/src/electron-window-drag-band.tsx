@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { cn } from '@nota/web-design/utils';
 import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
-import { useIsElectron } from './use-is-electron.js';
+import { useIsElectron } from './use-is-electron';
 
 /**
  * Fixed top band so the window can be dragged when using a hidden title bar (Electron

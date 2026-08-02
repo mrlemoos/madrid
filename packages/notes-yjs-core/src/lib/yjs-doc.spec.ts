@@ -1,13 +1,13 @@
 import { Schema } from 'prosemirror-model';
 import * as Y from 'yjs';
 
-import { NOTA_YDOC_FIELD, type ProseMirrorJSON } from './types.js';
+import { NOTA_YDOC_FIELD, type ProseMirrorJSON } from './types';
 import {
   encodeDocAsSnapshot,
   foldUpdatesToDoc,
   seedYDocFromContent,
   yDocToContent,
-} from './yjs-doc.js';
+} from './yjs-doc';
 
 // A minimal ProseMirror schema (doc > paragraph > text) — enough to exercise
 // the conversion invariants without pulling the editor's full extension set.

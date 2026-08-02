@@ -8,11 +8,11 @@ import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
 import {
   listPendingAudioNoteJobs,
   removePendingAudioNoteJob,
-} from './audio-note-pending-idb.js';
-import { postAudioToNoteStream } from './audio-to-note-client.js';
-import { applyAudioNoteStudyResult } from './audio-to-note-apply.js';
+} from './audio-note-pending-idb';
+import { postAudioToNoteStream } from './audio-to-note-client';
+import { applyAudioNoteStudyResult } from './audio-to-note-apply';
 import { uploadStudyRecordingAttachment } from '@nota/data-source/pdf-attachment-client';
-import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning.js';
+import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning';
 import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
 import { subscribeOnline } from '@nota/data-source/browser-connectivity';
 

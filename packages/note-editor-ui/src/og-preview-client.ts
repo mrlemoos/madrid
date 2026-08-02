@@ -1,6 +1,3 @@
-import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
-import { notaServerBaseUrl } from './vite-env.js';
-
 import type { PlatformLinkPreview } from '@nota/link-platform-preview';
 
 export type OgPreviewJson = {
@@ -15,35 +12,15 @@ type OgErrorJson = {
   error: string;
 };
 
-function notaServerBase(): string {
-  const base = notaServerBaseUrl();
-  if (!base) {
-    throw new Error(
-      'Link previews require NEXT_PUBLIC_NOTA_SERVER_API_URL (apps/nota-server) to be set.',
-    );
-  }
-  return base;
-}
-
 /**
- * Fetches Open Graph metadata for link previews via **`apps/nota-server`**
- * (`GET /api/og-preview`) with Bearer auth. The SPA does not implement OG fetch;
- * set `NEXT_PUBLIC_NOTA_SERVER_API_URL` in local and hosted environments.
+ * Fetches Open Graph metadata for link previews via the same-origin Next route
+ * `GET /api/og-preview` (Clerk session cookie auth). Entitled users only.
  */
 export async function fetchOgPreviewForEditor(
   href: string,
 ): Promise<OgPreviewJson> {
   const q = `url=${encodeURIComponent(href)}`;
-  const base = notaServerBase();
-
-  const token = await getClerkAccessToken();
-  if (!token) {
-    throw new Error('Unauthorized');
-  }
-
-  const res = await fetch(`${base}/api/og-preview?${q}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const res = await fetch(`/api/og-preview?${q}`);
 
   const data = (await res.json()) as OgPreviewJson | OgErrorJson;
   if (!res.ok) {

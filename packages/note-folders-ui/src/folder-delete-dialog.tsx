@@ -7,8 +7,8 @@ import type { Folder } from '@nota/database-types';
 import {
   clientDeleteAllNotesInFolderThenDeleteFolder,
   clientMoveAllNotesThenDeleteFolder,
-} from './delete-folder-client.js';
-import { useFolderTranslator } from './use-folder-translator.js';
+} from './delete-folder-client';
+import { useFolderTranslator } from './use-folder-translator';
 import {
   folderPathLabel,
   subtreeFolderIds,

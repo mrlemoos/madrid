@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { persistedDisplayTitle } from './note-title.js';
+import { persistedDisplayTitle } from './note-title';
 
 describe('persistedDisplayTitle', () => {
   it('returns the trimmed title when non-empty', () => {

@@ -16,7 +16,7 @@ import {
   useNotesDataMeta,
 } from '@nota/note-runtime/notes-data-context';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
-import { useWritingActivityTranslator } from './use-writing-activity-translator.js';
+import { useWritingActivityTranslator } from './use-writing-activity-translator';
 import {
   NotaTooltip,
   NotaTooltipPopup,
