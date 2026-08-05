@@ -5,8 +5,8 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/design/button';
-import { NotaSpinner } from '@nota/design/spinner';
+import { Button } from '@nota/design/button';
+import { Spinner } from '@nota/design/spinner';
 import { cn } from '@nota/design/utils';
 import { safeOgImageSrcForPreview } from '../../lib/og-image-url';
 import { revertLinkPreviewToParagraph } from './link-preview-scan';
@@ -169,7 +169,7 @@ function LinkPreviewNodeView(props: NodeViewProps): JSX.Element {
           className="inline-flex size-4 shrink-0 items-center justify-center"
           aria-hidden
         >
-          <NotaSpinner size="sm" />
+          <Spinner size="sm" />
         </span>
       </NodeViewWrapper>
     );
@@ -228,7 +228,7 @@ function LinkPreviewNodeView(props: NodeViewProps): JSX.Element {
               {displayTitle}
             </a>
             <div className="flex shrink-0 gap-1">
-              <NotaButton
+              <Button
                 type="button"
                 variant="ghost"
                 size="xs"
@@ -239,7 +239,7 @@ function LinkPreviewNodeView(props: NodeViewProps): JSX.Element {
                 }}
               >
                 Refresh
-              </NotaButton>
+              </Button>
             </div>
           </div>
           {descriptionAttr ? (

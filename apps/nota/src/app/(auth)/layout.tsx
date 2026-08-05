@@ -1,12 +1,7 @@
 'use client';
 
 import type { JSX, ReactNode } from 'react';
-import {
-  NotaCard,
-  NotaCardContent,
-  NotaCardFooter,
-  NotaCardHeader,
-} from '@nota/design/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@nota/design/card';
 import { AuthCardEpigraph } from '@/components/auth-card-epigraph';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
@@ -46,25 +41,25 @@ export default function AuthLayout({
       </div>
 
       <div className="nota-auth-card-enter relative z-10 w-full max-w-md">
-        <NotaCard
+        <Card
           className={cn(
             'border-border/50 bg-background/70 shadow-lg backdrop-blur-xl ring-1 ring-border/40',
           )}
         >
-          <NotaCardHeader className="pb-0 text-center">
+          <CardHeader className="pb-0 text-center">
             <AuthCardEpigraph />
-          </NotaCardHeader>
-          <NotaCardContent className="pt-0">
+          </CardHeader>
+          <CardContent className="pt-0">
             <div className="nota-auth-form-slot w-full border-t border-border/40 pt-5">
               {children}
             </div>
-          </NotaCardContent>
-          <NotaCardFooter className="justify-center border-t border-border/40 pt-4">
+          </CardContent>
+          <CardFooter className="justify-center border-t border-border/40 pt-4">
             <p className="text-center text-muted-foreground text-xs/relaxed">
               {footer}
             </p>
-          </NotaCardFooter>
-        </NotaCard>
+          </CardFooter>
+        </Card>
       </div>
     </main>
   );

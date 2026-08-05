@@ -5,9 +5,9 @@ import {
   type JSX,
   type ReactNode,
 } from 'react';
-import { NotaIcon } from '@nota/design/icon';
-import { NotaTooltipProvider } from '@nota/design/tooltip';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { Icon } from '@nota/design/icon';
+import { TooltipProvider } from '@nota/design/tooltip';
+import { LoadingStatus } from '@nota/design/spinner';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
 import {
   notesMainChrome,
@@ -230,7 +230,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
             'bg-linear-to-b from-muted/25 to-background text-muted-foreground',
           )}
         >
-          <NotaLoadingStatus label={t('Loading notes…')} />
+          <LoadingStatus label={t('Loading notes…')} />
         </div>
       ) : (
         <div
@@ -269,7 +269,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                 className="flex h-full min-h-0 w-full min-w-0 flex-col"
                 style={{ width: widthPx }}
               >
-                <NotaTooltipProvider>
+                <TooltipProvider>
                   <div
                     className={cn(
                       'flex shrink-0 items-center justify-end pr-4 pb-4',
@@ -338,7 +338,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon name="brain-circuit" size={16} />
+                            <Icon name="brain-circuit" size={16} />
                           </span>
                           {t('Note Graph')}
                         </Link>
@@ -360,7 +360,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon name="sparkles" size={16} />
+                            <Icon name="sparkles" size={16} />
                           </span>
                           {t('Shortcuts')}
                         </Link>
@@ -382,7 +382,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon name="gear" size={16} />
+                            <Icon name="gear" size={16} />
                           </span>
                           {t('Settings')}
                         </Link>
@@ -405,7 +405,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                             )}
                           >
                             <span className="inline-flex shrink-0" aria-hidden>
-                              <NotaIcon name="clock" size={16} />
+                              <Icon name="clock" size={16} />
                             </span>
                             {t('Journal')}
                           </Link>
@@ -413,7 +413,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                       </div>
                     </footer>
                   ) : null}
-                </NotaTooltipProvider>
+                </TooltipProvider>
                 {open ? (
                   <NotesSidebarResizeHandle
                     ariaLabel={t('Resize sidebar')}

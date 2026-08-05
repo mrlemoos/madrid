@@ -1,6 +1,6 @@
 import { useCallback, useId, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { NOTA_DIALOG_MOTION_CLASS } from '@nota/design/popup-motion';
 import { cn } from '@nota/design/utils';
 import type { Folder } from '@nota/database-types';
@@ -129,7 +129,7 @@ export function FolderCreateDialog({
             </p>
           ) : null}
           <div className="mt-4 flex justify-end gap-2">
-            <NotaButton
+            <Button
               type="button"
               variant="outline"
               disabled={busy}
@@ -138,8 +138,8 @@ export function FolderCreateDialog({
               }}
             >
               {t('Cancel')}
-            </NotaButton>
-            <NotaButton
+            </Button>
+            <Button
               type="button"
               variant="default"
               disabled={busy}
@@ -148,7 +148,7 @@ export function FolderCreateDialog({
               }}
             >
               {busy ? t('Creating…') : t('Create')}
-            </NotaButton>
+            </Button>
           </div>
         </Dialog.Popup>
       </Dialog.Portal>

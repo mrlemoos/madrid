@@ -1,4 +1,4 @@
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { cn } from '@nota/design/utils';
 import { usePrefersReducedMotion } from '@nota/nota-motion-ui/motion';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
@@ -131,7 +131,7 @@ export function NoteImageLightbox({
           <p className="min-w-0 truncate text-sm text-muted-foreground">
             {displayImage.filename}
           </p>
-          <NotaButton
+          <Button
             type="button"
             variant="outline"
             size="sm"
@@ -140,7 +140,7 @@ export function NoteImageLightbox({
             aria-label="Close image view"
           >
             Close
-          </NotaButton>
+          </Button>
         </header>
 
         <div className="flex min-h-0 flex-1 items-center justify-center px-4 pb-6 sm:px-8">

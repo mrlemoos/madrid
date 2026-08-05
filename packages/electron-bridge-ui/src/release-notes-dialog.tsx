@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { cn } from '@nota/design/utils';
 import { fetchReleases } from '@nota/nota-server-client';
 import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
@@ -163,7 +163,7 @@ export function ReleaseNotesDialog({
 
           <div className="border-t border-border/50 px-4 py-3">
             <div className="flex justify-end">
-              <NotaButton
+              <Button
                 type="button"
                 variant="outline"
                 onClick={() => {
@@ -171,7 +171,7 @@ export function ReleaseNotesDialog({
                 }}
               >
                 Close
-              </NotaButton>
+              </Button>
             </div>
           </div>
         </Dialog.Popup>

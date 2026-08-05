@@ -12,26 +12,26 @@ import {
   type SetStateAction,
   type JSX,
 } from 'react';
-import { NotaIcon } from '@nota/design/icon';
-import { NotaTintCircle } from '@nota/design/nota-tint-circle';
+import { Icon } from '@nota/design/icon';
+import { TintCircle } from '@nota/design/nota-tint-circle';
 import {
-  NotaContextMenu,
-  NotaContextMenuItem,
-  NotaContextMenuPortal,
-  NotaContextMenuPositioner,
-  NotaContextMenuPopup,
-  NotaContextMenuSeparator,
-  NotaContextMenuSubmenuRoot,
-  NotaContextMenuSubmenuTrigger,
-  NotaContextMenuTrigger,
-  NotaContextMenuViewport,
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuPortal,
+  ContextMenuPositioner,
+  ContextMenuPopup,
+  ContextMenuSeparator,
+  ContextMenuSubmenuRoot,
+  ContextMenuSubmenuTrigger,
+  ContextMenuTrigger,
+  ContextMenuViewport,
 } from '@nota/design/context-menu';
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipTrigger,
 } from '@nota/design/tooltip';
 import { cn } from '@nota/design/utils';
 import { NOTA_TRACKING_CHROME_XS_CLASS } from '@nota/notes-chrome-core/chrome-type';
@@ -138,8 +138,8 @@ function NoteRow(options: {
 
   return (
     <li className="list-none">
-      <NotaContextMenu>
-        <NotaContextMenuTrigger
+      <ContextMenu>
+        <ContextMenuTrigger
           render={
             <div
               className={cn(
@@ -160,7 +160,7 @@ function NoteRow(options: {
                 setDropTargetId(null);
               }}
             >
-              <NotaIcon
+              <Icon
                 name="file-description"
                 size={14}
                 strokeWidth={1.5}
@@ -179,71 +179,71 @@ function NoteRow(options: {
                   markNavIntent('pointer');
                 }}
               >
-                <NotaTooltip>
-                  <NotaTooltipTrigger
+                <Tooltip>
+                  <TooltipTrigger
                     delay={750}
                     render={<div className="min-w-0 truncate">{noteLabel}</div>}
                   />
-                  <NotaTooltipPortal>
-                    <NotaTooltipPositioner side="top" sideOffset={6}>
-                      <NotaTooltipPopup>{noteLabel}</NotaTooltipPopup>
-                    </NotaTooltipPositioner>
-                  </NotaTooltipPortal>
-                </NotaTooltip>
+                  <TooltipPortal>
+                    <TooltipPositioner side="top" sideOffset={6}>
+                      <TooltipPopup>{noteLabel}</TooltipPopup>
+                    </TooltipPositioner>
+                  </TooltipPortal>
+                </Tooltip>
               </Link>
             </div>
           }
         />
-        <NotaContextMenuPortal>
-          <NotaContextMenuPositioner side="right" align="start" sideOffset={4}>
-            <NotaContextMenuPopup>
-              <NotaContextMenuViewport>
-                <NotaContextMenuSubmenuRoot>
-                  <NotaContextMenuSubmenuTrigger label={t('Move to')}>
+        <ContextMenuPortal>
+          <ContextMenuPositioner side="right" align="start" sideOffset={4}>
+            <ContextMenuPopup>
+              <ContextMenuViewport>
+                <ContextMenuSubmenuRoot>
+                  <ContextMenuSubmenuTrigger label={t('Move to')}>
                     <span className="inline-flex min-w-0 flex-1 items-center gap-2">
-                      <NotaIcon
+                      <Icon
                         name="folder"
                         size={16}
                         className="shrink-0 text-muted-foreground"
                       />
                       <span className="min-w-0 flex-1">{t('Move to')}</span>
                     </span>
-                    <NotaIcon
+                    <Icon
                       name="arrow-narrow-right"
                       size={14}
                       className="shrink-0 text-muted-foreground"
                     />
-                  </NotaContextMenuSubmenuTrigger>
-                  <NotaContextMenuPortal>
-                    <NotaContextMenuPositioner
+                  </ContextMenuSubmenuTrigger>
+                  <ContextMenuPortal>
+                    <ContextMenuPositioner
                       side="right"
                       align="start"
                       sideOffset={4}
                     >
-                      <NotaContextMenuPopup>
-                        <NotaContextMenuViewport>
-                          <NotaContextMenuItem
+                      <ContextMenuPopup>
+                        <ContextMenuViewport>
+                          <ContextMenuItem
                             label={t('Root')}
                             onClick={() => {
                               void onMoveNoteToFolder(note.id, null);
                             }}
                           >
-                            <NotaIcon
+                            <Icon
                               name="home"
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
                             <span>{t('Root')}</span>
-                          </NotaContextMenuItem>
+                          </ContextMenuItem>
                           {folderMoveTargets.map(({ folderId, pathLabel }) => (
-                            <NotaContextMenuItem
+                            <ContextMenuItem
                               key={folderId}
                               label={pathLabel}
                               onClick={() => {
                                 void onMoveNoteToFolder(note.id, folderId);
                               }}
                             >
-                              <NotaIcon
+                              <Icon
                                 name="folder"
                                 size={16}
                                 className="shrink-0 text-muted-foreground"
@@ -251,29 +251,29 @@ function NoteRow(options: {
                               <span className="min-w-0 flex-1 truncate">
                                 {pathLabel}
                               </span>
-                            </NotaContextMenuItem>
+                            </ContextMenuItem>
                           ))}
-                          <NotaContextMenuSeparator />
-                          <NotaContextMenuItem
+                          <ContextMenuSeparator />
+                          <ContextMenuItem
                             label={t('New folder')}
                             onClick={() => {
                               onMoveNoteToNewFolder(note);
                             }}
                           >
-                            <NotaIcon
+                            <Icon
                               name="user-plus"
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
                             <span>{t('New folder')}</span>
-                          </NotaContextMenuItem>
-                        </NotaContextMenuViewport>
-                      </NotaContextMenuPopup>
-                    </NotaContextMenuPositioner>
-                  </NotaContextMenuPortal>
-                </NotaContextMenuSubmenuRoot>
-                <NotaContextMenuSeparator />
-                <NotaContextMenuItem
+                          </ContextMenuItem>
+                        </ContextMenuViewport>
+                      </ContextMenuPopup>
+                    </ContextMenuPositioner>
+                  </ContextMenuPortal>
+                </ContextMenuSubmenuRoot>
+                <ContextMenuSeparator />
+                <ContextMenuItem
                   label={t('Delete note: {noteTitle}', {
                     noteTitle: noteLabel,
                   })}
@@ -296,18 +296,18 @@ function NoteRow(options: {
                     });
                   }}
                 >
-                  <NotaIcon
+                  <Icon
                     name="trash"
                     size={16}
                     className="shrink-0 text-destructive"
                   />
                   <span className="text-destructive">{t('Delete note')}</span>
-                </NotaContextMenuItem>
-              </NotaContextMenuViewport>
-            </NotaContextMenuPopup>
-          </NotaContextMenuPositioner>
-        </NotaContextMenuPortal>
-      </NotaContextMenu>
+                </ContextMenuItem>
+              </ContextMenuViewport>
+            </ContextMenuPopup>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenu>
     </li>
   );
 }
@@ -367,8 +367,8 @@ function FolderRow(options: {
 
   return (
     <li className="list-none">
-      <NotaContextMenu>
-        <NotaContextMenuTrigger
+      <ContextMenu>
+        <ContextMenuTrigger
           render={
             <div
               className={cn(
@@ -441,7 +441,7 @@ function FolderRow(options: {
                   )}
                   aria-hidden
                 >
-                  <NotaIcon name="folder" size={14} strokeWidth={1.5} />
+                  <Icon name="folder" size={14} strokeWidth={1.5} />
                 </span>
                 {renamingFolderId === folder.id ? (
                   <input
@@ -473,8 +473,8 @@ function FolderRow(options: {
                     })}
                   />
                 ) : (
-                  <NotaTooltip>
-                    <NotaTooltipTrigger
+                  <Tooltip>
+                    <TooltipTrigger
                       className="min-w-0 flex-1 justify-start text-left"
                       render={
                         <span
@@ -493,24 +493,24 @@ function FolderRow(options: {
                         </span>
                       }
                     />
-                    <NotaTooltipPortal>
-                      <NotaTooltipPositioner side="top" sideOffset={6}>
-                        <NotaTooltipPopup>
+                    <TooltipPortal>
+                      <TooltipPositioner side="top" sideOffset={6}>
+                        <TooltipPopup>
                           {t('Double-click to rename')}
-                        </NotaTooltipPopup>
-                      </NotaTooltipPositioner>
-                    </NotaTooltipPortal>
-                  </NotaTooltip>
+                        </TooltipPopup>
+                      </TooltipPositioner>
+                    </TooltipPortal>
+                  </Tooltip>
                 )}
               </button>
             </div>
           }
         />
-        <NotaContextMenuPortal>
-          <NotaContextMenuPositioner side="right" align="start" sideOffset={4}>
-            <NotaContextMenuPopup>
-              <NotaContextMenuViewport>
-                <NotaContextMenuItem
+        <ContextMenuPortal>
+          <ContextMenuPositioner side="right" align="start" sideOffset={4}>
+            <ContextMenuPopup>
+              <ContextMenuViewport>
+                <ContextMenuItem
                   label={t('Rename folder {folderName}', {
                     folderName: folder.name,
                   })}
@@ -518,46 +518,46 @@ function FolderRow(options: {
                     startRenamingFolder(folder);
                   }}
                 >
-                  <NotaIcon
+                  <Icon
                     name="pen"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <span>{t('Rename')}</span>
-                </NotaContextMenuItem>
+                </ContextMenuItem>
                 {notaProEntitled ? (
-                  <NotaContextMenuItem
+                  <ContextMenuItem
                     label={t('Create note')}
                     onClick={() => {
                       onCreateNoteInFolder(folder.id);
                     }}
                   >
-                    <NotaIcon
+                    <Icon
                       name="user-plus"
                       size={16}
                       className="shrink-0 text-muted-foreground"
                     />
                     <span>{t('Create note')}</span>
-                  </NotaContextMenuItem>
+                  </ContextMenuItem>
                 ) : null}
-                <NotaContextMenuItem
+                <ContextMenuItem
                   label={t('New subfolder')}
                   onClick={() => {
                     onRequestNewSubfolder(folder);
                   }}
                 >
-                  <NotaIcon
+                  <Icon
                     name="user-plus"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <span>{t('New subfolder')}</span>
-                </NotaContextMenuItem>
+                </ContextMenuItem>
                 {notaProEntitled ? (
-                  <NotaContextMenuSubmenuRoot>
-                    <NotaContextMenuSubmenuTrigger label={t('Tint folder')}>
+                  <ContextMenuSubmenuRoot>
+                    <ContextMenuSubmenuTrigger label={t('Tint folder')}>
                       <span className="inline-flex min-w-0 flex-1 items-center gap-2">
-                        <NotaIcon
+                        <Icon
                           name="folder"
                           size={16}
                           className="shrink-0 text-muted-foreground"
@@ -566,22 +566,22 @@ function FolderRow(options: {
                           {t('Tint folder')}
                         </span>
                       </span>
-                      <NotaIcon
+                      <Icon
                         name="arrow-narrow-right"
                         size={14}
                         className="shrink-0 text-muted-foreground"
                       />
-                    </NotaContextMenuSubmenuTrigger>
-                    <NotaContextMenuPortal>
-                      <NotaContextMenuPositioner
+                    </ContextMenuSubmenuTrigger>
+                    <ContextMenuPortal>
+                      <ContextMenuPositioner
                         side="right"
                         align="start"
                         sideOffset={4}
                       >
-                        <NotaContextMenuPopup className="min-w-[unset] p-1">
-                          <NotaContextMenuViewport className="flex max-h-none max-w-[11rem] flex-row flex-wrap gap-1 overflow-visible">
+                        <ContextMenuPopup className="min-w-[unset] p-1">
+                          <ContextMenuViewport className="flex max-h-none max-w-[11rem] flex-row flex-wrap gap-1 overflow-visible">
                             {FOLDER_TINT_SWATCH_PRESETS.map((preset) => (
-                              <NotaContextMenuItem
+                              <ContextMenuItem
                                 key={preset.id}
                                 className="size-8 shrink-0 justify-center p-0"
                                 label={t(
@@ -598,39 +598,39 @@ function FolderRow(options: {
                                   });
                                 }}
                               >
-                                <NotaTintCircle
+                                <TintCircle
                                   colour={preset.swatchColour}
                                   sizePx={18}
                                   aria-label={t(
                                     FOLDER_TINT_PRESET_LABEL_KEY[preset.id],
                                   )}
                                 />
-                              </NotaContextMenuItem>
+                              </ContextMenuItem>
                             ))}
-                          </NotaContextMenuViewport>
-                        </NotaContextMenuPopup>
-                      </NotaContextMenuPositioner>
-                    </NotaContextMenuPortal>
-                  </NotaContextMenuSubmenuRoot>
+                          </ContextMenuViewport>
+                        </ContextMenuPopup>
+                      </ContextMenuPositioner>
+                    </ContextMenuPortal>
+                  </ContextMenuSubmenuRoot>
                 ) : null}
-                <NotaContextMenuItem
+                <ContextMenuItem
                   label={`${t('Delete folder')} ${folder.name}`}
                   onClick={() => {
                     setFolderDeleteTarget(folder);
                   }}
                 >
-                  <NotaIcon
+                  <Icon
                     name="trash"
                     size={16}
                     className="shrink-0 text-destructive"
                   />
                   <span className="text-destructive">{t('Delete folder')}</span>
-                </NotaContextMenuItem>
-              </NotaContextMenuViewport>
-            </NotaContextMenuPopup>
-          </NotaContextMenuPositioner>
-        </NotaContextMenuPortal>
-      </NotaContextMenu>
+                </ContextMenuItem>
+              </ContextMenuViewport>
+            </ContextMenuPopup>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenu>
       {children}
     </li>
   );
@@ -1037,8 +1037,8 @@ export function NotesSidebarList({
         ))}
 
         <li className="list-none">
-          <NotaContextMenu>
-            <NotaContextMenuTrigger
+          <ContextMenu>
+            <ContextMenuTrigger
               render={
                 <div
                   className={cn(
@@ -1114,46 +1114,46 @@ export function NotesSidebarList({
               }
             />
             {notaProEntitled ? (
-              <NotaContextMenuPortal>
-                <NotaContextMenuPositioner
+              <ContextMenuPortal>
+                <ContextMenuPositioner
                   side="right"
                   align="start"
                   sideOffset={4}
                 >
-                  <NotaContextMenuPopup>
-                    <NotaContextMenuViewport>
-                      <NotaContextMenuItem
+                  <ContextMenuPopup>
+                    <ContextMenuViewport>
+                      <ContextMenuItem
                         label={t('Create note')}
                         onClick={() => {
                           createNoteAtFolder(null);
                         }}
                       >
-                        <NotaIcon
+                        <Icon
                           name="user-plus"
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
                         <span>{t('Create note')}</span>
-                      </NotaContextMenuItem>
-                      <NotaContextMenuItem
+                      </ContextMenuItem>
+                      <ContextMenuItem
                         label={t('Create folder')}
                         onClick={() => {
                           openCreateFolderDialog(null);
                         }}
                       >
-                        <NotaIcon
+                        <Icon
                           name="user-plus"
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
                         <span>{t('Create folder')}</span>
-                      </NotaContextMenuItem>
-                    </NotaContextMenuViewport>
-                  </NotaContextMenuPopup>
-                </NotaContextMenuPositioner>
-              </NotaContextMenuPortal>
+                      </ContextMenuItem>
+                    </ContextMenuViewport>
+                  </ContextMenuPopup>
+                </ContextMenuPositioner>
+              </ContextMenuPortal>
             ) : null}
-          </NotaContextMenu>
+          </ContextMenu>
         </li>
       </ul>
 

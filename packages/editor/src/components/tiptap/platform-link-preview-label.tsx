@@ -4,11 +4,11 @@ import {
   type PlatformLinkPreview,
 } from '@nota/link-platform-preview';
 import {
-  NotaHoverCard,
-  NotaHoverCardPortal,
-  NotaHoverCardPositioner,
-  NotaHoverCardPopup,
-  NotaHoverCardTrigger,
+  HoverCard,
+  HoverCardPortal,
+  HoverCardPositioner,
+  HoverCardPopup,
+  HoverCardTrigger,
 } from '@nota/design/hover-card';
 import { cn } from '@nota/design/utils';
 import { safeOgImageSrcForPreview } from '../../lib/og-image-url';
@@ -301,8 +301,8 @@ export function PlatformLinkPreviewLabel({
   );
 
   return (
-    <NotaHoverCard>
-      <NotaHoverCardTrigger
+    <HoverCard>
+      <HoverCardTrigger
         nativeButton={false}
         delay={220}
         closeDelay={140}
@@ -345,14 +345,14 @@ export function PlatformLinkPreviewLabel({
           </a>
         }
       />
-      <NotaHoverCardPortal>
-        <NotaHoverCardPositioner
+      <HoverCardPortal>
+        <HoverCardPositioner
           side="top"
           sideOffset={10}
           align="start"
           collisionPadding={12}
         >
-          <NotaHoverCardPopup
+          <HoverCardPopup
             className="w-72 max-w-[min(20rem,calc(100vw-1.5rem))] p-0"
             role="region"
             aria-label="Link preview"
@@ -361,9 +361,9 @@ export function PlatformLinkPreviewLabel({
               platform={platform}
               displayText={displayText}
             />
-          </NotaHoverCardPopup>
-        </NotaHoverCardPositioner>
-      </NotaHoverCardPortal>
-    </NotaHoverCard>
+          </HoverCardPopup>
+        </HoverCardPositioner>
+      </HoverCardPortal>
+    </HoverCard>
   );
 }

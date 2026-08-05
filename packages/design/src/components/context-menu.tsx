@@ -3,8 +3,8 @@
  * popup, item, separator, and submenu helpers.
  *
  * @remarks
- * Import from the package subpath only: `import { NotaContextMenu, … } from '@nota/design/context-menu'`.
- * `NotaContextMenuPopup` and the item wrappers apply Nota surface styling; the other exports are thin re-exports of Base UI parts.
+ * Import from the package subpath only: `import { ContextMenu, … } from '@nota/design/context-menu'`.
+ * `ContextMenuPopup` and the item wrappers apply Nota surface styling; the other exports are thin re-exports of Base UI parts.
  *
  * @packageDocumentation
  */
@@ -16,41 +16,37 @@ import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { NOTA_POPUP_MOTION_CLASS } from '../lib/nota-popup-motion.js';
 import { cn } from '../lib/utils.js';
 
-export type NotaContextMenuProps = ComponentProps<typeof BaseContextMenu.Root>;
-export type NotaContextMenuTriggerProps = ComponentProps<
+export type ContextMenuProps = ComponentProps<typeof BaseContextMenu.Root>;
+export type ContextMenuTriggerProps = ComponentProps<
   typeof BaseContextMenu.Trigger
 >;
-export type NotaContextMenuPortalProps = ComponentProps<
+export type ContextMenuPortalProps = ComponentProps<
   typeof BaseContextMenu.Portal
 >;
-export type NotaContextMenuPositionerProps = ComponentProps<
+export type ContextMenuPositionerProps = ComponentProps<
   typeof BaseContextMenu.Positioner
 >;
-export type NotaContextMenuPopupProps = ComponentProps<
+export type ContextMenuPopupProps = ComponentProps<
   typeof BaseContextMenu.Popup
 >;
-export type NotaContextMenuViewportProps = ComponentProps<
-  typeof BaseMenu.Viewport
->;
-export type NotaContextMenuItemProps = ComponentProps<
-  typeof BaseContextMenu.Item
->;
-export type NotaContextMenuSeparatorProps = ComponentProps<
+export type ContextMenuViewportProps = ComponentProps<typeof BaseMenu.Viewport>;
+export type ContextMenuItemProps = ComponentProps<typeof BaseContextMenu.Item>;
+export type ContextMenuSeparatorProps = ComponentProps<
   typeof BaseContextMenu.Separator
 >;
-export type NotaContextMenuSubmenuRootProps = ComponentProps<
+export type ContextMenuSubmenuRootProps = ComponentProps<
   typeof BaseContextMenu.SubmenuRoot
 >;
-export type NotaContextMenuSubmenuTriggerProps = ComponentProps<
+export type ContextMenuSubmenuTriggerProps = ComponentProps<
   typeof BaseContextMenu.SubmenuTrigger
 >;
-export type NotaContextMenuRadioGroupProps = ComponentProps<
+export type ContextMenuRadioGroupProps = ComponentProps<
   typeof BaseContextMenu.RadioGroup
 >;
-export type NotaContextMenuRadioItemProps = ComponentProps<
+export type ContextMenuRadioItemProps = ComponentProps<
   typeof BaseContextMenu.RadioItem
 >;
-export type NotaContextMenuRadioItemIndicatorProps = ComponentProps<
+export type ContextMenuRadioItemIndicatorProps = ComponentProps<
   typeof BaseContextMenu.RadioItemIndicator
 >;
 
@@ -76,20 +72,19 @@ const DEFAULT_CONTEXT_MENU_SUBMENU_TRIGGER_CLASS = cn(
 
 const DEFAULT_CONTEXT_MENU_SEPARATOR_CLASS = 'my-1 h-px bg-border/70';
 
-export const NotaContextMenu = BaseContextMenu.Root;
-export const NotaContextMenuTrigger = BaseContextMenu.Trigger;
-export const NotaContextMenuPortal = BaseContextMenu.Portal;
-export const NotaContextMenuSubmenuRoot = BaseContextMenu.SubmenuRoot;
-export const NotaContextMenuRadioGroup = BaseContextMenu.RadioGroup;
-export const NotaContextMenuRadioItem = BaseContextMenu.RadioItem;
-export const NotaContextMenuRadioItemIndicator =
-  BaseContextMenu.RadioItemIndicator;
+export const ContextMenu = BaseContextMenu.Root;
+export const ContextMenuTrigger = BaseContextMenu.Trigger;
+export const ContextMenuPortal = BaseContextMenu.Portal;
+export const ContextMenuSubmenuRoot = BaseContextMenu.SubmenuRoot;
+export const ContextMenuRadioGroup = BaseContextMenu.RadioGroup;
+export const ContextMenuRadioItem = BaseContextMenu.RadioItem;
+export const ContextMenuRadioItemIndicator = BaseContextMenu.RadioItemIndicator;
 
-export function NotaContextMenuPositioner({
+export function ContextMenuPositioner({
   className,
   ref,
   ...props
-}: NotaContextMenuPositionerProps) {
+}: ContextMenuPositionerProps) {
   return (
     <BaseContextMenu.Positioner
       ref={ref}
@@ -99,11 +94,11 @@ export function NotaContextMenuPositioner({
   );
 }
 
-export function NotaContextMenuViewport({
+export function ContextMenuViewport({
   className,
   ref,
   ...props
-}: NotaContextMenuViewportProps) {
+}: ContextMenuViewportProps) {
   return (
     <BaseMenu.Viewport
       ref={ref}
@@ -113,11 +108,11 @@ export function NotaContextMenuViewport({
   );
 }
 
-export function NotaContextMenuPopup({
+export function ContextMenuPopup({
   className,
   ref,
   ...props
-}: NotaContextMenuPopupProps) {
+}: ContextMenuPopupProps) {
   return (
     <BaseContextMenu.Popup
       ref={ref}
@@ -127,10 +122,7 @@ export function NotaContextMenuPopup({
   );
 }
 
-export function NotaContextMenuItem({
-  className,
-  ...props
-}: NotaContextMenuItemProps) {
+export function ContextMenuItem({ className, ...props }: ContextMenuItemProps) {
   return (
     <BaseContextMenu.Item
       className={cn(DEFAULT_CONTEXT_MENU_ITEM_CLASS, className)}
@@ -139,10 +131,10 @@ export function NotaContextMenuItem({
   );
 }
 
-export function NotaContextMenuSubmenuTrigger({
+export function ContextMenuSubmenuTrigger({
   className,
   ...props
-}: NotaContextMenuSubmenuTriggerProps) {
+}: ContextMenuSubmenuTriggerProps) {
   return (
     <BaseContextMenu.SubmenuTrigger
       className={cn(DEFAULT_CONTEXT_MENU_SUBMENU_TRIGGER_CLASS, className)}
@@ -151,10 +143,10 @@ export function NotaContextMenuSubmenuTrigger({
   );
 }
 
-export function NotaContextMenuSeparator({
+export function ContextMenuSeparator({
   className,
   ...props
-}: NotaContextMenuSeparatorProps) {
+}: ContextMenuSeparatorProps) {
   return (
     <BaseContextMenu.Separator
       className={cn(DEFAULT_CONTEXT_MENU_SEPARATOR_CLASS, className)}

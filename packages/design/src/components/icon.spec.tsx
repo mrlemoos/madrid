@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { NOTA_ICONS, NotaIcon } from './icon.js';
+import { NOTA_ICONS, Icon } from './icon.js';
 
-describe('NotaIcon', () => {
+describe('Icon', () => {
   it('renders the named icon with size and className', () => {
     // Arrange|Act
     const { container } = render(
-      <NotaIcon
+      <Icon
         name="arrow-narrow-right"
         size={16}
         className="text-muted-foreground"
@@ -25,7 +25,7 @@ describe('NotaIcon', () => {
 
   it('passes span attributes to the wrapper, not the icon root', () => {
     // Arrange|Act
-    render(<NotaIcon name="trash" data-testid="trash-wrapper" />);
+    render(<Icon name="trash" data-testid="trash-wrapper" />);
 
     // Assert
     const wrapper = screen.getByTestId('trash-wrapper');
@@ -40,7 +40,7 @@ describe('NotaIcon', () => {
     // Act|Assert
     expect(names.length).toBeGreaterThan(0);
     for (const name of names) {
-      const { container, unmount } = render(<NotaIcon name={name} />);
+      const { container, unmount } = render(<Icon name={name} />);
       expect(container.querySelector('svg')).not.toBeNull();
       unmount();
     }

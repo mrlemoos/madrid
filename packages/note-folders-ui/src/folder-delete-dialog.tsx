@@ -1,6 +1,6 @@
 import { useCallback, useId, useMemo, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { NOTA_DIALOG_MOTION_CLASS } from '@nota/design/popup-motion';
 import { cn } from '@nota/design/utils';
 import type { Folder } from '@nota/database-types';
@@ -177,7 +177,7 @@ export function FolderDeleteDialog({
           ) : null}
 
           <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-end">
-            <NotaButton
+            <Button
               type="button"
               variant="outline"
               onClick={() => {
@@ -186,8 +186,8 @@ export function FolderDeleteDialog({
               disabled={Boolean(busy)}
             >
               {t('Cancel')}
-            </NotaButton>
-            <NotaButton
+            </Button>
+            <Button
               type="button"
               variant="default"
               disabled={Boolean(busy)}
@@ -198,8 +198,8 @@ export function FolderDeleteDialog({
               {busy === 'move'
                 ? t('Working…')
                 : t('Move notes and delete folder')}
-            </NotaButton>
-            <NotaButton
+            </Button>
+            <Button
               type="button"
               variant="destructive"
               disabled={Boolean(busy)}
@@ -210,7 +210,7 @@ export function FolderDeleteDialog({
               {busy === 'delete'
                 ? t('Working…')
                 : t('Delete all notes in folder')}
-            </NotaButton>
+            </Button>
           </div>
         </Dialog.Popup>
       </Dialog.Portal>

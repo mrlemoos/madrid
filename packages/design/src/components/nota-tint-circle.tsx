@@ -4,7 +4,7 @@ import { cn } from '../lib/utils.js';
 
 const DEFAULT_SIZE_PX = 16;
 
-export type NotaTintCircleProps = {
+export type TintCircleProps = {
   /** CSS colour (e.g. `oklch(...)` or `#hex`). */
   colour: string;
   /** Pixel diameter; default 16. */
@@ -15,13 +15,13 @@ export type NotaTintCircleProps = {
  * Filled circle for colour swatches (menu, command palette, folder tint).
  * Pass `aria-label` when the control is unlabelled visually.
  */
-export function NotaTintCircle({
+export function TintCircle({
   colour,
   sizePx = DEFAULT_SIZE_PX,
   className,
   'aria-label': ariaLabel,
   ...rest
-}: NotaTintCircleProps) {
+}: TintCircleProps) {
   return (
     <span
       className={cn(

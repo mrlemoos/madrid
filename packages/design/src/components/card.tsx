@@ -2,8 +2,8 @@
  * Composable card layout: themed container and slots for header, title, description, actions, body, and footer.
  *
  * @remarks
- * Import from the package subpath only: `import { NotaCard, NotaCardHeader, … } from '@nota/design/card'`.
- * Each part sets a stable `data-slot` (`card`, `card-header`, `card-title`, …) for styling and layout hooks. Parent `NotaCard` exposes `data-size` (`default` | `sm`) read by descendants via `group-data-[size=sm]/card`.
+ * Import from the package subpath only: `import { Card, CardHeader, … } from '@nota/design/card'`.
+ * Each part sets a stable `data-slot` (`card`, `card-header`, `card-title`, …) for styling and layout hooks. Parent `Card` exposes `data-size` (`default` | `sm`) read by descendants via `group-data-[size=sm]/card`.
  *
  * @packageDocumentation
  */
@@ -13,22 +13,22 @@ import * as React from 'react';
 import { cn } from '../lib/utils.js';
 
 /** Root card props: standard `div` props plus compact `size`. */
-export type NotaCardProps = React.ComponentProps<'div'> & {
+export type CardProps = React.ComponentProps<'div'> & {
   /** @defaultValue `'default'` */
   size?: 'default' | 'sm';
 };
-/** Props for {@link NotaCardHeader}. */
-export type NotaCardHeaderProps = React.ComponentProps<'div'>;
-/** Props for {@link NotaCardTitle}. */
-export type NotaCardTitleProps = React.ComponentProps<'div'>;
-/** Props for {@link NotaCardDescription}. */
-export type NotaCardDescriptionProps = React.ComponentProps<'div'>;
-/** Props for {@link NotaCardAction}. */
-export type NotaCardActionProps = React.ComponentProps<'div'>;
-/** Props for {@link NotaCardContent}. */
-export type NotaCardContentProps = React.ComponentProps<'div'>;
-/** Props for {@link NotaCardFooter}. */
-export type NotaCardFooterProps = React.ComponentProps<'div'>;
+/** Props for {@link CardHeader}. */
+export type CardHeaderProps = React.ComponentProps<'div'>;
+/** Props for {@link CardTitle}. */
+export type CardTitleProps = React.ComponentProps<'div'>;
+/** Props for {@link CardDescription}. */
+export type CardDescriptionProps = React.ComponentProps<'div'>;
+/** Props for {@link CardAction}. */
+export type CardActionProps = React.ComponentProps<'div'>;
+/** Props for {@link CardContent}. */
+export type CardContentProps = React.ComponentProps<'div'>;
+/** Props for {@link CardFooter}. */
+export type CardFooterProps = React.ComponentProps<'div'>;
 
 /**
  * Card surface: flex column, theme tokens (`bg-card`, `text-card-foreground`), optional `sm` density.
@@ -39,31 +39,27 @@ export type NotaCardFooterProps = React.ComponentProps<'div'>;
  * @example
  * ```tsx
  * import {
- *   NotaCard,
- *   NotaCardHeader,
- *   NotaCardTitle,
- *   NotaCardDescription,
- *   NotaCardContent,
+ *   Card,
+ *   CardHeader,
+ *   CardTitle,
+ *   CardDescription,
+ *   CardContent,
  * } from '@nota/design/card';
  *
  * export function Example() {
  *   return (
- *     <NotaCard size="sm">
- *       <NotaCardHeader>
- *         <NotaCardTitle>Title</NotaCardTitle>
- *         <NotaCardDescription>Subtitle</NotaCardDescription>
- *       </NotaCardHeader>
- *       <NotaCardContent>Body</NotaCardContent>
- *     </NotaCard>
+ *     <Card size="sm">
+ *       <CardHeader>
+ *         <CardTitle>Title</CardTitle>
+ *         <CardDescription>Subtitle</CardDescription>
+ *       </CardHeader>
+ *       <CardContent>Body</CardContent>
+ *     </Card>
  *   );
  * }
  * ```
  */
-export function NotaCard({
-  className,
-  size = 'default',
-  ...props
-}: NotaCardProps) {
+export function Card({ className, size = 'default', ...props }: CardProps) {
   return (
     <div
       data-slot="card"
@@ -78,12 +74,12 @@ export function NotaCard({
 }
 
 /**
- * Top region: grid for title, optional description, and optional {@link NotaCardAction}.
+ * Top region: grid for title, optional description, and optional {@link CardAction}.
  *
  * @remarks
  * `data-slot="card-header"`. Uses `@container/card-header` and adjusts padding when the parent card is `size="sm"`.
  */
-export function NotaCardHeader({ className, ...props }: NotaCardHeaderProps) {
+export function CardHeader({ className, ...props }: CardHeaderProps) {
   return (
     <div
       data-slot="card-header"
@@ -102,7 +98,7 @@ export function NotaCardHeader({ className, ...props }: NotaCardHeaderProps) {
  * @remarks
  * `data-slot="card-title"`. Uses `font-heading` and `text-sm font-medium`.
  */
-export function NotaCardTitle({ className, ...props }: NotaCardTitleProps) {
+export function CardTitle({ className, ...props }: CardTitleProps) {
   return (
     <div
       data-slot="card-title"
@@ -118,10 +114,7 @@ export function NotaCardTitle({ className, ...props }: NotaCardTitleProps) {
  * @remarks
  * `data-slot="card-description"`. When present, the header grid may use a second row for layout.
  */
-export function NotaCardDescription({
-  className,
-  ...props
-}: NotaCardDescriptionProps) {
+export function CardDescription({ className, ...props }: CardDescriptionProps) {
   return (
     <div
       data-slot="card-description"
@@ -137,7 +130,7 @@ export function NotaCardDescription({
  * @remarks
  * `data-slot="card-action"`. Positioned in column 2 of the header grid when combined with title/description.
  */
-export function NotaCardAction({ className, ...props }: NotaCardActionProps) {
+export function CardAction({ className, ...props }: CardActionProps) {
   return (
     <div
       data-slot="card-action"
@@ -156,7 +149,7 @@ export function NotaCardAction({ className, ...props }: NotaCardActionProps) {
  * @remarks
  * `data-slot="card-content"`. Horizontal padding follows parent `size` (`px-4` vs `px-3` on `sm`).
  */
-export function NotaCardContent({ className, ...props }: NotaCardContentProps) {
+export function CardContent({ className, ...props }: CardContentProps) {
   return (
     <div
       data-slot="card-content"
@@ -172,7 +165,7 @@ export function NotaCardContent({ className, ...props }: NotaCardContentProps) {
  * @remarks
  * `data-slot="card-footer"`. Flex row with padding; top border utilities can add spacing via `[.border-t]:pt-*`.
  */
-export function NotaCardFooter({ className, ...props }: NotaCardFooterProps) {
+export function CardFooter({ className, ...props }: CardFooterProps) {
   return (
     <div
       data-slot="card-footer"

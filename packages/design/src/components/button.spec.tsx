@@ -1,20 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { NotaButton, notaButtonVariants } from './button.js';
+import { Button, buttonVariants } from './button.js';
 
-describe('NotaButton (named exports)', () => {
-  it('exposes NotaButton and notaButtonVariants', () => {
+describe('Button (named exports)', () => {
+  it('exposes Button and buttonVariants', () => {
     // Assert
-    expect(NotaButton).toBeDefined();
-    expect(notaButtonVariants).toBeDefined();
+    expect(Button).toBeDefined();
+    expect(buttonVariants).toBeDefined();
   });
 });
 
-describe('NotaButton (smoke)', () => {
+describe('Button (smoke)', () => {
   it('renders with default variant classes', () => {
     // Arrange|Act
-    render(<NotaButton type="button">Save</NotaButton>);
+    render(<Button type="button">Save</Button>);
 
     // Assert
     const el = screen.getByRole('button', { name: 'Save' });
@@ -22,10 +22,10 @@ describe('NotaButton (smoke)', () => {
   });
 });
 
-describe('NotaButton press asymmetry', () => {
+describe('Button press asymmetry', () => {
   it('presses in faster and shallower than the release ease-out', () => {
     // Arrange
-    const classes = notaButtonVariants();
+    const classes = buttonVariants();
 
     // Act — parse duration tokens from the base CVA string
     const releaseMs = Number(

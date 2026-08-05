@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
-import { NotaIcon } from '@nota/design/icon';
+import { Icon } from '@nota/design/icon';
 import { NotaLogo } from '@/components/nota-logo';
-import { notaButtonVariants } from '@nota/design/button';
+import { buttonVariants } from '@nota/design/button';
 import { cn } from '@/lib/utils';
 import { pathForScreen } from '@nota/app-navigation-core/navigation';
 
@@ -95,13 +95,13 @@ export function NotFoundScreen({
           <a
             href={homeHref}
             className={cn(
-              notaButtonVariants({ variant: 'default', size: 'lg' }),
+              buttonVariants({ variant: 'default', size: 'lg' }),
               'mt-8 flex h-10 w-full touch-manipulation items-center justify-center gap-2 text-center',
             )}
           >
             {signedIn ? 'Back to notes' : 'Return home'}
             <span data-icon="inline-end" aria-hidden className="inline-flex">
-              <NotaIcon name="arrow-narrow-right" size={16} />
+              <Icon name="arrow-narrow-right" size={16} />
             </span>
           </a>
         </div>

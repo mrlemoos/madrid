@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
 import {
-  NotaHoverCard,
-  NotaHoverCardPortal,
-  NotaHoverCardPositioner,
-  NotaHoverCardPopup,
+  HoverCard,
+  HoverCardPortal,
+  HoverCardPositioner,
+  HoverCardPopup,
 } from '@nota/design/hover-card';
 // FlightGlobe is a light wrapper that lazy-loads its own d3-geo + atlas chunk,
 // so a static import here doesn't pull that weight into the editor's chunk.
@@ -146,7 +146,7 @@ interface HoverCardProps {
   onOpen: (code: string) => void;
 }
 
-function HoverCard({
+function FlightHoverCard({
   hover,
   onCardEnter,
   onCardLeave,
@@ -156,20 +156,20 @@ function HoverCard({
   const fetch = useFlightInfo(hover.code, false);
 
   return (
-    <NotaHoverCard
+    <HoverCard
       open
       onOpenChange={(next) => {
         if (!next) onDismiss();
       }}
     >
-      <NotaHoverCardPortal>
-        <NotaHoverCardPositioner
+      <HoverCardPortal>
+        <HoverCardPositioner
           anchor={hover.anchor}
           side="bottom"
           align="start"
           sideOffset={8}
         >
-          <NotaHoverCardPopup
+          <HoverCardPopup
             className="w-[300px] cursor-pointer p-3"
             onMouseEnter={onCardEnter}
             onMouseLeave={onCardLeave}
@@ -184,10 +184,10 @@ function HoverCard({
               </span>
             </div>
             <FlightBody fetch={fetch} variant="flat" width={276} height={150} />
-          </NotaHoverCardPopup>
-        </NotaHoverCardPositioner>
-      </NotaHoverCardPortal>
-    </NotaHoverCard>
+          </HoverCardPopup>
+        </HoverCardPositioner>
+      </HoverCardPortal>
+    </HoverCard>
   );
 }
 
@@ -279,7 +279,7 @@ export function useFlightCode(): {
   const overlay = (
     <>
       {hover ? (
-        <HoverCard
+        <FlightHoverCard
           hover={hover}
           onCardEnter={cancelHide}
           onCardLeave={scheduleHide}

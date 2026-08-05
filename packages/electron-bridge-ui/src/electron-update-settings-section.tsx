@@ -1,4 +1,4 @@
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import {
   parseNotaUpdateStatusPayload,
@@ -93,7 +93,7 @@ export function ElectronUpdateSettingsSection(): JSX.Element | null {
           </p>
         ) : null}
         <div className="flex flex-wrap gap-2">
-          <NotaButton
+          <Button
             type="button"
             variant="secondary"
             size="sm"
@@ -101,16 +101,16 @@ export function ElectronUpdateSettingsSection(): JSX.Element | null {
             onClick={runCheck}
           >
             {t('Check for updates')}
-          </NotaButton>
+          </Button>
           {status.phase === 'downloaded' ? (
-            <NotaButton
+            <Button
               type="button"
               variant="default"
               size="sm"
               onClick={runQuitAndInstall}
             >
               {t('Restart and update')}
-            </NotaButton>
+            </Button>
           ) : null}
         </div>
       </div>

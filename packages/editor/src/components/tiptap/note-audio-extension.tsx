@@ -5,15 +5,15 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { NotaButton } from '@nota/design/button';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { Button } from '@nota/design/button';
+import { LoadingStatus } from '@nota/design/spinner';
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipProvider,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipProvider,
+  TooltipTrigger,
 } from '@nota/design/tooltip';
 import { cn } from '@nota/design/utils';
 import { useNotePdfDocContext } from './note-pdf-extension';
@@ -132,7 +132,7 @@ function NoteAudioNodeView(props: NodeViewProps) {
       )}
       data-drag-handle
     >
-      <NotaTooltipProvider>
+      <TooltipProvider>
         <div className="flex flex-col gap-2 p-3">
           <div className="flex flex-wrap items-center gap-2">
             <span className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">
@@ -143,7 +143,7 @@ function NoteAudioNodeView(props: NodeViewProps) {
                 <span className="text-xs text-muted-foreground">
                   File no longer available
                 </span>
-                <NotaButton
+                <Button
                   type="button"
                   variant="ghost"
                   size="sm"
@@ -153,11 +153,11 @@ function NoteAudioNodeView(props: NodeViewProps) {
                   }}
                 >
                   Remove from note
-                </NotaButton>
+                </Button>
               </div>
             ) : (
               <div className="flex shrink-0 flex-wrap items-center gap-1">
-                <NotaButton
+                <Button
                   type="button"
                   variant="ghost"
                   size="sm"
@@ -166,11 +166,11 @@ function NoteAudioNodeView(props: NodeViewProps) {
                   onClick={() => void handleDownload()}
                 >
                   Download
-                </NotaButton>
-                <NotaTooltip>
-                  <NotaTooltipTrigger
+                </Button>
+                <Tooltip>
+                  <TooltipTrigger
                     render={
-                      <NotaButton
+                      <Button
                         type="button"
                         variant="ghost"
                         size="icon"
@@ -193,15 +193,15 @@ function NoteAudioNodeView(props: NodeViewProps) {
                             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                           />
                         </svg>
-                      </NotaButton>
+                      </Button>
                     }
                   />
-                  <NotaTooltipPortal>
-                    <NotaTooltipPositioner side="top" sideOffset={6}>
-                      <NotaTooltipPopup>Remove recording</NotaTooltipPopup>
-                    </NotaTooltipPositioner>
-                  </NotaTooltipPortal>
-                </NotaTooltip>
+                  <TooltipPortal>
+                    <TooltipPositioner side="top" sideOffset={6}>
+                      <TooltipPopup>Remove recording</TooltipPopup>
+                    </TooltipPositioner>
+                  </TooltipPortal>
+                </Tooltip>
               </div>
             )}
           </div>
@@ -221,10 +221,7 @@ function NoteAudioNodeView(props: NodeViewProps) {
                 />
               ) : (
                 <div className="flex min-h-[3rem] items-center justify-center text-sm text-muted-foreground">
-                  <NotaLoadingStatus
-                    label="Loading recording…"
-                    spinnerSize="sm"
-                  />
+                  <LoadingStatus label="Loading recording…" spinnerSize="sm" />
                 </div>
               )}
             </div>
@@ -236,7 +233,7 @@ function NoteAudioNodeView(props: NodeViewProps) {
             </p>
           ) : null}
         </div>
-      </NotaTooltipProvider>
+      </TooltipProvider>
     </NodeViewWrapper>
   );
 }

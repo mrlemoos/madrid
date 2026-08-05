@@ -1,24 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import {
-  NotaDialog,
-  NotaDialogContent,
-  NotaDialogTitle,
-  NotaDialogTrigger,
-} from './dialog.js';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './dialog.js';
 
-describe('NotaDialog', () => {
+describe('Dialog', () => {
   it('opens from the trigger and shows the titled content', () => {
     // Arrange
     render(
-      <NotaDialog>
-        <NotaDialogTrigger>Open layout</NotaDialogTrigger>
-        <NotaDialogContent showCloseButton={false}>
-          <NotaDialogTitle>Note layout</NotaDialogTitle>
+      <Dialog>
+        <DialogTrigger>Open layout</DialogTrigger>
+        <DialogContent showCloseButton={false}>
+          <DialogTitle>Note layout</DialogTitle>
           <p>Theme options</p>
-        </NotaDialogContent>
-      </NotaDialog>,
+        </DialogContent>
+      </Dialog>,
     );
 
     // Act

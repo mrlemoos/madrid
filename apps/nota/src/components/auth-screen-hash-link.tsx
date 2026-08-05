@@ -1,14 +1,14 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX, ReactNode } from 'react';
 import Link from 'next/link';
-import { notaButtonVariants } from '@nota/design/button';
+import { buttonVariants } from '@nota/design/button';
 import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
 import { cn } from '@/lib/utils';
 
 type AuthHashTarget = 'login' | 'signup';
 
 type AuthScreenHashLinkButtonProps = Pick<
-  VariantProps<typeof notaButtonVariants>,
+  VariantProps<typeof buttonVariants>,
   'variant' | 'size'
 >;
 
@@ -34,7 +34,7 @@ export function AuthScreenHashLink({
     <Link
       href={href}
       className={cn(
-        notaButtonVariants({ variant, size }),
+        buttonVariants({ variant, size }),
         variant === 'link' ? 'h-auto p-0 text-sm' : undefined,
         className,
       )}

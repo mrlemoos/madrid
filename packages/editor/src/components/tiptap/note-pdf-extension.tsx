@@ -14,15 +14,15 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { NotaButton } from '@nota/design/button';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { Button } from '@nota/design/button';
+import { LoadingStatus } from '@nota/design/spinner';
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipProvider,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipProvider,
+  TooltipTrigger,
 } from '@nota/design/tooltip';
 import { cn } from '@nota/design/utils';
 import { pdfPreviewSrc } from '../../lib/pdf-preview-url';
@@ -463,7 +463,7 @@ export function NotePdfNodeView(props: NodeViewProps) {
       )}
       data-drag-handle
     >
-      <NotaTooltipProvider>
+      <TooltipProvider>
         <div className="flex flex-col gap-3">
           {missing ? (
             <div className="flex flex-wrap items-center gap-2">
@@ -493,8 +493,8 @@ export function NotePdfNodeView(props: NodeViewProps) {
                   aria-label="PDF display name"
                 />
               ) : (
-                <NotaTooltip>
-                  <NotaTooltipTrigger
+                <Tooltip>
+                  <TooltipTrigger
                     render={
                       <span
                         className="min-w-0 flex-1 cursor-text truncate text-sm font-medium text-foreground"
@@ -508,20 +508,18 @@ export function NotePdfNodeView(props: NodeViewProps) {
                       </span>
                     }
                   />
-                  <NotaTooltipPortal>
-                    <NotaTooltipPositioner side="top" sideOffset={6}>
-                      <NotaTooltipPopup>
-                        Double-click to rename
-                      </NotaTooltipPopup>
-                    </NotaTooltipPositioner>
-                  </NotaTooltipPortal>
-                </NotaTooltip>
+                  <TooltipPortal>
+                    <TooltipPositioner side="top" sideOffset={6}>
+                      <TooltipPopup>Double-click to rename</TooltipPopup>
+                    </TooltipPositioner>
+                  </TooltipPortal>
+                </Tooltip>
               )}
               <div className="flex shrink-0 items-center gap-1">
                 <span className="text-xs text-muted-foreground">
                   File no longer available
                 </span>
-                <NotaButton
+                <Button
                   type="button"
                   variant="ghost"
                   size="sm"
@@ -531,7 +529,7 @@ export function NotePdfNodeView(props: NodeViewProps) {
                   }}
                 >
                   Remove from note
-                </NotaButton>
+                </Button>
               </div>
             </div>
           ) : (
@@ -626,8 +624,8 @@ export function NotePdfNodeView(props: NodeViewProps) {
                       aria-label="PDF display name"
                     />
                   ) : (
-                    <NotaTooltip>
-                      <NotaTooltipTrigger
+                    <Tooltip>
+                      <TooltipTrigger
                         render={
                           <span
                             className="min-w-0 flex-1 cursor-text truncate text-sm font-medium text-foreground"
@@ -641,19 +639,17 @@ export function NotePdfNodeView(props: NodeViewProps) {
                           </span>
                         }
                       />
-                      <NotaTooltipPortal>
-                        <NotaTooltipPositioner side="top" sideOffset={6}>
-                          <NotaTooltipPopup>
-                            Double-click to rename
-                          </NotaTooltipPopup>
-                        </NotaTooltipPositioner>
-                      </NotaTooltipPortal>
-                    </NotaTooltip>
+                      <TooltipPortal>
+                        <TooltipPositioner side="top" sideOffset={6}>
+                          <TooltipPopup>Double-click to rename</TooltipPopup>
+                        </TooltipPositioner>
+                      </TooltipPortal>
+                    </Tooltip>
                   )}
                 </div>
 
                 <div className="mt-2 flex flex-wrap items-center gap-1">
-                  <NotaButton
+                  <Button
                     type="button"
                     variant="ghost"
                     size="sm"
@@ -661,8 +657,8 @@ export function NotePdfNodeView(props: NodeViewProps) {
                     onClick={() => void openPreview()}
                   >
                     Preview
-                  </NotaButton>
-                  <NotaButton
+                  </Button>
+                  <Button
                     type="button"
                     variant="ghost"
                     size="sm"
@@ -670,11 +666,11 @@ export function NotePdfNodeView(props: NodeViewProps) {
                     onClick={() => void handleDownload()}
                   >
                     Download
-                  </NotaButton>
-                  <NotaTooltip>
-                    <NotaTooltipTrigger
+                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger
                       render={
-                        <NotaButton
+                        <Button
                           type="button"
                           variant="ghost"
                           size="icon"
@@ -697,15 +693,15 @@ export function NotePdfNodeView(props: NodeViewProps) {
                               d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                             />
                           </svg>
-                        </NotaButton>
+                        </Button>
                       }
                     />
-                    <NotaTooltipPortal>
-                      <NotaTooltipPositioner side="top" sideOffset={6}>
-                        <NotaTooltipPopup>Remove PDF</NotaTooltipPopup>
-                      </NotaTooltipPositioner>
-                    </NotaTooltipPortal>
-                  </NotaTooltip>
+                    <TooltipPortal>
+                      <TooltipPositioner side="top" sideOffset={6}>
+                        <TooltipPopup>Remove PDF</TooltipPopup>
+                      </TooltipPositioner>
+                    </TooltipPortal>
+                  </Tooltip>
                 </div>
               </div>
             </div>
@@ -735,19 +731,19 @@ export function NotePdfNodeView(props: NodeViewProps) {
                         <h4 className="min-w-0 truncate text-sm font-medium text-foreground">
                           {preview?.filename ?? 'Preview'}
                         </h4>
-                        <NotaButton
+                        <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={closePreview}
                         >
                           Close
-                        </NotaButton>
+                        </Button>
                       </div>
                       <div className="min-h-[50vh] flex-1 bg-muted/30">
                         {previewLoading ? (
                           <div className="flex h-[50vh] items-center justify-center text-sm text-muted-foreground">
-                            <NotaLoadingStatus label="Loading preview…" />
+                            <LoadingStatus label="Loading preview…" />
                           </div>
                         ) : preview ? (
                           pdfPreviewUseIframe ? (
@@ -773,7 +769,7 @@ export function NotePdfNodeView(props: NodeViewProps) {
               )
             : null}
         </div>
-      </NotaTooltipProvider>
+      </TooltipProvider>
     </NodeViewWrapper>
   );
 }

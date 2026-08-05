@@ -2,39 +2,36 @@ import { render, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import {
-  NotaHoverCard,
-  NotaHoverCardPopup,
-  NotaHoverCardPortal,
-  NotaHoverCardPositioner,
-  NotaHoverCardTrigger,
+  HoverCard,
+  HoverCardPopup,
+  HoverCardPortal,
+  HoverCardPositioner,
+  HoverCardTrigger,
 } from './hover-card.js';
 
-describe('NotaHoverCard (named exports)', () => {
+describe('HoverCard (named exports)', () => {
   it('exposes Root, Trigger, Portal, Positioner, and Popup', () => {
     // Assert
-    expect(NotaHoverCard).toBeDefined();
-    expect(NotaHoverCardTrigger).toBeDefined();
-    expect(NotaHoverCardPortal).toBeDefined();
-    expect(NotaHoverCardPositioner).toBeDefined();
-    expect(NotaHoverCardPopup).toBeDefined();
+    expect(HoverCard).toBeDefined();
+    expect(HoverCardTrigger).toBeDefined();
+    expect(HoverCardPortal).toBeDefined();
+    expect(HoverCardPositioner).toBeDefined();
+    expect(HoverCardPopup).toBeDefined();
   });
 });
 
-describe('NotaHoverCardPopup (rendering)', () => {
+describe('HoverCardPopup (rendering)', () => {
   it('renders the popup content when open', () => {
     // Arrange / Act
     const { baseElement } = render(
-      <NotaHoverCard defaultOpen>
-        <NotaHoverCardTrigger
-          nativeButton={false}
-          render={<span>Anchor</span>}
-        />
-        <NotaHoverCardPortal>
-          <NotaHoverCardPositioner side="top" sideOffset={8}>
-            <NotaHoverCardPopup>Card body</NotaHoverCardPopup>
-          </NotaHoverCardPositioner>
-        </NotaHoverCardPortal>
-      </NotaHoverCard>,
+      <HoverCard defaultOpen>
+        <HoverCardTrigger nativeButton={false} render={<span>Anchor</span>} />
+        <HoverCardPortal>
+          <HoverCardPositioner side="top" sideOffset={8}>
+            <HoverCardPopup>Card body</HoverCardPopup>
+          </HoverCardPositioner>
+        </HoverCardPortal>
+      </HoverCard>,
     );
 
     // Assert — getByText throws if the popup content isn't rendered

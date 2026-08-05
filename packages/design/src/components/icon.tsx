@@ -2,7 +2,7 @@
  * Nota icon wrapper: drop-in replacement for HugeiconsIcon over itshover animated icons.
  *
  * @remarks
- * Import from the package subpath only: `import { NotaIcon } from '@nota/design/icon'`.
+ * Import from the package subpath only: `import { Icon } from '@nota/design/icon'`.
  * Pick an icon by its `name`; the underlying components live under `@nota/design/icons`
  * and are registered in {@link NOTA_ICONS}.
  *
@@ -56,17 +56,17 @@ import {
 /**
  * An itshover animated icon component (forwardRef + hover motion).
  */
-export type NotaAnimatedIcon = ForwardRefExoticComponent<
+export type AnimatedIcon = ForwardRefExoticComponent<
   AnimatedIconProps & RefAttributes<AnimatedIconHandle>
 >;
 
 /**
- * Every icon addressable by {@link NotaIcon}'s `name`.
+ * Every icon addressable by {@link Icon}'s `name`.
  *
  * @remarks
  * Listed explicitly rather than derived, so each name is greppable and an unknown
  * one is a compile error. Referencing the registry pulls the whole set into the
- * bundle; that is the trade for a serialisable {@link NotaIconName}.
+ * bundle; that is the trade for a serialisable {@link IconName}.
  */
 export const NOTA_ICONS = {
   'align-center': AlignCenterIcon,
@@ -101,20 +101,20 @@ export const NOTA_ICONS = {
   trash: TrashIcon,
   'user-plus': UserPlusIcon,
   'volume-2': Volume2Icon,
-} as const satisfies Record<string, NotaAnimatedIcon>;
+} as const satisfies Record<string, AnimatedIcon>;
 
 /**
  * Name of a registered icon. Serialisable, so command tables and other data can
  * carry an icon without importing a component.
  */
-export type NotaIconName = keyof typeof NOTA_ICONS;
+export type IconName = keyof typeof NOTA_ICONS;
 
 /**
- * Props for {@link NotaIcon}.
+ * Props for {@link Icon}.
  */
-export type NotaIconProps = HTMLAttributes<HTMLSpanElement> & {
+export type IconProps = HTMLAttributes<HTMLSpanElement> & {
   /** Registered icon name, e.g. `"arrow-narrow-right"` */
-  name: NotaIconName;
+  name: IconName;
   /** Pixel size passed to the icon */
   size?: number;
   /** Stroke width passed to the icon */
@@ -132,20 +132,20 @@ export type NotaIconProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @example
  * ```tsx
- * import { NotaIcon } from '@nota/design/icon';
+ * import { Icon } from '@nota/design/icon';
  *
- * <NotaIcon name="arrow-narrow-right" size={16} className="text-muted-foreground" />
+ * <Icon name="arrow-narrow-right" size={16} className="text-muted-foreground" />
  * ```
  */
-export function NotaIcon({
+export function Icon({
   name,
   size = 24,
   className,
   color,
   strokeWidth,
   ...rest
-}: NotaIconProps): JSX.Element {
-  const Icon = NOTA_ICONS[name];
+}: IconProps): JSX.Element {
+  const Glyph = NOTA_ICONS[name];
   return (
     <span
       className={cn(
@@ -154,7 +154,7 @@ export function NotaIcon({
       )}
       {...rest}
     >
-      <Icon size={size} color={color} strokeWidth={strokeWidth} />
+      <Glyph size={size} color={color} strokeWidth={strokeWidth} />
     </span>
   );
 }

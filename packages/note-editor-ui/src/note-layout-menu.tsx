@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState, type JSX } from 'react';
-import { NotaIcon } from '@nota/design/icon';
-import { NotaButton } from '@nota/design/button';
+import { Icon } from '@nota/design/icon';
+import { Button } from '@nota/design/button';
 import {
-  NotaDialog,
-  NotaDialogContent,
-  NotaDialogHeader,
-  NotaDialogTitle,
-  NotaDialogTrigger,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from '@nota/design/dialog';
 import { cn } from '@nota/design/utils';
 import {
@@ -65,12 +65,12 @@ export function NoteLayoutMenu({
   );
 
   return (
-    <NotaDialog open={open} onOpenChange={setOpen}>
-      <NotaDialogTrigger
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger
         disabled={disabled}
         aria-label="Note layout"
         render={
-          <NotaButton
+          <Button
             type="button"
             variant="ghost"
             size="icon-sm"
@@ -78,15 +78,15 @@ export function NoteLayoutMenu({
           />
         }
       >
-        <NotaIcon name="mouse-pointer-2" size={18} />
-      </NotaDialogTrigger>
-      <NotaDialogContent
+        <Icon name="mouse-pointer-2" size={18} />
+      </DialogTrigger>
+      <DialogContent
         showCloseButton={false}
         className="top-[22%] w-[min(100vw-2rem,18rem)] max-w-none translate-y-0 gap-0 p-3 sm:max-w-none"
       >
-        <NotaDialogHeader>
-          <NotaDialogTitle>Note layout</NotaDialogTitle>
-        </NotaDialogHeader>
+        <DialogHeader>
+          <DialogTitle>Note layout</DialogTitle>
+        </DialogHeader>
         <div className="mt-3 space-y-3">
           <div>
             <label
@@ -179,7 +179,7 @@ export function NoteLayoutMenu({
                       className="h-8 w-14 rounded border border-border object-cover"
                     />
                   )}
-                  <NotaButton
+                  <Button
                     type="button"
                     variant="outline"
                     size="sm"
@@ -190,10 +190,10 @@ export function NoteLayoutMenu({
                     }}
                   >
                     Remove
-                  </NotaButton>
+                  </Button>
                 </div>
               ) : (
-                <NotaButton
+                <Button
                   type="button"
                   variant="outline"
                   size="sm"
@@ -202,11 +202,11 @@ export function NoteLayoutMenu({
                   onClick={() => bannerInputRef.current?.click()}
                 >
                   {uploading ? 'Uploading…' : 'Add banner image'}
-                </NotaButton>
+                </Button>
               )}
             </div>
           )}
-          <NotaButton
+          <Button
             type="button"
             variant="outline"
             size="sm"
@@ -217,9 +217,9 @@ export function NoteLayoutMenu({
             }}
           >
             Reset to defaults
-          </NotaButton>
+          </Button>
         </div>
-      </NotaDialogContent>
-    </NotaDialog>
+      </DialogContent>
+    </Dialog>
   );
 }

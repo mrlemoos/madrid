@@ -11,7 +11,7 @@ import {
 import { Dialog } from '@base-ui/react/dialog';
 import type { DialogRoot } from '@base-ui/react/dialog';
 import { Command, defaultFilter } from 'cmdk';
-import { NotaIcon, type NotaIconName } from '@nota/design/icon';
+import { Icon, type IconName } from '@nota/design/icon';
 import { cn } from '@nota/design/utils';
 import {
   notaKbdFooterClass,
@@ -57,7 +57,7 @@ import {
 } from '@nota/note-capture-ui/audio-to-note-start';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { useTheme } from '@nota/design/theme';
-import { NotaTintCircle } from '@nota/design/nota-tint-circle';
+import { TintCircle } from '@nota/design/nota-tint-circle';
 import { CommandPaletteSemanticSync } from './command-palette-semantic-sync';
 import { NOTA_CMDK_ITEM_CLASS } from '@nota/nota-motion-ui/interaction';
 import {
@@ -108,12 +108,12 @@ function PaletteItemIcon({
   name,
   className,
 }: {
-  name: NotaIconName;
+  name: IconName;
   className?: string;
 }): JSX.Element {
   return (
     <span aria-hidden className={cn('inline-flex shrink-0', className)}>
-      <NotaIcon name={name} size={16} />
+      <Icon name={name} size={16} />
     </span>
   );
 }
@@ -670,7 +670,7 @@ export function CommandPalette(): JSX.Element {
                                   }}
                                 >
                                   {selected ? (
-                                    <NotaIcon name="simple-checked" size={12} />
+                                    <Icon name="simple-checked" size={12} />
                                   ) : null}
                                 </button>
                               ) : null}
@@ -963,7 +963,7 @@ export function CommandPalette(): JSX.Element {
                           'aria-selected:bg-accent aria-selected:text-accent-foreground',
                         )}
                       >
-                        <NotaTintCircle
+                        <TintCircle
                           colour={preset.swatchColour}
                           sizePx={16}
                           aria-hidden

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/design/button';
-import { NotaIcon } from '@nota/design/icon';
+import { Button } from '@nota/design/button';
+import { Icon } from '@nota/design/icon';
 import { cn } from '@nota/design/utils';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
@@ -82,7 +82,7 @@ export function NoteShareButton({
       : t('Share');
 
   return (
-    <NotaButton
+    <Button
       type="button"
       variant={token ? 'outline' : 'ghost'}
       size="sm"
@@ -97,8 +97,8 @@ export function NoteShareButton({
         token && 'text-foreground/80',
       )}
     >
-      <NotaIcon name="link" size={14} strokeWidth={2} aria-hidden />
+      <Icon name="link" size={14} strokeWidth={2} aria-hidden />
       {label}
-    </NotaButton>
+    </Button>
   );
 }

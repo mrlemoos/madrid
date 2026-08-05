@@ -2,40 +2,40 @@ import { render, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipProvider,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipProvider,
+  TooltipTrigger,
 } from './tooltip.js';
 
-describe('NotaTooltip (named exports)', () => {
+describe('Tooltip (named exports)', () => {
   it('exposes Provider, Root, Trigger, Portal, Positioner, Popup', () => {
     // Assert
-    expect(NotaTooltipProvider).toBeDefined();
-    expect(NotaTooltip).toBeDefined();
-    expect(NotaTooltipTrigger).toBeDefined();
-    expect(NotaTooltipPortal).toBeDefined();
-    expect(NotaTooltipPositioner).toBeDefined();
-    expect(NotaTooltipPopup).toBeDefined();
+    expect(TooltipProvider).toBeDefined();
+    expect(Tooltip).toBeDefined();
+    expect(TooltipTrigger).toBeDefined();
+    expect(TooltipPortal).toBeDefined();
+    expect(TooltipPositioner).toBeDefined();
+    expect(TooltipPopup).toBeDefined();
   });
 });
 
-describe('NotaTooltipPopup (default popover styles)', () => {
-  it('applies the shared nota popover class tokens on NotaTooltipPopup', () => {
+describe('TooltipPopup (default popover styles)', () => {
+  it('applies the shared nota popover class tokens on TooltipPopup', () => {
     // Arrange|Act: defaultOpen avoids flaky hover simulation in JSDOM
     const { baseElement } = render(
-      <NotaTooltipProvider delay={0}>
-        <NotaTooltip defaultOpen>
-          <NotaTooltipTrigger render={<span>Anchor</span>} />
-          <NotaTooltipPortal>
-            <NotaTooltipPositioner side="top" sideOffset={6}>
-              <NotaTooltipPopup>Test label</NotaTooltipPopup>
-            </NotaTooltipPositioner>
-          </NotaTooltipPortal>
-        </NotaTooltip>
-      </NotaTooltipProvider>,
+      <TooltipProvider delay={0}>
+        <Tooltip defaultOpen>
+          <TooltipTrigger render={<span>Anchor</span>} />
+          <TooltipPortal>
+            <TooltipPositioner side="top" sideOffset={6}>
+              <TooltipPopup>Test label</TooltipPopup>
+            </TooltipPositioner>
+          </TooltipPortal>
+        </Tooltip>
+      </TooltipProvider>,
     );
 
     // Assert

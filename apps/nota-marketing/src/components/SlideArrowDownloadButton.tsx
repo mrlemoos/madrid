@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { NotaIcon } from '@nota/design/icon';
+import { Icon } from '@nota/design/icon';
 
 type SlideArrowDownloadButtonProps = {
   href: string;
@@ -51,7 +51,7 @@ export default function SlideArrowDownloadButton({
             transition={{ type: 'spring', stiffness: 600, damping: 25 }}
             className="flex items-center shrink-0 mr-2.5"
           >
-            <NotaIcon name="apple-brand-logo" size={16} className="w-4 h-4" />
+            <Icon name="apple-brand-logo" size={16} className="w-4 h-4" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -68,7 +68,7 @@ export default function SlideArrowDownloadButton({
             transition={{ type: 'spring', stiffness: 600, damping: 25 }}
             className="flex items-center shrink-0 ml-2.5"
           >
-            <NotaIcon name="arrow-narrow-right" size={16} className="w-4 h-4" />
+            <Icon name="arrow-narrow-right" size={16} className="w-4 h-4" />
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,7 +1,7 @@
 import type { JSX, ReactNode } from 'react';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { NotaButton } from '@nota/design/button';
-import { NotaIcon } from '@nota/design/icon';
+import { Button } from '@nota/design/button';
+import { Icon } from '@nota/design/icon';
 import { cn } from '@nota/design/utils';
 import { replaceScreen } from '@nota/app-navigation-core/navigation';
 import {
@@ -26,12 +26,12 @@ import {
   ACTIVITY_LEVEL_CLASSES,
 } from '@nota/writing-activity-core/writing-activity';
 import {
-  NotaTooltip,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipPopup,
-  NotaTooltipProvider,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipPopup,
+  TooltipProvider,
+  TooltipTrigger,
 } from '@nota/design/tooltip';
 
 export function SidebarToggle({
@@ -45,11 +45,11 @@ export function SidebarToggle({
   const label = open ? t('Close sidebar') : t('Open sidebar');
 
   return (
-    <NotaTooltipProvider delay={250}>
-      <NotaTooltip>
-        <NotaTooltipTrigger
+    <TooltipProvider delay={250}>
+      <Tooltip>
+        <TooltipTrigger
           render={
-            <NotaButton
+            <Button
               type="button"
               variant="ghost"
               size="icon"
@@ -64,28 +64,20 @@ export function SidebarToggle({
               aria-expanded={open}
             >
               {open ? (
-                <NotaIcon
-                  name="arrow-narrow-left"
-                  size={20}
-                  strokeWidth={1.5}
-                />
+                <Icon name="arrow-narrow-left" size={20} strokeWidth={1.5} />
               ) : (
-                <NotaIcon
-                  name="arrow-narrow-right"
-                  size={20}
-                  strokeWidth={1.5}
-                />
+                <Icon name="arrow-narrow-right" size={20} strokeWidth={1.5} />
               )}
-            </NotaButton>
+            </Button>
           }
         />
-        <NotaTooltipPortal>
-          <NotaTooltipPositioner side="bottom" sideOffset={6}>
-            <NotaTooltipPopup>{label}</NotaTooltipPopup>
-          </NotaTooltipPositioner>
-        </NotaTooltipPortal>
-      </NotaTooltip>
-    </NotaTooltipProvider>
+        <TooltipPortal>
+          <TooltipPositioner side="bottom" sideOffset={6}>
+            <TooltipPopup>{label}</TooltipPopup>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
 
@@ -180,14 +172,14 @@ export function NotesIndexPanel({
         <p className="mb-6 text-muted-foreground">
           {t('Choose a note from the sidebar or create a new one.')}
         </p>
-        <NotaButton
+        <Button
           type="button"
           size="lg"
           className="min-h-10 px-6"
           onClick={onCreate}
         >
           {t('Create New Note')}
-        </NotaButton>
+        </Button>
       </div>
 
       {showGraph && (
@@ -225,8 +217,8 @@ export function NotesIndexPanel({
 
           <div className="grid auto-cols-[10px] grid-flow-col grid-rows-7 gap-0.5 overflow-x-auto rounded bg-border/30 p-2">
             {cells.map((cell) => (
-              <NotaTooltip key={cell.dateKey}>
-                <NotaTooltipTrigger
+              <Tooltip key={cell.dateKey}>
+                <TooltipTrigger
                   render={
                     <div
                       className={cn(
@@ -236,18 +228,18 @@ export function NotesIndexPanel({
                     />
                   }
                 />
-                <NotaTooltipPortal>
-                  <NotaTooltipPositioner side="top" sideOffset={4}>
-                    <NotaTooltipPopup>
+                <TooltipPortal>
+                  <TooltipPositioner side="top" sideOffset={4}>
+                    <TooltipPopup>
                       {cell.count} on{' '}
                       {cell.date.toLocaleDateString(undefined, {
                         month: 'short',
                         day: 'numeric',
                       })}
-                    </NotaTooltipPopup>
-                  </NotaTooltipPositioner>
-                </NotaTooltipPortal>
-              </NotaTooltip>
+                    </TooltipPopup>
+                  </TooltipPositioner>
+                </TooltipPortal>
+              </Tooltip>
             ))}
           </div>
 

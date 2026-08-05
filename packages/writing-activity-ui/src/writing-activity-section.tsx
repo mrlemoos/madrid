@@ -18,11 +18,11 @@ import {
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useWritingActivityTranslator } from './use-writing-activity-translator';
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipTrigger,
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipTrigger,
 } from '@nota/design/tooltip';
 
 const COLOR_FAMILIES: WritingActivityColor[] = ['blue', 'red', 'pink', 'rose'];
@@ -117,8 +117,8 @@ export function WritingActivitySection(): JSX.Element | null {
           {/* Compact GitHub-style: 7 rows (days), many columns (weeks). Keeps height small. */}
           <div className="grid auto-cols-[10px] grid-flow-col grid-rows-7 gap-0.5 overflow-x-auto pb-1">
             {cells.map((cell) => (
-              <NotaTooltip key={cell.dateKey}>
-                <NotaTooltipTrigger
+              <Tooltip key={cell.dateKey}>
+                <TooltipTrigger
                   render={
                     <div
                       className={cn(
@@ -129,9 +129,9 @@ export function WritingActivitySection(): JSX.Element | null {
                     />
                   }
                 />
-                <NotaTooltipPortal>
-                  <NotaTooltipPositioner side="top" sideOffset={4}>
-                    <NotaTooltipPopup>
+                <TooltipPortal>
+                  <TooltipPositioner side="top" sideOffset={4}>
+                    <TooltipPopup>
                       {t('{count} contributions on {date}', {
                         count: cell.count,
                         date: cell.date.toLocaleDateString(undefined, {
@@ -140,10 +140,10 @@ export function WritingActivitySection(): JSX.Element | null {
                           day: 'numeric',
                         }),
                       })}
-                    </NotaTooltipPopup>
-                  </NotaTooltipPositioner>
-                </NotaTooltipPortal>
-              </NotaTooltip>
+                    </TooltipPopup>
+                  </TooltipPositioner>
+                </TooltipPortal>
+              </Tooltip>
             ))}
           </div>
 

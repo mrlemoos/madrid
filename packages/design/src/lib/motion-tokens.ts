@@ -17,7 +17,7 @@ export const NOTA_PRESS_SCALE = 0.97;
  * Damping `1` = critically damped (no overshoot). Below `1` = slight bounce.
  * Response is not a fixed duration — settle time emerges from the parameters.
  */
-export type NotaSpringPreset = {
+export type SpringPreset = {
   readonly damping: number;
   readonly response: number;
 };
@@ -26,19 +26,19 @@ export type NotaSpringPreset = {
 export const NOTA_SPRING_SHELL = {
   damping: 1,
   response: 0.3,
-} as const satisfies NotaSpringPreset;
+} as const satisfies SpringPreset;
 
 /** Critically damped popover / menu enter. */
 export const NOTA_SPRING_POPOVER = {
   damping: 1,
   response: 0.2,
-} as const satisfies NotaSpringPreset;
+} as const satisfies SpringPreset;
 
 /** Slightly under-damped settle after a momentum gesture (e.g. resize fling). */
 export const NOTA_SPRING_SETTLE = {
   damping: 0.8,
   response: 0.3,
-} as const satisfies NotaSpringPreset;
+} as const satisfies SpringPreset;
 
 export const NOTA_SPRING_PRESETS = {
   shell: NOTA_SPRING_SHELL,
@@ -46,4 +46,4 @@ export const NOTA_SPRING_PRESETS = {
   settle: NOTA_SPRING_SETTLE,
 } as const;
 
-export type NotaSpringPresetName = keyof typeof NOTA_SPRING_PRESETS;
+export type SpringPresetName = keyof typeof NOTA_SPRING_PRESETS;

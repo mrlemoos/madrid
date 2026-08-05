@@ -1,14 +1,14 @@
 'use client';
 
 import type { JSX } from 'react';
-import { NotaIcon } from '@nota/design/icon';
+import { Icon } from '@nota/design/icon';
 import { cn } from '@/lib/utils';
 import {
-  NotaCard,
-  NotaCardContent,
-  NotaCardDescription,
-  NotaCardFooter,
-  NotaCardHeader,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
 } from '@nota/design/card';
 import { AuthScreenHashLink } from '@/components/auth-screen-hash-link';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
@@ -27,12 +27,12 @@ export function LandingPage(): JSX.Element {
       </div>
 
       <div className="relative z-10 w-full max-w-md">
-        <NotaCard
+        <Card
           className={cn(
             'border-border/50 bg-background/70 shadow-lg backdrop-blur-xl ring-1 ring-border/40',
           )}
         >
-          <NotaCardHeader className="text-center">
+          <CardHeader className="text-center">
             <div className="mb-3 flex justify-center">
               <NotaLogo className="size-14" />
             </div>
@@ -42,11 +42,11 @@ export function LandingPage(): JSX.Element {
             >
               Think clearly. Write slowly.
             </h1>
-            <NotaCardDescription className="text-pretty">
+            <CardDescription className="text-pretty">
               A quiet space for your thoughts, away from the noise.
-            </NotaCardDescription>
-          </NotaCardHeader>
-          <NotaCardContent className="flex flex-col gap-3">
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
             <AuthScreenHashLink
               target="login"
               variant="default"
@@ -57,11 +57,11 @@ export function LandingPage(): JSX.Element {
             >
               Continue with email
               <span data-icon="inline-end" aria-hidden className="inline-flex">
-                <NotaIcon name="arrow-narrow-right" size={16} />
+                <Icon name="arrow-narrow-right" size={16} />
               </span>
             </AuthScreenHashLink>
-          </NotaCardContent>
-          <NotaCardFooter className="justify-center border-t border-border/40 pt-4">
+          </CardContent>
+          <CardFooter className="justify-center border-t border-border/40 pt-4">
             <p className="text-center text-muted-foreground text-xs/relaxed">
               New here?{' '}
               <AuthScreenHashLink
@@ -71,8 +71,8 @@ export function LandingPage(): JSX.Element {
                 Create an account
               </AuthScreenHashLink>
             </p>
-          </NotaCardFooter>
-        </NotaCard>
+          </CardFooter>
+        </Card>
       </div>
     </main>
   );

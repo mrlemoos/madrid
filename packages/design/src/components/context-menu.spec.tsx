@@ -2,44 +2,44 @@ import { render, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import {
-  NotaContextMenu,
-  NotaContextMenuItem,
-  NotaContextMenuPopup,
-  NotaContextMenuPortal,
-  NotaContextMenuPositioner,
-  NotaContextMenuTrigger,
-  NotaContextMenuViewport,
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuPopup,
+  ContextMenuPortal,
+  ContextMenuPositioner,
+  ContextMenuTrigger,
+  ContextMenuViewport,
 } from './context-menu.js';
 
-describe('NotaContextMenu (named exports)', () => {
+describe('ContextMenu (named exports)', () => {
   it('exposes Root, Trigger, Portal, Positioner, Popup, Viewport, and Item', () => {
     // Assert
-    expect(NotaContextMenu).toBeDefined();
-    expect(NotaContextMenuTrigger).toBeDefined();
-    expect(NotaContextMenuPortal).toBeDefined();
-    expect(NotaContextMenuPositioner).toBeDefined();
-    expect(NotaContextMenuPopup).toBeDefined();
-    expect(NotaContextMenuViewport).toBeDefined();
-    expect(NotaContextMenuItem).toBeDefined();
+    expect(ContextMenu).toBeDefined();
+    expect(ContextMenuTrigger).toBeDefined();
+    expect(ContextMenuPortal).toBeDefined();
+    expect(ContextMenuPositioner).toBeDefined();
+    expect(ContextMenuPopup).toBeDefined();
+    expect(ContextMenuViewport).toBeDefined();
+    expect(ContextMenuItem).toBeDefined();
   });
 });
 
-describe('NotaContextMenuPositioner (default layering)', () => {
+describe('ContextMenuPositioner (default layering)', () => {
   it('applies the shared popover z-index to the positioner', () => {
     // Arrange
     const { baseElement } = render(
-      <NotaContextMenu defaultOpen>
-        <NotaContextMenuTrigger render={<span>Anchor</span>} />
-        <NotaContextMenuPortal>
-          <NotaContextMenuPositioner side="right" sideOffset={4}>
-            <NotaContextMenuPopup>
-              <NotaContextMenuViewport>
-                <NotaContextMenuItem>Rename</NotaContextMenuItem>
-              </NotaContextMenuViewport>
-            </NotaContextMenuPopup>
-          </NotaContextMenuPositioner>
-        </NotaContextMenuPortal>
-      </NotaContextMenu>,
+      <ContextMenu defaultOpen>
+        <ContextMenuTrigger render={<span>Anchor</span>} />
+        <ContextMenuPortal>
+          <ContextMenuPositioner side="right" sideOffset={4}>
+            <ContextMenuPopup>
+              <ContextMenuViewport>
+                <ContextMenuItem>Rename</ContextMenuItem>
+              </ContextMenuViewport>
+            </ContextMenuPopup>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenu>,
     );
 
     // Act
@@ -53,22 +53,22 @@ describe('NotaContextMenuPositioner (default layering)', () => {
   });
 });
 
-describe('NotaContextMenuPopup (motion)', () => {
+describe('ContextMenuPopup (motion)', () => {
   it('applies trigger origin and 150–200ms ease-out enter/exit', () => {
     // Arrange
     const { baseElement } = render(
-      <NotaContextMenu defaultOpen>
-        <NotaContextMenuTrigger render={<span>Anchor</span>} />
-        <NotaContextMenuPortal>
-          <NotaContextMenuPositioner side="right" sideOffset={4}>
-            <NotaContextMenuPopup>
-              <NotaContextMenuViewport>
-                <NotaContextMenuItem>Rename</NotaContextMenuItem>
-              </NotaContextMenuViewport>
-            </NotaContextMenuPopup>
-          </NotaContextMenuPositioner>
-        </NotaContextMenuPortal>
-      </NotaContextMenu>,
+      <ContextMenu defaultOpen>
+        <ContextMenuTrigger render={<span>Anchor</span>} />
+        <ContextMenuPortal>
+          <ContextMenuPositioner side="right" sideOffset={4}>
+            <ContextMenuPopup>
+              <ContextMenuViewport>
+                <ContextMenuItem>Rename</ContextMenuItem>
+              </ContextMenuViewport>
+            </ContextMenuPopup>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenu>,
     );
 
     // Act

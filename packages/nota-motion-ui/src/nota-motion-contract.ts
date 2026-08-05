@@ -1,6 +1,6 @@
 import {
   NOTA_PRESS_IN_MS,
-  type NotaSpringPresetName,
+  type SpringPresetName,
 } from '@nota/design/motion-tokens';
 
 /**
@@ -32,7 +32,7 @@ export type NotaMotionDecision = {
   /** Timed ease duration in milliseconds; `0` for none or spring. */
   durationMs: number;
   dataMotion: NotaDataMotion;
-  springPreset?: NotaSpringPresetName;
+  springPreset?: SpringPresetName;
 };
 
 const INSTANT: NotaMotionDecision = {

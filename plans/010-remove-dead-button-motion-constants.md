@@ -8,7 +8,7 @@
 
 ## Problem
 
-`NOTA_BUTTON_PRESS_S` and `NOTA_BUTTON_RELEASE_S` are exported from the GSAP motion token module but never consumed by runtime code. They create a false impression that button press timing is centralised in `nota-motion.ts`, when button feedback is actually implemented in CSS on `NotaButton` and `.nota-pressable`.
+`NOTA_BUTTON_PRESS_S` and `NOTA_BUTTON_RELEASE_S` are exported from the GSAP motion token module but never consumed by runtime code. They create a false impression that button press timing is centralised in `nota-motion.ts`, when button feedback is actually implemented in CSS on `Button` and `.nota-pressable`.
 
 **Grep confirmation (commit `08ed1fa`):** both symbols appear in exactly two files — definition and a spec that only asserts the constants exist. Zero imports in components, hooks, GSAP tweens, or styles.
 
@@ -39,14 +39,14 @@ it('keeps button press timings in a quick tactile band (0.2–0.4s)', () => {
 
 **Where button motion actually lives (do not change in this plan):**
 
-1. **`NotaButton`** — Tailwind on the CVA base string:
+1. **`Button`** — Tailwind on the CVA base string:
 
 ```tsx
 /* packages/design/src/components/button.tsx:34 — current (excerpt) */
 transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-200 ease-out motion-safe:active:scale-[0.98]
 ```
 
-2. **`.nota-pressable`** — app-level class for non-`NotaButton` pressables (e.g. Clerk auth submit):
+2. **`.nota-pressable`** — app-level class for non-`Button` pressables (e.g. Clerk auth submit):
 
 ```css
 /* apps/nota/styles.css:147-157 — current */
@@ -112,8 +112,8 @@ After edit, `nota-motion.ts` ends at `NOTA_SIDEBAR_SLIDE_PX` and jumps straight 
   - `rg 'NOTA_BUTTON_PRESS_S|NOTA_BUTTON_RELEASE_S' apps packages` → no matches.
   - `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` → all tests pass (3 cases).
   - `pnpm exec nx lint @nota/nota --files=apps/nota/src/lib/nota-motion.ts,apps/nota/src/lib/nota-motion.spec.ts` → clean.
-- **Feel check:** run `pnpm exec nx dev @nota/nota`, open Settings or any screen with `NotaButton`, press and hold a button:
+- **Feel check:** run `pnpm exec nx dev @nota/nota`, open Settings or any screen with `Button`, press and hold a button:
   - Subtle scale to ~0.98 on `:active`; release snaps back — unchanged from before this plan.
-  - In DevTools → Rendering → emulate `prefers-reduced-motion: reduce` — `NotaButton` skips scale (`motion-safe:` prefix); `.nota-pressable` skips `:active` transform — unchanged.
+  - In DevTools → Rendering → emulate `prefers-reduced-motion: reduce` — `Button` skips scale (`motion-safe:` prefix); `.nota-pressable` skips `:active` transform — unchanged.
   - Toggle Animations panel to 10% speed — confirm 200ms transform transition, not 250ms/350ms asymmetric GSAP (there should be no GSAP involvement on buttons).
 - **Done when:** dead exports and spec block are gone, grep is clean, `nota-motion` unit tests pass, button press feel is visually identical to pre-change.

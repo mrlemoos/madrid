@@ -8,7 +8,7 @@
 
 ## Problem
 
-Four popup surfaces use Base UI `@starting-style` / `@ending-style` scale+opacity entrances but specify **no** `duration-*` or `ease-*` on their `transition-[transform,scale,opacity]` class. Without an explicit duration, CSS defaults `transition-duration` to `0s`, so enter/exit timing is undefined (often instant or inconsistent across browsers) and does not match the repo's deliberate motion on `NotaButton`.
+Four popup surfaces use Base UI `@starting-style` / `@ending-style` scale+opacity entrances but specify **no** `duration-*` or `ease-*` on their `transition-[transform,scale,opacity]` class. Without an explicit duration, CSS defaults `transition-duration` to `0s`, so enter/exit timing is undefined (often instant or inconsistent across browsers) and does not match the repo's deliberate motion on `Button`.
 
 Per AUDIT.md category 2:
 
@@ -50,7 +50,7 @@ All instances of the shared popup motion pattern (`origin-[var(--transform-origi
 
 ## Target
 
-Every Base UI popup using the scale+opacity `@starting-style` / `@ending-style` pattern gets **`duration-200 ease-out`** — 200ms sits in the dropdown budget (150–250ms) and matches `NotaButton`.
+Every Base UI popup using the scale+opacity `@starting-style` / `@ending-style` pattern gets **`duration-200 ease-out`** — 200ms sits in the dropdown budget (150–250ms) and matches `Button`.
 
 **Shared constant** (single source of truth in `@nota/design`):
 
@@ -146,15 +146,15 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
    - Add `@nota/design` as a dependency in `packages/editor/package.json` if not already present (`workspace:*`).
 
 7. **Add tests** (red first, then green):
-   - `context-menu.spec.tsx`: new `describe('NotaContextMenuPopup (motion)')` asserting `duration-200` and `ease-out` on the popup element.
-   - `hover-card.spec.tsx`: new `describe('NotaHoverCardPopup (motion)')` with the same assertions.
+   - `context-menu.spec.tsx`: new `describe('ContextMenuPopup (motion)')` asserting `duration-200` and `ease-out` on the popup element.
+   - `hover-card.spec.tsx`: new `describe('HoverCardPopup (motion)')` with the same assertions.
 
 ## Boundaries
 
 - Do NOT touch tooltip popup styling (no motion there today).
 - Do NOT change dialog/GSAP motion (`command-palette.tsx`, `nota-motion.ts`).
 - Do NOT change PDF card hover transitions (`note-pdf-extension.tsx`).
-- Do NOT add CSS custom properties in this plan — use Tailwind `ease-out` (same class as `NotaButton`). If plan **007** is already DONE, `ease-out` will resolve to `--ease-out` via `@theme`; no extra work needed.
+- Do NOT add CSS custom properties in this plan — use Tailwind `ease-out` (same class as `Button`). If plan **007** is already DONE, `ease-out` will resolve to `--ease-out` via `@theme`; no extra work needed.
 - Do NOT change markup, Base UI structure, or `scale-95` values.
 - Do NOT add new npm dependencies.
 - If file:line drift since commit `08ed1fa`, STOP and report instead of improvising.

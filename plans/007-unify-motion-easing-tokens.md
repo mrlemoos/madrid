@@ -71,7 +71,7 @@ Marketing duplicates the old pressable curve locally as `--btn-ease: cubic-bezie
 
 ### Why it matters
 
-Press targets (`nota-pressable`, `NotaButton`, Clerk auth buttons) should share one strong ease-out. Shell chrome (sidebar width, palette backdrop) should stay on the calmer GSAP sine band. Without tokens, future edits will reintroduce drift.
+Press targets (`nota-pressable`, `Button`, Clerk auth buttons) should share one strong ease-out. Shell chrome (sidebar width, palette backdrop) should stay on the calmer GSAP sine band. Without tokens, future edits will reintroduce drift.
 
 ## Target
 
@@ -194,7 +194,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
    --ease-in-out: var(--ease-in-out);
    ```
 
-   This overrides Tailwind's weak default `ease-out` / `ease-in-out` with the strong tokens for any `ease-out` class in the nota app (including `NotaButton`).
+   This overrides Tailwind's weak default `ease-out` / `ease-in-out` with the strong tokens for any `ease-out` class in the nota app (including `Button`).
 
 6. **Bridge Tailwind utilities (marketing)** — in `apps/nota-marketing/src/styles/global.css` `@theme inline` block (~line 10), add the same two lines.
 
@@ -250,7 +250,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
   - `--ease-in-out` resolves to `cubic-bezier(0.77, 0, 0.175, 1)`
 
 - **Feel check**:
-  - **Buttons**: Click `NotaButton` in Settings and a `.nota-pressable` Clerk auth control — press scale should feel identical (same snap on `:active`).
+  - **Buttons**: Click `Button` in Settings and a `.nota-pressable` Clerk auth control — press scale should feel identical (same snap on `:active`).
   - **Sidebar**: Toggle notes sidebar — motion should feel **unchanged** (still calm ~450ms sine ease; not snappier).
   - **Command palette**: Open/close with Cmd/Ctrl+K — backdrop motion unchanged (sine.out / sine.in).
   - DevTools → Animations → 10% playback: press feedback completes in ~200ms with a fast start; sidebar width tween remains slower and softer.

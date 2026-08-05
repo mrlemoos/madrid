@@ -3,7 +3,7 @@
 import type { JSX } from 'react';
 import { useAuth } from '@clerk/react';
 import { NotaClerkSignIn } from '@/components/nota-clerk-auth';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { LoadingStatus } from '@nota/design/spinner';
 
 /** `/signin` — the Clerk sign-in form (chrome + footer come from the (auth) layout). */
 export default function SignInPage(): JSX.Element {
@@ -12,7 +12,7 @@ export default function SignInPage(): JSX.Element {
   if (!isLoaded) {
     return (
       <div className="py-8">
-        <NotaLoadingStatus label="Loading…" spinnerSize="sm" />
+        <LoadingStatus label="Loading…" spinnerSize="sm" />
       </div>
     );
   }

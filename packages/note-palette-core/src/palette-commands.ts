@@ -1,4 +1,4 @@
-import type { NotaIconName } from '@nota/design/icon';
+import type { IconName } from '@nota/design/icon';
 
 export type NotaThemeChoice = 'light' | 'dark' | 'system';
 
@@ -14,7 +14,7 @@ export type PaletteActionCommand = {
   value: string;
   label: string;
   keywords: string[];
-  icon: NotaIconName;
+  icon: IconName;
   tone: 'default' | 'destructive';
   /** Shows a trailing "(current)" marker (e.g. the active theme). */
   current: boolean;

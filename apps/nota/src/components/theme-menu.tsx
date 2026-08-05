@@ -1,7 +1,7 @@
 import { useMemo, type JSX } from 'react';
 import { Menu } from '@base-ui/react/menu';
-import { NotaIcon } from '@nota/design/icon';
-import { notaButtonVariants } from '@nota/design/button';
+import { Icon } from '@nota/design/icon';
+import { buttonVariants } from '@nota/design/button';
 import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
 import { cn } from '@/lib/utils';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
@@ -30,12 +30,12 @@ export function ThemeMenu(): JSX.Element {
         type="button"
         aria-label={t('Theme')}
         className={cn(
-          notaButtonVariants({ variant: 'outline', size: 'default' }),
+          buttonVariants({ variant: 'outline', size: 'default' }),
           'min-w-30 justify-between gap-2 px-2.5 font-normal',
         )}
       >
         <span className="truncate">{themeLabel[theme]}</span>
-        <NotaIcon
+        <Icon
           name="arrow-narrow-down"
           size={14}
           className="shrink-0 text-muted-foreground"
@@ -67,25 +67,25 @@ export function ThemeMenu(): JSX.Element {
                   closeOnClick
                   className={itemClass}
                 >
-                  <NotaIcon
+                  <Icon
                     name="bulb"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <span className="min-w-0 flex-1">{t('Light')}</span>
                   <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                    <NotaIcon name="simple-checked" size={14} />
+                    <Icon name="simple-checked" size={14} />
                   </Menu.RadioItemIndicator>
                 </Menu.RadioItem>
                 <Menu.RadioItem value="dark" closeOnClick className={itemClass}>
-                  <NotaIcon
+                  <Icon
                     name="moon"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <span className="min-w-0 flex-1">{t('Dark')}</span>
                   <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                    <NotaIcon name="simple-checked" size={14} />
+                    <Icon name="simple-checked" size={14} />
                   </Menu.RadioItemIndicator>
                 </Menu.RadioItem>
                 <Menu.RadioItem
@@ -93,14 +93,14 @@ export function ThemeMenu(): JSX.Element {
                   closeOnClick
                   className={itemClass}
                 >
-                  <NotaIcon
+                  <Icon
                     name="cpu"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
                   <span className="min-w-0 flex-1">{t('System')}</span>
                   <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                    <NotaIcon name="simple-checked" size={14} />
+                    <Icon name="simple-checked" size={14} />
                   </Menu.RadioItemIndicator>
                 </Menu.RadioItem>
               </Menu.RadioGroup>

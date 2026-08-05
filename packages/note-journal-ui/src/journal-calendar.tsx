@@ -1,5 +1,5 @@
 import { useMemo, type JSX } from 'react';
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { cn } from '@nota/design/utils';
 import {
   buildJournalCalendarCells,
@@ -168,7 +168,7 @@ export function JournalCalendar({
       </div>
 
       {!isViewingCurrentMonth ? (
-        <NotaButton
+        <Button
           type="button"
           variant="outline"
           size="sm"
@@ -176,7 +176,7 @@ export function JournalCalendar({
           onClick={onJumpToToday}
         >
           {t('Go to today')}
-        </NotaButton>
+        </Button>
       ) : null}
 
       <div className="grid grid-cols-7 gap-1 text-center text-[0.65rem] font-medium uppercase tracking-wide text-muted-foreground">

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/design/button';
+import { Button } from '@nota/design/button';
 import { cn } from '@nota/design/utils';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useNotesDataActions } from '@nota/note-runtime/notes-data-context';
@@ -337,7 +337,7 @@ export function AudioToNoteDock(): JSX.Element | null {
       {phase === 'error' && error ? (
         <div className="flex flex-col gap-2">
           <p className="text-destructive">{error}</p>
-          <NotaButton
+          <Button
             type="button"
             size="sm"
             variant="secondary"
@@ -346,7 +346,7 @@ export function AudioToNoteDock(): JSX.Element | null {
             }}
           >
             Dismiss
-          </NotaButton>
+          </Button>
         </div>
       ) : null}
 
@@ -361,7 +361,7 @@ export function AudioToNoteDock(): JSX.Element | null {
               {formatRecordingDuration(elapsedSeconds)}
             </span>
             {pauseSupported ? (
-              <NotaButton
+              <Button
                 type="button"
                 size="sm"
                 variant="outline"
@@ -371,27 +371,27 @@ export function AudioToNoteDock(): JSX.Element | null {
                 }
               >
                 {recorderPaused ? 'Resume' : 'Pause'}
-              </NotaButton>
+              </Button>
             ) : null}
           </div>
           <p className="text-muted-foreground">{statusLine}</p>
           <div className="flex flex-wrap gap-2">
-            <NotaButton
+            <Button
               type="button"
               variant="default"
               onClick={stopRecording}
               aria-label="Stop recording and generate study notes"
             >
               Stop and generate
-            </NotaButton>
-            <NotaButton
+            </Button>
+            <Button
               type="button"
               variant="outline"
               onClick={cancelRecording}
               aria-label="Cancel recording without saving"
             >
               Cancel
-            </NotaButton>
+            </Button>
           </div>
         </div>
       ) : null}

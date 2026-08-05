@@ -2,8 +2,8 @@
  * Loading affordances: indeterminate spinner and labelled status row for async UI.
  *
  * @remarks
- * Import from the package subpath only: `import { NotaSpinner, NotaLoadingStatus } from '@nota/design/spinner'`.
- * `NotaSpinner` is decorative (`aria-hidden`); prefer {@link NotaLoadingStatus} when screen readers should announce progress.
+ * Import from the package subpath only: `import { Spinner, LoadingStatus } from '@nota/design/spinner'`.
+ * `Spinner` is decorative (`aria-hidden`); prefer {@link LoadingStatus} when screen readers should announce progress.
  *
  * @packageDocumentation
  */
@@ -18,9 +18,9 @@ const NOTA_SPINNER_SIZE_CLASS: Record<'sm' | 'md', string> = {
 };
 
 /**
- * Props for {@link NotaSpinner}.
+ * Props for {@link Spinner}.
  */
-export type NotaSpinnerProps = {
+export type SpinnerProps = {
   /** Additional Tailwind / utility classes. */
   className?: string;
   /**
@@ -34,21 +34,18 @@ export type NotaSpinnerProps = {
  * Indeterminate circular progress indicator (CSS spin).
  *
  * @remarks
- * Renders a `span` with `aria-hidden`; it does not expose an accessible name. Pair with visible copy or use {@link NotaLoadingStatus} for `role="status"`.
+ * Renders a `span` with `aria-hidden`; it does not expose an accessible name. Pair with visible copy or use {@link LoadingStatus} for `role="status"`.
  *
  * @example
  * ```tsx
- * import { NotaSpinner } from '@nota/design/spinner';
+ * import { Spinner } from '@nota/design/spinner';
  *
  * export function Inline() {
- *   return <NotaSpinner size="sm" />;
+ *   return <Spinner size="sm" />;
  * }
  * ```
  */
-export function NotaSpinner({
-  className,
-  size = 'md',
-}: NotaSpinnerProps): JSX.Element {
+export function Spinner({ className, size = 'md' }: SpinnerProps): JSX.Element {
   return (
     <span
       className={cn(
@@ -62,15 +59,15 @@ export function NotaSpinner({
 }
 
 /**
- * Props for {@link NotaLoadingStatus}.
+ * Props for {@link LoadingStatus}.
  */
-export type NotaLoadingStatusProps = {
+export type LoadingStatusProps = {
   /** Visible status text (string or node). */
   label: ReactNode;
   /** Wrapper classes for the flex row. */
   className?: string;
   /**
-   * Spinner size passed to {@link NotaSpinner}.
+   * Spinner size passed to {@link Spinner}.
    * @defaultValue `'md'`
    */
   spinnerSize?: 'sm' | 'md';
@@ -84,18 +81,18 @@ export type NotaLoadingStatusProps = {
  *
  * @example
  * ```tsx
- * import { NotaLoadingStatus } from '@nota/design/spinner';
+ * import { LoadingStatus } from '@nota/design/spinner';
  *
  * export function LoadingNotes() {
- *   return <NotaLoadingStatus label="Loading notes…" spinnerSize="sm" />;
+ *   return <LoadingStatus label="Loading notes…" spinnerSize="sm" />;
  * }
  * ```
  */
-export function NotaLoadingStatus({
+export function LoadingStatus({
   label,
   className,
   spinnerSize = 'md',
-}: NotaLoadingStatusProps): JSX.Element {
+}: LoadingStatusProps): JSX.Element {
   return (
     <div
       className={cn(
@@ -105,7 +102,7 @@ export function NotaLoadingStatus({
       role="status"
       aria-live="polite"
     >
-      <NotaSpinner size={spinnerSize} />
+      <Spinner size={spinnerSize} />
       <span>{label}</span>
     </div>
   );

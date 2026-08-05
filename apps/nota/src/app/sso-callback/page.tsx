@@ -2,7 +2,7 @@
 
 import type { JSX } from 'react';
 import { AuthenticateWithRedirectCallback } from '@clerk/react';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { LoadingStatus } from '@nota/design/spinner';
 
 /**
  * OAuth landing route (`/sso-callback`): mounts the captcha target and Clerk's
@@ -17,7 +17,7 @@ export default function SsoCallbackPage(): JSX.Element {
         signInUrl="/signin"
         signUpUrl="/signup"
       />
-      <NotaLoadingStatus label="Signing you in…" />
+      <LoadingStatus label="Signing you in…" />
     </div>
   );
 }

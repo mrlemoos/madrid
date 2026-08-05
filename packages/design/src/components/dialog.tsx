@@ -3,8 +3,8 @@
  *
  * @remarks
  * Import from the package subpath only:
- * `import { NotaDialog, NotaDialogContent, … } from '@nota/design/dialog'`.
- * {@link NotaDialogContent} portals the overlay + popup with Nota surface styles
+ * `import { Dialog, DialogContent, … } from '@nota/design/dialog'`.
+ * {@link DialogContent} portals the overlay + popup with Nota surface styles
  * and {@link NOTA_DIALOG_MOTION_CLASS}.
  *
  * @packageDocumentation
@@ -13,24 +13,20 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog';
 
-import { NotaButton } from './button.js';
+import { Button } from './button.js';
 import { NOTA_DIALOG_MOTION_CLASS } from '../lib/nota-popup-motion.js';
 import { cn } from '../lib/utils.js';
 
-export type NotaDialogProps = ComponentProps<typeof DialogPrimitive.Root>;
-export type NotaDialogTriggerProps = ComponentProps<
-  typeof DialogPrimitive.Trigger
->;
-export type NotaDialogPortalProps = ComponentProps<
-  typeof DialogPrimitive.Portal
->;
-export type NotaDialogCloseProps = ComponentProps<typeof DialogPrimitive.Close>;
-export type NotaDialogOverlayProps = ComponentProps<
+export type DialogProps = ComponentProps<typeof DialogPrimitive.Root>;
+export type DialogTriggerProps = ComponentProps<typeof DialogPrimitive.Trigger>;
+export type DialogPortalProps = ComponentProps<typeof DialogPrimitive.Portal>;
+export type DialogCloseProps = ComponentProps<typeof DialogPrimitive.Close>;
+export type DialogOverlayProps = ComponentProps<
   typeof DialogPrimitive.Backdrop
 >;
-export type NotaDialogPopupProps = ComponentProps<typeof DialogPrimitive.Popup>;
-export type NotaDialogTitleProps = ComponentProps<typeof DialogPrimitive.Title>;
-export type NotaDialogDescriptionProps = ComponentProps<
+export type DialogPopupProps = ComponentProps<typeof DialogPrimitive.Popup>;
+export type DialogTitleProps = ComponentProps<typeof DialogPrimitive.Title>;
+export type DialogDescriptionProps = ComponentProps<
   typeof DialogPrimitive.Description
 >;
 
@@ -50,24 +46,21 @@ const DEFAULT_CONTENT_CLASS = cn(
  *
  * @see {@link https://base-ui.com/react/components/dialog | Base UI Dialog}
  */
-export const NotaDialog = DialogPrimitive.Root;
+export const Dialog = DialogPrimitive.Root;
 
 /** Button that opens the dialog. */
-export const NotaDialogTrigger = DialogPrimitive.Trigger;
+export const DialogTrigger = DialogPrimitive.Trigger;
 
 /** Portal for overlay + popup. */
-export const NotaDialogPortal = DialogPrimitive.Portal;
+export const DialogPortal = DialogPrimitive.Portal;
 
 /** Closes the dialog when activated. */
-export const NotaDialogClose = DialogPrimitive.Close;
+export const DialogClose = DialogPrimitive.Close;
 
 /**
  * Dimmed backdrop behind the popup.
  */
-export function NotaDialogOverlay({
-  className,
-  ...props
-}: NotaDialogOverlayProps) {
+export function DialogOverlay({ className, ...props }: DialogOverlayProps) {
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
@@ -77,7 +70,7 @@ export function NotaDialogOverlay({
   );
 }
 
-export type NotaDialogContentProps = NotaDialogPopupProps & {
+export type DialogContentProps = DialogPopupProps & {
   /** When true, render a ghost icon close control in the top-right. @defaultValue true */
   showCloseButton?: boolean;
 };
@@ -85,15 +78,15 @@ export type NotaDialogContentProps = NotaDialogPopupProps & {
 /**
  * Portaled overlay + popup surface. Pass `className` to override size/position.
  */
-export function NotaDialogContent({
+export function DialogContent({
   className,
   children,
   showCloseButton = true,
   ...props
-}: NotaDialogContentProps) {
+}: DialogContentProps) {
   return (
-    <NotaDialogPortal>
-      <NotaDialogOverlay />
+    <DialogPortal>
+      <DialogOverlay />
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(DEFAULT_CONTENT_CLASS, className)}
@@ -104,7 +97,7 @@ export function NotaDialogContent({
           <DialogPrimitive.Close
             data-slot="dialog-close"
             render={
-              <NotaButton
+              <Button
                 variant="ghost"
                 size="icon-sm"
                 className="absolute top-2 right-2"
@@ -116,14 +109,11 @@ export function NotaDialogContent({
           </DialogPrimitive.Close>
         ) : null}
       </DialogPrimitive.Popup>
-    </NotaDialogPortal>
+    </DialogPortal>
   );
 }
 
-export function NotaDialogHeader({
-  className,
-  ...props
-}: ComponentProps<'div'>) {
+export function DialogHeader({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       data-slot="dialog-header"
@@ -133,16 +123,16 @@ export function NotaDialogHeader({
   );
 }
 
-export type NotaDialogFooterProps = ComponentProps<'div'> & {
+export type DialogFooterProps = ComponentProps<'div'> & {
   showCloseButton?: boolean;
 };
 
-export function NotaDialogFooter({
+export function DialogFooter({
   className,
   showCloseButton = false,
   children,
   ...props
-}: NotaDialogFooterProps) {
+}: DialogFooterProps) {
   return (
     <div
       data-slot="dialog-footer"
@@ -154,9 +144,7 @@ export function NotaDialogFooter({
     >
       {children}
       {showCloseButton ? (
-        <DialogPrimitive.Close
-          render={<NotaButton variant="outline" size="sm" />}
-        >
+        <DialogPrimitive.Close render={<Button variant="outline" size="sm" />}>
           Close
         </DialogPrimitive.Close>
       ) : null}
@@ -164,7 +152,7 @@ export function NotaDialogFooter({
   );
 }
 
-export function NotaDialogTitle({ className, ...props }: NotaDialogTitleProps) {
+export function DialogTitle({ className, ...props }: DialogTitleProps) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -174,10 +162,10 @@ export function NotaDialogTitle({ className, ...props }: NotaDialogTitleProps) {
   );
 }
 
-export function NotaDialogDescription({
+export function DialogDescription({
   className,
   ...props
-}: NotaDialogDescriptionProps) {
+}: DialogDescriptionProps) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"

@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { NotaIcon } from '@nota/design/icon';
+import { Icon } from '@nota/design/icon';
 
 type GitHubIconProps = {
   className?: string;
@@ -10,7 +10,7 @@ export function GitHubIcon({
 }: GitHubIconProps): JSX.Element {
   return (
     <span className={className} aria-hidden>
-      <NotaIcon name="github" size={20} />
+      <Icon name="github" size={20} />
     </span>
   );
 }

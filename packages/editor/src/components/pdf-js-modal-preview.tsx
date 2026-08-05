@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NotaLoadingStatus } from '@nota/design/spinner';
+import { LoadingStatus } from '@nota/design/spinner';
 import { cn } from '@nota/design/utils';
 // Asset URL for the PDF.js worker. `new URL(..., import.meta.url)` is the
 // bundler-native way to emit and reference the asset (replaces Vite's `?url`).
@@ -87,7 +87,7 @@ export function PdfJsModalPreview({
     >
       {phase === 'loading' ? (
         <div className="flex flex-1 items-center justify-center py-12 text-sm text-muted-foreground">
-          <NotaLoadingStatus label="Loading preview…" />
+          <LoadingStatus label="Loading preview…" />
         </div>
       ) : null}
       <div

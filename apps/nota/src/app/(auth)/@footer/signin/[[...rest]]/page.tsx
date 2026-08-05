@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import Link from 'next/link';
-import { notaButtonVariants } from '@nota/design/button';
+import { buttonVariants } from '@nota/design/button';
 import { cn } from '@/lib/utils';
 
 /** `@footer` slot for `/signin` — prompt to switch to sign up. */
@@ -11,7 +11,7 @@ export default function SignInFooter(): JSX.Element {
       <Link
         href="/signup"
         className={cn(
-          notaButtonVariants({ variant: 'link', size: 'sm' }),
+          buttonVariants({ variant: 'link', size: 'sm' }),
           'h-auto p-0 text-sm',
         )}
       >

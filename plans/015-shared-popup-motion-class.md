@@ -43,7 +43,7 @@ Four Base UI popup surfaces duplicate the same three-line Tailwind motion block.
 
 **What is missing (addressed by related plan 008):**
 
-Popups lack explicit `duration-*` and `ease-out`. `NotaButton` already uses `duration-200 ease-out` (`packages/design/src/components/button.tsx:34`). Plan **008** adds `duration-200 ease-out` to these same four surfaces. This plan's shared constant **must include** those tokens so one import delivers both consolidation and the 008 target for these files.
+Popups lack explicit `duration-*` and `ease-out`. `Button` already uses `duration-200 ease-out` (`packages/design/src/components/button.tsx:34`). Plan **008** adds `duration-200 ease-out` to these same four surfaces. This plan's shared constant **must include** those tokens so one import delivers both consolidation and the 008 target for these files.
 
 **Not in scope (confirmed no duplicate):**
 
@@ -112,7 +112,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
    - `ease-out`
    - `data-[starting-style]:scale-95`
    - `data-[ending-style]:scale-95`
-2. Extend `hover-card.spec.tsx` (or add `context-menu` motion assertion) — rendered `NotaHoverCardPopup` class string includes `duration-200` and `ease-out` after wiring constant into component.
+2. Extend `hover-card.spec.tsx` (or add `context-menu` motion assertion) — rendered `HoverCardPopup` class string includes `duration-200` and `ease-out` after wiring constant into component.
 
 **Green:**
 
@@ -161,7 +161,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 ## Boundaries
 
 - Do NOT change popup **surface** tokens (border, shadow, width, padding) — motion constant only.
-- Do NOT add motion to `NotaTooltipPopup` (no Base UI starting/ending styles today).
+- Do NOT add motion to `TooltipPopup` (no Base UI starting/ending styles today).
 - Do NOT touch `command-palette.tsx`, `notes-shell.tsx`, or GSAP paths.
 - Do NOT add new dependencies.
 - Do NOT change `scale-95`, transform-origin variable name, or transition property list.

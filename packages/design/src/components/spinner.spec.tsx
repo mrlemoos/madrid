@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { NotaLoadingStatus, NotaSpinner } from './spinner.js';
+import { LoadingStatus, Spinner } from './spinner.js';
 
-describe('NotaSpinner', () => {
+describe('Spinner', () => {
   it('renders a decorative spinning ring (paired with copy elsewhere)', () => {
     // Arrange|Act
-    const { container } = render(<NotaSpinner />);
+    const { container } = render(<Spinner />);
 
     // Assert
     const spinner = container.querySelector('.animate-spin');
@@ -14,10 +14,10 @@ describe('NotaSpinner', () => {
   });
 });
 
-describe('NotaLoadingStatus', () => {
+describe('LoadingStatus', () => {
   it('exposes a polite status region with a visible label', () => {
     // Arrange|Act
-    render(<NotaLoadingStatus label="Loading graph…" />);
+    render(<LoadingStatus label="Loading graph…" />);
 
     // Assert
     const region = screen.getByRole('status');
