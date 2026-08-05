@@ -38,7 +38,6 @@ const NOTA_WORKSPACE_PACKAGES = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: NOTA_WORKSPACE_PACKAGES,
-  typescript: { ignoreBuildErrors: true },
   async headers() {
     return [
       {

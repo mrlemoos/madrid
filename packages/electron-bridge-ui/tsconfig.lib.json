@@ -25,6 +25,6 @@
     { "path": "../note-folders-ui/tsconfig.lib.json" },
     { "path": "../note-runtime/tsconfig.lib.json" },
     { "path": "../notes-offline/tsconfig.lib.json" },
-    { "path": "../web-design/tsconfig.lib.json" }
+    { "path": "../design/tsconfig.lib.json" }
   ]
 }

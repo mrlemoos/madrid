@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
-import { cn } from '@nota/web-design/utils';
+import { NotaLoadingStatus } from '@nota/design/spinner';
+import { cn } from '@nota/design/utils';
 // Asset URL for the PDF.js worker. `new URL(..., import.meta.url)` is the
 // bundler-native way to emit and reference the asset (replaces Vite's `?url`).
 const pdfjsWorkerUrl = new URL(

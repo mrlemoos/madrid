@@ -86,7 +86,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

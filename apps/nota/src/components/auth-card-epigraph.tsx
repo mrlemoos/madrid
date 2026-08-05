@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { NotaLogo } from '@/components/nota-logo';
-import { NotaCardDescription } from '@nota/web-design/card';
+import { NotaCardDescription } from '@nota/design/card';
 
 const serif = { fontFamily: '"Instrument Serif", serif' } as const;
 

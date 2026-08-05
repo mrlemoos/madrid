@@ -1,1 +1,1 @@
-export { cn, type ClassValue } from '@nota/web-design/utils';
+export { cn, type ClassValue } from '@nota/design/utils';

@@ -1,7 +1,7 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX, ReactNode } from 'react';
 import Link from 'next/link';
-import { notaButtonVariants } from '@nota/web-design/button';
+import { notaButtonVariants } from '@nota/design/button';
 import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
 import { cn } from '@/lib/utils';
 

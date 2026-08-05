@@ -15,7 +15,7 @@
   ],
   "references": [
     {
-      "path": "../../packages/web-design"
+      "path": "../../packages/design"
     },
     {
       "path": "../../packages/note-doc-plain-text"

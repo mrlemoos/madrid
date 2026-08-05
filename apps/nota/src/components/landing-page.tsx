@@ -1,8 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import { NotaIcon } from '@nota/web-design/icon';
-import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
+import { NotaIcon } from '@nota/design/icon';
 import { cn } from '@/lib/utils';
 import {
   NotaCard,
@@ -10,7 +9,7 @@ import {
   NotaCardDescription,
   NotaCardFooter,
   NotaCardHeader,
-} from '@nota/web-design/card';
+} from '@nota/design/card';
 import { AuthScreenHashLink } from '@/components/auth-screen-hash-link';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
 import { NotaLogo } from '@/components/nota-logo';
@@ -58,7 +57,7 @@ export function LandingPage(): JSX.Element {
             >
               Continue with email
               <span data-icon="inline-end" aria-hidden className="inline-flex">
-                <NotaIcon icon={ArrowNarrowRightIcon} size={16} />
+                <NotaIcon name="arrow-narrow-right" size={16} />
               </span>
             </AuthScreenHashLink>
           </NotaCardContent>

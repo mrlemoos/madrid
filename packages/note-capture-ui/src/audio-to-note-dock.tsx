@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useNotesDataActions } from '@nota/note-runtime/notes-data-context';
 import { postAudioToNoteStream } from './audio-to-note-client';

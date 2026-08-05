@@ -33,7 +33,7 @@
     { "path": "../notes-chrome-core/tsconfig.lib.json" },
     { "path": "../notes-offline/tsconfig.lib.json" },
     { "path": "../notes-yjs-core/tsconfig.lib.json" },
-    { "path": "../web-design/tsconfig.lib.json" },
+    { "path": "../design/tsconfig.lib.json" },
     { "path": "../writing-activity-ui/tsconfig.lib.json" }
   ]
 }

@@ -7,13 +7,11 @@ import { StrictMode, useEffect, type ReactNode } from 'react';
 import { setAppRouterNav } from '@nota/app-navigation-core/navigation';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
 import { AppErrorBoundary } from './components/app-error-boundary';
-import { ThemeProvider } from '@nota/web-design/theme';
+import { ThemeProvider } from '@nota/design/theme';
 import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
 import { NoteEditorCommandsProvider } from '@nota/editor';
 import { StickyDocTitleProvider } from '@nota/note-runtime/sticky-doc-title';
 import { AppSessionProvider } from '@nota/note-runtime/session-context';
-import { clerkFullNotesUrl } from '@nota/app-navigation-core/clerk-hash';
-import { ClerkSsoCallbackRoute } from './components/clerk-sso-callback-route';
 import { viteEnvString } from './lib/vite-env';
 
 const POSTHOG_PROJECT_TOKEN = viteEnvString(
@@ -57,9 +55,9 @@ export function AppProviders({ children }: AppProvidersProps) {
       signInUrl="/signin"
       signUpUrl="/signup"
       // Path routing: post-auth lands on the real `/notes` route (auth-gated by
-      // the (protected) layout).
-      signInForceRedirectUrl={clerkFullNotesUrl()}
-      signUpForceRedirectUrl={clerkFullNotesUrl()}
+      // the (protected) layout). Relative so it renders on the server too.
+      signInForceRedirectUrl="/notes"
+      signUpForceRedirectUrl="/notes"
       routerPush={(to) => {
         router.push(to);
       }}
@@ -71,7 +69,6 @@ export function AppProviders({ children }: AppProvidersProps) {
       <StrictMode>
         <DeferredPostHogRoot apiKey={POSTHOG_PROJECT_TOKEN}>
           <ClerkSupabaseBridge>
-            <ClerkSsoCallbackRoute />
             <ThemeProvider defaultTheme="system" storageKey="nota-ui-theme">
               <AppSessionProvider>
                 <StickyDocTitleProvider>

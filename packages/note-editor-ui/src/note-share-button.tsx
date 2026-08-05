@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaIcon } from '@nota/web-design/icon';
-import { LinkIcon } from '@nota/web-design/icons';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { NotaIcon } from '@nota/design/icon';
+import { cn } from '@nota/design/utils';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
 import { buildShareUrl, shareNote } from '@nota/data-source/note-share-client';
@@ -98,7 +97,7 @@ export function NoteShareButton({
         token && 'text-foreground/80',
       )}
     >
-      <NotaIcon icon={LinkIcon} size={14} strokeWidth={2} aria-hidden />
+      <NotaIcon name="link" size={14} strokeWidth={2} aria-hidden />
       {label}
     </NotaButton>
   );

@@ -41,7 +41,7 @@ Execute in phases by leverage. Within a phase, order is flexible unless **Depend
 ### Phase 3 — Popup cohesion
 
 7. **008** — Add `duration-200 ease-out` to popup surfaces, _or_ skip straight to **015** (which includes the same timing in `NOTA_POPUP_MOTION_CLASS`).
-8. **015** — `NOTA_POPUP_MOTION_CLASS` in `@nota/web-design`; dedupe `hover-card`, `context-menu`, `theme-menu`, `note-image-extension`.
+8. **015** — `NOTA_POPUP_MOTION_CLASS` in `@nota/design`; dedupe `hover-card`, `context-menu`, `theme-menu`, `note-image-extension`.
 
 ### Phase 4 — Polish and additive delight
 

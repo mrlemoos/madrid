@@ -1,7 +1,7 @@
 import { useEffect, useRef, type JSX } from 'react';
 import { createPortal } from 'react-dom';
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 import { persistedDisplayTitle } from '../../lib/note-title';
 import type { Note } from '@nota/database-types';
 

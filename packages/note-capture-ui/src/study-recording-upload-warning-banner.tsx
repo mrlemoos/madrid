@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
 
 /**

@@ -6,7 +6,16 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const clientAppDir = join(__dirname, '../../../nota/src');
 
+/** Server halves of the app after nota-server was absorbed; they may use server-only Clerk. */
+const SERVER_DIRS = [
+  join(clientAppDir, 'app/api'),
+  join(clientAppDir, 'server'),
+];
+
 function collectSourceFiles(dir: string, acc: string[] = []): string[] {
+  if (SERVER_DIRS.includes(dir)) {
+    return acc;
+  }
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
     const st = statSync(p);

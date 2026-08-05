@@ -1,5 +1,5 @@
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 import { usePrefersReducedMotion } from '@nota/nota-motion-ui/motion';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
 import { useEffect, useRef, useState, type JSX } from 'react';

@@ -9,7 +9,7 @@
  * - Core nodes: native RN implementation where possible (via TenTap bridges today)
  * - Complex nodes (tables, mermaid, pdf, advanced code, images): hybrid WebView islands
  * - Only depends on platform:shared packages + RN/TenTap glue.
- * - No @nota/editor, @nota/web-design, or other web-only packages.
+ * - No @nota/editor, @nota/design, or other web-only packages.
  */
 
 // Public editor interface

@@ -19,6 +19,6 @@
     { "path": "../note-runtime/tsconfig.lib.json" },
     { "path": "../nota-motion-ui/tsconfig.lib.json" },
     { "path": "../i18n/tsconfig.lib.json" },
-    { "path": "../web-design/tsconfig.lib.json" }
+    { "path": "../design/tsconfig.lib.json" }
   ]
 }

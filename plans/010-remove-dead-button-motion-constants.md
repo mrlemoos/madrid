@@ -42,7 +42,7 @@ it('keeps button press timings in a quick tactile band (0.2–0.4s)', () => {
 1. **`NotaButton`** — Tailwind on the CVA base string:
 
 ```tsx
-/* packages/web-design/src/components/button.tsx:34 — current (excerpt) */
+/* packages/design/src/components/button.tsx:34 — current (excerpt) */
 transition-[color,background-color,border-color,box-shadow,transform,opacity] duration-200 ease-out motion-safe:active:scale-[0.98]
 ```
 
@@ -80,14 +80,14 @@ After edit, `nota-motion.ts` ends at `NOTA_SIDEBAR_SLIDE_PX` and jumps straight 
 ## Repo conventions to follow
 
 - **GSAP tokens** live in `apps/nota/src/lib/nota-motion.ts`; only constants consumed by GSAP callers belong there. Exemplar: `NOTA_PALETTE_ENTER_S` imported by `apps/nota/src/components/command-palette.tsx:77`.
-- **Button press** belongs in `@nota/web-design/button` and `apps/nota/styles.css` (`.nota-pressable`), not in GSAP seconds. Exemplar: `packages/web-design/src/components/button.tsx:34`.
+- **Button press** belongs in `@nota/design/button` and `apps/nota/styles.css` (`.nota-pressable`), not in GSAP seconds. Exemplar: `packages/design/src/components/button.tsx:34`.
 - **Tests** for `nota-motion` assert product intent for _used_ exports only; colocated `*.spec.ts` with AAA sections (`// Arrange|Act|Assert`).
 
 ## Red / green TDD strategy
 
 1. **Red (before edit):** `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — passes today because the fourth `it` block asserts the dead constants. Grep `NOTA_BUTTON_PRESS_S` — expect 4 hits (2 definition + 2 spec import/assert lines).
 2. **Green (after edit):** same test command — still passes with three `it` blocks. Grep `NOTA_BUTTON_PRESS_S|NOTA_BUTTON_RELEASE_S` — expect 0 hits under `apps/`, `packages/`.
-3. **Regression guard:** no new tests required; removal is the fix. Optional sanity: `pnpm exec nx test @nota/web-design --testPathPattern=button` still passes (unchanged).
+3. **Regression guard:** no new tests required; removal is the fix. Optional sanity: `pnpm exec nx test @nota/design --testPathPattern=button` still passes (unchanged).
 
 ## Steps
 
@@ -99,7 +99,7 @@ After edit, `nota-motion.ts` ends at `NOTA_SIDEBAR_SLIDE_PX` and jumps straight 
 
 ## Boundaries
 
-- Do NOT touch `packages/web-design/src/components/button.tsx`, `apps/nota/styles.css`, or `.nota-pressable` behaviour.
+- Do NOT touch `packages/design/src/components/button.tsx`, `apps/nota/styles.css`, or `.nota-pressable` behaviour.
 - Do NOT add CSS duration tokens or wire GSAP to buttons.
 - Do NOT change `NOTA_PALETTE_*`, `NOTA_SIDEBAR_*`, sine eases, `usePrefersReducedMotion`, or GSAP re-exports.
 - Do NOT add dependencies.

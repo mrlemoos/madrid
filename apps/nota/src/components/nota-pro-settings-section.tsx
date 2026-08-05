@@ -1,7 +1,7 @@
 import { PricingTable } from '@clerk/react';
 import { useCallback, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { NotaButton } from '@nota/design/button';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 import {
   useNotesDataActions,
   useNotesDataMeta,

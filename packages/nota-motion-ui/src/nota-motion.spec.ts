@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  NOTA_EASE_OUT,
-  NOTA_SPRING_SHELL,
-} from '@nota/web-design/motion-tokens';
+import { NOTA_EASE_OUT, NOTA_SPRING_SHELL } from '@nota/design/motion-tokens';
 import {
   NOTA_MOTION_EASE_IN,
   NOTA_MOTION_EASE_IN_OUT,
@@ -45,7 +42,7 @@ describe('nota-motion', () => {
     expect(NOTA_SIDEBAR_SLIDE_PX).toBeLessThanOrEqual(32);
   });
 
-  it('re-exports press asymmetry and spring presets from web-design tokens', () => {
+  it('re-exports press asymmetry and spring presets from design tokens', () => {
     // Arrange / Act / Assert — app consumers import from nota-motion
     expect(NOTA_PRESS_IN_MS).toBe(100);
     expect(NOTA_PRESS_OUT_MS).toBe(160);

@@ -3,7 +3,7 @@
 import type { JSX } from 'react';
 import { useAuth } from '@clerk/react';
 import { NotaClerkSignIn } from '@/components/nota-clerk-auth';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 
 /** `/signin` — the Clerk sign-in form (chrome + footer come from the (auth) layout). */
 export default function SignInPage(): JSX.Element {

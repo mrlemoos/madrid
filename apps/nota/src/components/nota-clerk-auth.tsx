@@ -2,8 +2,8 @@ import { SignIn, SignUp } from '@clerk/react';
 import { shadcn } from '@clerk/ui/themes';
 import type { JSX } from 'react';
 
-import { notaButtonVariants } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { notaButtonVariants } from '@nota/design/button';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 import { cn } from '@/lib/utils';
 
 const authFallback = (
@@ -32,7 +32,9 @@ const clerkPrimaryButton = cn(
 );
 
 /** Nota glass-card auth: shadcn tokens, no nested Clerk card chrome. */
-export const notaClerkAuthAppearance = {
+// Not exported: its inferred type reaches into @clerk/ui internals that can't be
+// named portably (TS2742), and only the two components below use it.
+const notaClerkAuthAppearance = {
   theme: shadcn,
   options: {
     logoPlacement: 'none' as const,

@@ -11,7 +11,7 @@
 ## Constraints
 
 - Must only depend on `platform:shared` packages.
-- No dependency on web-only packages (@nota/editor, @nota/web-design, etc.).
+- No dependency on web-only packages (@nota/editor, @nota/design, etc.).
 - Long-term: changes to web editor nodes must be mirrored here with tests.
 
 ## Key Decisions from Planning

@@ -1,4 +1,4 @@
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 
 /** Target for `prefers-reduced-transparency` overrides in `styles.css`. */
 export const NOTA_NOTES_SIDEBAR_CHROME_CLASS = 'nota-notes-sidebar-chrome';

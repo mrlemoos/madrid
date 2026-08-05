@@ -115,7 +115,7 @@
     "@nota/notes-chrome-core": "workspace:*",
     "@nota/notes-offline": "workspace:*",
     "@nota/notes-yjs-core": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@nota/writing-activity-ui": "workspace:*",
     "@supabase/supabase-js": "catalog:",
     "@tiptap/core": "^2.11.5",

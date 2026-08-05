@@ -46,7 +46,7 @@
       "path": "../note-link-graph/tsconfig.lib.json"
     },
     {
-      "path": "../web-design/tsconfig.lib.json"
+      "path": "../design/tsconfig.lib.json"
     }
   ]
 }

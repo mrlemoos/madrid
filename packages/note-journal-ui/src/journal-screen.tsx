@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState, type JSX } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import {
   buildJournalEntriesFromNotes,
   filterJournalEntriesByDateKey,

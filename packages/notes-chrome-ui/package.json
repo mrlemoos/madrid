@@ -72,7 +72,7 @@
     "@nota/note-runtime": "workspace:*",
     "@nota/nota-motion-ui": "workspace:*",
     "@nota/notes-chrome-core": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@nota/writing-activity-core": "workspace:*",
     "react": "catalog:"
   },

@@ -12,17 +12,8 @@ import {
   type SetStateAction,
   type JSX,
 } from 'react';
-import { NotaIcon } from '@nota/web-design/icon';
-import {
-  ArrowNarrowRightIcon,
-  FileDescriptionIcon,
-  FolderIcon,
-  HomeIcon,
-  PenIcon,
-  TrashIcon,
-  UserPlusIcon,
-} from '@nota/web-design/icons';
-import { NotaTintCircle } from '@nota/web-design/nota-tint-circle';
+import { NotaIcon } from '@nota/design/icon';
+import { NotaTintCircle } from '@nota/design/nota-tint-circle';
 import {
   NotaContextMenu,
   NotaContextMenuItem,
@@ -34,15 +25,15 @@ import {
   NotaContextMenuSubmenuTrigger,
   NotaContextMenuTrigger,
   NotaContextMenuViewport,
-} from '@nota/web-design/context-menu';
+} from '@nota/design/context-menu';
 import {
   NotaTooltip,
   NotaTooltipPopup,
   NotaTooltipPortal,
   NotaTooltipPositioner,
   NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/tooltip';
+import { cn } from '@nota/design/utils';
 import { NOTA_TRACKING_CHROME_XS_CLASS } from '@nota/notes-chrome-core/chrome-type';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
@@ -170,7 +161,7 @@ function NoteRow(options: {
               }}
             >
               <NotaIcon
-                icon={FileDescriptionIcon}
+                name="file-description"
                 size={14}
                 strokeWidth={1.5}
                 aria-hidden
@@ -211,14 +202,14 @@ function NoteRow(options: {
                   <NotaContextMenuSubmenuTrigger label={t('Move to')}>
                     <span className="inline-flex min-w-0 flex-1 items-center gap-2">
                       <NotaIcon
-                        icon={FolderIcon}
+                        name="folder"
                         size={16}
                         className="shrink-0 text-muted-foreground"
                       />
                       <span className="min-w-0 flex-1">{t('Move to')}</span>
                     </span>
                     <NotaIcon
-                      icon={ArrowNarrowRightIcon}
+                      name="arrow-narrow-right"
                       size={14}
                       className="shrink-0 text-muted-foreground"
                     />
@@ -238,7 +229,7 @@ function NoteRow(options: {
                             }}
                           >
                             <NotaIcon
-                              icon={HomeIcon}
+                              name="home"
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
@@ -253,7 +244,7 @@ function NoteRow(options: {
                               }}
                             >
                               <NotaIcon
-                                icon={FolderIcon}
+                                name="folder"
                                 size={16}
                                 className="shrink-0 text-muted-foreground"
                               />
@@ -270,7 +261,7 @@ function NoteRow(options: {
                             }}
                           >
                             <NotaIcon
-                              icon={UserPlusIcon}
+                              name="user-plus"
                               size={16}
                               className="shrink-0 text-muted-foreground"
                             />
@@ -306,7 +297,7 @@ function NoteRow(options: {
                   }}
                 >
                   <NotaIcon
-                    icon={TrashIcon}
+                    name="trash"
                     size={16}
                     className="shrink-0 text-destructive"
                   />
@@ -450,7 +441,7 @@ function FolderRow(options: {
                   )}
                   aria-hidden
                 >
-                  <NotaIcon icon={FolderIcon} size={14} strokeWidth={1.5} />
+                  <NotaIcon name="folder" size={14} strokeWidth={1.5} />
                 </span>
                 {renamingFolderId === folder.id ? (
                   <input
@@ -528,7 +519,7 @@ function FolderRow(options: {
                   }}
                 >
                   <NotaIcon
-                    icon={PenIcon}
+                    name="pen"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
@@ -542,7 +533,7 @@ function FolderRow(options: {
                     }}
                   >
                     <NotaIcon
-                      icon={UserPlusIcon}
+                      name="user-plus"
                       size={16}
                       className="shrink-0 text-muted-foreground"
                     />
@@ -556,7 +547,7 @@ function FolderRow(options: {
                   }}
                 >
                   <NotaIcon
-                    icon={UserPlusIcon}
+                    name="user-plus"
                     size={16}
                     className="shrink-0 text-muted-foreground"
                   />
@@ -567,7 +558,7 @@ function FolderRow(options: {
                     <NotaContextMenuSubmenuTrigger label={t('Tint folder')}>
                       <span className="inline-flex min-w-0 flex-1 items-center gap-2">
                         <NotaIcon
-                          icon={FolderIcon}
+                          name="folder"
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
@@ -576,7 +567,7 @@ function FolderRow(options: {
                         </span>
                       </span>
                       <NotaIcon
-                        icon={ArrowNarrowRightIcon}
+                        name="arrow-narrow-right"
                         size={14}
                         className="shrink-0 text-muted-foreground"
                       />
@@ -629,7 +620,7 @@ function FolderRow(options: {
                   }}
                 >
                   <NotaIcon
-                    icon={TrashIcon}
+                    name="trash"
                     size={16}
                     className="shrink-0 text-destructive"
                   />
@@ -1138,7 +1129,7 @@ export function NotesSidebarList({
                         }}
                       >
                         <NotaIcon
-                          icon={UserPlusIcon}
+                          name="user-plus"
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />
@@ -1151,7 +1142,7 @@ export function NotesSidebarList({
                         }}
                       >
                         <NotaIcon
-                          icon={UserPlusIcon}
+                          name="user-plus"
                           size={16}
                           className="shrink-0 text-muted-foreground"
                         />

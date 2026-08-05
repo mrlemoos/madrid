@@ -33,7 +33,7 @@ import {
   NoteImageLightbox,
   type NoteImageLightboxImage,
 } from './note-image-lightbox';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { NOTA_TRACKING_DISPLAY_CLASS } from '@nota/notes-chrome-core/chrome-type';
 import type { Editor } from '@tiptap/core';
 import {

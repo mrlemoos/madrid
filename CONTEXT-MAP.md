@@ -59,6 +59,6 @@ feature cluster.
 | `@nota/notes-offline-core`    | [`packages/notes-offline-core/CONTEXT.md`](packages/notes-offline-core/CONTEXT.md)       | [`packages/notes-offline-core/docs/adr/`](packages/notes-offline-core/docs/adr/)       |
 | `@nota/notes-yjs-core`        | [`packages/notes-yjs-core/CONTEXT.md`](packages/notes-yjs-core/CONTEXT.md)               | [`packages/notes-yjs-core/docs/adr/`](packages/notes-yjs-core/docs/adr/)               |
 | `@nota/validation`            | [`packages/validation/CONTEXT.md`](packages/validation/CONTEXT.md)                       | [`packages/validation/docs/adr/`](packages/validation/docs/adr/)                       |
-| `@nota/web-design`            | [`packages/web-design/CONTEXT.md`](packages/web-design/CONTEXT.md)                       | [`packages/web-design/docs/adr/`](packages/web-design/docs/adr/)                       |
+| `@nota/design`                | [`packages/design/CONTEXT.md`](packages/design/CONTEXT.md)                               | [`packages/design/docs/adr/`](packages/design/docs/adr/)                               |
 | `@nota/writing-activity-core` | [`packages/writing-activity-core/CONTEXT.md`](packages/writing-activity-core/CONTEXT.md) | [`packages/writing-activity-core/docs/adr/`](packages/writing-activity-core/docs/adr/) |
 | `@nota/writing-activity-ui`   | [`packages/writing-activity-ui/CONTEXT.md`](packages/writing-activity-ui/CONTEXT.md)     | [`packages/writing-activity-ui/docs/adr/`](packages/writing-activity-ui/docs/adr/)     |

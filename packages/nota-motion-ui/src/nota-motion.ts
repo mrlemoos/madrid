@@ -8,7 +8,7 @@ import {
   NOTA_SPRING_PRESETS,
   NOTA_SPRING_SETTLE,
   NOTA_SPRING_SHELL,
-} from '@nota/web-design/motion-tokens';
+} from '@nota/design/motion-tokens';
 import { NOTA_SIDEBAR_DEFAULT_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
 import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
@@ -16,7 +16,7 @@ gsap.registerPlugin(useGSAP);
 
 /**
  * GSAP shell/palette eases — calm sine band; see nota-motion.spec.ts.
- * CSS micro-interactions use `@nota/web-design` `--ease-out` / `--ease-in-out`
+ * CSS micro-interactions use `@nota/design` `--ease-out` / `--ease-in-out`
  * (motion-tokens.ts / theme-chrome.css), not these GSAP strings.
  * Frequency → animate? / spring? / none? lives in `nota-motion-contract.ts`.
  */

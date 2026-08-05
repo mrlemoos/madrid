@@ -1,8 +1,4 @@
-import type { ComponentProps } from 'react';
-import type { NotaIcon } from '@nota/web-design/icon';
-import { BulbIcon, CpuIcon, MoonIcon } from '@nota/web-design/icons';
-
-type NotaIconType = ComponentProps<typeof NotaIcon>['icon'];
+import type { NotaIconName } from '@nota/design/icon';
 
 export type NotaThemeChoice = 'light' | 'dark' | 'system';
 
@@ -18,7 +14,7 @@ export type PaletteActionCommand = {
   value: string;
   label: string;
   keywords: string[];
-  icon: NotaIconType;
+  icon: NotaIconName;
   tone: 'default' | 'destructive';
   /** Shows a trailing "(current)" marker (e.g. the active theme). */
   current: boolean;
@@ -49,7 +45,7 @@ export function buildAppearanceCommands(
       value: 'use-light-theme',
       label: 'Use light theme',
       keywords: ['light', ...APPEARANCE_KEYWORDS],
-      icon: BulbIcon,
+      icon: 'bulb',
       tone: 'default',
       current: ctx.theme === 'light',
       run: choose('light'),
@@ -58,7 +54,7 @@ export function buildAppearanceCommands(
       value: 'use-dark-theme',
       label: 'Use dark theme',
       keywords: ['dark', ...APPEARANCE_KEYWORDS],
-      icon: MoonIcon,
+      icon: 'moon',
       tone: 'default',
       current: ctx.theme === 'dark',
       run: choose('dark'),
@@ -67,7 +63,7 @@ export function buildAppearanceCommands(
       value: 'use-system-theme',
       label: 'Use system theme',
       keywords: ['system', 'auto', 'os', 'default', ...APPEARANCE_KEYWORDS],
-      icon: CpuIcon,
+      icon: 'cpu',
       tone: 'default',
       current: ctx.theme === 'system',
       run: choose('system'),

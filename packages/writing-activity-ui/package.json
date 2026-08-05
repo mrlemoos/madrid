@@ -49,7 +49,7 @@
     "@nota/i18n": "workspace:*",
     "@nota/note-journal-core": "workspace:*",
     "@nota/note-runtime": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@nota/writing-activity-core": "workspace:*",
     "react": "catalog:"
   },

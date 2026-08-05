@@ -107,7 +107,7 @@
     "@nota/note-folders-ui": "workspace:*",
     "@nota/note-runtime": "workspace:*",
     "@nota/notes-offline": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef, type JSX } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import type { JournalEntry } from '@nota/note-journal-core/notes';
 import { useJournalTranslator } from './use-journal-translator';
 

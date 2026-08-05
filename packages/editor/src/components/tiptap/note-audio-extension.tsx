@@ -5,8 +5,8 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { NotaButton } from '@nota/design/button';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 import {
   NotaTooltip,
   NotaTooltipPopup,
@@ -14,8 +14,8 @@ import {
   NotaTooltipPositioner,
   NotaTooltipProvider,
   NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/tooltip';
+import { cn } from '@nota/design/utils';
 import { useNotePdfDocContext } from './note-pdf-extension';
 
 function NoteAudioNodeView(props: NodeViewProps) {

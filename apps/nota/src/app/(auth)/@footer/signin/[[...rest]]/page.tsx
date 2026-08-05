@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import Link from 'next/link';
-import { notaButtonVariants } from '@nota/web-design/button';
+import { notaButtonVariants } from '@nota/design/button';
 import { cn } from '@/lib/utils';
 
 /** `@footer` slot for `/signin` — prompt to switch to sign up. */

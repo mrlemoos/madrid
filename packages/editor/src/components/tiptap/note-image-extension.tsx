@@ -1,21 +1,15 @@
 import { Menu } from '@base-ui/react/menu';
 import { Node, mergeAttributes } from '@tiptap/core';
-import { NotaIcon } from '@nota/web-design/icon';
-import {
-  AlignCenterIcon,
-  ArrowNarrowLeftIcon,
-  ArrowNarrowRightIcon,
-  SimpleCheckedIcon,
-} from '@nota/web-design/icons';
+import { NotaIcon, type NotaIconName } from '@nota/design/icon';
 import {
   NodeViewWrapper,
   ReactNodeViewRenderer,
   type NodeViewProps,
 } from '@tiptap/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { NotaButton, notaButtonVariants } from '@nota/web-design/button';
-import { NOTA_POPUP_MOTION_CLASS } from '@nota/web-design/popup-motion';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { NotaButton, notaButtonVariants } from '@nota/design/button';
+import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 import {
   NotaTooltip,
   NotaTooltipPopup,
@@ -23,8 +17,8 @@ import {
   NotaTooltipPositioner,
   NotaTooltipProvider,
   NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/tooltip';
+import { cn } from '@nota/design/utils';
 import { useNotePdfDocContext } from './note-pdf-extension';
 
 export type NoteImageAlign = 'left' | 'center' | 'right';
@@ -42,10 +36,10 @@ const ALIGN_MENU_ITEM_CLASS = cn(
   'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
 );
 
-const ALIGN_TRIGGER_ICON: Record<NoteImageAlign, typeof ArrowNarrowLeftIcon> = {
-  left: ArrowNarrowLeftIcon,
-  center: AlignCenterIcon,
-  right: ArrowNarrowRightIcon,
+const ALIGN_TRIGGER_ICON: Record<NoteImageAlign, NotaIconName> = {
+  left: 'arrow-narrow-left',
+  center: 'align-center',
+  right: 'arrow-narrow-right',
 };
 
 export function NoteImageNodeView(props: NodeViewProps) {
@@ -258,7 +252,7 @@ export function NoteImageNodeView(props: NodeViewProps) {
                       )}
                     >
                       <NotaIcon
-                        icon={ALIGN_TRIGGER_ICON[align]}
+                        name={ALIGN_TRIGGER_ICON[align]}
                         size={16}
                         className="shrink-0"
                       />
@@ -289,16 +283,13 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
                                 <NotaIcon
-                                  icon={ArrowNarrowLeftIcon}
+                                  name="arrow-narrow-left"
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Left</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <NotaIcon
-                                    icon={SimpleCheckedIcon}
-                                    size={14}
-                                  />
+                                  <NotaIcon name="simple-checked" size={14} />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                               <Menu.RadioItem
@@ -307,16 +298,13 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
                                 <NotaIcon
-                                  icon={AlignCenterIcon}
+                                  name="align-center"
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Centre</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <NotaIcon
-                                    icon={SimpleCheckedIcon}
-                                    size={14}
-                                  />
+                                  <NotaIcon name="simple-checked" size={14} />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                               <Menu.RadioItem
@@ -325,16 +313,13 @@ export function NoteImageNodeView(props: NodeViewProps) {
                                 className={ALIGN_MENU_ITEM_CLASS}
                               >
                                 <NotaIcon
-                                  icon={ArrowNarrowRightIcon}
+                                  name="arrow-narrow-right"
                                   size={16}
                                   className="shrink-0 text-muted-foreground"
                                 />
                                 <span className="min-w-0 flex-1">Right</span>
                                 <Menu.RadioItemIndicator className="flex size-4 shrink-0 items-center justify-center">
-                                  <NotaIcon
-                                    icon={SimpleCheckedIcon}
-                                    size={14}
-                                  />
+                                  <NotaIcon name="simple-checked" size={14} />
                                 </Menu.RadioItemIndicator>
                               </Menu.RadioItem>
                             </Menu.RadioGroup>

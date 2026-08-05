@@ -40,7 +40,7 @@
     "@nota/nota-motion-ui": "workspace:*",
     "@nota/note-journal-core": "workspace:*",
     "@nota/note-runtime": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@tanstack/react-virtual": "^3.13.24",
     "react": "catalog:"
   },

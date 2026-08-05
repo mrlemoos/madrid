@@ -108,7 +108,7 @@
   "dependencies": {
     "@gsap/react": "catalog:",
     "@nota/nota-motion-core": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "gsap": "catalog:",
     "react": "catalog:"
   },

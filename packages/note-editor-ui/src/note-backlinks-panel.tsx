@@ -1,6 +1,6 @@
 import { buildNoteLinkGraph, notesToIdMap } from '@nota/note-link-graph';
 import { useDeferredValue, useMemo, type JSX } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
 import {
   NOTA_PRESSABLE_CLASS,

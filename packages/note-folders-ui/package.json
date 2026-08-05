@@ -143,7 +143,7 @@
     "@nota/i18n": "workspace:*",
     "@nota/note-folders-core": "workspace:*",
     "@nota/note-runtime": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@nota/writing-activity-ui": "workspace:*",
     "react": "catalog:"
   },

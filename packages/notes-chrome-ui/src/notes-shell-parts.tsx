@@ -1,13 +1,8 @@
 import type { JSX, ReactNode } from 'react';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaIcon } from '@nota/web-design/icon';
-import {
-  ArrowNarrowLeftIcon,
-  ArrowNarrowRightIcon,
-} from '@nota/web-design/icons';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { NotaIcon } from '@nota/design/icon';
+import { cn } from '@nota/design/utils';
 import { replaceScreen } from '@nota/app-navigation-core/navigation';
 import {
   consumeNavIntent,
@@ -37,25 +32,7 @@ import {
   NotaTooltipPopup,
   NotaTooltipProvider,
   NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
-
-/** Avoid `fallback={null}`: paywall redirect hits Settings before the chunk loads; Electron notes root is transparent so an empty main reads as a blank screen. */
-export function LazyNotesRouteFallback({
-  label,
-}: {
-  label: string;
-}): JSX.Element {
-  return (
-    <div
-      className={cn(
-        'flex min-h-[40vh] flex-col items-center justify-center px-4',
-        'bg-background/80 text-sm text-muted-foreground',
-      )}
-    >
-      <NotaLoadingStatus label={label} />
-    </div>
-  );
-}
+} from '@nota/design/tooltip';
 
 export function SidebarToggle({
   className,
@@ -88,13 +65,13 @@ export function SidebarToggle({
             >
               {open ? (
                 <NotaIcon
-                  icon={ArrowNarrowLeftIcon}
+                  name="arrow-narrow-left"
                   size={20}
                   strokeWidth={1.5}
                 />
               ) : (
                 <NotaIcon
-                  icon={ArrowNarrowRightIcon}
+                  name="arrow-narrow-right"
                   size={20}
                   strokeWidth={1.5}
                 />

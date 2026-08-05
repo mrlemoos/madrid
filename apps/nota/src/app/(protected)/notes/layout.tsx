@@ -16,7 +16,7 @@ import { repairClerkAuthLocationHash } from '@nota/app-navigation-core/clerk-has
 import { fetchNotaProEntitled } from '@/lib/nota-server-client';
 import { runWelcomeNoteSeedIfNeeded } from '@/lib/welcome-note-seed';
 import { clearNoteAttachmentSignedUrlCache } from '@nota/data-source/attachment-signed-url-cache';
-import { SignedInCommandPalette } from '@/signed-in-command-palette';
+import { SignedInCommandPalette } from '@nota/note-palette-ui/signed-in-command-palette';
 import { cn } from '@/lib/utils';
 
 /**

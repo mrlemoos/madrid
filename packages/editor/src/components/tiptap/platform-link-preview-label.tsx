@@ -9,8 +9,8 @@ import {
   NotaHoverCardPositioner,
   NotaHoverCardPopup,
   NotaHoverCardTrigger,
-} from '@nota/web-design/hover-card';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/hover-card';
+import { cn } from '@nota/design/utils';
 import { safeOgImageSrcForPreview } from '../../lib/og-image-url';
 import { useNotePdfDocContext } from './note-pdf-extension';
 

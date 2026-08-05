@@ -37,7 +37,7 @@ const folderDeleteDialog = readFileSync(
 const commandPalette = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../components/command-palette.tsx',
+    '../../../../packages/note-palette-ui/src/command-palette.tsx',
   ),
   'utf8',
 );

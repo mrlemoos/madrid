@@ -1,8 +1,8 @@
 import { useCallback, useId, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { NotaButton } from '@nota/web-design/button';
-import { NOTA_DIALOG_MOTION_CLASS } from '@nota/web-design/popup-motion';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { NOTA_DIALOG_MOTION_CLASS } from '@nota/design/popup-motion';
+import { cn } from '@nota/design/utils';
 import type { Folder } from '@nota/database-types';
 import { useFolderTranslator } from './use-folder-translator';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';

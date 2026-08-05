@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Note, NoteAttachment } from '@nota/database-types';
 import { NoteEditor } from './note-editor';
 import { NoteBacklinksPanel } from './note-backlinks-panel';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { noteSurfaceClassNames, parseNoteEditorSettings } from '@nota/editor';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';

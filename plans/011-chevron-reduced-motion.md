@@ -45,7 +45,7 @@ Behaviour under reduced motion:
 The repo already uses Tailwind `motion-safe:` to gate movement without custom CSS:
 
 - `apps/nota/src/components/note-image-lightbox.tsx:98` — `motion-safe:transition motion-safe:duration-300 motion-safe:ease-out`
-- `packages/web-design/src/components/button.tsx:34` — `motion-safe:active:scale-[0.98]` (press feedback gated; colour transitions remain)
+- `packages/design/src/components/button.tsx:34` — `motion-safe:active:scale-[0.98]` (press feedback gated; colour transitions remain)
 
 Prefer the `motion-safe:` prefix over a new `@media (prefers-reduced-motion: reduce)` block in `styles.css` for this one-off utility string. Do **not** add `ease-out` in this plan — duration and easing are out of scope for finding #11; only the reduced-motion guard is required.
 

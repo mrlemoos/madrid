@@ -13,10 +13,10 @@
   "iconLibrary": "itshover",
   "rtl": false,
   "aliases": {
-    "components": "../../packages/web-design/src/components",
-    "utils": "../../packages/web-design/src/lib/utils",
-    "ui": "../../packages/web-design/src/components",
-    "lib": "../../packages/web-design/src/lib",
+    "components": "../../packages/design/src/components",
+    "utils": "../../packages/design/src/lib/utils",
+    "ui": "../../packages/design/src/components",
+    "lib": "../../packages/design/src/lib",
     "hooks": "@/hooks"
   },
   "menuColor": "default",

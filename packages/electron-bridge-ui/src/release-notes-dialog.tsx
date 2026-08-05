@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 import { fetchReleases } from '@nota/nota-server-client';
 import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
 import { notaServerBaseUrl } from './vite-env';

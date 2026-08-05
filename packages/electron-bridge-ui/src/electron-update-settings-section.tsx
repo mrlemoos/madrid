@@ -1,4 +1,4 @@
-import { NotaButton } from '@nota/web-design/button';
+import { NotaButton } from '@nota/design/button';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import {
   parseNotaUpdateStatusPayload,

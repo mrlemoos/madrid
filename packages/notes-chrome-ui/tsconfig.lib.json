@@ -30,7 +30,7 @@
     { "path": "../note-runtime/tsconfig.lib.json" },
     { "path": "../nota-motion-ui/tsconfig.lib.json" },
     { "path": "../notes-chrome-core/tsconfig.lib.json" },
-    { "path": "../web-design/tsconfig.lib.json" },
+    { "path": "../design/tsconfig.lib.json" },
     { "path": "../writing-activity-core/tsconfig.lib.json" }
   ]
 }

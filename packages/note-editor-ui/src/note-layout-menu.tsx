@@ -1,15 +1,14 @@
 import { useCallback, useRef, useState, type JSX } from 'react';
-import { NotaIcon } from '@nota/web-design/icon';
-import { MousePointer2Icon } from '@nota/web-design/icons';
-import { NotaButton } from '@nota/web-design/button';
+import { NotaIcon } from '@nota/design/icon';
+import { NotaButton } from '@nota/design/button';
 import {
   NotaDialog,
   NotaDialogContent,
   NotaDialogHeader,
   NotaDialogTitle,
   NotaDialogTrigger,
-} from '@nota/web-design/dialog';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/dialog';
+import { cn } from '@nota/design/utils';
 import {
   NOTE_THEME_LABEL,
   NOTE_THEME_OPTIONS,
@@ -79,7 +78,7 @@ export function NoteLayoutMenu({
           />
         }
       >
-        <NotaIcon icon={MousePointer2Icon} size={18} />
+        <NotaIcon name="mouse-pointer-2" size={18} />
       </NotaDialogTrigger>
       <NotaDialogContent
         showCloseButton={false}

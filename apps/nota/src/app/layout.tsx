@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { AppProvidersBoundary } from './app-providers-boundary';
+import { AppProviders } from '@/providers';
 
 // Fonts via the JS graph (Next bundles the woff2 assets), matching the former
 // Vite `main.tsx` imports. Order preserved.
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <AppProvidersBoundary>{children}</AppProvidersBoundary>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
 import { useIsElectron } from './use-is-electron';
 

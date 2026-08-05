@@ -66,7 +66,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "class-variance-authority": "^0.7.1"
   },
   "devDependencies": {

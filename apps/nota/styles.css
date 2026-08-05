@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@import '@nota/web-design/theme-chrome.css';
+@import '@nota/design/theme-chrome.css';
 
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';

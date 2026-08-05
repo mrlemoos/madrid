@@ -6,7 +6,7 @@ import {
   NotaCardContent,
   NotaCardFooter,
   NotaCardHeader,
-} from '@nota/web-design/card';
+} from '@nota/design/card';
 import { AuthCardEpigraph } from '@/components/auth-card-epigraph';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';

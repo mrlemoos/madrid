@@ -14,8 +14,8 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { NotaButton } from '@nota/design/button';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 import {
   NotaTooltip,
   NotaTooltipPopup,
@@ -23,8 +23,8 @@ import {
   NotaTooltipPositioner,
   NotaTooltipProvider,
   NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
-import { cn } from '@nota/web-design/utils';
+} from '@nota/design/tooltip';
+import { cn } from '@nota/design/utils';
 import { pdfPreviewSrc } from '../../lib/pdf-preview-url';
 import { PdfJsModalPreview } from '../pdf-js-modal-preview';
 import { NotePdfThumbnailFrame } from './note-pdf-thumbnail-frame';

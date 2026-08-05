@@ -1,5 +1,5 @@
 import { useEffect, useRef, type JSX } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import { useIsElectron } from './use-is-electron';

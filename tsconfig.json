@@ -25,7 +25,7 @@
       "path": "./packages/helper-hooks"
     },
     {
-      "path": "./packages/web-design"
+      "path": "./packages/design"
     },
     {
       "path": "./packages/i18n"
@@ -122,6 +122,9 @@
     },
     {
       "path": "./packages/note-editor-ui"
+    },
+    {
+      "path": "./packages/note-palette-ui"
     }
   ]
 }

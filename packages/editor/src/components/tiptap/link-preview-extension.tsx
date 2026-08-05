@@ -5,9 +5,9 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaSpinner } from '@nota/web-design/spinner';
-import { cn } from '@nota/web-design/utils';
+import { NotaButton } from '@nota/design/button';
+import { NotaSpinner } from '@nota/design/spinner';
+import { cn } from '@nota/design/utils';
 import { safeOgImageSrcForPreview } from '../../lib/og-image-url';
 import { revertLinkPreviewToParagraph } from './link-preview-scan';
 import { useNotePdfDocContext } from './note-pdf-extension';
@@ -31,8 +31,8 @@ function linkPreviewHasPersistedMeta(node: {
   if (platformPreviewFromAttrs(node.attrs)) return true;
   return Boolean(
     stringifyPreviewAttr(node.attrs['title']).trim() ||
-    stringifyPreviewAttr(node.attrs['description']).trim() ||
-    stringifyPreviewAttr(node.attrs['image']).trim(),
+      stringifyPreviewAttr(node.attrs['description']).trim() ||
+      stringifyPreviewAttr(node.attrs['image']).trim(),
   );
 }
 

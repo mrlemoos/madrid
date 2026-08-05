@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
-import { clerkFullNotesUrl } from '@nota/app-navigation-core/clerk-hash';
 import { AppProviders } from './providers';
 
 const viteEnvStringMock = vi.hoisted(() =>
@@ -57,11 +56,7 @@ vi.mock('@nota/note-runtime/clerk-supabase-bridge', () => ({
   ),
 }));
 
-vi.mock('./components/clerk-sso-callback-route', () => ({
-  ClerkSsoCallbackRoute: () => <div data-testid="clerk-sso-callback-route" />,
-}));
-
-vi.mock('@nota/web-design/theme', () => ({
+vi.mock('@nota/design/theme', () => ({
   ThemeProvider: ({
     children,
     defaultTheme,
@@ -143,7 +138,6 @@ describe('AppProviders', () => {
     expect(screen.getByTestId('sticky-doc-title-provider')).toBeTruthy();
     expect(screen.getByTestId('note-editor-commands-provider')).toBeTruthy();
     expect(screen.getByTestId('app-error-boundary')).toBeTruthy();
-    expect(screen.getByTestId('clerk-sso-callback-route')).toBeTruthy();
   });
 
   it('throws when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing', async () => {
@@ -190,8 +184,8 @@ describe('AppProviders', () => {
       publishableKey: 'pk_test_placeholder',
       signInUrl: '/signin',
       signUpUrl: '/signup',
-      signInForceRedirectUrl: clerkFullNotesUrl(),
-      signUpForceRedirectUrl: clerkFullNotesUrl(),
+      signInForceRedirectUrl: '/notes',
+      signUpForceRedirectUrl: '/notes',
       allowedRedirectProtocols: ['nota:'],
     });
     expect(clerkProviderProps.current?.routerPush).toBeTypeOf('function');

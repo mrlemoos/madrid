@@ -1,16 +1,22 @@
 'use client';
 
 import type { JSX } from 'react';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { AuthenticateWithRedirectCallback } from '@clerk/react';
+import { NotaLoadingStatus } from '@nota/design/spinner';
 
 /**
- * OAuth landing route (`/sso-callback`). The actual Clerk handshake
- * (`AuthenticateWithRedirectCallback`) is mounted by `ClerkSsoCallbackRoute`
- * inside the app providers for this pathname; this page just holds the frame.
+ * OAuth landing route (`/sso-callback`): mounts the captcha target and Clerk's
+ * `handleRedirectCallback` (see Clerk OAuth custom-flow docs) while showing the
+ * signing-in frame.
  */
 export default function SsoCallbackPage(): JSX.Element {
   return (
     <div className="flex h-dvh items-center justify-center bg-background text-sm text-muted-foreground">
+      <div id="clerk-captcha" />
+      <AuthenticateWithRedirectCallback
+        signInUrl="/signin"
+        signUpUrl="/signup"
+      />
       <NotaLoadingStatus label="Signing you in…" />
     </div>
   );
