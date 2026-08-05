@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { noteHashHref } from './note-hash-href';
 
 describe('noteHashHref', () => {
-  it('builds a notes/note hash for the given note id', () => {
+  it('builds a notes/note path for the given note id', () => {
     // Arrange
     const noteId = '11111111-1111-4111-8111-111111111111';
 
@@ -10,10 +10,10 @@ describe('noteHashHref', () => {
     const href = noteHashHref(noteId);
 
     // Assert
-    expect(href).toBe(`#/notes/note/${noteId}`);
+    expect(href).toBe(`/notes/note/${noteId}`);
   });
 
-  it('falls back to the notes list hash when the note id is empty', () => {
+  it('falls back to the notes list path when the note id is empty', () => {
     // Arrange
     const noteId = '';
 
@@ -21,6 +21,6 @@ describe('noteHashHref', () => {
     const href = noteHashHref(noteId);
 
     // Assert
-    expect(href).toBe('#/notes');
+    expect(href).toBe('/notes');
   });
 });

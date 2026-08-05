@@ -4,7 +4,7 @@ import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
 import { NotaLogo } from '@/components/nota-logo';
 import { notaButtonVariants } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
-import { hashForScreen } from '@nota/app-navigation-core/navigation';
+import { pathForScreen } from '@nota/app-navigation-core/navigation';
 
 export function NotFoundScreen({
   signedIn,
@@ -12,8 +12,8 @@ export function NotFoundScreen({
   signedIn: boolean;
 }): JSX.Element {
   const homeHref = signedIn
-    ? hashForScreen({ kind: 'notes', panel: 'list', noteId: null })
-    : hashForScreen({ kind: 'landing' });
+    ? pathForScreen({ kind: 'notes', panel: 'list', noteId: null })
+    : pathForScreen({ kind: 'landing' });
 
   return (
     <main

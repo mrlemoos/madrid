@@ -1,4 +1,4 @@
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 import { recordWritingActivityToday } from '@nota/writing-activity-ui/tracking';
 import type { Note } from '@nota/database-types';
@@ -28,6 +28,6 @@ export async function clientCreateNote(options: {
     options.insertNoteAtFront(result.note);
   }
 
-  setAppHash({ kind: 'notes', panel: 'note', noteId });
+  navigateToScreen({ kind: 'notes', panel: 'note', noteId });
   await options.refreshNotesList({ silent: true });
 }

@@ -58,6 +58,7 @@ import type { Folder, Note, UserPreferences } from '@nota/database-types';
 import type { NotesShellPanel } from '@nota/app-navigation-core/navigation';
 import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
 import { noteHashHref } from '@nota/note-editor-core/note-hash-href';
+import Link from 'next/link';
 import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
 import { clientDeleteNoteById } from '@nota/note-folders-ui/delete-note-client';
 import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';
@@ -179,7 +180,7 @@ function NoteRow(options: {
                   isActive ? 'text-foreground' : 'text-muted-foreground',
                 )}
               />
-              <a
+              <Link
                 href={noteHashHref(note.id)}
                 className="relative z-0 min-w-0 flex-1 truncate text-sm font-normal"
                 aria-current={isActive ? 'page' : undefined}
@@ -198,7 +199,7 @@ function NoteRow(options: {
                     </NotaTooltipPositioner>
                   </NotaTooltipPortal>
                 </NotaTooltip>
-              </a>
+              </Link>
             </div>
           }
         />

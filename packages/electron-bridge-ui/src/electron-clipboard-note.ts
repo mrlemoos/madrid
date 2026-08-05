@@ -3,7 +3,7 @@ import { createNote, updateNote } from '@nota/data-source/models/notes';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { createLocalOnlyNote } from '@nota/notes-offline';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { uploadNoteAttachmentFile } from '@nota/data-source/pdf-attachment-client';
 import {
   clipboardPlainTextToTiptapDoc,
@@ -59,7 +59,7 @@ export async function createNoteFromMenubarClipboard(options: {
   }
 
   const goToNote = (id: string): void => {
-    setAppHash({ kind: 'notes', panel: 'note', noteId: id });
+    navigateToScreen({ kind: 'notes', panel: 'note', noteId: id });
   };
 
   if (clipboard.kind === 'text') {

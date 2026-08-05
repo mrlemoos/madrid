@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
-  hashForScreen,
+  pathForScreen,
   parseAppNavFromLocation,
-  replaceAppHash,
-  setAppHash,
+  replaceScreen,
+  navigateToScreen,
 } from './app-navigation';
 import {
   peekNavIntent,
@@ -12,15 +12,15 @@ import {
 
 const SAMPLE_NOTE_ID = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeeeee';
 
-function stubWindowHash(hash: string, pathname = '/'): void {
+function stubWindowPath(pathname: string): void {
   const prevWindow = globalThis.window;
   vi.stubGlobal('window', {
     ...prevWindow,
     location: {
       ...prevWindow.location,
       pathname,
-      hash,
-      href: `http://localhost:4200${pathname}${hash}`,
+      hash: '',
+      href: `http://localhost:4200${pathname}`,
     },
   });
 }
@@ -32,9 +32,9 @@ afterEach(() => {
 });
 
 describe('parseAppNavFromLocation', () => {
-  it('returns landing when hash is empty', () => {
+  it('returns landing when pathname is /', () => {
     // Arrange
-    stubWindowHash('');
+    stubWindowPath('/');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -43,31 +43,9 @@ describe('parseAppNavFromLocation', () => {
     expect(result).toEqual({ kind: 'landing' });
   });
 
-  it('returns landing when hash is #/', () => {
+  it('returns notFound when pathname is /404', () => {
     // Arrange
-    stubWindowHash('#/');
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'landing' });
-  });
-
-  it('returns landing when hash is #', () => {
-    // Arrange
-    stubWindowHash('#');
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'landing' });
-  });
-
-  it('returns notFound when hash is #/404', () => {
-    // Arrange
-    stubWindowHash('#/404');
+    stubWindowPath('/404');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -76,43 +54,50 @@ describe('parseAppNavFromLocation', () => {
     expect(result).toEqual({ kind: 'notFound' });
   });
 
-  it('hashForScreen maps notFound to canonical #/404', () => {
+  it('pathForScreen maps notFound to /404', () => {
     // Arrange
     const screen = { kind: 'notFound' as const };
-    const expectedHash = '#/404';
 
     // Act
-    const href = hashForScreen(screen);
+    const href = pathForScreen(screen);
 
     // Assert
-    expect(href).toBe(expectedHash);
+    expect(href).toBe('/404');
   });
 
-  it('hashForScreen maps login to Clerk pathname /sign-in', () => {
+  it('pathForScreen maps login to /signin', () => {
     // Arrange
     const screen = { kind: 'login' as const };
 
     // Act
-    const result = hashForScreen(screen);
+    const result = pathForScreen(screen);
 
     // Assert
-    expect(result).toBe('/sign-in');
+    expect(result).toBe('/signin');
   });
 
-  it('hashForScreen maps signup to Clerk pathname /sign-up', () => {
+  it('pathForScreen maps signup to /signup', () => {
     // Arrange
     const screen = { kind: 'signup' as const };
 
     // Act
-    const result = hashForScreen(screen);
+    const result = pathForScreen(screen);
 
     // Assert
-    expect(result).toBe('/sign-up');
+    expect(result).toBe('/signup');
   });
 
-  it('returns login when pathname is /sign-in', () => {
+  it('pathForScreen maps landing to /', () => {
+    // Arrange / Act
+    const href = pathForScreen({ kind: 'landing' });
+
+    // Assert
+    expect(href).toBe('/');
+  });
+
+  it('returns login when pathname is /signin', () => {
     // Arrange
-    stubWindowHash('', '/sign-in');
+    stubWindowPath('/signin');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -121,20 +106,9 @@ describe('parseAppNavFromLocation', () => {
     expect(result).toEqual({ kind: 'login' });
   });
 
-  it('returns login when hash is #/login', () => {
+  it('returns signup when pathname is /signup', () => {
     // Arrange
-    stubWindowHash('#/login');
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'login' });
-  });
-
-  it('returns signup when hash is #/signup', () => {
-    // Arrange
-    stubWindowHash('#/signup');
+    stubWindowPath('/signup');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -143,37 +117,51 @@ describe('parseAppNavFromLocation', () => {
     expect(result).toEqual({ kind: 'signup' });
   });
 
-  it('returns notes list when hash is #/notes', () => {
+  it('tolerates legacy hyphenated /sign-in', () => {
     // Arrange
-    stubWindowHash('#/notes');
+    stubWindowPath('/sign-in');
 
     // Act
     const result = parseAppNavFromLocation();
 
     // Assert
-    expect(result).toEqual({
-      kind: 'notes',
-      panel: 'list',
-      noteId: null,
-    });
+    expect(result).toEqual({ kind: 'login' });
   });
 
-  it('returns notes journal when hash is #/notes/journal', () => {
+  it('returns login for /signin/verify-email-code (Clerk sub-steps)', () => {
     // Arrange
-    stubWindowHash('#/notes/journal');
+    stubWindowPath('/signin/verify-email-code');
 
     // Act
     const result = parseAppNavFromLocation();
 
     // Assert
-    expect(result).toEqual({
-      kind: 'notes',
-      panel: 'journal',
-      noteId: null,
-    });
+    expect(result).toEqual({ kind: 'login' });
   });
 
-  it('hashForScreen maps journal to #/notes/journal', () => {
+  it('returns notes list when pathname is /notes', () => {
+    // Arrange
+    stubWindowPath('/notes');
+
+    // Act
+    const result = parseAppNavFromLocation();
+
+    // Assert
+    expect(result).toEqual({ kind: 'notes', panel: 'list', noteId: null });
+  });
+
+  it('returns notes journal when pathname is /notes/journal', () => {
+    // Arrange
+    stubWindowPath('/notes/journal');
+
+    // Act
+    const result = parseAppNavFromLocation();
+
+    // Assert
+    expect(result).toEqual({ kind: 'notes', panel: 'journal', noteId: null });
+  });
+
+  it('pathForScreen maps journal to /notes/journal', () => {
     // Arrange
     const screen = {
       kind: 'notes' as const,
@@ -182,45 +170,26 @@ describe('parseAppNavFromLocation', () => {
     };
 
     // Act
-    const href = hashForScreen(screen);
+    const href = pathForScreen(screen);
 
     // Assert
-    expect(href).toBe('#/notes/journal');
+    expect(href).toBe('/notes/journal');
   });
 
-  it('returns notes graph when hash is #/notes/graph', () => {
+  it('returns notes graph when pathname is /notes/graph', () => {
     // Arrange
-    stubWindowHash('#/notes/graph');
+    stubWindowPath('/notes/graph');
 
     // Act
     const result = parseAppNavFromLocation();
 
     // Assert
-    expect(result).toEqual({
-      kind: 'notes',
-      panel: 'graph',
-      noteId: null,
-    });
+    expect(result).toEqual({ kind: 'notes', panel: 'graph', noteId: null });
   });
 
-  it('returns note panel for #/notes/note/:uuid', () => {
+  it('returns note panel for /notes/note/:uuid', () => {
     // Arrange
-    stubWindowHash(`#/notes/note/${SAMPLE_NOTE_ID}`);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({
-      kind: 'notes',
-      panel: 'note',
-      noteId: SAMPLE_NOTE_ID,
-    });
-  });
-
-  it('returns note panel for legacy #/notes/:uuid', () => {
-    // Arrange
-    stubWindowHash(`#/notes/${SAMPLE_NOTE_ID}`);
+    stubWindowPath(`/notes/note/${SAMPLE_NOTE_ID}`);
 
     // Act
     const result = parseAppNavFromLocation();
@@ -233,9 +202,39 @@ describe('parseAppNavFromLocation', () => {
     });
   });
 
-  it('returns notFound when hash is #/typo', () => {
+  it('returns note panel for legacy /notes/:uuid', () => {
     // Arrange
-    stubWindowHash('#/typo');
+    stubWindowPath(`/notes/${SAMPLE_NOTE_ID}`);
+
+    // Act
+    const result = parseAppNavFromLocation();
+
+    // Assert
+    expect(result).toEqual({
+      kind: 'notes',
+      panel: 'note',
+      noteId: SAMPLE_NOTE_ID,
+    });
+  });
+
+  it('pathForScreen maps note panel to /notes/note/:uuid', () => {
+    // Arrange
+    const screen = {
+      kind: 'notes' as const,
+      panel: 'note' as const,
+      noteId: SAMPLE_NOTE_ID,
+    };
+
+    // Act
+    const href = pathForScreen(screen);
+
+    // Assert
+    expect(href).toBe(`/notes/note/${SAMPLE_NOTE_ID}`);
+  });
+
+  it('returns notFound when pathname is /typo', () => {
+    // Arrange
+    stubWindowPath('/typo');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -244,91 +243,20 @@ describe('parseAppNavFromLocation', () => {
     expect(result).toEqual({ kind: 'notFound' });
   });
 
-  it('returns notFound when hash is #/notes/nope', () => {
+  it('returns notFound when pathname is /notes/nope', () => {
     // Arrange
-    stubWindowHash('#/notes/nope');
+    stubWindowPath('/notes/nope');
 
     // Act
     const result = parseAppNavFromLocation();
 
     // Assert
     expect(result).toEqual({ kind: 'notFound' });
-  });
-
-  it('returns login when hash is #/login/extra (Clerk sub-steps)', () => {
-    // Arrange
-    stubWindowHash('#/login/extra');
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'login' });
-  });
-
-  it('returns login when hash uses Clerk hyphenated #/sign-in', () => {
-    // Arrange
-    const hash = '#/sign-in';
-    stubWindowHash(hash);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'login' });
-  });
-
-  it('returns login for #/sign-in/verify-email-code', () => {
-    // Arrange
-    const hash = '#/sign-in/verify-email-code';
-    stubWindowHash(hash);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'login' });
-  });
-
-  it('returns signup when hash uses Clerk hyphenated #/sign-up', () => {
-    // Arrange
-    const hash = '#/sign-up';
-    stubWindowHash(hash);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'signup' });
-  });
-
-  it('returns signup for #/sign-up/verify-email-address', () => {
-    // Arrange
-    const hash = '#/sign-up/verify-email-address';
-    stubWindowHash(hash);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'signup' });
-  });
-
-  it('returns signup when hash has query after #/sign-up', () => {
-    // Arrange
-    const hash = '#/sign-up?redirect_url=%2F';
-    stubWindowHash(hash);
-
-    // Act
-    const result = parseAppNavFromLocation();
-
-    // Assert
-    expect(result).toEqual({ kind: 'signup' });
   });
 
   it('returns notFound when note path has invalid uuid', () => {
     // Arrange
-    stubWindowHash('#/notes/note/not-a-uuid');
+    stubWindowPath('/notes/note/not-a-uuid');
 
     // Act
     const result = parseAppNavFromLocation();
@@ -338,86 +266,58 @@ describe('parseAppNavFromLocation', () => {
   });
 });
 
-describe('setAppHash / replaceAppHash nav intent', () => {
+describe('navigateToScreen / replaceScreen nav intent', () => {
   beforeEach(() => {
     resetNavIntent();
     document.documentElement.removeAttribute('data-nav-intent');
   });
 
-  it('defaults to keyboard intent so create/paywall/history paths stay instant', () => {
-    // Arrange
+  function stubWindowForWrite(pathname: string): {
+    pushState: ReturnType<typeof vi.fn>;
+    replaceState: ReturnType<typeof vi.fn>;
+  } {
     const prevWindow = globalThis.window;
-    const location = {
-      ...prevWindow.location,
-      pathname: '/',
-      hash: '#/notes',
-      href: 'http://localhost:4200/#/notes',
-    };
-    Object.defineProperty(location, 'hash', {
-      configurable: true,
-      get() {
-        return (this as { _hash?: string })._hash ?? '#/notes';
-      },
-      set(value: string) {
-        (this as { _hash?: string })._hash = value.startsWith('#')
-          ? value
-          : `#${value}`;
-      },
-    });
+    const pushState = vi.fn();
+    const replaceState = vi.fn();
     vi.stubGlobal('window', {
       ...prevWindow,
-      location,
+      location: {
+        ...prevWindow.location,
+        pathname,
+        hash: '',
+        href: `http://localhost:4200${pathname}`,
+      },
       history: {
         ...prevWindow.history,
         state: null,
-        replaceState: vi.fn(),
-        pushState: vi.fn(),
+        pushState,
+        replaceState,
       },
     });
+    return { pushState, replaceState };
+  }
+
+  it('defaults to keyboard intent and pushes a new path', () => {
+    // Arrange
+    const { pushState } = stubWindowForWrite('/notes');
 
     // Act
-    setAppHash({ kind: 'notes', panel: 'graph', noteId: null });
+    navigateToScreen({ kind: 'notes', panel: 'graph', noteId: null });
 
     // Assert
     expect(peekNavIntent()).toBe('keyboard');
     expect(document.documentElement.getAttribute('data-nav-intent')).toBe(
       'keyboard',
     );
+    expect(pushState).toHaveBeenCalled();
   });
 
   it('marks pointer intent when options.intent is pointer', () => {
     // Arrange
-    const prevWindow = globalThis.window;
-    const location = {
-      ...prevWindow.location,
-      pathname: '/',
-      hash: '#/notes',
-      href: 'http://localhost:4200/#/notes',
-    };
-    Object.defineProperty(location, 'hash', {
-      configurable: true,
-      get() {
-        return (this as { _hash?: string })._hash ?? '#/notes';
-      },
-      set(value: string) {
-        (this as { _hash?: string })._hash = value.startsWith('#')
-          ? value
-          : `#${value}`;
-      },
-    });
-    vi.stubGlobal('window', {
-      ...prevWindow,
-      location,
-      history: {
-        ...prevWindow.history,
-        state: null,
-        replaceState: vi.fn(),
-        pushState: vi.fn(),
-      },
-    });
+    stubWindowForWrite('/notes');
 
     // Act
-    setAppHash(
+    navigateToScreen(
       { kind: 'notes', panel: 'journal', noteId: null },
       { intent: 'pointer' },
     );
@@ -429,28 +329,23 @@ describe('setAppHash / replaceAppHash nav intent', () => {
     );
   });
 
-  it('marks keyboard intent on replaceAppHash by default (paywall redirect)', () => {
+  it('is a no-op when already on the target path (no duplicate history entry)', () => {
     // Arrange
-    const prevWindow = globalThis.window;
-    const replaceState = vi.fn();
-    vi.stubGlobal('window', {
-      ...prevWindow,
-      location: {
-        ...prevWindow.location,
-        pathname: '/',
-        hash: '#/notes',
-        href: 'http://localhost:4200/#/notes',
-      },
-      history: {
-        ...prevWindow.history,
-        state: null,
-        replaceState,
-        pushState: vi.fn(),
-      },
-    });
+    const { pushState } = stubWindowForWrite('/notes');
 
     // Act
-    replaceAppHash({ kind: 'notes', panel: 'settings', noteId: null });
+    navigateToScreen({ kind: 'notes', panel: 'list', noteId: null });
+
+    // Assert
+    expect(pushState).not.toHaveBeenCalled();
+  });
+
+  it('marks keyboard intent on replaceScreen by default (paywall redirect)', () => {
+    // Arrange
+    const { replaceState } = stubWindowForWrite('/notes');
+
+    // Act
+    replaceScreen({ kind: 'notes', panel: 'settings', noteId: null });
 
     // Assert
     expect(peekNavIntent()).toBe('keyboard');

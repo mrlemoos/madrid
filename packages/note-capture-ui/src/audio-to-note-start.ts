@@ -1,5 +1,5 @@
 import type { Note } from '@nota/database-types';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { createLocalOnlyNote } from '@nota/notes-offline';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
@@ -21,7 +21,7 @@ export async function startStudyNotesFromRecording(options: {
   }
 
   const goToNote = (id: string): void => {
-    setAppHash({ kind: 'notes', panel: 'note', noteId: id });
+    navigateToScreen({ kind: 'notes', panel: 'note', noteId: id });
   };
 
   if (!isLikelyOnline()) {

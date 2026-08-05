@@ -1,4 +1,4 @@
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 import type { UserPreferences } from '@nota/database-types';
@@ -24,7 +24,7 @@ export async function clientDeleteNoteById(
   const result = await vaultMutator.deleteNote(userId, noteId);
 
   options.removeNoteFromList(noteId);
-  setAppHash({ kind: 'notes', panel: 'list', noteId: null });
+  navigateToScreen({ kind: 'notes', panel: 'list', noteId: null });
   await maybePruneEmptyFolder({
     folderId: options.noteFolderId,
     userPreferences: options.userPreferences,

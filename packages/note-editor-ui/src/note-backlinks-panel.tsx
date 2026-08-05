@@ -10,6 +10,7 @@ import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
 import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
 import { noteHashHref } from '@nota/note-editor-core/note-hash-href';
 import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
+import Link from 'next/link';
 
 export function NoteBacklinksPanel({
   noteId,
@@ -55,8 +56,9 @@ export function NoteBacklinksPanel({
               screen.noteId === id;
             return (
               <li key={id}>
-                <a
+                <Link
                   href={noteHashHref(id)}
+                  aria-current={isActive ? 'page' : undefined}
                   onClick={() => {
                     markNavIntent('pointer');
                   }}
@@ -70,7 +72,7 @@ export function NoteBacklinksPanel({
                   )}
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             );
           })}

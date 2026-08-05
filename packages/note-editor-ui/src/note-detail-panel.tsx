@@ -18,7 +18,7 @@ import {
   listNoteAttachments,
   NOTE_PDFS_BUCKET,
 } from '@nota/data-source/models/note-attachments';
-import { replaceAppHash } from '@nota/app-navigation-core/navigation';
+import { replaceScreen } from '@nota/app-navigation-core/navigation';
 import { shouldRefetchOpenNoteFromVaultList } from '@nota/app-navigation-core/open-note-vault-list-sync';
 import {
   useNotesDataActions,
@@ -244,7 +244,7 @@ export function NoteDetailPanel({
       if (!g.userId || g.vaultLoading || g.displayNote) {
         return;
       }
-      replaceAppHash({ kind: 'notFound' });
+      replaceScreen({ kind: 'notFound' });
     }, 0);
     return () => {
       cancelled = true;

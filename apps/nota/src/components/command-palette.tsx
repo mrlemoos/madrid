@@ -38,7 +38,7 @@ import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigati
 import { openTodaysNoteClient } from '@nota/app-navigation-ui/open-todays-note';
 import {
   navigateFromLegacyPath,
-  setAppHash,
+  navigateToScreen,
 } from '@nota/app-navigation-core/navigation';
 import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { useClerk } from '@clerk/react';
@@ -1322,7 +1322,7 @@ export function CommandPalette(): JSX.Element {
                         'contribution',
                       ]}
                       onSelect={() => {
-                        setAppHash({
+                        navigateToScreen({
                           kind: 'notes',
                           panel: 'list',
                           noteId: null,
@@ -1730,7 +1730,7 @@ export function CommandPalette(): JSX.Element {
                       void (async () => {
                         try {
                           await signOut();
-                          setAppHash({ kind: 'landing' });
+                          navigateToScreen({ kind: 'landing' });
                           closePalette();
                         } finally {
                           setBusyAction(null);

@@ -13,7 +13,7 @@ vi.mock('@nota/data-source/vault-runtime', () => ({
 }));
 
 vi.mock('@nota/app-navigation-core/navigation', () => ({
-  setAppHash: vi.fn(),
+  navigateToScreen: vi.fn(),
 }));
 
 vi.mock('./maybe-prune-empty-folder', () => ({

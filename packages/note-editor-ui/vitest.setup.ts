@@ -1,6 +1,28 @@
 // Runs before Vitest tests.
 import { vi } from 'vitest';
 
+// `next/link` needs the App Router context, which jsdom unit tests lack; render it
+// as a plain anchor so href/aria assertions still work.
+vi.mock('next/link', async () => {
+  const { createElement } = await import('react');
+  return {
+    default: ({
+      children,
+      href,
+      ...props
+    }: {
+      children?: unknown;
+      href?: unknown;
+      [key: string]: unknown;
+    }) =>
+      createElement(
+        'a',
+        { href: typeof href === 'string' ? href : '', ...props },
+        children as never,
+      ),
+  };
+});
+
 // Node 25+ / the test runtime can provide a `localStorage` that lacks `setItem`; Zustand
 // `persist` needs a full `Storage` shape (notes preferences store).
 const inMemoryLocalStorage: Record<string, string> = {};

@@ -1,7 +1,7 @@
 /** Hosted SPA the packaged shell loads (must match deployed nota). */
 export const PACKAGED_REMOTE_APP_ORIGIN = 'https://app.nota.mrlemoos.dev';
 
-export const DEV_PORT = 4200;
+export const DEV_PORT = 3000;
 
 /** Origin string without trailing slash, for path joins such as `/sso-callback`. */
 export function normalisedPackagedAppOrigin(): string {

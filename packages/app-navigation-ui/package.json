@@ -88,6 +88,7 @@
   "dependencies": {
     "@nota/app-navigation-core": "workspace:*",
     "@nota/data-source": "workspace:*",
+    "next": "catalog:",
     "@nota/database-types": "workspace:*",
     "@nota/nota-motion-ui": "workspace:*",
     "@nota/note-runtime": "workspace:*",

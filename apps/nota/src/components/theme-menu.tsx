@@ -38,7 +38,7 @@ export function ThemeMenu(): JSX.Element {
         aria-label={t('Theme')}
         className={cn(
           notaButtonVariants({ variant: 'outline', size: 'default' }),
-          'min-w-[7.5rem] justify-between gap-2 px-2.5 font-normal',
+          'min-w-30 justify-between gap-2 px-2.5 font-normal',
         )}
       >
         <span className="truncate">{themeLabel[theme]}</span>
@@ -52,7 +52,7 @@ export function ThemeMenu(): JSX.Element {
         <Menu.Positioner side="bottom" align="end" sideOffset={4}>
           <Menu.Popup
             className={cn(
-              'z-50 min-w-[var(--anchor-width)] overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-md',
+              'z-50 min-w-(--anchor-width) overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-md',
               NOTA_POPUP_MOTION_CLASS,
             )}
           >

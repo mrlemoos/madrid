@@ -64,7 +64,7 @@
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.1.1",
     "gsap": "catalog:",
-    "next": "^16.2.12",
+    "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "shadcn": "^4.1.0",

@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { NotesShell, type NotesShellRouteComponents } from './notes-shell';
+import { NotesShell } from './notes-shell';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
 
@@ -27,19 +27,14 @@ const notesShellTestCtx = vi.hoisted(() => {
   };
 });
 
-function NoopRoute(): null {
-  return null;
-}
-
-const testRoutes: NotesShellRouteComponents = {
-  NotesGraphRoute: NoopRoute,
-  NotesJournalRoute: NoopRoute,
-  NotesSettingsRoute: NoopRoute,
-  NotesShortcutsRoute: NoopRoute,
-};
+const PANEL_CHILD_TEST_ID = 'nota-panel-child';
 
 function renderNotesShell(): ReturnType<typeof render> {
-  return render(<NotesShell routes={testRoutes} />);
+  return render(
+    <NotesShell>
+      <div data-testid={PANEL_CHILD_TEST_ID} />
+    </NotesShell>,
+  );
 }
 
 vi.mock('@nota/electron-bridge-ui/menubar-bridge', () => ({
@@ -142,6 +137,7 @@ vi.mock('@nota/note-runtime/stores/preferences', () => ({
 
 vi.mock('@nota/note-runtime/use-sync-user-preferences', () => ({
   useSyncUserPreferences: (): void => {},
+  useSyncClerkDisplayName: (): void => {},
 }));
 
 vi.mock('@nota/app-navigation-ui/use-notes-history-shortcut', () => ({
@@ -219,7 +215,11 @@ describe('NotesShell', () => {
 
     // Act
     notesShellTestCtx.vaultLoading = false;
-    rerender(<NotesShell routes={testRoutes} />);
+    rerender(
+      <NotesShell>
+        <div data-testid={PANEL_CHILD_TEST_ID} />
+      </NotesShell>,
+    );
 
     // Assert
     const aside = container.querySelector('aside');
@@ -292,15 +292,14 @@ describe('NotesShell', () => {
     expect(screen.queryByRole('heading', { name: 'Notes' })).toBeNull();
   });
 
-  it('calls the injected prefetchRoutes callback once on mount', () => {
+  it('renders the active panel route as children in the main area', () => {
     // Arrange
-    window.history.replaceState(null, '', '#/notes');
-    const prefetchRoutes = vi.fn();
+    window.history.replaceState(null, '', '/notes');
 
     // Act
-    render(<NotesShell routes={testRoutes} prefetchRoutes={prefetchRoutes} />);
+    renderNotesShell();
 
     // Assert
-    expect(prefetchRoutes).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId(PANEL_CHILD_TEST_ID)).toBeTruthy();
   });
 });

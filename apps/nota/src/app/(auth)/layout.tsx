@@ -1,3 +1,5 @@
+'use client';
+
 import type { JSX, ReactNode } from 'react';
 import {
   NotaCard,
@@ -14,7 +16,12 @@ import { cn } from '@/lib/utils';
 const electronAuthTopPadding =
   'pt-[max(calc(2rem+26px),calc(52px+env(safe-area-inset-top,0px)))]' as const;
 
-export function AuthScreenShell({
+/**
+ * Shared chrome for `/signin` + `/signup` (the `(auth)` group). The Clerk form is
+ * the route `children`; the "switch to sign in/up" prompt is the `@footer` parallel
+ * route slot, resolved per-route (`@footer/signin`, `@footer/signup`).
+ */
+export default function AuthLayout({
   children,
   footer,
 }: {

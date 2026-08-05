@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import { NotaButton } from '@nota/web-design/button';
 import { cn } from '@/lib/utils';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 
 /**
  * Full-screen block when the signed-in user cannot use notes without an active Nota Pro entitlement.
@@ -43,7 +43,7 @@ export function NotaProGate(): JSX.Element {
               onClick={() => {
                 void (async () => {
                   await signOut();
-                  setAppHash({ kind: 'landing' });
+                  navigateToScreen({ kind: 'landing' });
                 })();
               }}
             >

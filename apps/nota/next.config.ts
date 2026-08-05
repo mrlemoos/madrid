@@ -2,6 +2,11 @@ import type { NextConfig } from 'next';
 import packageJson from './package.json' with { type: 'json' };
 
 // Ported from vercel.json — kept in sync until the static SPA config is retired.
+// Next dev (Turbopack HMR + React Refresh) evals + uses a ws to the dev server,
+// which a production-strict CSP blocks (blank page under Electron/Chromium).
+// Relax only in development; production stays eval-free.
+const IS_DEV = process.env.NODE_ENV !== 'production';
+
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -11,11 +16,12 @@ const CONTENT_SECURITY_POLICY = [
   "img-src 'self' data: blob: https: http:",
   "font-src 'self' data: https://fonts.gstatic.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "script-src 'self' 'unsafe-inline' https://*.accounts.dev https://*.clerk.accounts.dev https://clerk.com https://*.clerk.com https://challenges.cloudflare.com https://*.nota.mrlemoos.dev https://clerk.nota.mrlemoos.dev https://*.i.posthog.com",
+  `script-src 'self' 'unsafe-inline'${IS_DEV ? " 'unsafe-eval'" : ''} https://*.accounts.dev https://*.clerk.accounts.dev https://clerk.com https://*.clerk.com https://challenges.cloudflare.com https://*.nota.mrlemoos.dev https://clerk.nota.mrlemoos.dev https://*.i.posthog.com`,
   "worker-src 'self' blob:",
-  "connect-src 'self' https: wss:",
+  `connect-src 'self' https: wss:${IS_DEV ? ' ws:' : ''}`,
   "frame-src 'self' https:",
-  'upgrade-insecure-requests',
+  // Would upgrade ws://localhost + http dev assets to secure and break HMR.
+  ...(IS_DEV ? [] : ['upgrade-insecure-requests']),
 ].join('; ');
 
 function isNotaWorkspacePackage(packageName: string): boolean {

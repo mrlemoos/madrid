@@ -1,8 +1,11 @@
 // Runs before Vitest tests
 import { vi } from 'vitest';
+import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
+import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
 
 // Next App Router hooks need a router context that jsdom lacks; stub them so
-// client components (providers, shell) render under test.
+// client components (providers, shell) render under test. (`vi.mock` is hoisted
+// above imports by Vitest regardless of source position.)
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn(),
@@ -18,9 +21,6 @@ vi.mock('next/navigation', () => ({
   redirect: vi.fn(),
   notFound: vi.fn(),
 }));
-
-import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
-import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
 
 // Node 25+ / the test runtime can provide a `localStorage` that lacks `setItem`; Zustand `persist`
 // needs a full `Storage` shape (e.g. notes sidebar folder collapse state).

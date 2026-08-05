@@ -1,8 +1,11 @@
+'use client';
+
 import { UserButton } from '@clerk/react';
 import { useLayoutEffect, useMemo, useState, type JSX } from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { LOCALE_OPTIONS } from '@nota/i18n';
-import { ThemeMenu } from '../components/theme-menu';
+import { ThemeMenu } from '@/components/theme-menu';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import {
   useNotesDataActions,
@@ -14,13 +17,14 @@ import {
   type CursorVisualStyle,
 } from '@nota/note-runtime/stores/preferences';
 import { ElectronUpdateSettingsSection } from '@nota/electron-bridge-ui/update-settings-section';
-import { NotaProSettingsSection } from '../components/nota-pro-settings-section';
+import { NotaProSettingsSection } from '@/components/nota-pro-settings-section';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { hashForScreen } from '@nota/app-navigation-core/navigation';
-import { navigatorLooksLikeApplePlatform } from '../lib/navigator-apple-platform';
-import { useNotaTranslator } from '../lib/use-nota-translator';
+import { pathForScreen } from '@nota/app-navigation-core/navigation';
+import { navigatorLooksLikeApplePlatform } from '@/lib/navigator-apple-platform';
+import { useNotaTranslator } from '@/lib/use-nota-translator';
 
-export default function NotesSettings(): JSX.Element {
+/** `/notes/settings` — appearance, shortcuts, subscription, account. */
+export default function NotesSettingsPage(): JSX.Element {
   const { user } = useRootLoaderData();
   const { notaProEntitled, userPreferences } = useNotesDataMeta();
   const { setUserPreferencesInState } = useNotesDataActions();
@@ -83,7 +87,7 @@ export default function NotesSettings(): JSX.Element {
   const [historyBackLabel, setHistoryBackLabel] = useState('⌘[');
   const [historyForwardLabel, setHistoryForwardLabel] = useState('⌘]');
 
-  const shortcutsHref = hashForScreen({
+  const shortcutsHref = pathForScreen({
     kind: 'notes',
     panel: 'shortcuts',
     noteId: null,
@@ -243,12 +247,12 @@ export default function NotesSettings(): JSX.Element {
             )}
           </p>
           <p className="text-sm text-muted-foreground">
-            <a
+            <Link
               href={shortcutsHref}
               className="text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground"
             >
               {t('View all shortcuts')}
-            </a>
+            </Link>
           </p>
         </section>
 

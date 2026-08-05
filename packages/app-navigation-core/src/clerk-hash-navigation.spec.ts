@@ -227,7 +227,7 @@ describe('sanitizeClerkAuthHashFragment', () => {
       'http://localhost:4200/#/notes',
     );
     expect(params.get('sign_in_force_redirect_url')).toBe(
-      'http://localhost:4200/#/notes',
+      'http://localhost:4200/notes',
     );
   });
 
@@ -258,7 +258,7 @@ describe('sanitizeClerkAuthHashFragment', () => {
     const params = new URLSearchParams(out.slice('/sign-up?'.length));
     expect(params.get('sign_up_force_redirect_url')).toBe(notes);
     expect(params.get('sign_in_force_redirect_url')).toBe(notes);
-    expect(params.get('redirect_url')).toBe('http://localhost:4200/sign-in');
+    expect(params.get('redirect_url')).toBe('http://localhost:4200/signin');
   });
 
   it('sanitises return_url with triple-encoded segments', () => {
@@ -273,7 +273,7 @@ describe('sanitizeClerkAuthHashFragment', () => {
 
     // Assert
     const params = new URLSearchParams(out.slice('/sign-up?'.length));
-    expect(params.get('return_url')).toBe('http://localhost:4200/sign-in');
+    expect(params.get('return_url')).toBe('http://localhost:4200/signin');
   });
 
   it('strips malformed query tokens parsed as a junk key (no equals sign)', () => {
@@ -293,10 +293,10 @@ describe('sanitizeClerkAuthHashFragment', () => {
 });
 
 describe('repairClerkAuthLocationHash', () => {
-  it('calls replaceAppHash(signup) when the auth hash query is oversized', () => {
+  it('calls replaceScreen(signup) when the auth hash query is oversized', () => {
     // Arrange
     const replaceSpy = vi
-      .spyOn(appNavigation, 'replaceAppHash')
+      .spyOn(appNavigation, 'replaceScreen')
       .mockImplementation(() => {});
     const junk = 'z'.repeat(3000);
     const hash = `#/sign-up?${junk}`;

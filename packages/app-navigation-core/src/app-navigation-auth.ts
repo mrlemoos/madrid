@@ -1,8 +1,9 @@
 /** Pathnames used by Clerk `<SignIn path="…" />` / `<SignUp path="…" />` (path routing). */
-export const CLERK_SIGN_IN_PATH = '/sign-in';
-export const CLERK_SIGN_UP_PATH = '/sign-up';
+export const CLERK_SIGN_IN_PATH = '/signin';
+export const CLERK_SIGN_UP_PATH = '/signup';
 
-const AUTH_PATHNAME = /^\/(?:sign-in|sign-up|login|signup)(?:\/|$)/;
+// Tolerate the legacy hyphenated `/sign-in` bookmarks alongside the canonical `/signin`.
+const AUTH_PATHNAME = /^\/(?:sign-in|sign-up|login|signin|signup)(?:\/|$)/;
 
 export function isClerkAuthPathname(pathname: string): boolean {
   return AUTH_PATHNAME.test(pathname);
@@ -18,18 +19,20 @@ export function screenKindForAuthPathname(
   pathname: string,
 ): 'login' | 'signup' | null {
   if (
-    pathname === CLERK_SIGN_IN_PATH ||
-    pathname.startsWith(`${CLERK_SIGN_IN_PATH}/`) ||
+    pathname === '/signin' ||
+    pathname.startsWith('/signin/') ||
+    pathname === '/sign-in' ||
+    pathname.startsWith('/sign-in/') ||
     pathname === '/login' ||
     pathname.startsWith('/login/')
   ) {
     return 'login';
   }
   if (
-    pathname === CLERK_SIGN_UP_PATH ||
-    pathname.startsWith(`${CLERK_SIGN_UP_PATH}/`) ||
     pathname === '/signup' ||
-    pathname.startsWith('/signup/')
+    pathname.startsWith('/signup/') ||
+    pathname === '/sign-up' ||
+    pathname.startsWith('/sign-up/')
   ) {
     return 'signup';
   }

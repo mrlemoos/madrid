@@ -59,6 +59,7 @@
     "@nota/app-navigation-core": "workspace:*",
     "@nota/app-navigation-ui": "workspace:*",
     "@nota/database-types": "workspace:*",
+    "next": "catalog:",
     "@nota/electron-bridge-core": "workspace:*",
     "@nota/electron-bridge-ui": "workspace:*",
     "@nota/i18n": "workspace:*",

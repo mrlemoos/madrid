@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 
 export function useSettingsShortcut(
   userId: string | undefined,
@@ -21,7 +21,7 @@ export function useSettingsShortcut(
     }
 
     e.preventDefault();
-    setAppHash({ kind: 'notes', panel: 'settings', noteId: null });
+    navigateToScreen({ kind: 'notes', panel: 'settings', noteId: null });
   });
 
   useEffect(() => {

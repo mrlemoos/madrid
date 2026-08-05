@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createNoteFromMenubarClipboard } from './electron-clipboard-note';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
 import { createNote } from '@nota/data-source/models/notes';
 import { createLocalOnlyNote } from '@nota/notes-offline';
 
 vi.mock('@nota/app-navigation-core/navigation', () => ({
-  setAppHash: vi.fn(),
+  navigateToScreen: vi.fn(),
 }));
 
 vi.mock('@nota/data-source/supabase/browser', () => ({
@@ -63,7 +63,7 @@ describe('createNoteFromMenubarClipboard', () => {
 
     // Assert
     expect(createNote).not.toHaveBeenCalled();
-    expect(setAppHash).not.toHaveBeenCalled();
+    expect(navigateToScreen).not.toHaveBeenCalled();
   });
 
   it('creates a remote note from plain text while online', async () => {
@@ -93,7 +93,7 @@ describe('createNoteFromMenubarClipboard', () => {
     // Assert
     expect(createNote).toHaveBeenCalled();
     expect(insertNoteAtFront).toHaveBeenCalled();
-    expect(setAppHash).toHaveBeenCalledWith({
+    expect(navigateToScreen).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'note',
       noteId: 'n1',
@@ -118,7 +118,7 @@ describe('createNoteFromMenubarClipboard', () => {
     // Assert
     expect(createLocalOnlyNote).toHaveBeenCalled();
     expect(createNote).not.toHaveBeenCalled();
-    expect(setAppHash).toHaveBeenCalledWith({
+    expect(navigateToScreen).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'note',
       noteId: 'local-1',

@@ -1,10 +1,13 @@
+'use client';
+
 import { NotesGraphScreen } from '@nota/note-graph';
 import type { JSX } from 'react';
 import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
 import { navigateFromLegacyPath } from '@nota/app-navigation-core/navigation';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 
-export default function NotesGraph(): JSX.Element {
+/** `/notes/graph` — the note link graph. */
+export default function NotesGraphPage(): JSX.Element {
   const { notes } = useNotesDataVault();
   const { t } = useNotaTranslator();
 

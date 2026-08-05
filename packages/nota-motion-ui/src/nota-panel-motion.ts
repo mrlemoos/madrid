@@ -152,7 +152,7 @@ export function resolvePanelMotion(intent: NavIntent): PanelMotion {
   };
 }
 
-/** Stamp intent before `setAppHash` / `replaceAppHash` / hash `<a>` clicks / history chords. */
+/** Stamp intent before `navigateToScreen` / `replaceScreen` / hash `<a>` clicks / history chords. */
 export function markNavIntent(intent: NavIntent): void {
   navIntentRegister.mark(intent);
 }

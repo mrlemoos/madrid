@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientCreateNote } from './create-note-client';
 import { vaultMutator } from '@nota/data-source/vault-runtime';
 import { recordWritingActivityToday } from '@nota/writing-activity-ui/tracking';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 
 const insertNoteAtFront = vi.fn();
 const refreshNotesList = vi.fn();
@@ -14,7 +14,7 @@ vi.mock('@nota/data-source/vault-runtime', () => ({
 }));
 
 vi.mock('@nota/app-navigation-core/navigation', () => ({
-  setAppHash: vi.fn(),
+  navigateToScreen: vi.fn(),
 }));
 
 vi.mock('@nota/writing-activity-ui/tracking', () => ({
@@ -78,7 +78,7 @@ describe('clientCreateNote', () => {
       folderId: 'folder-1',
     });
     expect(insertNoteAtFront).toHaveBeenCalledWith(serverNote);
-    expect(setAppHash).toHaveBeenCalledWith({
+    expect(navigateToScreen).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'note',
       noteId: 'server-note-id',
@@ -141,7 +141,7 @@ describe('clientCreateNote', () => {
 
     // Assert
     expect(insertNoteAtFront).not.toHaveBeenCalled();
-    expect(setAppHash).toHaveBeenCalledWith({
+    expect(navigateToScreen).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'note',
       noteId: 'local-note-id',

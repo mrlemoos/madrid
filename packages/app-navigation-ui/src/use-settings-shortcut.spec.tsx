@@ -1,10 +1,10 @@
 import { render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { setAppHash } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@nota/app-navigation-core/navigation';
 import { useSettingsShortcut } from './use-settings-shortcut';
 
 vi.mock('@nota/app-navigation-core/navigation', () => ({
-  setAppHash: vi.fn(),
+  navigateToScreen: vi.fn(),
 }));
 
 function Harness({
@@ -32,8 +32,8 @@ describe('useSettingsShortcut', () => {
     fireEvent.keyDown(document, keyEvent);
 
     // Assert
-    expect(vi.mocked(setAppHash)).toHaveBeenCalledTimes(1);
-    expect(vi.mocked(setAppHash)).toHaveBeenCalledWith({
+    expect(vi.mocked(navigateToScreen)).toHaveBeenCalledTimes(1);
+    expect(vi.mocked(navigateToScreen)).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'settings',
       noteId: null,
@@ -49,7 +49,7 @@ describe('useSettingsShortcut', () => {
     fireEvent.keyDown(document, keyEvent);
 
     // Assert
-    expect(vi.mocked(setAppHash)).toHaveBeenCalledWith({
+    expect(vi.mocked(navigateToScreen)).toHaveBeenCalledWith({
       kind: 'notes',
       panel: 'settings',
       noteId: null,
@@ -65,7 +65,7 @@ describe('useSettingsShortcut', () => {
     fireEvent.keyDown(document, keyEvent);
 
     // Assert
-    expect(vi.mocked(setAppHash)).not.toHaveBeenCalled();
+    expect(vi.mocked(navigateToScreen)).not.toHaveBeenCalled();
   });
 
   it('does nothing when the shortcut hook is disabled', () => {
@@ -77,7 +77,7 @@ describe('useSettingsShortcut', () => {
     fireEvent.keyDown(document, keyEvent);
 
     // Assert
-    expect(vi.mocked(setAppHash)).not.toHaveBeenCalled();
+    expect(vi.mocked(navigateToScreen)).not.toHaveBeenCalled();
   });
 
   it('does not run while the command palette is focused', () => {
@@ -100,6 +100,6 @@ describe('useSettingsShortcut', () => {
     fireEvent.keyDown(input, keyEvent);
 
     // Assert
-    expect(vi.mocked(setAppHash)).not.toHaveBeenCalled();
+    expect(vi.mocked(navigateToScreen)).not.toHaveBeenCalled();
   });
 });

@@ -5,7 +5,7 @@
  */
 
 import { isClerkAuthPathname } from './app-navigation-auth';
-import { NOTA_HASH_HISTORY_EVENT, replaceAppHash } from './app-navigation';
+import { NOTA_HASH_HISTORY_EVENT, replaceScreen } from './app-navigation';
 
 const AUTH_HASH_PATH = /^\/(?:sign-in|sign-up|login|signup)(?:\/|$)/;
 
@@ -378,15 +378,15 @@ export function clerkSpaOriginWithPath(): string {
 }
 
 export function clerkFullSignInUrl(): string {
-  return `${window.location.origin}/sign-in`;
+  return `${window.location.origin}/signin`;
 }
 
 export function clerkFullSignUpUrl(): string {
-  return `${window.location.origin}/sign-up`;
+  return `${window.location.origin}/signup`;
 }
 
 export function clerkFullNotesUrl(): string {
-  return `${clerkSpaOriginWithPath()}#/notes`;
+  return `${window.location.origin}/notes`;
 }
 
 /**
@@ -477,7 +477,7 @@ export function repairClerkAuthLocationHash(): void {
     if (AUTH_HASH_PATH.test(path)) {
       const queryLen = q === -1 ? 0 : raw.length - q - 1;
       if (queryLen > MAX_AUTH_HASH_QUERY_LEN) {
-        replaceAppHash(
+        replaceScreen(
           path.startsWith('/sign-up') || path.startsWith('/signup')
             ? { kind: 'signup' }
             : { kind: 'login' },
@@ -512,7 +512,7 @@ export function repairClerkAuthLocationHash(): void {
     return;
   }
   if (isRootAuthPath(path) && authHashFragmentStillPoisoned(raw)) {
-    replaceAppHash(
+    replaceScreen(
       path.startsWith('/sign-up') || path.startsWith('/signup')
         ? { kind: 'signup' }
         : { kind: 'login' },

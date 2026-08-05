@@ -8,7 +8,7 @@ import {
 } from '@nota/web-design/icons';
 import { NotaLoadingStatus } from '@nota/web-design/spinner';
 import { cn } from '@nota/web-design/utils';
-import { replaceAppHash } from '@nota/app-navigation-core/navigation';
+import { replaceScreen } from '@nota/app-navigation-core/navigation';
 import {
   consumeNavIntent,
   resolvePanelMotion,
@@ -231,7 +231,7 @@ export function NotesIndexPanel({
             </div>
             <button
               onClick={() => {
-                replaceAppHash(
+                replaceScreen(
                   {
                     kind: 'notes',
                     panel: 'settings',

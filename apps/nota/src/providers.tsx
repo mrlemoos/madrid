@@ -3,7 +3,8 @@
 import { ClerkProvider } from '@clerk/react';
 import { ui } from '@clerk/ui';
 import { useRouter } from 'next/navigation';
-import { StrictMode, type ReactNode } from 'react';
+import { StrictMode, useEffect, type ReactNode } from 'react';
+import { setAppRouterNav } from '@nota/app-navigation-core/navigation';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
 import { AppErrorBoundary } from './components/app-error-boundary';
 import { ThemeProvider } from '@nota/web-design/theme';
@@ -27,6 +28,24 @@ interface AppProvidersProps {
 
 export function AppProviders({ children }: AppProvidersProps) {
   const router = useRouter();
+
+  // Bridge Next's router into the imperative nav helpers (navigateToScreen/replaceScreen).
+  // Without this they fall back to shallow `history.pushState`, which does not render
+  // a different route segment in the App Router.
+  useEffect(() => {
+    setAppRouterNav({
+      push: (href) => {
+        router.push(href);
+      },
+      replace: (href) => {
+        router.replace(href);
+      },
+    });
+    return () => {
+      setAppRouterNav(null);
+    };
+  }, [router]);
+
   if (!clerkPublishableKey) {
     throw new Error('Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY');
   }
@@ -37,11 +56,16 @@ export function AppProviders({ children }: AppProvidersProps) {
       publishableKey={clerkPublishableKey}
       signInUrl="/signin"
       signUpUrl="/signup"
-      // Notes still use hash navigation until Stage B/C; keep redirects there.
+      // Path routing: post-auth lands on the real `/notes` route (auth-gated by
+      // the (protected) layout).
       signInForceRedirectUrl={clerkFullNotesUrl()}
       signUpForceRedirectUrl={clerkFullNotesUrl()}
-      routerPush={(to) => router.push(to)}
-      routerReplace={(to) => router.replace(to)}
+      routerPush={(to) => {
+        router.push(to);
+      }}
+      routerReplace={(to) => {
+        router.replace(to);
+      }}
       allowedRedirectProtocols={['nota:']}
     >
       <StrictMode>

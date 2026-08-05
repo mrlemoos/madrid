@@ -99,6 +99,7 @@
     "@nota/app-navigation-core": "workspace:*",
     "@nota/app-navigation-ui": "workspace:*",
     "@nota/data-source": "workspace:*",
+    "next": "catalog:",
     "@nota/database-types": "workspace:*",
     "@nota/editor": "workspace:*",
     "@nota/electron-bridge-ui": "workspace:*",

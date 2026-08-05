@@ -1,3 +1,5 @@
+'use client';
+
 import type { JSX } from 'react';
 import { NotaIcon } from '@nota/web-design/icon';
 import { ArrowNarrowRightIcon } from '@nota/web-design/icons';
