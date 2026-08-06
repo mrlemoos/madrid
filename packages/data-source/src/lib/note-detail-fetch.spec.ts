@@ -27,7 +27,10 @@ describe('fetchNoteRowAndAttachmentsParallel', () => {
       due_at: null,
       is_deadline: false,
       editor_settings: {},
-    } as Note;
+      banner_attachment_id: null,
+      folder_id: null,
+      share_token: null,
+    };
 
     // Act
     const resultPromise = fetchNoteRowAndAttachmentsParallel(client, noteId, {

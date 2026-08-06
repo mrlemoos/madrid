@@ -1,5 +1,7 @@
 import { act, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { MockInstance } from 'vitest';
+import type { JSX } from 'react';
 import { gsap } from './nota-motion';
 import { useNotesSidebarShellMotion } from './use-notes-sidebar-shell-motion';
 
@@ -61,7 +63,7 @@ function findRail(container: HTMLElement): HTMLElement {
 }
 
 describe('useNotesSidebarShellMotion', () => {
-  let setSpy: ReturnType<typeof vi.spyOn<typeof gsap, 'set'>>;
+  let setSpy: MockInstance<typeof gsap.set>;
 
   beforeEach(() => {
     setSpy = vi.spyOn(gsap, 'set');

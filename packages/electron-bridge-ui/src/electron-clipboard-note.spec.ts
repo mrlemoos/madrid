@@ -77,6 +77,10 @@ describe('createNoteFromMenubarClipboard', () => {
       created_at: '',
       updated_at: '',
       editor_settings: null,
+      due_at: null,
+      is_deadline: false,
+      banner_attachment_id: null,
+      share_token: null,
     });
 
     // Act

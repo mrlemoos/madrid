@@ -20,7 +20,11 @@ const noteBase = {
   created_at: '2026-01-01T00:00:00.000Z',
   updated_at: '2026-01-01T00:00:00.000Z',
   folder_id: null as string | null,
-  editor_settings: null,
+  editor_settings: {},
+  due_at: null as string | null,
+  is_deadline: false,
+  banner_attachment_id: null as string | null,
+  share_token: null as string | null,
 };
 
 function folder(id: string, name: string): Folder {

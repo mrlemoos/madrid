@@ -22,6 +22,7 @@ function makeNote(overrides: Partial<Note> = {}): Note {
     editor_settings: {},
     banner_attachment_id: null,
     folder_id: null,
+    share_token: null,
     ...overrides,
   };
 }

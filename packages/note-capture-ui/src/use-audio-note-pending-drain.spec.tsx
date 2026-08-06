@@ -11,9 +11,11 @@ const studyResult: AudioNoteStudyResult = {
 };
 
 const drainMocks = vi.hoisted(() => {
-  const useRootLoaderData = vi.fn(() => ({
-    user: { id: 'user-1', email: null as string | null },
-  }));
+  const useRootLoaderData = vi.fn(
+    (): { user: { id: string; email: string | null } | null } => ({
+      user: { id: 'user-1', email: null as string | null },
+    }),
+  );
   const useNotesDataMeta = vi.fn(() => ({
     notaProEntitled: true,
     loading: false,
@@ -34,17 +36,19 @@ const drainMocks = vi.hoisted(() => {
   }));
   const isLikelyOnline = vi.fn(() => true);
   const listPendingAudioNoteJobs = vi.fn(
-    async () => [] as PendingAudioNoteJob[],
+    async (_userId: string) => [] as PendingAudioNoteJob[],
   );
-  const removePendingAudioNoteJob = vi.fn(async () => {});
-  const postAudioToNoteStream = vi.fn(async () => studyResult);
-  const applyAudioNoteStudyResult = vi.fn(async () => {});
-  const uploadStudyRecordingAttachment = vi.fn(async () => ({
-    id: 'att-1',
-    filename: 'recording.webm',
-  }));
+  const removePendingAudioNoteJob = vi.fn(async (_id: string) => {});
+  const postAudioToNoteStream = vi.fn(async (_blob: Blob) => studyResult);
+  const applyAudioNoteStudyResult = vi.fn(async (_opts: unknown) => {});
+  const uploadStudyRecordingAttachment = vi.fn(
+    async (_noteId: string, _userId: string, _blob: Blob, _mime: string) => ({
+      id: 'att-1',
+      filename: 'recording.webm',
+    }),
+  );
   const formatStudyRecordingUploadWarning = vi.fn(
-    () => 'formatted-upload-warning',
+    (_err: unknown) => 'formatted-upload-warning',
   );
   const onlineListeners: Array<() => void> = [];
   const subscribeOnline = vi.fn((listener: () => void) => {

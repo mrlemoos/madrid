@@ -18,6 +18,9 @@ function makeNote(overrides: Partial<Note> = {}): Note {
     due_at: null,
     is_deadline: false,
     editor_settings: {},
+    banner_attachment_id: null,
+    folder_id: null,
+    share_token: null,
     ...overrides,
   };
 }
