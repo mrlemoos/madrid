@@ -10,7 +10,7 @@ const AlignCenterIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
   ) => {
     const [scope, animate] = useAnimate();
 
-    const start = async () => {
+    const start = () => {
       animate('.line-1', { scaleX: [1, 0.8, 1] }, { duration: 0.3 });
       animate(
         '.line-2',

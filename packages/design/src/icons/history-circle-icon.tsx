@@ -10,7 +10,7 @@ const HistoryCircleIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
   ) => {
     const [scope, animate] = useAnimate();
 
-    const start = useCallback(async () => {
+    const start = useCallback(() => {
       // rewind circle slightly
       animate(
         '.history-circle',
@@ -37,7 +37,7 @@ const HistoryCircleIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       );
     }, [animate]);
 
-    const stop = useCallback(async () => {
+    const stop = useCallback(() => {
       animate(
         '.history-circle, .clock-hand',
         {

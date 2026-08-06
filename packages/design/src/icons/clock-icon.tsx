@@ -45,11 +45,11 @@ const ClockIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     });
 
     const handleHoverStart = () => {
-      start();
+      void start();
     };
 
     const handleHoverEnd = () => {
-      stop();
+      void stop();
     };
 
     return (

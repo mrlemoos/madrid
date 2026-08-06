@@ -10,7 +10,7 @@ const LayoutDashboardIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
   ) => {
     const [scope, animate] = useAnimate();
 
-    const start = async () => {
+    const start = () => {
       animate('.rect-1', { x: 10 }, { duration: 0.3, ease: 'easeInOut' });
 
       animate(
@@ -26,7 +26,7 @@ const LayoutDashboardIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       );
     };
 
-    const stop = async () => {
+    const stop = () => {
       animate(
         '.rect-1, .rect-2, .rect-3, .rect-4',
         { scale: 1, x: 0, y: 0 },

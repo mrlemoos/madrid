@@ -10,7 +10,7 @@ const UserPlusIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
   ) => {
     const [scope, animate] = useAnimate();
 
-    const start = useCallback(async () => {
+    const start = useCallback(() => {
       // User bounces slightly
       animate(
         '.user-avatar',
@@ -38,7 +38,7 @@ const UserPlusIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       );
     }, [animate]);
 
-    const stop = useCallback(async () => {
+    const stop = useCallback(() => {
       animate(
         '.user-avatar',
         {

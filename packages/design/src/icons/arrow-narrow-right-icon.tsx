@@ -30,7 +30,7 @@ const ArrowNarrowRightIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     });
 
     const handleHoverStart = () => {
-      start();
+      void start();
     };
 
     const handleHoverEnd = () => {

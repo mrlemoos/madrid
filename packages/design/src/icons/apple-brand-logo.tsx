@@ -37,7 +37,7 @@ const AppleBrandLogo = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       );
     };
 
-    const stop = async () => {
+    const stop = () => {
       animate(
         '.apple-leaf',
         {
@@ -70,7 +70,7 @@ const AppleBrandLogo = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
     });
 
     const handleHoverStart = () => {
-      start();
+      void start();
     };
 
     const handleHoverEnd = () => {

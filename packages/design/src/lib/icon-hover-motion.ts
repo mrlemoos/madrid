@@ -22,15 +22,20 @@ export function canRunIconHoverMotion(
 
 /**
  * Wrap an icon hover handler so it no-ops when hover motion is gated off.
+ *
+ * @remarks
+ * Returns `void` even for async handlers: these are pointer event handlers, so
+ * nothing can await them, and handing a promise back would make every call site
+ * a floating promise.
  */
 export function gateIconHover(
   run: () => void | Promise<void>,
   matchMedia?: MatchMedia,
-): () => void | Promise<void> {
+): () => void {
   return () => {
     if (!canRunIconHoverMotion(matchMedia)) {
       return;
     }
-    return run();
+    void run();
   };
 }

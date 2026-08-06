@@ -10,7 +10,7 @@ const CpuIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
   ) => {
     const [scope, animate] = useAnimate();
 
-    const start = async () => {
+    const start = () => {
       animate(
         '.pins',
         { scale: [1, 1.15, 1] },

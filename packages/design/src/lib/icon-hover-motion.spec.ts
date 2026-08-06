@@ -56,7 +56,7 @@ describe('canRunIconHoverMotion', () => {
 });
 
 describe('gateIconHover', () => {
-  it('invokes the handler only when hover motion is allowed', async () => {
+  it('invokes the handler only when hover motion is allowed', () => {
     // Arrange
     const run = vi.fn();
     const allow = (query: string) => ({
@@ -65,8 +65,8 @@ describe('gateIconHover', () => {
     const deny = () => ({ matches: false });
 
     // Act
-    await gateIconHover(run, allow)();
-    await gateIconHover(run, deny)();
+    gateIconHover(run, allow)();
+    gateIconHover(run, deny)();
 
     // Assert
     expect(run).toHaveBeenCalledTimes(1);

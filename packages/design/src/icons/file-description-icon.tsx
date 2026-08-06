@@ -34,7 +34,7 @@ const FileDescriptionIcon = forwardRef<AnimatedIconHandle, AnimatedIconProps>(
       );
     }, [animate]);
 
-    const stop = useCallback(async () => {
+    const stop = useCallback(() => {
       animate(
         '.file-fold, .file-lines',
         {
