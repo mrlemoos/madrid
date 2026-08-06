@@ -1,18 +1,18 @@
 import { describe, expect, it, vi } from 'vitest';
-import { DEFAULT_NOTE_CONTENT } from './types.js';
+import { DEFAULT_NOTE_CONTENT } from './types';
 import type { Note } from '@nota/database-types';
-import type { OutboxEntry, StoredNote } from './types.js';
+import type { OutboxEntry, StoredNote } from './types';
 import {
   createOutboxDrainer,
   drainOutbox,
   storedNoteToRemoteUpsertInput,
-} from './drain-outbox.js';
+} from './drain-outbox';
 import type {
   LocalNoteOutboxStore,
   OutboxDrainDeps,
   RemoteNoteSync,
   VaultConnectivity,
-} from './outbox-ports.js';
+} from './outbox-ports';
 
 function makeNote(overrides: Partial<Note> & { id: string }): Note {
   return {
@@ -27,6 +27,7 @@ function makeNote(overrides: Partial<Note> & { id: string }): Note {
     editor_settings: overrides.editor_settings ?? {},
     banner_attachment_id: overrides.banner_attachment_id ?? null,
     folder_id: overrides.folder_id ?? null,
+    share_token: overrides.share_token ?? null,
   };
 }
 
@@ -45,6 +46,7 @@ function makeStoredNote(
     editor_settings: overrides.editor_settings ?? {},
     banner_attachment_id: overrides.banner_attachment_id ?? null,
     folder_id: overrides.folder_id ?? null,
+    share_token: overrides.share_token ?? null,
     dirty: overrides.dirty ?? true,
     pending_create: overrides.pending_create ?? false,
     pending_delete: overrides.pending_delete ?? false,

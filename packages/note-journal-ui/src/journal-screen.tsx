@@ -1,15 +1,14 @@
 import { useCallback, useMemo, useState, type JSX } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@nota/design/utils';
 import {
   buildJournalEntriesFromNotes,
   filterJournalEntriesByDateKey,
   journalDateKeysFromEntries,
-} from '@/lib/journal-notes';
-import { navigateFromLegacyPath } from '@/lib/app-navigation';
-import { useNotesDataVault } from '@/context/notes-data-context';
-import { useNotaTranslator } from '@/lib/use-nota-translator';
-import { parseDateKey } from '@/lib/journal-calendar';
-import { localDateKey } from '@/lib/todays-note';
+} from '@nota/note-journal-core/notes';
+import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
+import { parseDateKey } from '@nota/note-journal-core/calendar';
+import { localDateKey } from '@nota/note-journal-core/local-date-key';
+import { useJournalTranslator } from './use-journal-translator';
 import { JournalCalendar } from './journal-calendar';
 import { JournalNotesList } from './journal-notes-list';
 
@@ -20,9 +19,13 @@ function initialVisibleMonth(
   return { year: anchor.getFullYear(), month: anchor.getMonth() };
 }
 
-export function JournalScreen(): JSX.Element {
+export function JournalScreen({
+  onOpenNote,
+}: {
+  onOpenNote: (noteId: string) => void;
+}): JSX.Element {
   const { notes } = useNotesDataVault();
-  const { t } = useNotaTranslator();
+  const { t } = useJournalTranslator();
   const entries = useMemo(() => buildJournalEntriesFromNotes(notes), [notes]);
   const dateKeysWithNotes = useMemo(
     () => journalDateKeysFromEntries(entries),
@@ -116,9 +119,7 @@ export function JournalScreen(): JSX.Element {
             </div>
             <JournalNotesList
               entries={filteredEntries}
-              onOpenNote={(id) => {
-                navigateFromLegacyPath(`/notes/${id}`);
-              }}
+              onOpenNote={onOpenNote}
             />
           </section>
         </div>

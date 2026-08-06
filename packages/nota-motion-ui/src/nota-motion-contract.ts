@@ -1,7 +1,7 @@
 import {
   NOTA_PRESS_IN_MS,
-  type NotaSpringPresetName,
-} from '@nota/web-design/motion-tokens';
+  type SpringPresetName,
+} from '@nota/design/motion-tokens';
 
 /**
  * Input path that triggered the UI change.
@@ -32,7 +32,7 @@ export type NotaMotionDecision = {
   /** Timed ease duration in milliseconds; `0` for none or spring. */
   durationMs: number;
   dataMotion: NotaDataMotion;
-  springPreset?: NotaSpringPresetName;
+  springPreset?: SpringPresetName;
 };
 
 const INSTANT: NotaMotionDecision = {

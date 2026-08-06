@@ -10,7 +10,8 @@
     "rootDir": "src",
     "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "ignoreDeprecations": "6.0"
   },
   "exclude": [
     "out-tsc",
@@ -46,7 +47,7 @@
       "path": "../note-link-graph/tsconfig.lib.json"
     },
     {
-      "path": "../web-design/tsconfig.lib.json"
+      "path": "../design/tsconfig.lib.json"
     }
   ]
 }

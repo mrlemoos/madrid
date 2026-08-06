@@ -5,8 +5,8 @@ import type {
   Json,
   NoteInsert,
   NoteUpdate,
-} from '~/types/database.types';
-import { subtreeFolderIds } from '../lib/folder-tree';
+} from '@nota/database-types';
+import { subtreeFolderIds } from '../lib/folder-subtree';
 import { listNoteAttachments, NOTE_PDFS_BUCKET } from './note-attachments';
 
 /** Browser and tests use the generated `Database` shape. */

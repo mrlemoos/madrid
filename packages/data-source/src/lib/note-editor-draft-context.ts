@@ -1,5 +1,5 @@
 import type { NoteDraftContext } from '@nota/notes-offline-core';
-import type { Json, Note } from '~/types/database.types';
+import type { Json, Note } from '@nota/database-types';
 
 export function editorDraftContext(
   note: Note,

@@ -1,4 +1,4 @@
-import type { OutboxEntry } from './types.js';
+import type { OutboxEntry } from './types';
 
 /** Process deletes after upserts for the same note id to avoid invalid API order. */
 export function sortOutboxForProcessing(entries: OutboxEntry[]): OutboxEntry[] {

@@ -3,7 +3,7 @@ import {
   idbRequest,
   OUTBOX_OBJECT_STORE,
   transactionComplete,
-} from './db.js';
+} from './db';
 import type { OutboxEntry, OutboxKind } from '@nota/notes-offline-core';
 import { sortOutboxForProcessing } from '@nota/notes-offline-core';
 

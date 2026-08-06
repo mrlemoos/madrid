@@ -3,8 +3,8 @@ import {
   idbRequest,
   NOTES_OBJECT_STORE,
   transactionComplete,
-} from './db.js';
-import { enqueueOutbox, removeOutboxEntry } from './outbox.js';
+} from './db';
+import { enqueueOutbox, removeOutboxEntry } from './outbox';
 import type { StoredNote } from '@nota/notes-offline-core';
 import { DEFAULT_NOTE_CONTENT } from '@nota/notes-offline-core';
 import type { Json, Note } from '@nota/database-types';

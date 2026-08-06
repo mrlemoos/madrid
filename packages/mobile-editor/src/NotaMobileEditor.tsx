@@ -155,7 +155,7 @@ export function NotaMobileEditor({
       <RichText
         editor={editor}
         // Calm, minimal styling — theme tokens will come from a future
-        // platform-neutral design package (never @nota/web-design).
+        // platform-neutral design package (never @nota/design).
         style={styles.richText}
         containerStyle={styles.richTextContainer}
       />

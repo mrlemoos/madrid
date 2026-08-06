@@ -3,7 +3,7 @@ import {
   syncServerNotesToIdbInChunks,
   NOTES_IDB_PUT_CHUNK_SIZE,
 } from './sync-server-notes-to-idb';
-import type { Note } from '~/types/database.types';
+import type { Note } from '@nota/database-types';
 
 function mockNote(id: string): Note {
   return {
@@ -16,7 +16,10 @@ function mockNote(id: string): Note {
     due_at: null,
     is_deadline: false,
     editor_settings: {},
-  } as Note;
+    banner_attachment_id: null,
+    folder_id: null,
+    share_token: null,
+  };
 }
 
 describe('syncServerNotesToIdbInChunks', () => {

@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 
 export type NotePdfThumbnailPhase = 'loading' | 'ready' | 'error';
 

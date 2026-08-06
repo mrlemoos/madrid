@@ -42,7 +42,7 @@
     "@nota/editor": "workspace:*",
     "@nota/i18n": "workspace:*",
     "@nota/note-link-graph": "workspace:*",
-    "@nota/web-design": "workspace:*",
+    "@nota/design": "workspace:*",
     "@xyflow/react": "^12.10.1",
     "react": "catalog:"
   },

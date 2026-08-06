@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { sortOutboxForProcessing } from './sort-outbox-for-processing.js';
-import type { OutboxEntry } from './types.js';
+import { sortOutboxForProcessing } from './sort-outbox-for-processing';
+import type { OutboxEntry } from './types';
 
 describe('sortOutboxForProcessing', () => {
   it('orders upsert before delete for the same note id', () => {

@@ -76,17 +76,6 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k actions nota-build.keychain
           echo "csc_link=$RUNNER_TEMP/nota-certificate.p12" >> "$GITHUB_OUTPUT"
 
-      - name: Verify Vite client env (fail fast)
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
-        run: |
-          if [ -z "$VITE_SUPABASE_URL" ] || [ -z "$VITE_SUPABASE_ANON_KEY" ] || [ -z "$VITE_CLERK_PUBLISHABLE_KEY" ]; then
-            echo '::error::VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, and VITE_CLERK_PUBLISHABLE_KEY must be set for the Production environment (or as repository secrets). Exact names; Variables need vars.* in the workflow — see apps/nota-electron/README.md.'
-            exit 1
-          fi
-
       - name: Decide GitHub release draft (release candidates)
         id: release_draft
         run: |
@@ -104,11 +93,10 @@ jobs:
           echo "draft=$DRAFT" >> "$GITHUB_OUTPUT"
 
       - name: Build web app and publish Electron release
+        # No NEXT_PUBLIC_* client env here: the packaged shell loads the hosted
+        # SPA (app.nota.mrlemoos.dev), whose env comes from Vercel. The bundled
+        # nota/dist is not the runtime source, so baking client keys in is moot.
         env:
-          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
-          VITE_NOTA_SERVER_API_URL: ${{ secrets.VITE_NOTA_SERVER_API_URL }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}

@@ -1,8 +1,26 @@
 // Runs before Vitest tests
 import { vi } from 'vitest';
+import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
+import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
 
-import { setClerkAccessTokenGetter } from './src/lib/clerk-token-ref';
-import { setSupabaseClerkGetToken } from './src/lib/supabase/browser';
+// Next App Router hooks need a router context that jsdom lacks; stub them so
+// client components (providers, shell) render under test. (`vi.mock` is hoisted
+// above imports by Vitest regardless of source position.)
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    prefetch: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+  useParams: () => ({}),
+  redirect: vi.fn(),
+  notFound: vi.fn(),
+}));
 
 // Node 25+ / the test runtime can provide a `localStorage` that lacks `setItem`; Zustand `persist`
 // needs a full `Storage` shape (e.g. notes sidebar folder collapse state).
@@ -64,10 +82,10 @@ if (canvasCtor) {
   };
 }
 
-process.env.VITE_SUPABASE_URL = 'http://localhost:54321';
-process.env.VITE_SUPABASE_ANON_KEY = 'test-anon-key';
-process.env.VITE_CLERK_PUBLISHABLE_KEY = 'pk_test_placeholder';
-process.env.VITE_NOTA_SERVER_API_URL = 'http://127.0.0.1:9';
+process.env.NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54321';
+process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key';
+process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = 'pk_test_placeholder';
+process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL = 'http://127.0.0.1:9';
 
 setSupabaseClerkGetToken(async () => 'test-clerk-jwt');
 setClerkAccessTokenGetter(async () => 'test-clerk-jwt');
@@ -75,10 +93,10 @@ setClerkAccessTokenGetter(async () => 'test-clerk-jwt');
 vi.stubGlobal('import', {
   meta: {
     env: {
-      VITE_SUPABASE_URL: 'http://localhost:54321',
-      VITE_SUPABASE_ANON_KEY: 'test-anon-key',
-      VITE_CLERK_PUBLISHABLE_KEY: 'pk_test_placeholder',
-      VITE_NOTA_SERVER_API_URL: 'http://127.0.0.1:9',
+      NEXT_PUBLIC_SUPABASE_URL: 'http://localhost:54321',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'test-anon-key',
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_placeholder',
+      NEXT_PUBLIC_NOTA_SERVER_API_URL: 'http://127.0.0.1:9',
     },
   },
 });

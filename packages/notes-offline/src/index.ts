@@ -13,7 +13,7 @@ export {
   NOTES_OBJECT_STORE,
   OUTBOX_OBJECT_STORE,
   transactionComplete,
-} from './lib/db.js';
+} from './lib/db';
 export {
   createLocalOnlyNote,
   getStoredNote,
@@ -23,12 +23,12 @@ export {
   putServerNoteIfNotDirty,
   removeStoredNote,
   saveLocalNoteDraft,
-} from './lib/local-note-store.js';
+} from './lib/local-note-store';
 export {
   listOutbox,
   removeOutboxEntry,
   sortOutboxForProcessing,
-} from './lib/outbox.js';
+} from './lib/outbox';
 export {
   mergeNoteLists,
   mergeNoteWithLocal,

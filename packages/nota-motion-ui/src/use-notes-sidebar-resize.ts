@@ -7,17 +7,17 @@ import {
   animateSprings,
   createCriticallyDampedSpringConfig,
   type SpringAnimationHandle,
-} from '@/lib/nota-critically-damped-spring';
-import { NOTA_SPRING_PRESETS } from '@/lib/nota-motion';
+} from '@nota/nota-motion-core/critically-damped-spring';
+import { NOTA_SPRING_PRESETS } from './nota-motion';
 import {
   computeSidebarResizeLiveWidth,
   resolveSidebarResizeSettle,
-} from '@/lib/nota-sidebar-resize-settle';
+} from '@nota/nota-motion-core/sidebar-resize-settle';
 import {
   clampNotaSidebarWidthPx,
   NOTA_SIDEBAR_MAX_WIDTH_PX,
   NOTA_SIDEBAR_MIN_WIDTH_PX,
-} from '@/lib/nota-sidebar-width';
+} from '@nota/nota-motion-core/sidebar-width';
 
 function setSidebarWidths(
   asideEl: HTMLElement,
@@ -174,8 +174,6 @@ export function useNotesSidebarResize(options: {
       settleHandleRef.current = null;
       clearResizeSession();
     };
-    // applyLiveWidth / settle read refs; listing them rebinds every render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- resize session
   }, [options.asideRef, options.railRef, options.setSidebarWidthPx]);
 
   const onResizePointerDown = (

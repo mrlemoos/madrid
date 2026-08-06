@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { StoredNote } from '@/lib/notes-offline';
-import type { Folder, Note, UserPreferences } from '~/types/database.types';
+import type { StoredNote } from '@nota/notes-offline';
+import type { Folder, Note, UserPreferences } from '@nota/database-types';
 import {
   loadVault,
   type VaultLoadPorts,

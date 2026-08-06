@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { drainNotesOutbox } from './notes-offline';
+import { drainNotesOutbox } from '@nota/data-source/notes-offline-sync';
 import { useOptionalNotesDataActions } from '../context/notes-data-context';
-import { subscribeOnline } from './browser-connectivity';
+import { subscribeOnline } from '@nota/data-source/browser-connectivity';
 
 /**
  * Periodically drains the notes outbox when the tab is visible or the network is back.

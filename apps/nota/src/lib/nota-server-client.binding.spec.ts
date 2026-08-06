@@ -1,40 +1,42 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('./clerk-token-ref', () => ({
+vi.mock('@nota/data-source/clerk-token-ref', () => ({
   getClerkAccessToken: vi.fn(),
-}));
-
-vi.mock('@nota/nota-server-client', () => ({
-  fetchNotaProEntitled: vi.fn(),
-  postNotaProInvalidate: vi.fn(),
-  postSemanticSearch: vi.fn(),
-  postSearchIndexNote: vi.fn(),
-  postSearchReindexAll: vi.fn(),
 }));
 
 describe('nota-server-client app binding', () => {
   afterEach(() => {
-    vi.unstubAllEnvs();
     vi.clearAllMocks();
+    vi.unstubAllGlobals();
   });
 
-  it('forwards env + Clerk token to package fetchNotaProEntitled', async () => {
+  it('fetches the same-origin entitled route (Clerk cookie auth, no bearer)', async () => {
     // Arrange
-    vi.stubEnv('VITE_NOTA_SERVER_API_URL', 'https://ns.example');
     vi.resetModules();
-    const { getClerkAccessToken } = await import('./clerk-token-ref');
-    const pkg = await import('@nota/nota-server-client');
-    vi.mocked(getClerkAccessToken).mockResolvedValue('jwt');
-    vi.mocked(pkg.fetchNotaProEntitled).mockResolvedValue(new Response());
+    const fetchMock = vi.fn().mockResolvedValue(new Response());
+    vi.stubGlobal('fetch', fetchMock);
     const { fetchNotaProEntitled } = await import('./nota-server-client');
 
     // Act
     await fetchNotaProEntitled();
 
     // Assert
-    expect(pkg.fetchNotaProEntitled).toHaveBeenCalledWith(
-      'https://ns.example',
-      'jwt',
-    );
+    expect(fetchMock).toHaveBeenCalledWith('/api/nota-pro-entitled');
+  });
+
+  it('posts the same-origin invalidate route', async () => {
+    // Arrange
+    vi.resetModules();
+    const fetchMock = vi.fn().mockResolvedValue(new Response());
+    vi.stubGlobal('fetch', fetchMock);
+    const { postNotaProInvalidate } = await import('./nota-server-client');
+
+    // Act
+    await postNotaProInvalidate();
+
+    // Assert
+    expect(fetchMock).toHaveBeenCalledWith('/api/nota-pro-invalidate', {
+      method: 'POST',
+    });
   });
 });

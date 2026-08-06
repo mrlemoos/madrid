@@ -12,7 +12,7 @@ export const SHARED_NOTE_PATH_PREFIX = '/s/';
  * current origin in the browser (dev + web).
  */
 function shareOrigin(): string {
-  const configured = viteEnvString('VITE_NOTA_WEB_APP_ORIGIN');
+  const configured = viteEnvString('NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN');
   if (configured) {
     return configured.replace(/\/$/, '');
   }
@@ -23,7 +23,7 @@ function shareOrigin(): string {
     return window.location.origin;
   }
   // ponytail: hardcoded prod fallback for packaged Electron (file: origin);
-  // set VITE_NOTA_WEB_APP_ORIGIN to override per environment.
+  // set NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN to override per environment.
   return 'https://app.nota.mrlemoos.dev';
 }
 
@@ -65,6 +65,8 @@ export interface SharedNote {
   title: string;
   content: unknown;
   editorSettings: unknown;
+  /** Author's snapshot display name for the Share Card; null when unset. */
+  authorDisplayName: string | null;
   updatedAt: string | null;
 }
 
@@ -86,6 +88,7 @@ export async function fetchSharedNote(
     title: string;
     content: unknown;
     editor_settings: unknown;
+    author_display_name: string | null;
     updated_at: string | null;
   };
   return {
@@ -93,6 +96,7 @@ export async function fetchSharedNote(
     title: row.title,
     content: row.content,
     editorSettings: row.editor_settings,
+    authorDisplayName: row.author_display_name ?? null,
     updatedAt: row.updated_at,
   };
 }

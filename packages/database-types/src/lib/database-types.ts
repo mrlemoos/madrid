@@ -222,6 +222,7 @@ export interface Database {
       user_preferences: {
         Row: {
           user_id: string;
+          display_name: string | null;
           locale: string | null;
           open_todays_note_shortcut: boolean;
           show_note_backlinks: boolean;
@@ -236,6 +237,7 @@ export interface Database {
         };
         Insert: {
           user_id: string;
+          display_name?: string | null;
           locale?: string | null;
           open_todays_note_shortcut?: boolean;
           show_note_backlinks?: boolean;
@@ -250,6 +252,7 @@ export interface Database {
         };
         Update: {
           user_id?: string;
+          display_name?: string | null;
           locale?: string | null;
           open_todays_note_shortcut?: boolean;
           show_note_backlinks?: boolean;

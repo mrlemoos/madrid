@@ -11,9 +11,9 @@ export {
   noteSurfaceMaxWidthPx,
   noteThemeSelectValue,
   parseNoteEditorSettings,
-} from './lib/note-editor-settings.js';
+} from './lib/note-editor-settings';
 export type {
   NotaSurfaceFontRole,
   NotaSurfaceMeasure,
   NoteEditorSettings,
-} from './lib/note-editor-settings.js';
+} from './lib/note-editor-settings';

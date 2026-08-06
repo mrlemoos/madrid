@@ -1,11 +1,11 @@
 import { PricingTable } from '@clerk/react';
 import { useCallback, useState, type JSX } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { Button } from '@nota/design/button';
+import { LoadingStatus } from '@nota/design/spinner';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '../context/notes-data-context';
+} from '@nota/note-runtime/notes-data-context';
 import { postNotaProInvalidate } from '../lib/nota-server-client';
 
 export function NotaProSettingsSection(): JSX.Element {
@@ -30,7 +30,7 @@ export function NotaProSettingsSection(): JSX.Element {
       <h2 className="text-sm font-medium text-foreground">Subscription</h2>
       <div className="space-y-5 rounded-xl border border-border/60 bg-linear-to-b from-muted/25 to-muted/10 px-5 py-5 shadow-sm">
         {loading ? (
-          <NotaLoadingStatus
+          <LoadingStatus
             className="justify-start text-left"
             label="Loading subscription status…"
             spinnerSize="sm"
@@ -60,7 +60,7 @@ export function NotaProSettingsSection(): JSX.Element {
             <div className="nota-clerk-pricing-table [&_.cl-card]:bg-transparent [&_.cl-card]:shadow-none">
               <PricingTable />
             </div>
-            <NotaButton
+            <Button
               type="button"
               variant="secondary"
               size="sm"
@@ -72,7 +72,7 @@ export function NotaProSettingsSection(): JSX.Element {
                 : notaProEntitled
                   ? 'Refresh subscription status'
                   : 'I completed checkout :  refresh'}
-            </NotaButton>
+            </Button>
           </div>
         )}
       </div>

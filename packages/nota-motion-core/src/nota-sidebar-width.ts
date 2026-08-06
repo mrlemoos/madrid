@@ -1,7 +1,8 @@
-import { NOTA_SIDEBAR_WIDTH_PX } from '@/lib/nota-motion';
-
-/** Default notes sidebar width (px). */
-export const NOTA_SIDEBAR_DEFAULT_WIDTH_PX = NOTA_SIDEBAR_WIDTH_PX;
+/**
+ * Default notes sidebar width (px). Canonical source of the 288px design token;
+ * `@nota/nota-motion-ui/motion` re-exports it as `NOTA_SIDEBAR_WIDTH_PX`.
+ */
+export const NOTA_SIDEBAR_DEFAULT_WIDTH_PX = 288;
 
 /** Narrowest usable notes sidebar (px). */
 export const NOTA_SIDEBAR_MIN_WIDTH_PX = 240;

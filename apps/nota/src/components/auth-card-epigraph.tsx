@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import { NotaLogo } from '@/components/nota-logo';
-import { NotaCardDescription } from '@nota/web-design/card';
+import { CardDescription } from '@nota/design/card';
 
 const serif = { fontFamily: '"Instrument Serif", serif' } as const;
 
@@ -16,9 +16,9 @@ export function AuthCardEpigraph(): JSX.Element {
       >
         Think clearly. Write slowly.
       </h1>
-      <NotaCardDescription className="mt-2 text-pretty">
+      <CardDescription className="mt-2 text-pretty">
         A quiet space for your thoughts, away from the noise.
-      </NotaCardDescription>
+      </CardDescription>
     </>
   );
 }

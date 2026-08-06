@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { createTranslator, type SupportedLocale } from '@nota/i18n';
-import { useNotaPreferencesStore } from '@/stores/nota-preferences';
+import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 
 export function useNotaTranslator(): {
   locale: SupportedLocale;

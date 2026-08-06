@@ -1,18 +1,9 @@
 import type { Editor } from '@tiptap/core';
 import { BubbleMenu } from '@tiptap/react';
-import { NotaIcon } from '@nota/web-design/icon';
-import {
-  ArrowNarrowDownIcon,
-  ArrowNarrowLeftIcon,
-  ArrowNarrowRightIcon,
-  ArrowNarrowUpIcon,
-  LayoutDashboardIcon,
-  LayersIcon,
-  TrashIcon,
-} from '@nota/web-design/icons';
+import { Icon } from '@nota/design/icon';
 import { type JSX, type MouseEvent as ReactMouseEvent } from 'react';
-import { NotaButton } from '@nota/web-design/button';
-import { cn } from '@nota/web-design/utils';
+import { Button } from '@nota/design/button';
+import { cn } from '@nota/design/utils';
 
 const menuClass =
   'flex flex-wrap items-center gap-0.5 rounded-md border border-border bg-popover p-1 shadow-md';
@@ -51,7 +42,7 @@ export function TableEditorMenu({
         aria-label="Table"
         onMouseDownCapture={keepEditorCellSelection}
       >
-        <NotaButton
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -60,9 +51,9 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().addRowBefore().focus().run()}
         >
-          <NotaIcon icon={ArrowNarrowUpIcon} size={14} />
-        </NotaButton>
-        <NotaButton
+          <Icon name="arrow-narrow-up" size={14} />
+        </Button>
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -71,9 +62,9 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().addRowAfter().focus().run()}
         >
-          <NotaIcon icon={ArrowNarrowDownIcon} size={14} />
-        </NotaButton>
-        <NotaButton
+          <Icon name="arrow-narrow-down" size={14} />
+        </Button>
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -82,10 +73,10 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().deleteRow().focus().run()}
         >
-          <NotaIcon icon={TrashIcon} size={14} />
-        </NotaButton>
+          <Icon name="trash" size={14} />
+        </Button>
         <span className="mx-0.5 h-4 w-px shrink-0 bg-border" aria-hidden />
-        <NotaButton
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -94,9 +85,9 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().addColumnBefore().focus().run()}
         >
-          <NotaIcon icon={ArrowNarrowLeftIcon} size={14} />
-        </NotaButton>
-        <NotaButton
+          <Icon name="arrow-narrow-left" size={14} />
+        </Button>
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -105,9 +96,9 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().addColumnAfter().focus().run()}
         >
-          <NotaIcon icon={ArrowNarrowRightIcon} size={14} />
-        </NotaButton>
-        <NotaButton
+          <Icon name="arrow-narrow-right" size={14} />
+        </Button>
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -116,10 +107,10 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().deleteColumn().focus().run()}
         >
-          <NotaIcon icon={TrashIcon} size={14} />
-        </NotaButton>
+          <Icon name="trash" size={14} />
+        </Button>
         <span className="mx-0.5 h-4 w-px shrink-0 bg-border" aria-hidden />
-        <NotaButton
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -128,9 +119,9 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().toggleHeaderRow().focus().run()}
         >
-          <NotaIcon icon={LayersIcon} size={14} />
-        </NotaButton>
-        <NotaButton
+          <Icon name="layers" size={14} />
+        </Button>
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -139,10 +130,10 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().toggleHeaderColumn().focus().run()}
         >
-          <NotaIcon icon={LayoutDashboardIcon} size={14} />
-        </NotaButton>
+          <Icon name="layout-dashboard" size={14} />
+        </Button>
         <span className="mx-0.5 h-4 w-px shrink-0 bg-border" aria-hidden />
-        <NotaButton
+        <Button
           type="button"
           variant="ghost"
           size="icon-xs"
@@ -152,8 +143,8 @@ export function TableEditorMenu({
           onMouseDownCapture={keepEditorCellSelection}
           onClick={() => editor.chain().deleteTable().focus().run()}
         >
-          <NotaIcon icon={TrashIcon} size={14} />
-        </NotaButton>
+          <Icon name="trash" size={14} />
+        </Button>
       </div>
     </BubbleMenu>
   );

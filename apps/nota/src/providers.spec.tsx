@@ -1,15 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
-import { clerkFullNotesUrl } from './lib/clerk-hash-navigation';
 import { AppProviders } from './providers';
 
 const viteEnvStringMock = vi.hoisted(() =>
   vi.fn((key: string): string | undefined => {
-    if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+    if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
       return 'pk_test_placeholder';
     }
-    if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+    if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
       return 'ph_test_token';
     }
     return undefined;
@@ -51,17 +50,13 @@ vi.mock('./components/deferred-posthog-root', () => ({
   ),
 }));
 
-vi.mock('./context/clerk-supabase-bridge', () => ({
+vi.mock('@nota/note-runtime/clerk-supabase-bridge', () => ({
   ClerkSupabaseBridge: ({ children }: { children: ReactNode }) => (
     <>{children}</>
   ),
 }));
 
-vi.mock('./components/clerk-sso-callback-route', () => ({
-  ClerkSsoCallbackRoute: () => <div data-testid="clerk-sso-callback-route" />,
-}));
-
-vi.mock('@nota/web-design/theme', () => ({
+vi.mock('@nota/design/theme', () => ({
   ThemeProvider: ({
     children,
     defaultTheme,
@@ -81,13 +76,13 @@ vi.mock('@nota/web-design/theme', () => ({
   ),
 }));
 
-vi.mock('./context/session-context', () => ({
+vi.mock('@nota/note-runtime/session-context', () => ({
   AppSessionProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="app-session-provider">{children}</div>
   ),
 }));
 
-vi.mock('./context/sticky-doc-title', () => ({
+vi.mock('@nota/note-runtime/sticky-doc-title', () => ({
   StickyDocTitleProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="sticky-doc-title-provider">{children}</div>
   ),
@@ -109,10 +104,10 @@ describe('AppProviders', () => {
   beforeEach(() => {
     clerkProviderProps.current = null;
     viteEnvStringMock.mockImplementation((key: string) => {
-      if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+      if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
         return 'pk_test_placeholder';
       }
-      if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+      if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
         return 'ph_test_token';
       }
       return undefined;
@@ -143,16 +138,15 @@ describe('AppProviders', () => {
     expect(screen.getByTestId('sticky-doc-title-provider')).toBeTruthy();
     expect(screen.getByTestId('note-editor-commands-provider')).toBeTruthy();
     expect(screen.getByTestId('app-error-boundary')).toBeTruthy();
-    expect(screen.getByTestId('clerk-sso-callback-route')).toBeTruthy();
   });
 
-  it('throws when VITE_CLERK_PUBLISHABLE_KEY is missing', async () => {
+  it('throws when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing', async () => {
     // Arrange
     viteEnvStringMock.mockImplementation((key: string) => {
-      if (key === 'VITE_CLERK_PUBLISHABLE_KEY') {
+      if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
         return undefined;
       }
-      if (key === 'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN') {
+      if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
         return 'ph_test_token';
       }
       return undefined;
@@ -171,13 +165,12 @@ describe('AppProviders', () => {
       );
 
     // Assert
-    expect(renderWithoutKey).toThrow('Missing VITE_CLERK_PUBLISHABLE_KEY');
+    expect(renderWithoutKey).toThrow(
+      'Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY',
+    );
   });
 
-  it('configures ClerkProvider for hash routing and Mac deep links', () => {
-    // Arrange
-    const origin = window.location.origin;
-
+  it('configures ClerkProvider for path-routed auth and Mac deep links', () => {
     // Act
     render(
       <AppProviders>
@@ -189,10 +182,10 @@ describe('AppProviders', () => {
     expect(clerkProviderProps.current).toMatchObject({
       ui: 'mock-clerk-ui',
       publishableKey: 'pk_test_placeholder',
-      signInUrl: `${origin}/sign-in`,
-      signUpUrl: `${origin}/sign-up`,
-      signInForceRedirectUrl: clerkFullNotesUrl(),
-      signUpForceRedirectUrl: clerkFullNotesUrl(),
+      signInUrl: '/signin',
+      signUpUrl: '/signup',
+      signInForceRedirectUrl: '/notes',
+      signUpForceRedirectUrl: '/notes',
       allowedRedirectProtocols: ['nota:'],
     });
     expect(clerkProviderProps.current?.routerPush).toBeTypeOf('function');

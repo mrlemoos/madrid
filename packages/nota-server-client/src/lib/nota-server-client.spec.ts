@@ -6,7 +6,7 @@ import {
   postSemanticSearch,
   postSearchIndexNote,
   postSearchReindexAll,
-} from './nota-server-client.js';
+} from './nota-server-client';
 
 describe('@nota/nota-server-client', () => {
   afterEach(() => {

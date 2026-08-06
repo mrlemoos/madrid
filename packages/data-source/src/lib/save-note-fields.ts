@@ -6,7 +6,7 @@ import type {
 import { editorDraftContext } from './note-editor-draft-context';
 import { noteAfterPatchMutation } from './note-patch-result';
 import { persistedDisplayTitle } from './note-title';
-import type { Json, Note } from '~/types/database.types';
+import type { Json, Note } from '@nota/database-types';
 
 type DraftOverrides = Parameters<typeof editorDraftContext>[1];
 

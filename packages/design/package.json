@@ -1,0 +1,163 @@
+{
+  "name": "@nota/design",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    "./button": {
+      "@nota/source": "./src/components/button.tsx",
+      "types": "./dist/components/button.d.ts",
+      "import": "./dist/button.js",
+      "default": "./dist/button.js"
+    },
+    "./card": {
+      "@nota/source": "./src/components/card.tsx",
+      "types": "./dist/components/card.d.ts",
+      "import": "./dist/card.js",
+      "default": "./dist/card.js"
+    },
+    "./tooltip": {
+      "@nota/source": "./src/components/tooltip.tsx",
+      "types": "./dist/components/tooltip.d.ts",
+      "import": "./dist/tooltip.js",
+      "default": "./dist/tooltip.js"
+    },
+    "./context-menu": {
+      "@nota/source": "./src/components/context-menu.tsx",
+      "types": "./dist/components/context-menu.d.ts",
+      "import": "./dist/context-menu.js",
+      "default": "./dist/context-menu.js"
+    },
+    "./hover-card": {
+      "@nota/source": "./src/components/hover-card.tsx",
+      "types": "./dist/components/hover-card.d.ts",
+      "import": "./dist/hover-card.js",
+      "default": "./dist/hover-card.js"
+    },
+    "./dialog": {
+      "@nota/source": "./src/components/dialog.tsx",
+      "types": "./dist/components/dialog.d.ts",
+      "import": "./dist/dialog.js",
+      "default": "./dist/dialog.js"
+    },
+    "./flight-globe": {
+      "@nota/source": "./src/components/flight-globe.tsx",
+      "types": "./dist/components/flight-globe.d.ts",
+      "import": "./dist/flight-globe.js",
+      "default": "./dist/flight-globe.js"
+    },
+    "./spinner": {
+      "@nota/source": "./src/components/spinner.tsx",
+      "types": "./dist/components/spinner.d.ts",
+      "import": "./dist/spinner.js",
+      "default": "./dist/spinner.js"
+    },
+    "./nota-tint-circle": {
+      "@nota/source": "./src/components/nota-tint-circle.tsx",
+      "types": "./dist/components/nota-tint-circle.d.ts",
+      "import": "./dist/nota-tint-circle.js",
+      "default": "./dist/nota-tint-circle.js"
+    },
+    "./utils": {
+      "@nota/source": "./src/lib/utils.ts",
+      "types": "./dist/lib/utils.d.ts",
+      "import": "./dist/utils.js",
+      "default": "./dist/utils.js"
+    },
+    "./theme": {
+      "@nota/source": "./src/lib/theme.tsx",
+      "types": "./dist/lib/theme.d.ts",
+      "import": "./dist/theme.js",
+      "default": "./dist/theme.js"
+    },
+    "./theme-color": {
+      "@nota/source": "./src/lib/theme-color.ts",
+      "types": "./dist/lib/theme-color.d.ts",
+      "import": "./dist/theme-color.js",
+      "default": "./dist/theme-color.js"
+    },
+    "./motion-tokens": {
+      "@nota/source": "./src/lib/motion-tokens.ts",
+      "types": "./dist/lib/motion-tokens.d.ts",
+      "import": "./dist/motion-tokens.js",
+      "default": "./dist/motion-tokens.js"
+    },
+    "./popup-motion": {
+      "@nota/source": "./src/lib/nota-popup-motion.ts",
+      "types": "./dist/lib/nota-popup-motion.d.ts",
+      "import": "./dist/popup-motion.js",
+      "default": "./dist/popup-motion.js"
+    },
+    "./icon": {
+      "@nota/source": "./src/components/icon.tsx",
+      "types": "./dist/components/icon.d.ts",
+      "import": "./dist/icon.js",
+      "default": "./dist/icon.js"
+    },
+    "./icons": {
+      "@nota/source": "./src/icons/index.ts",
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons.js",
+      "default": "./dist/icons.js"
+    },
+    "./theme-chrome.css": "./src/theme-chrome.css",
+    "./theme-tokens.css": "./src/theme-tokens.css"
+  },
+  "peerDependencies": {
+    "@nota/helper-hooks": "workspace:*",
+    "react": "^19.0.3",
+    "react-dom": "^19.0.3"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "d3-geo": "^3.1.1",
+    "motion": "catalog:",
+    "tailwind-merge": "^3.5.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.5.6",
+    "@tailwindcss/vite": "catalog:",
+    "@testing-library/react": "16.3.0",
+    "@types/d3-geo": "^3.1.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/topojson-client": "^3.1.4",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "storybook": "10.5.6",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vitest": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:ui",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/dist"
+        ],
+        "options": {
+          "cwd": "packages/design",
+          "command": "vite build && pnpm exec tsc -b tsconfig.lib.json"
+        }
+      }
+    }
+  }
+}

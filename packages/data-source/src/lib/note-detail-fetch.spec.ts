@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fetchNoteRowAndAttachmentsParallel } from './note-detail-fetch';
 import type { TypedSupabaseClient } from '../models/notes';
-import type { Note } from '~/types/database.types';
+import type { Note } from '@nota/database-types';
 
 describe('fetchNoteRowAndAttachmentsParallel', () => {
   it('starts listing attachments before getNote resolves', async () => {
@@ -27,7 +27,10 @@ describe('fetchNoteRowAndAttachmentsParallel', () => {
       due_at: null,
       is_deadline: false,
       editor_settings: {},
-    } as Note;
+      banner_attachment_id: null,
+      folder_id: null,
+      share_token: null,
+    };
 
     // Act
     const resultPromise = fetchNoteRowAndAttachmentsParallel(client, noteId, {

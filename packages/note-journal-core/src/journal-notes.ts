@@ -2,7 +2,7 @@ import {
   journalDateKeyFromTitle,
   parseJournalDateFromTitle,
 } from './journal-date-from-title';
-import { extractJournalNoteListPreviewFromDocJson } from './note-doc-plain-text';
+import { extractJournalNoteListPreviewFromDocJson } from '@nota/note-doc-plain-text';
 
 export type JournalNoteSource = {
   id: string;

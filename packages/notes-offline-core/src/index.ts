@@ -3,14 +3,14 @@ export type {
   OutboxEntry,
   OutboxKind,
   StoredNote,
-} from './lib/types.js';
-export { DEFAULT_NOTE_CONTENT } from './lib/types.js';
+} from './lib/types';
+export { DEFAULT_NOTE_CONTENT } from './lib/types';
 export {
   mergeNoteLists,
   mergeNoteWithLocal,
   storedNoteToListRow,
-} from './lib/merge-note-with-local.js';
-export { sortOutboxForProcessing } from './lib/sort-outbox-for-processing.js';
+} from './lib/merge-note-with-local';
+export { sortOutboxForProcessing } from './lib/sort-outbox-for-processing';
 export type {
   LocalNoteOutboxStore,
   OutboxDrainDeps,
@@ -20,13 +20,13 @@ export type {
   RemoteNoteSync,
   RemoteNoteUpsertInput,
   VaultConnectivity,
-} from './lib/outbox-ports.js';
+} from './lib/outbox-ports';
 export {
   createOutboxDrainer,
   drainOutbox,
   storedNoteToRemoteUpsertInput,
-} from './lib/drain-outbox.js';
-export type { OutboxDrainer } from './lib/drain-outbox.js';
+} from './lib/drain-outbox';
+export type { OutboxDrainer } from './lib/drain-outbox';
 export type {
   CreateNoteMutationInput,
   CreateNoteMutationResult,
@@ -39,5 +39,5 @@ export type {
   PatchNoteMutationResult,
   VaultMutator,
   VaultMutatorDeps,
-} from './lib/vault-mutation-ports.js';
-export { createVaultMutator } from './lib/vault-mutator.js';
+} from './lib/vault-mutation-ports';
+export { createVaultMutator } from './lib/vault-mutator';

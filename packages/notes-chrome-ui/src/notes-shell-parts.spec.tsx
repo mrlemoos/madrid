@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ShellPanel, SidebarToggle } from './notes-shell-parts.js';
+import { ShellPanel, SidebarToggle } from './notes-shell-parts';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import {
   markNavIntent,
@@ -9,7 +9,7 @@ import {
   resetNavIntent,
 } from '@nota/nota-motion-ui/panel-motion';
 
-vi.mock('./use-notes-chrome-translator.js', () => ({
+vi.mock('./use-notes-chrome-translator', () => ({
   useNotesChromeTranslator: () => ({
     t: (key: string) => key,
   }),

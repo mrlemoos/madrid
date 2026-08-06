@@ -1,0 +1,77 @@
+{
+  "name": "@nota/notes-chrome-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./shell-chrome": {
+      "@nota/source": {
+        "types": "./src/notes-shell-chrome.ts",
+        "import": "./src/notes-shell-chrome.ts",
+        "default": "./src/notes-shell-chrome.ts"
+      },
+      "types": "./src/notes-shell-chrome.ts",
+      "import": "./src/notes-shell-chrome.ts",
+      "default": "./src/notes-shell-chrome.ts"
+    },
+    "./chrome-type": {
+      "@nota/source": {
+        "types": "./src/notes-chrome-type.ts",
+        "import": "./src/notes-chrome-type.ts",
+        "default": "./src/notes-chrome-type.ts"
+      },
+      "types": "./src/notes-chrome-type.ts",
+      "import": "./src/notes-chrome-type.ts",
+      "default": "./src/notes-chrome-type.ts"
+    },
+    "./banner-chrome": {
+      "@nota/source": {
+        "types": "./src/note-banner-chrome.ts",
+        "import": "./src/note-banner-chrome.ts",
+        "default": "./src/note-banner-chrome.ts"
+      },
+      "types": "./src/note-banner-chrome.ts",
+      "import": "./src/note-banner-chrome.ts",
+      "default": "./src/note-banner-chrome.ts"
+    },
+    "./sidebar-tree-styles": {
+      "@nota/source": {
+        "types": "./src/notes-sidebar-tree-styles.ts",
+        "import": "./src/notes-sidebar-tree-styles.ts",
+        "default": "./src/notes-sidebar-tree-styles.ts"
+      },
+      "types": "./src/notes-sidebar-tree-styles.ts",
+      "import": "./src/notes-sidebar-tree-styles.ts",
+      "default": "./src/notes-sidebar-tree-styles.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/notes-chrome-core",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/design": "workspace:*",
+    "class-variance-authority": "^0.7.1"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

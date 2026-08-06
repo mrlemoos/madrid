@@ -1,10 +1,10 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '~/types/database.types';
+import type { Database } from '@nota/database-types';
 
 import { viteEnvString } from '../vite-env';
 
-const supabaseUrl = viteEnvString('VITE_SUPABASE_URL');
-const supabaseAnonKey = viteEnvString('VITE_SUPABASE_ANON_KEY');
+const supabaseUrl = viteEnvString('NEXT_PUBLIC_SUPABASE_URL');
+const supabaseAnonKey = viteEnvString('NEXT_PUBLIC_SUPABASE_ANON_KEY');
 
 export type TypedSupabaseBrowserClient = SupabaseClient<Database>;
 

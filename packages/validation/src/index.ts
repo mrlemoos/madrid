@@ -1,2 +1,2 @@
-export * from './lib/auth.js';
-export * from './lib/user-preferences.js';
+export * from './lib/auth';
+export * from './lib/user-preferences';

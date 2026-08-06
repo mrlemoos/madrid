@@ -1,10 +1,10 @@
-import { createLocalOnlyNote } from './notes-offline';
-import { getBrowserClient } from './supabase/browser';
+import { createLocalOnlyNote } from '@nota/notes-offline';
+import { getBrowserClient } from '@nota/data-source/supabase/browser';
 import { WELCOME_NOTE_CONTENT, WELCOME_NOTE_TITLE } from './welcome-note-doc';
 import {
   getUserPreferences,
   upsertUserPreferences,
-} from '../models/user-preferences';
+} from '@nota/data-source/models/user-preferences';
 
 /**
  * One promise per user for the welcome seed. Kept after settle so Strict Mode

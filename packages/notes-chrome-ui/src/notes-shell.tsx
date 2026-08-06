@@ -2,27 +2,19 @@ import {
   useEffect,
   useLayoutEffect,
   useState,
-  Suspense,
-  type ComponentType,
   type JSX,
+  type ReactNode,
 } from 'react';
-import { NotaIcon } from '@nota/web-design/icon';
-import {
-  BrainCircuitIcon,
-  ClockIcon,
-  GearIcon,
-  SparklesIcon,
-} from '@nota/web-design/icons';
-import { NotaTooltipProvider } from '@nota/web-design/tooltip';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { Icon } from '@nota/design/icon';
+import { TooltipProvider } from '@nota/design/tooltip';
+import { LoadingStatus } from '@nota/design/spinner';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
 import {
   notesMainChrome,
   notesSidebarChrome,
   notesStickyTitleChrome,
 } from '@nota/notes-chrome-core/shell-chrome';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
-import { cn } from '@nota/web-design/utils';
+import { cn } from '@nota/design/utils';
 import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
 import { useNotesOfflineSync } from '@nota/note-runtime/use-notes-offline-sync';
@@ -31,7 +23,10 @@ import { useNotesSidebarShortcut } from '@nota/app-navigation-ui/use-notes-sideb
 import { useCreateFolderShortcut } from '@nota/note-folders-ui/use-create-folder-shortcut';
 import { useSettingsShortcut } from '@nota/app-navigation-ui/use-settings-shortcut';
 import { useTodaysNoteShortcut } from '@nota/app-navigation-ui/use-todays-note-shortcut';
-import { useSyncUserPreferences } from '@nota/note-runtime/use-sync-user-preferences';
+import {
+  useSyncUserPreferences,
+  useSyncClerkDisplayName,
+} from '@nota/note-runtime/use-sync-user-preferences';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { useNotesSidebarShellMotion } from '@nota/nota-motion-ui/use-notes-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@nota/nota-motion-ui/use-notes-sidebar-resize';
@@ -45,56 +40,35 @@ import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
 import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
 import {
-  hashForScreen,
-  replaceAppHash,
+  pathForScreen,
+  replaceScreen,
   type NotesShellPanel,
 } from '@nota/app-navigation-core/navigation';
+import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
+import Link from 'next/link';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
-import { NoteDetailPanel } from '@nota/note-editor-ui/note-detail-panel';
-import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
 import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
-import { NotesSidebarList } from './notes-sidebar-list.js';
+import { NotesSidebarList } from './notes-sidebar-list';
 import { AudioToNoteDock } from '@nota/note-capture-ui/audio-to-note-dock';
 import { ElectronMenubarBridge } from '@nota/electron-bridge-ui/menubar-bridge';
 import { ElectronTrafficLightsController } from '@nota/electron-bridge-ui/traffic-lights-controller';
 import { StudyRecordingUploadWarningBanner } from '@nota/note-capture-ui/study-recording-upload-warning-banner';
 import { useAudioNotePendingDrain } from '@nota/note-capture-ui/use-audio-note-pending-drain';
-import { useNotesChromeTranslator } from './use-notes-chrome-translator.js';
-import {
-  LazyNotesRouteFallback,
-  NotesIndexPanel,
-  ShellPanel,
-  SidebarToggle,
-} from './notes-shell-parts.js';
+import { useNotesChromeTranslator } from './use-notes-chrome-translator';
+import { SidebarToggle } from './notes-shell-parts';
 import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-resize-handle';
 
 /**
- * App-owned lazy route components. `NotesShell` lives in a package and cannot import
- * app-local route files directly, so the app injects them (mirrors `NotesDataProviderPorts`).
+ * Persistent chrome for the notes workspace: sidebar (vault list), footer nav, the
+ * paywall banner, and all the workspace hooks/shortcuts. Rendered as the shared
+ * `(protected)/notes/layout.tsx`; the active panel is the route `children`, so the
+ * sidebar never remounts while the main content is a real page route.
  */
-export type NotesShellRouteComponents = {
-  NotesGraphRoute: ComponentType;
-  NotesJournalRoute: ComponentType;
-  NotesSettingsRoute: ComponentType;
-  NotesShortcutsRoute: ComponentType;
-};
-
 type NotesShellProps = {
-  routes: NotesShellRouteComponents;
-  /** Optional app-owned hook to warm the lazy route chunks once the shell mounts. */
-  prefetchRoutes?: () => void;
+  children: ReactNode;
 };
 
-export function NotesShell({
-  routes,
-  prefetchRoutes,
-}: NotesShellProps): JSX.Element {
-  const {
-    NotesGraphRoute,
-    NotesJournalRoute,
-    NotesSettingsRoute,
-    NotesShortcutsRoute,
-  } = routes;
+export function NotesShell({ children }: NotesShellProps): JSX.Element {
   const screen = useAppNavigationScreen();
   const panel: NotesShellPanel =
     screen.kind === 'notes' ? screen.panel : 'list';
@@ -150,6 +124,13 @@ export function NotesShell({
     notaProEntitled,
   );
 
+  useSyncClerkDisplayName(
+    userPreferences,
+    user?.id,
+    setUserPreferencesInState,
+    notaProEntitled,
+  );
+
   useNotesHistoryShortcut(user?.id, shellReady);
   useNotesSidebarShortcut(user?.id, shellReady);
   useSettingsShortcut(user?.id, shellReady);
@@ -191,10 +172,6 @@ export function NotesShell({
 
   useAudioNotePendingDrain(Boolean(user?.id && notaProEntitled && shellReady));
 
-  useEffect(() => {
-    prefetchRoutes?.();
-  }, [prefetchRoutes]);
-
   useLayoutEffect(() => {
     if (!paywalled) {
       return;
@@ -202,7 +179,7 @@ export function NotesShell({
     if (panel === 'settings') {
       return;
     }
-    replaceAppHash({ kind: 'notes', panel: 'settings', noteId: null });
+    replaceScreen({ kind: 'notes', panel: 'settings', noteId: null });
   }, [paywalled, panel]);
 
   useEffect(() => {
@@ -212,35 +189,22 @@ export function NotesShell({
     };
   }, [registerScrollRoot, resetSticky]);
 
-  const onCreateNote = (): void => {
-    if (!user?.id) {
-      return;
-    }
-    void clientCreateNote({
-      userId: user.id,
-      insertNoteAtFront,
-      refreshNotesList,
-      notaProEntitled,
-      notes,
-    });
-  };
-
-  const graphHref = hashForScreen({
+  const graphHref = pathForScreen({
     kind: 'notes',
     panel: 'graph',
     noteId: null,
   });
-  const settingsHref = hashForScreen({
+  const settingsHref = pathForScreen({
     kind: 'notes',
     panel: 'settings',
     noteId: null,
   });
-  const shortcutsHref = hashForScreen({
+  const shortcutsHref = pathForScreen({
     kind: 'notes',
     panel: 'shortcuts',
     noteId: null,
   });
-  const journalHref = hashForScreen({
+  const journalHref = pathForScreen({
     kind: 'notes',
     panel: 'journal',
     noteId: null,
@@ -266,7 +230,7 @@ export function NotesShell({
             'bg-linear-to-b from-muted/25 to-background text-muted-foreground',
           )}
         >
-          <NotaLoadingStatus label={t('Loading notes…')} />
+          <LoadingStatus label={t('Loading notes…')} />
         </div>
       ) : (
         <div
@@ -305,7 +269,7 @@ export function NotesShell({
                 className="flex h-full min-h-0 w-full min-w-0 flex-col"
                 style={{ width: widthPx }}
               >
-                <NotaTooltipProvider>
+                <TooltipProvider>
                   <div
                     className={cn(
                       'flex shrink-0 items-center justify-end pr-4 pb-4',
@@ -358,8 +322,9 @@ export function NotesShell({
                   {user ? (
                     <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
                       <div className="flex flex-col gap-3">
-                        <a
+                        <Link
                           href={graphHref}
+                          aria-current={panel === 'graph' ? 'page' : undefined}
                           onClick={() => {
                             markNavIntent('pointer');
                           }}
@@ -373,12 +338,15 @@ export function NotesShell({
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon icon={BrainCircuitIcon} size={16} />
+                            <Icon name="brain-circuit" size={16} />
                           </span>
                           {t('Note Graph')}
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                           href={shortcutsHref}
+                          aria-current={
+                            panel === 'shortcuts' ? 'page' : undefined
+                          }
                           onClick={() => {
                             markNavIntent('pointer');
                           }}
@@ -392,12 +360,15 @@ export function NotesShell({
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon icon={SparklesIcon} size={16} />
+                            <Icon name="sparkles" size={16} />
                           </span>
                           {t('Shortcuts')}
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                           href={settingsHref}
+                          aria-current={
+                            panel === 'settings' ? 'page' : undefined
+                          }
                           onClick={() => {
                             markNavIntent('pointer');
                           }}
@@ -411,13 +382,16 @@ export function NotesShell({
                           )}
                         >
                           <span className="inline-flex shrink-0" aria-hidden>
-                            <NotaIcon icon={GearIcon} size={16} />
+                            <Icon name="gear" size={16} />
                           </span>
                           {t('Settings')}
-                        </a>
+                        </Link>
                         {showJournalNav ? (
-                          <a
+                          <Link
                             href={journalHref}
+                            aria-current={
+                              panel === 'journal' ? 'page' : undefined
+                            }
                             onClick={() => {
                               markNavIntent('pointer');
                             }}
@@ -431,15 +405,15 @@ export function NotesShell({
                             )}
                           >
                             <span className="inline-flex shrink-0" aria-hidden>
-                              <NotaIcon icon={ClockIcon} size={16} />
+                              <Icon name="clock" size={16} />
                             </span>
                             {t('Journal')}
-                          </a>
+                          </Link>
                         ) : null}
                       </div>
                     </footer>
                   ) : null}
-                </NotaTooltipProvider>
+                </TooltipProvider>
                 {open ? (
                   <NotesSidebarResizeHandle
                     ariaLabel={t('Resize sidebar')}
@@ -482,57 +456,7 @@ export function NotesShell({
                 </p>
               </div>
             ) : null}
-            <ShellPanel active={panel === 'list'} panelId="nota-panel-list">
-              <NotesIndexPanel onCreate={onCreateNote} />
-            </ShellPanel>
-            <ShellPanel active={panel === 'note'} panelId="nota-panel-note">
-              {routeNoteId ? <NoteDetailPanel noteId={routeNoteId} /> : null}
-            </ShellPanel>
-            <ShellPanel active={panel === 'graph'} panelId="nota-panel-graph">
-              <Suspense
-                fallback={
-                  <LazyNotesRouteFallback label={t('Loading graph…')} />
-                }
-              >
-                <NotesGraphRoute />
-              </Suspense>
-            </ShellPanel>
-            <ShellPanel
-              active={panel === 'journal'}
-              panelId="nota-panel-journal"
-            >
-              <Suspense
-                fallback={
-                  <LazyNotesRouteFallback label={t('Loading journal…')} />
-                }
-              >
-                <NotesJournalRoute />
-              </Suspense>
-            </ShellPanel>
-            <ShellPanel
-              active={panel === 'settings'}
-              panelId="nota-panel-settings"
-            >
-              <Suspense
-                fallback={
-                  <LazyNotesRouteFallback label={t('Loading settings…')} />
-                }
-              >
-                <NotesSettingsRoute />
-              </Suspense>
-            </ShellPanel>
-            <ShellPanel
-              active={panel === 'shortcuts'}
-              panelId="nota-panel-shortcuts"
-            >
-              <Suspense
-                fallback={
-                  <LazyNotesRouteFallback label={t('Loading shortcuts…')} />
-                }
-              >
-                <NotesShortcutsRoute />
-              </Suspense>
-            </ShellPanel>
+            {children}
           </main>
         </div>
       )}

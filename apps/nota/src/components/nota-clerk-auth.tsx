@@ -2,17 +2,13 @@ import { SignIn, SignUp } from '@clerk/react';
 import { shadcn } from '@clerk/ui/themes';
 import type { JSX } from 'react';
 
-import { notaButtonVariants } from '@nota/web-design/button';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
-import {
-  clerkFullSignInUrl,
-  clerkFullSignUpUrl,
-} from '@/lib/clerk-hash-navigation';
+import { buttonVariants } from '@nota/design/button';
+import { LoadingStatus } from '@nota/design/spinner';
 import { cn } from '@/lib/utils';
 
 const authFallback = (
   <div className="py-6">
-    <NotaLoadingStatus label="Loading…" spinnerSize="sm" />
+    <LoadingStatus label="Loading…" spinnerSize="sm" />
   </div>
 );
 
@@ -31,12 +27,14 @@ const clerkFieldInput = cn(
 );
 
 const clerkPrimaryButton = cn(
-  notaButtonVariants({ variant: 'default', size: 'lg' }),
+  buttonVariants({ variant: 'default', size: 'lg' }),
   'nota-pressable h-10 w-full touch-manipulation text-sm',
 );
 
 /** Nota glass-card auth: shadcn tokens, no nested Clerk card chrome. */
-export const notaClerkAuthAppearance = {
+// Not exported: its inferred type reaches into @clerk/ui internals that can't be
+// named portably (TS2742), and only the two components below use it.
+const notaClerkAuthAppearance = {
   theme: shadcn,
   options: {
     logoPlacement: 'none' as const,
@@ -85,11 +83,11 @@ export const notaClerkAuthAppearance = {
     formFieldHintText: 'text-left text-xs text-muted-foreground',
     formButtonPrimary: clerkPrimaryButton,
     formButtonReset: cn(
-      notaButtonVariants({ variant: 'ghost', size: 'sm' }),
+      buttonVariants({ variant: 'ghost', size: 'sm' }),
       'text-muted-foreground',
     ),
     formFieldAction: cn(
-      notaButtonVariants({ variant: 'link', size: 'sm' }),
+      buttonVariants({ variant: 'link', size: 'sm' }),
       'h-auto p-0 text-sm font-normal',
     ),
     dividerLine: 'bg-border/50',
@@ -98,7 +96,7 @@ export const notaClerkAuthAppearance = {
     identityPreview: 'rounded-lg border border-border/50 bg-muted/25',
     identityPreviewText: 'text-sm text-foreground',
     identityPreviewEditButton: cn(
-      notaButtonVariants({ variant: 'link', size: 'sm' }),
+      buttonVariants({ variant: 'link', size: 'sm' }),
       'h-auto p-0',
     ),
     alert:
@@ -106,34 +104,34 @@ export const notaClerkAuthAppearance = {
     alertText: 'text-sm',
     otpCodeFieldInput: cn(clerkFieldInput, 'text-center tracking-[0.35em]'),
     formResendCodeLink: cn(
-      notaButtonVariants({ variant: 'link', size: 'sm' }),
+      buttonVariants({ variant: 'link', size: 'sm' }),
       'h-auto p-0',
     ),
     formFieldInputShowPasswordButton: cn(
-      notaButtonVariants({ variant: 'ghost', size: 'icon-sm' }),
+      buttonVariants({ variant: 'ghost', size: 'icon-sm' }),
       'text-muted-foreground hover:text-foreground',
     ),
   },
 };
 
-/** Default Clerk `<SignIn />` on pathname `/sign-in` (empty hash — required for PathRouter). */
+/** Clerk `<SignIn />` on the App Router path route `/signin` (path routing). */
 export function NotaClerkSignIn(): JSX.Element {
   return (
     <SignIn
-      path="/sign-in"
-      signUpUrl={clerkFullSignUpUrl()}
+      path="/signin"
+      signUpUrl="/signup"
       appearance={notaClerkAuthAppearance}
       fallback={authFallback}
     />
   );
 }
 
-/** Default Clerk `<SignUp />`; path routing + hash bridge in `clerk-hash-navigation`. */
+/** Clerk `<SignUp />` on the App Router path route `/signup` (path routing). */
 export function NotaClerkSignUp(): JSX.Element {
   return (
     <SignUp
-      path="/sign-up"
-      signInUrl={clerkFullSignInUrl()}
+      path="/signup"
+      signInUrl="/signin"
       appearance={notaClerkAuthAppearance}
       fallback={authFallback}
     />

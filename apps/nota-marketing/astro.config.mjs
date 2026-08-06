@@ -18,10 +18,6 @@ export default defineConfig({
       conditions: ['@nota/source', 'import', 'module', 'browser', 'default'],
       alias: {
         '@': path.resolve(__dirname, 'src'),
-        '@nota/note-doc-plain-text': path.resolve(
-          __dirname,
-          '../nota/src/lib/note-doc-plain-text.ts',
-        ),
       },
     },
   },

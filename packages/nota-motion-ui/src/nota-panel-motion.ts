@@ -4,7 +4,7 @@
  * Pointer panel swaps may fade ≤180ms; keyboard / history / create-and-open stay instant.
  */
 
-import { resolveNotaMotion } from '@/lib/nota-motion-contract';
+import { resolveNotaMotion } from './nota-motion-contract';
 
 export type NavIntent = 'pointer' | 'keyboard';
 
@@ -152,7 +152,7 @@ export function resolvePanelMotion(intent: NavIntent): PanelMotion {
   };
 }
 
-/** Stamp intent before `setAppHash` / `replaceAppHash` / hash `<a>` clicks / history chords. */
+/** Stamp intent before `navigateToScreen` / `replaceScreen` / hash `<a>` clicks / history chords. */
 export function markNavIntent(intent: NavIntent): void {
   navIntentRegister.mark(intent);
 }

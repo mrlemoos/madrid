@@ -1,0 +1,98 @@
+{
+  "name": "@nota/app-navigation-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./navigation": {
+      "@nota/source": {
+        "types": "./src/app-navigation.ts",
+        "import": "./src/app-navigation.ts",
+        "default": "./src/app-navigation.ts"
+      },
+      "types": "./src/app-navigation.ts",
+      "import": "./src/app-navigation.ts",
+      "default": "./src/app-navigation.ts"
+    },
+    "./auth": {
+      "@nota/source": {
+        "types": "./src/app-navigation-auth.ts",
+        "import": "./src/app-navigation-auth.ts",
+        "default": "./src/app-navigation-auth.ts"
+      },
+      "types": "./src/app-navigation-auth.ts",
+      "import": "./src/app-navigation-auth.ts",
+      "default": "./src/app-navigation-auth.ts"
+    },
+    "./clerk-hash": {
+      "@nota/source": {
+        "types": "./src/clerk-hash-navigation.ts",
+        "import": "./src/clerk-hash-navigation.ts",
+        "default": "./src/clerk-hash-navigation.ts"
+      },
+      "types": "./src/clerk-hash-navigation.ts",
+      "import": "./src/clerk-hash-navigation.ts",
+      "default": "./src/clerk-hash-navigation.ts"
+    },
+    "./pathname-policy": {
+      "@nota/source": {
+        "types": "./src/pathname-policy.ts",
+        "import": "./src/pathname-policy.ts",
+        "default": "./src/pathname-policy.ts"
+      },
+      "types": "./src/pathname-policy.ts",
+      "import": "./src/pathname-policy.ts",
+      "default": "./src/pathname-policy.ts"
+    },
+    "./todays-note": {
+      "@nota/source": {
+        "types": "./src/todays-note.ts",
+        "import": "./src/todays-note.ts",
+        "default": "./src/todays-note.ts"
+      },
+      "types": "./src/todays-note.ts",
+      "import": "./src/todays-note.ts",
+      "default": "./src/todays-note.ts"
+    },
+    "./open-note-vault-list-sync": {
+      "@nota/source": {
+        "types": "./src/open-note-vault-list-sync.ts",
+        "import": "./src/open-note-vault-list-sync.ts",
+        "default": "./src/open-note-vault-list-sync.ts"
+      },
+      "types": "./src/open-note-vault-list-sync.ts",
+      "import": "./src/open-note-vault-list-sync.ts",
+      "default": "./src/open-note-vault-list-sync.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/app-navigation-core",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/database-types": "workspace:*",
+    "@nota/nota-motion-ui": "workspace:*",
+    "@nota/note-journal-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

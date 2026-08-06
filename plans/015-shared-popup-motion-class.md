@@ -8,14 +8,14 @@
 
 ## Problem
 
-Four Base UI popup surfaces duplicate the same three-line Tailwind motion block. The strings are copy-pasted verbatim (or nearly so) across `@nota/web-design` primitives and two app/editor call sites. Any timing, easing, or scale tweak must be edited in four places, which invites drift.
+Four Base UI popup surfaces duplicate the same three-line Tailwind motion block. The strings are copy-pasted verbatim (or nearly so) across `@nota/design` primitives and two app/editor call sites. Any timing, easing, or scale tweak must be edited in four places, which invites drift.
 
 **Duplicate inventory (commit `08ed1fa`):**
 
 | Location                                                         | Lines   | Motion block identical?             | Extra non-motion classes on same `cn()`            |
 | ---------------------------------------------------------------- | ------- | ----------------------------------- | -------------------------------------------------- |
-| `packages/web-design/src/components/hover-card.tsx`              | 31–33   | Yes, plus `outline-none` on line 31 | Surface: `z-50 w-80 … shadow-lg` (29–30)           |
-| `packages/web-design/src/components/context-menu.tsx`            | 58–60   | Yes                                 | Surface: `z-50 min-w-48 … p-1 shadow-md` (57)      |
+| `packages/design/src/components/hover-card.tsx`                  | 31–33   | Yes, plus `outline-none` on line 31 | Surface: `z-50 w-80 … shadow-lg` (29–30)           |
+| `packages/design/src/components/context-menu.tsx`                | 58–60   | Yes                                 | Surface: `z-50 min-w-48 … p-1 shadow-md` (57)      |
 | `apps/nota/src/components/theme-menu.tsx`                        | 55–57   | Yes                                 | Surface: `z-50 min-w-[var(--anchor-width)] …` (54) |
 | `packages/editor/src/components/tiptap/note-image-extension.tsx` | 277–279 | Yes                                 | Surface: `z-50 min-w-[10.5rem] …` (276)            |
 
@@ -43,11 +43,11 @@ Four Base UI popup surfaces duplicate the same three-line Tailwind motion block.
 
 **What is missing (addressed by related plan 008):**
 
-Popups lack explicit `duration-*` and `ease-out`. `NotaButton` already uses `duration-200 ease-out` (`packages/web-design/src/components/button.tsx:34`). Plan **008** adds `duration-200 ease-out` to these same four surfaces. This plan's shared constant **must include** those tokens so one import delivers both consolidation and the 008 target for these files.
+Popups lack explicit `duration-*` and `ease-out`. `Button` already uses `duration-200 ease-out` (`packages/design/src/components/button.tsx:34`). Plan **008** adds `duration-200 ease-out` to these same four surfaces. This plan's shared constant **must include** those tokens so one import delivers both consolidation and the 008 target for these files.
 
 **Not in scope (confirmed no duplicate):**
 
-- `packages/web-design/src/components/tooltip.tsx` — `DEFAULT_NOTA_TOOLTIP_POPUP_CLASS` has surface tokens only; no `data-[starting-style]` / `data-[ending-style]` motion.
+- `packages/design/src/components/tooltip.tsx` — `DEFAULT_NOTA_TOOLTIP_POPUP_CLASS` has surface tokens only; no `data-[starting-style]` / `data-[ending-style]` motion.
 - `apps/nota/src/components/command-palette.tsx` — GSAP motion, not Base UI popup CSS.
 - No other `data-[starting-style]` / `data-[ending-style]` matches in the repo at `08ed1fa`.
 
@@ -55,10 +55,10 @@ Popups lack explicit `duration-*` and `ease-out`. `NotaButton` already uses `dur
 
 ## Target
 
-One exported constant in `@nota/web-design`, consumed by all four call sites:
+One exported constant in `@nota/design`, consumed by all four call sites:
 
 ```ts
-// packages/web-design/src/lib/nota-popup-motion.ts — target
+// packages/design/src/lib/nota-popup-motion.ts — target
 import { cn } from './utils.js';
 
 /** Base UI popup enter/exit: scale from trigger, 200ms ease-out, no scale(0). */
@@ -68,7 +68,7 @@ export const NOTA_POPUP_MOTION_CLASS = cn('origin-[var(--transform-origin)] tran
 Import path (new subpath export, matching package convention):
 
 ```ts
-import { NOTA_POPUP_MOTION_CLASS } from '@nota/web-design/popup-motion';
+import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
 ```
 
 **Call-site target pattern:**
@@ -95,24 +95,24 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 
 ## Repo conventions to follow
 
-- **Subpath exports only** — no package root export. Add `./popup-motion` to `packages/web-design/package.json` `exports` and `packages/web-design/vite.config.mts` `libEntries`, mirroring `./theme-color` and `./utils`.
+- **Subpath exports only** — no package root export. Add `./popup-motion` to `packages/design/package.json` `exports` and `packages/design/vite.config.mts` `libEntries`, mirroring `./theme-color` and `./utils`.
 - **`cn` for class constants** — same pattern as `DEFAULT_CONTEXT_MENU_POPUP_CLASS` in `context-menu.tsx:56–61`; motion constant uses `cn()` even when it is a fixed string today so future token splits stay merge-safe.
-- **Exemplar for duration + ease-out:** `packages/web-design/src/components/button.tsx:34` — `duration-200 ease-out`.
-- **Exemplar for popup tests:** `packages/web-design/src/components/hover-card.spec.tsx` — assert surface tokens on rendered popup; extend similarly for motion tokens.
-- **`@nota/editor` may depend on `@nota/web-design`** — already declared in `packages/editor/package.json`; importing `@nota/web-design/popup-motion` is allowed (`platform:web` → `platform:web`).
+- **Exemplar for duration + ease-out:** `packages/design/src/components/button.tsx:34` — `duration-200 ease-out`.
+- **Exemplar for popup tests:** `packages/design/src/components/hover-card.spec.tsx` — assert surface tokens on rendered popup; extend similarly for motion tokens.
+- **`@nota/editor` may depend on `@nota/design`** — already declared in `packages/editor/package.json`; importing `@nota/design/popup-motion` is allowed (`platform:web` → `platform:web`).
 
 ## TDD strategy
 
 **Red (write first):**
 
-1. `packages/web-design/src/lib/nota-popup-motion.spec.ts` — assert `NOTA_POPUP_MOTION_CLASS` contains:
+1. `packages/design/src/lib/nota-popup-motion.spec.ts` — assert `NOTA_POPUP_MOTION_CLASS` contains:
    - `origin-[var(--transform-origin)]`
    - `transition-[transform,scale,opacity]`
    - `duration-200`
    - `ease-out`
    - `data-[starting-style]:scale-95`
    - `data-[ending-style]:scale-95`
-2. Extend `hover-card.spec.tsx` (or add `context-menu` motion assertion) — rendered `NotaHoverCardPopup` class string includes `duration-200` and `ease-out` after wiring constant into component.
+2. Extend `hover-card.spec.tsx` (or add `context-menu` motion assertion) — rendered `HoverCardPopup` class string includes `duration-200` and `ease-out` after wiring constant into component.
 
 **Green:**
 
@@ -125,8 +125,8 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 ## Steps
 
 1. **Add motion module and export wiring**
-   - Create `packages/web-design/src/lib/nota-popup-motion.ts` with `NOTA_POPUP_MOTION_CLASS` exactly as in **Target** above.
-   - Add to `packages/web-design/package.json` `exports`:
+   - Create `packages/design/src/lib/nota-popup-motion.ts` with `NOTA_POPUP_MOTION_CLASS` exactly as in **Target** above.
+   - Add to `packages/design/package.json` `exports`:
      ```json
      "./popup-motion": {
        "@nota/source": "./src/lib/nota-popup-motion.ts",
@@ -135,16 +135,16 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
        "default": "./dist/popup-motion.js"
      }
      ```
-   - Add `'popup-motion': path.join(root, 'src/lib/nota-popup-motion.ts')` to `libEntries` in `packages/web-design/vite.config.mts`.
+   - Add `'popup-motion': path.join(root, 'src/lib/nota-popup-motion.ts')` to `libEntries` in `packages/design/vite.config.mts`.
 
 2. **Write failing spec** (`nota-popup-motion.spec.ts`) per TDD strategy **Red** section.
 
-3. **Wire `@nota/web-design` primitives**
+3. **Wire `@nota/design` primitives**
    - `hover-card.tsx`: import `NOTA_POPUP_MOTION_CLASS`; replace lines 31–33 with `NOTA_POPUP_MOTION_CLASS`; keep `outline-none` on the surface line (29–30).
    - `context-menu.tsx`: import constant; replace lines 58–60 in `DEFAULT_CONTEXT_MENU_POPUP_CLASS` with `NOTA_POPUP_MOTION_CLASS`.
 
 4. **Wire app + editor call sites**
-   - `apps/nota/src/components/theme-menu.tsx`: `import { NOTA_POPUP_MOTION_CLASS } from '@nota/web-design/popup-motion'`; replace lines 55–57 with the constant inside the existing `cn()` on `Menu.Popup` (line 53).
+   - `apps/nota/src/components/theme-menu.tsx`: `import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion'`; replace lines 55–57 with the constant inside the existing `cn()` on `Menu.Popup` (line 53).
    - `packages/editor/src/components/tiptap/note-image-extension.tsx`: same import; replace lines 277–279 inside `Menu.Popup` `cn()` (line 275).
 
 5. **Extend component spec** — update `hover-card.spec.tsx` (or add context-menu motion test) to assert motion tokens on popup after step 3.
@@ -161,7 +161,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 ## Boundaries
 
 - Do NOT change popup **surface** tokens (border, shadow, width, padding) — motion constant only.
-- Do NOT add motion to `NotaTooltipPopup` (no Base UI starting/ending styles today).
+- Do NOT add motion to `TooltipPopup` (no Base UI starting/ending styles today).
 - Do NOT touch `command-palette.tsx`, `notes-shell.tsx`, or GSAP paths.
 - Do NOT add new dependencies.
 - Do NOT change `scale-95`, transform-origin variable name, or transition property list.
@@ -173,8 +173,8 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 - **Mechanical:**
 
   ```bash
-  pnpm exec nx run @nota/web-design:test --outputStyle=static
-  pnpm exec nx run @nota/web-design:build --outputStyle=static
+  pnpm exec nx run @nota/design:test --outputStyle=static
+  pnpm exec nx run @nota/design:build --outputStyle=static
   pnpm exec nx run @nota/editor:test --outputStyle=static
   pnpm exec nx lint @nota/nota --outputStyle=static
   ```

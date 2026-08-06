@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseRedditUrl, redditPostJsonUrl } from './parse-reddit-url.js';
+import { parseRedditUrl, redditPostJsonUrl } from './parse-reddit-url';
 
 describe('parseRedditUrl', () => {
   it('detects a post URL', () => {

@@ -10,7 +10,7 @@ import {
   type NotesDataActionsSlice,
   type NotesDataMetaSlice,
   type NotesDataVaultSlice,
-} from '~/context/notes-data-context';
+} from '@nota/note-runtime/notes-data-context';
 
 const noopRefresh = async (): Promise<void> => {};
 

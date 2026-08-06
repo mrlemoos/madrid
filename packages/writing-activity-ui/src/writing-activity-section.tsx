@@ -1,5 +1,5 @@
 import { useMemo, type JSX } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@nota/design/utils';
 import {
   buildActivityGridCells,
   countActiveDaysLast365,
@@ -8,33 +8,43 @@ import {
   ACTIVITY_LEVEL_CLASSES,
   type ActivityLevel,
   type WritingActivityColor,
-} from '@/lib/writing-activity';
-import { useNotaPreferencesStore } from '../stores/nota-preferences';
-import { submitUserPreferencesPatch } from '@/lib/use-sync-user-preferences';
+} from '@nota/writing-activity-core/writing-activity';
+import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
+import { submitUserPreferencesPatch } from '@nota/note-runtime/use-sync-user-preferences';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '@/context/notes-data-context';
-import { useRootLoaderData } from '@/context/session-context';
-import { useNotaTranslator } from '@/lib/use-nota-translator';
+} from '@nota/note-runtime/notes-data-context';
+import { useRootLoaderData } from '@nota/note-runtime/session-context';
+import { useWritingActivityTranslator } from './use-writing-activity-translator';
 import {
-  NotaTooltip,
-  NotaTooltipPopup,
-  NotaTooltipPortal,
-  NotaTooltipPositioner,
-  NotaTooltipTrigger,
-} from '@nota/web-design/tooltip';
+  Tooltip,
+  TooltipPopup,
+  TooltipPortal,
+  TooltipPositioner,
+  TooltipTrigger,
+} from '@nota/design/tooltip';
 
 const COLOR_FAMILIES: WritingActivityColor[] = ['blue', 'red', 'pink', 'rose'];
 
-export function WritingActivitySection(): JSX.Element {
-  const { t } = useNotaTranslator();
+export function WritingActivitySection(): JSX.Element | null {
+  const { t } = useWritingActivityTranslator();
   const { notaProEntitled } = useNotesDataMeta();
-  const show = useNotaPreferencesStore((s) => s.showWritingActivityGraph);
-  const color = useNotaPreferencesStore((s) => s.writingActivityColor);
-  const days = useNotaPreferencesStore((s) => s.writingActivityDays);
-  const setShow = useNotaPreferencesStore((s) => s.setShowWritingActivityGraph);
-  const setColor = useNotaPreferencesStore((s) => s.setWritingActivityColor);
+  const show = useNotaPreferencesStore(
+    ({ showWritingActivityGraph }) => showWritingActivityGraph,
+  );
+  const color = useNotaPreferencesStore(
+    ({ writingActivityColor }) => writingActivityColor,
+  );
+  const days = useNotaPreferencesStore(
+    ({ writingActivityDays }) => writingActivityDays,
+  );
+  const setShow = useNotaPreferencesStore(
+    ({ setShowWritingActivityGraph }) => setShowWritingActivityGraph,
+  );
+  const setColor = useNotaPreferencesStore(
+    ({ setWritingActivityColor }) => setWritingActivityColor,
+  );
   const { setUserPreferencesInState } = useNotesDataActions();
   const { user } = useRootLoaderData();
 
@@ -105,21 +115,23 @@ export function WritingActivitySection(): JSX.Element {
           </div>
 
           {/* Compact GitHub-style: 7 rows (days), many columns (weeks). Keeps height small. */}
-          <div className="grid auto-cols-[10px] grid-flow-col grid-rows-7 gap-[2px] overflow-x-auto pb-1">
+          <div className="grid auto-cols-[10px] grid-flow-col grid-rows-7 gap-0.5 overflow-x-auto pb-1">
             {cells.map((cell) => (
-              <NotaTooltip key={cell.dateKey}>
-                <NotaTooltipTrigger asChild>
-                  <div
-                    className={cn(
-                      'h-[10px] w-[10px] rounded-[2px]',
-                      ACTIVITY_LEVEL_CLASSES[color][cell.level],
-                    )}
-                    aria-label={`${String(cell.count)} contributions on ${cell.date.toLocaleDateString()}`}
-                  />
-                </NotaTooltipTrigger>
-                <NotaTooltipPortal>
-                  <NotaTooltipPositioner side="top" sideOffset={4}>
-                    <NotaTooltipPopup>
+              <Tooltip key={cell.dateKey}>
+                <TooltipTrigger
+                  render={
+                    <div
+                      className={cn(
+                        'h-2.5 w-2.5 rounded-xs',
+                        ACTIVITY_LEVEL_CLASSES[color][cell.level],
+                      )}
+                      aria-label={`${String(cell.count)} contributions on ${cell.date.toLocaleDateString()}`}
+                    />
+                  }
+                />
+                <TooltipPortal>
+                  <TooltipPositioner side="top" sideOffset={4}>
+                    <TooltipPopup>
                       {t('{count} contributions on {date}', {
                         count: cell.count,
                         date: cell.date.toLocaleDateString(undefined, {
@@ -128,10 +140,10 @@ export function WritingActivitySection(): JSX.Element {
                           day: 'numeric',
                         }),
                       })}
-                    </NotaTooltipPopup>
-                  </NotaTooltipPositioner>
-                </NotaTooltipPortal>
-              </NotaTooltip>
+                    </TooltipPopup>
+                  </TooltipPositioner>
+                </TooltipPortal>
+              </Tooltip>
             ))}
           </div>
 

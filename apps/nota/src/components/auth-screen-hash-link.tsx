@@ -1,20 +1,21 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX, ReactNode } from 'react';
-import { notaButtonVariants } from '@nota/web-design/button';
-import { replaceAppHash, type AppNavScreen } from '@/lib/app-navigation';
-import { authPathnameForScreenKind } from '@/lib/app-navigation-auth';
+import Link from 'next/link';
+import { buttonVariants } from '@nota/design/button';
+import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
 import { cn } from '@/lib/utils';
 
 type AuthHashTarget = 'login' | 'signup';
 
 type AuthScreenHashLinkButtonProps = Pick<
-  VariantProps<typeof notaButtonVariants>,
+  VariantProps<typeof buttonVariants>,
   'variant' | 'size'
 >;
 
 /**
- * Same-tab navigation for auth screens. Auth uses pathname (`/sign-in`) so Clerk path routing
- * works; `replaceAppHash` clears `#/…` hashes that would block `<SignIn />` from mounting.
+ * Styled link to a Clerk auth route (`/signin` / `/signup`). A real `next/link` — the
+ * earlier imperative variant issued `history.replaceState`, which Next treats as a
+ * shallow URL update (no route change), so the click never navigated.
  */
 export function AuthScreenHashLink({
   target,
@@ -27,36 +28,18 @@ export function AuthScreenHashLink({
   className?: string;
   children: ReactNode;
 } & AuthScreenHashLinkButtonProps): JSX.Element {
-  const screen: AppNavScreen =
-    target === 'login'
-      ? ({ kind: 'login' } as const)
-      : ({ kind: 'signup' } as const);
-  const href = authPathnameForScreenKind(screen.kind);
+  const href = authPathnameForScreenKind(target);
 
   return (
-    <a
+    <Link
       href={href}
       className={cn(
-        notaButtonVariants({ variant, size }),
+        buttonVariants({ variant, size }),
         variant === 'link' ? 'h-auto p-0 text-sm' : undefined,
         className,
       )}
-      onClick={(e) => {
-        if (
-          e.defaultPrevented ||
-          e.button !== 0 ||
-          e.metaKey ||
-          e.ctrlKey ||
-          e.shiftKey ||
-          e.altKey
-        ) {
-          return;
-        }
-        e.preventDefault();
-        replaceAppHash(screen);
-      }}
     >
       {children}
-    </a>
+    </Link>
   );
 }

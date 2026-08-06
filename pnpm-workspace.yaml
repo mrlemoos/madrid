@@ -6,16 +6,17 @@ packages:
 storeDir: .pnpm-store
 
 catalog:
+  next: ^16.2.12
   electron: 41.2.1
-  react: 19.2.5
-  react-dom: 19.2.5
+  react: 19.2.3
+  react-dom: 19.2.3
   zod: ^3.23.0
   '@supabase/supabase-js': ^2.103.3
   yjs: ^13.6.20
   y-prosemirror: ^1.2.15
   y-indexeddb: ^9.0.12
   prosemirror-model: ^1.24.1
-  typescript: ~5.9.2
+  typescript: 6.0.3
   '@types/node': 20.19.9
   tailwindcss: ^4.0.0
   postcss: 8.4.38
@@ -27,14 +28,16 @@ catalog:
   vitest: ~4.1.0
   '@vitest/coverage-v8': ~4.1.0
   '@vitest/ui': ~4.1.0
-  '@nx/eslint': 22.6.5
-  '@nx/eslint-plugin': 22.6.5
-  '@nx/react': 22.6.5
-  '@nx/web': 22.6.5
+  '@nx/eslint': 23.1.1
+  '@nx/eslint-plugin': 23.1.1
+  '@nx/react': 23.1.1
+  '@nx/web': 23.1.1
   '@fontsource-variable/source-serif-4': ^5.2.9
   '@fontsource/instrument-serif': ^5.2.8
   esbuild: ^0.25.0
-  vite: ^7.0.0
-  '@vitejs/plugin-react': ^4.2.0
+  vite: 8.2.0
+  '@vitejs/plugin-react': 6.0.5
   vite-plugin-dts: ~4.5.0
   motion: ^12.23.12
+  gsap: ^3.13.0
+  '@gsap/react': ^2.1.2

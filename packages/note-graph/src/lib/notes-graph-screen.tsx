@@ -1,7 +1,7 @@
 import { lazy, Suspense, type JSX } from 'react';
 import type { Note } from '@nota/database-types';
 import type { PlaceholderValues } from '@nota/i18n';
-import { NotaLoadingStatus } from '@nota/web-design/spinner';
+import { LoadingStatus } from '@nota/design/spinner';
 
 const NotesGraphViewLazy = lazy(async () => {
   const { NotesGraphView } = await import('./notes-graph-view');
@@ -35,7 +35,7 @@ export function NotesGraphScreen({
         <Suspense
           fallback={
             <div className="flex min-h-[280px] flex-1 items-center justify-center rounded-lg border border-border bg-muted/30 text-sm text-muted-foreground">
-              <NotaLoadingStatus label={t('Loading graph…')} />
+              <LoadingStatus label={t('Loading graph…')} />
             </div>
           }
         >

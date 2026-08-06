@@ -2,8 +2,8 @@ import {
   SVGL_REDDIT_LOGO_URL,
   SVGL_YOUTUBE_LOGO_URL,
   WIKIPEDIA_LOGO_URL,
-} from './logos.js';
-import type { PlatformLinkPreview } from './platform-preview-types.js';
+} from './logos';
+import type { PlatformLinkPreview } from './platform-preview-types';
 
 /** British English i18n key for the Wikipedia article suffix. */
 export const WIKIPEDIA_ARTICLE_SUFFIX_I18N_KEY = 'on Wikipedia';

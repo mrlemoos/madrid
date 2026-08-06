@@ -3,7 +3,7 @@ import type { Note } from '@nota/database-types';
 import {
   buildNoteLinkGraph,
   extractOutgoingNoteIdsFromContent,
-} from './note-link-graph.js';
+} from './note-link-graph';
 
 const NOTE_A = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const NOTE_B = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb';
@@ -20,6 +20,7 @@ function minimalNote(overrides: Partial<Note> & Pick<Note, 'id'>): Note {
     editor_settings: {},
     banner_attachment_id: null,
     folder_id: null,
+    share_token: null,
     ...overrides,
   };
 }

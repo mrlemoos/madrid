@@ -1,4 +1,4 @@
-import { createTranslator, resolveLocale } from './i18n.js';
+import { createTranslator, resolveLocale } from './i18n';
 
 describe('i18n', () => {
   it('translates British English keys for Spanish and Portuguese', () => {

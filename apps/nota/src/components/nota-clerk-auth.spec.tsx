@@ -9,14 +9,14 @@ function loadAuthComponentSource(): string {
 }
 
 describe('NotaClerk auth', () => {
-  it('uses default Clerk SignIn with path routing on /sign-in', () => {
+  it('uses default Clerk SignIn with path routing on /signin', () => {
     // Arrange
     const source = loadAuthComponentSource();
 
     // Act
     const usesClerkReact = source.includes("from '@clerk/react'");
     const usesSignIn = source.includes('<SignIn');
-    const usesPathProp = source.includes('path="/sign-in"');
+    const usesPathProp = source.includes('path="/signin"');
     const avoidsHashRouting = !source.includes('routing="hash"');
     const avoidsElements = !source.includes('@clerk/elements');
 
@@ -28,13 +28,13 @@ describe('NotaClerk auth', () => {
     expect(avoidsElements).toBe(true);
   });
 
-  it('uses default Clerk SignUp with path routing on /sign-up', () => {
+  it('uses default Clerk SignUp with path routing on /signup', () => {
     // Arrange
     const source = loadAuthComponentSource();
 
     // Act
     const usesSignUp = source.includes('<SignUp');
-    const usesPathProp = source.includes('path="/sign-up"');
+    const usesPathProp = source.includes('path="/signup"');
 
     // Assert
     expect(usesSignUp).toBe(true);

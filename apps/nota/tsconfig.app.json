@@ -10,7 +10,6 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "rootDir": ".",
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["./src/*"]
@@ -47,7 +46,10 @@
   ],
   "references": [
     {
-      "path": "../../packages/web-design/tsconfig.lib.json"
+      "path": "../../packages/writing-activity-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/writing-activity-core/tsconfig.lib.json"
     },
     {
       "path": "../../packages/validation/tsconfig.lib.json"
@@ -62,13 +64,61 @@
       "path": "../../packages/notes-offline/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/notes-chrome-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/notes-chrome-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-palette-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-palette-core/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-link-graph/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-journal-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-journal-core/tsconfig.lib.json"
     },
     {
       "path": "../../packages/note-graph/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/note-folders-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-folders-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-editor-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-editor-settings/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-editor-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-doc-plain-text/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-capture-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-capture-core/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/nota-server-client/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/nota-motion-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/nota-motion-core/tsconfig.lib.json"
     },
     {
       "path": "../../packages/link-platform-preview/tsconfig.lib.json"
@@ -83,10 +133,31 @@
       "path": "../../packages/helper-hooks/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/electron-bridge-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/electron-bridge-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/design/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/data-source/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/clerk-oauth-protocol/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/app-navigation-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/app-navigation-core/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/database-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-runtime/tsconfig.lib.json"
     },
     {
       "path": "../../packages/editor/tsconfig.lib.json"

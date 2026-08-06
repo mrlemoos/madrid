@@ -31,7 +31,6 @@ export function shouldAnimateJournalMonthGrid(
 }
 
 export function resolveJournalMonthGridLayers({
-  incoming: _incoming,
   outgoing,
   prefersReducedMotion,
   isCrossfading,

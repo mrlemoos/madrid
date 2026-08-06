@@ -4,14 +4,14 @@ import {
   NOTA_SIDEBAR_SLIDE_PX,
   NOTA_SPRING_PRESETS,
   useGSAP,
-  usePrefersReducedMotion,
-} from '@/lib/nota-motion';
+} from './nota-motion';
+import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 import {
   animateSprings,
   createCriticallyDampedSpringConfig,
   type CriticallyDampedSpringConfig,
   type SpringAnimationHandle,
-} from '@/lib/nota-critically-damped-spring';
+} from '@nota/nota-motion-core/critically-damped-spring';
 
 type NotaSidebarClipLayout = {
   width: number;
@@ -94,7 +94,6 @@ export function useNotesSidebarShellMotion(params: {
       return;
     }
     gsap.set(clip, clipLayout(true, widthPx));
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- widthPx + mount: not open toggle
   }, [mounted, widthPx]);
 
   useGSAP(

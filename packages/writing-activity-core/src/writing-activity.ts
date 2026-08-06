@@ -1,4 +1,4 @@
-import { localDateKey } from './todays-note';
+import { localDateKey } from '@nota/note-journal-core/local-date-key';
 
 /** 5 intensity levels for the contribution graph. */
 export type ActivityLevel = 0 | 1 | 2 | 3 | 4;
@@ -21,7 +21,7 @@ export function parseWritingActivityColor(
     value !== null &&
     (WRITING_ACTIVITY_COLORS as readonly string[]).includes(value)
   ) {
-    return value;
+    return value as WritingActivityColor;
   }
   return 'blue';
 }

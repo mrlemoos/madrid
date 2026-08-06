@@ -1,0 +1,542 @@
+/**
+ * Clerk `<SignIn path="/sign-in" />` uses path routing. PathRouter returns **null** while the
+ * URL hash starts with `#/` (`hasUrlInFragment`), so auth must live on pathname with an empty
+ * hash. Notes/landing keep hash routing (`#/notes`). Legacy `#/sign-in` bookmarks migrate at boot.
+ */
+
+import { isClerkAuthPathname } from './app-navigation-auth';
+import { NOTA_HASH_HISTORY_EVENT, replaceScreen } from './app-navigation';
+
+const AUTH_HASH_PATH = /^\/(?:sign-in|sign-up|login|signup)(?:\/|$)/;
+
+function applyClerkRouterTarget(
+  url: URL,
+  target: string,
+  write: (url: URL) => void,
+): void {
+  const normalised = target.startsWith('#') ? target.slice(1) : target;
+  const qIndex = normalised.indexOf('?');
+  const pathPart = qIndex === -1 ? normalised : normalised.slice(0, qIndex);
+  const search = qIndex === -1 ? '' : normalised.slice(qIndex);
+
+  if (AUTH_HASH_PATH.test(pathPart)) {
+    url.pathname = pathPart;
+    url.search = search;
+    url.hash = '';
+  } else {
+    url.pathname = '/';
+    url.search = '';
+    url.hash = normalised.startsWith('/')
+      ? `#${normalised}`
+      : `#/${normalised}`;
+  }
+  write(url);
+}
+
+function migrateLegacyAuthHashToPathname(): boolean {
+  const h = window.location.hash;
+  const raw = h.startsWith('#') ? h.slice(1) : h;
+  if (!raw.startsWith('/')) {
+    return false;
+  }
+  const q = raw.indexOf('?');
+  const path = q === -1 ? raw : raw.slice(0, q);
+  if (!AUTH_HASH_PATH.test(path)) {
+    return false;
+  }
+  const url = new URL(window.location.href);
+  url.pathname = path;
+  url.search = q === -1 ? '' : raw.slice(q);
+  url.hash = '';
+  window.history.replaceState(window.history.state, '', url.toString());
+  return true;
+}
+
+function stripAuthHashIfPathnameAuth(): void {
+  if (!isClerkAuthPathname(window.location.pathname)) {
+    return;
+  }
+  if (!window.location.hash.startsWith('#/')) {
+    return;
+  }
+  const url = new URL(window.location.href);
+  url.hash = '';
+  window.history.replaceState(window.history.state, '', url.toString());
+}
+
+const MAX_AUTH_HASH_QUERY_LEN = 2048;
+
+function tryMapAuthPath(pathnameOnly: string, search: string): string | null {
+  if (pathnameOnly === '/sign-in' || pathnameOnly.startsWith('/sign-in/')) {
+    const rest =
+      pathnameOnly === '/sign-in' ? '' : pathnameOnly.slice('/sign-in'.length);
+    return `/sign-in${rest}${search}`;
+  }
+
+  if (pathnameOnly === '/sign-up' || pathnameOnly.startsWith('/sign-up/')) {
+    const rest =
+      pathnameOnly === '/sign-up' ? '' : pathnameOnly.slice('/sign-up'.length);
+    return `/sign-up${rest}${search}`;
+  }
+
+  if (pathnameOnly === '/login' || pathnameOnly.startsWith('/login/')) {
+    return `${pathnameOnly}${search}`;
+  }
+
+  if (pathnameOnly === '/signup' || pathnameOnly.startsWith('/signup/')) {
+    return `${pathnameOnly}${search}`;
+  }
+
+  return null;
+}
+
+/**
+ * Clerk hash routing often passes targets like `http://host/#/sign-up?…` where the real
+ * path and query live in `location.hash`, not `pathname` + `search`. If we fail to map those,
+ * `routerReplace` becomes a no-op and Clerk falls back to re-encoding the current URL into
+ * redirect params, which explodes (`sign_*_force_redirect_url` nesting).
+ */
+export function mapClerkToHashFragment(
+  to: string,
+  currentHref: string,
+): { fragment: string } | null {
+  let parsed: URL;
+  try {
+    parsed = new URL(to, currentHref);
+  } catch {
+    return null;
+  }
+
+  let current: URL;
+  try {
+    current = new URL(currentHref);
+  } catch {
+    return null;
+  }
+
+  if (parsed.origin !== current.origin) {
+    return null;
+  }
+
+  const docPath = (parsed.pathname.replace(/\/$/, '') || '/') + parsed.search;
+  const docQ = docPath.indexOf('?');
+  const docPathnameOnly = docQ === -1 ? docPath : docPath.slice(0, docQ);
+  const docSearch = docQ === -1 ? '' : docPath.slice(docQ);
+
+  let fragment = tryMapAuthPath(docPathnameOnly, docSearch);
+
+  if (
+    !fragment &&
+    (parsed.pathname === '/' || parsed.pathname === '') &&
+    parsed.hash.length > 1
+  ) {
+    const rawHash = parsed.hash.startsWith('#')
+      ? parsed.hash.slice(1)
+      : parsed.hash;
+    if (rawHash.startsWith('/')) {
+      const hq = rawHash.indexOf('?');
+      const hashPath = hq === -1 ? rawHash : rawHash.slice(0, hq);
+      const hashSearch = hq === -1 ? '' : rawHash.slice(hq);
+      fragment = tryMapAuthPath(hashPath, hashSearch);
+    }
+  }
+
+  if (!fragment) {
+    return null;
+  }
+  return { fragment };
+}
+
+function redirectParamLooksNested(encodedValue: string): boolean {
+  if (encodedValue.length > 280) {
+    return true;
+  }
+  let s = encodedValue;
+  for (let i = 0; i < 8; i++) {
+    try {
+      const next = decodeURIComponent(s);
+      if (next === s) {
+        break;
+      }
+      s = next;
+    } catch {
+      break;
+    }
+  }
+  return /sign_(?:in|up)_(?:force|fallback)_redirect_url(?:=|%3D)/i.test(s);
+}
+
+/** Triple-encoded segments (e.g. `%253A`) or a hash query that re-embeds Clerk redirect keys. */
+function redirectOrReturnUrlLooksPoisoned(encodedValue: string): boolean {
+  if (redirectParamLooksNested(encodedValue)) {
+    return true;
+  }
+  if (/%253[a-f0-9]{2}/i.test(encodedValue)) {
+    return true;
+  }
+  let s = encodedValue;
+  for (let i = 0; i < 10; i++) {
+    try {
+      const next = decodeURIComponent(s);
+      if (next === s) {
+        break;
+      }
+      s = next;
+    } catch {
+      break;
+    }
+  }
+  const hashIdx = s.indexOf('#');
+  if (hashIdx === -1) {
+    return false;
+  }
+  const afterHash = s.slice(hashIdx + 1);
+  const q = afterHash.indexOf('?');
+  if (q === -1) {
+    return false;
+  }
+  const hashQuery = afterHash.slice(q);
+  if (/sign_(?:in|up)_(?:force|fallback)_redirect_url/i.test(hashQuery)) {
+    return true;
+  }
+  if (hashQuery.length > 120) {
+    return true;
+  }
+  return false;
+}
+
+const SIGN_REDIRECT_PARAM = /^sign_(?:in|up)_(?:force|fallback)_redirect_url$/i;
+
+const REDIRECT_OR_RETURN_PARAM = /^(redirect_url|return_url)$/i;
+
+/**
+ * Known Clerk hash-auth query keys only. Anything else (e.g. `sign_0/#/sign-in` from a
+ * broken `key=value` parse) is stripped so `URLSearchParams` cannot leave garbage in the hash.
+ */
+const CLERK_AUTH_HASH_QUERY_KEY =
+  /^(?:sign_(?:in|up)_(?:force|fallback)_redirect_url|redirect_url|return_url|__clerk_[a-z0-9_]+)$/i;
+
+function isAllowedAuthHashQueryKey(key: string): boolean {
+  return CLERK_AUTH_HASH_QUERY_KEY.test(key);
+}
+
+/** Decoded key names should not contain URL/path characters :  indicates a parse artefact. */
+function isPathologicalAuthHashQueryKey(key: string): boolean {
+  return /[#/?]/.test(key);
+}
+
+function fullyDecodeRedirectValue(encodedValue: string): string {
+  let s = encodedValue;
+  for (let i = 0; i < 10; i++) {
+    try {
+      const next = decodeURIComponent(s);
+      if (next === s) {
+        break;
+      }
+      s = next;
+    } catch {
+      break;
+    }
+  }
+  return s;
+}
+
+/**
+ * Replace a poisoned `redirect_url` / `return_url` with a same-origin URL that has no nested hash query.
+ */
+function canonicalUrlForPoisonedRedirectOrReturn(
+  authPathPart: string,
+  encodedValue: string,
+): string {
+  const d = fullyDecodeRedirectValue(encodedValue);
+  const onSignUp =
+    authPathPart.startsWith('/sign-up') || authPathPart.startsWith('/signup');
+  const onSignIn =
+    authPathPart.startsWith('/sign-in') || authPathPart.startsWith('/login');
+
+  if (onSignUp) {
+    if (/#\/sign-in\b/i.test(d) || d.includes('/sign-in?')) {
+      return clerkFullSignInUrl();
+    }
+    if (/#\/sign-up\b/i.test(d) || d.includes('/sign-up?')) {
+      return clerkFullSignUpUrl();
+    }
+  }
+  if (onSignIn) {
+    if (/#\/sign-up\b/i.test(d) || d.includes('/sign-up?')) {
+      return clerkFullSignUpUrl();
+    }
+    if (/#\/sign-in\b/i.test(d) || d.includes('/sign-in?')) {
+      return clerkFullSignInUrl();
+    }
+  }
+  return clerkFullNotesUrl();
+}
+
+function authHashFragmentStillPoisoned(fragment: string): boolean {
+  if (/%253[a-f0-9]{2}/i.test(fragment)) {
+    return true;
+  }
+  const qIndex = fragment.indexOf('?');
+  if (qIndex === -1) {
+    return false;
+  }
+  const params = new URLSearchParams(fragment.slice(qIndex + 1));
+  for (const key of params.keys()) {
+    if (
+      !isAllowedAuthHashQueryKey(key) ||
+      isPathologicalAuthHashQueryKey(key)
+    ) {
+      return true;
+    }
+    const val = params.get(key);
+    if (val == null || val === '') {
+      continue;
+    }
+    if (SIGN_REDIRECT_PARAM.test(key) && redirectParamLooksNested(val)) {
+      return true;
+    }
+    if (
+      REDIRECT_OR_RETURN_PARAM.test(key) &&
+      redirectOrReturnUrlLooksPoisoned(val)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isRootAuthPath(path: string): boolean {
+  return (
+    path === '/sign-in' ||
+    path === '/sign-up' ||
+    path === '/login' ||
+    path === '/signup'
+  );
+}
+
+/**
+ * Collapse runaway Clerk redirect query values (nested `sign_*_force_redirect_url` chains)
+ * back to a single canonical post-auth URL.
+ */
+export function sanitizeClerkAuthHashFragment(fragment: string): string {
+  const qIndex = fragment.indexOf('?');
+  if (qIndex === -1) {
+    return fragment;
+  }
+  const pathPart = fragment.slice(0, qIndex);
+  if (
+    !pathPart.startsWith('/sign-in') &&
+    !pathPart.startsWith('/sign-up') &&
+    !pathPart.startsWith('/login') &&
+    !pathPart.startsWith('/signup')
+  ) {
+    return fragment;
+  }
+
+  const params = new URLSearchParams(fragment.slice(qIndex + 1));
+
+  for (const key of [...params.keys()]) {
+    if (
+      !isAllowedAuthHashQueryKey(key) ||
+      isPathologicalAuthHashQueryKey(key)
+    ) {
+      params.delete(key);
+    }
+  }
+
+  const notes = clerkFullNotesUrl();
+  for (const key of [...params.keys()]) {
+    const val = params.get(key);
+    if (val == null || val === '') {
+      continue;
+    }
+    if (SIGN_REDIRECT_PARAM.test(key)) {
+      if (redirectParamLooksNested(val)) {
+        params.set(key, notes);
+      }
+      continue;
+    }
+    if (
+      REDIRECT_OR_RETURN_PARAM.test(key) &&
+      redirectOrReturnUrlLooksPoisoned(val)
+    ) {
+      params.set(key, canonicalUrlForPoisonedRedirectOrReturn(pathPart, val));
+    }
+  }
+  const out = params.toString();
+  return out ? `${pathPart}?${out}` : pathPart;
+}
+
+export function clerkSpaOriginWithPath(): string {
+  const { origin, pathname } = window.location;
+  const normalised =
+    pathname.length > 1 && pathname.endsWith('/')
+      ? pathname.slice(0, -1)
+      : pathname;
+  return `${origin}${normalised}`;
+}
+
+export function clerkFullSignInUrl(): string {
+  return `${window.location.origin}/signin`;
+}
+
+export function clerkFullSignUpUrl(): string {
+  return `${window.location.origin}/signup`;
+}
+
+export function clerkFullNotesUrl(): string {
+  return `${window.location.origin}/notes`;
+}
+
+/**
+ * After a successful sign-in/up, Clerk calls `routerPush(signInForceRedirectUrl)` :
+ * e.g. `http://localhost:4200#/notes`. `mapClerkToHashFragment` only handles auth paths
+ * and returns null for `/notes`, so without this fallback the navigation silently drops.
+ * Extract the hash path from any same-origin URL so post-auth redirects land correctly.
+ */
+function extractSameOriginHashPath(to: string): string | null {
+  try {
+    const parsed = new URL(to, window.location.href);
+    if (parsed.origin !== window.location.origin) return null;
+    const hash = parsed.hash.startsWith('#')
+      ? parsed.hash.slice(1)
+      : parsed.hash;
+    return hash.startsWith('/') ? hash : null;
+  } catch {
+    return null;
+  }
+}
+
+export function clerkRouterPush(
+  to: string,
+  metadata?: { windowNavigate: (u: URL | string) => void },
+): void {
+  const mapped = mapClerkToHashFragment(to, window.location.href);
+  if (!mapped) {
+    const hashPath = extractSameOriginHashPath(to);
+    if (hashPath !== null) {
+      const url = new URL(window.location.href);
+      applyClerkRouterTarget(url, hashPath, (u) => {
+        window.history.pushState(window.history.state, '', u.toString());
+      });
+    } else {
+      metadata?.windowNavigate(to);
+    }
+    return;
+  }
+  const url = new URL(window.location.href);
+  applyClerkRouterTarget(
+    url,
+    sanitizeClerkAuthHashFragment(mapped.fragment),
+    (u) => {
+      window.history.pushState(window.history.state, '', u.toString());
+    },
+  );
+  // Navigation sync is scheduled by the app-navigation `history.pushState` patch (deferred, React-safe).
+}
+
+export function clerkRouterReplace(
+  to: string,
+  metadata?: { windowNavigate: (u: URL | string) => void },
+): void {
+  const mapped = mapClerkToHashFragment(to, window.location.href);
+  if (!mapped) {
+    const hashPath = extractSameOriginHashPath(to);
+    if (hashPath !== null) {
+      const url = new URL(window.location.href);
+      applyClerkRouterTarget(url, hashPath, (u) => {
+        window.history.replaceState(window.history.state, '', u.toString());
+      });
+    } else {
+      metadata?.windowNavigate(to);
+    }
+    return;
+  }
+  const url = new URL(window.location.href);
+  applyClerkRouterTarget(
+    url,
+    sanitizeClerkAuthHashFragment(mapped.fragment),
+    (u) => {
+      window.history.replaceState(window.history.state, '', u.toString());
+    },
+  );
+  // Navigation sync is scheduled by the app-navigation `history.replaceState` patch (deferred, React-safe).
+}
+
+/**
+ * Normalise a corrupted auth hash before Clerk mounts (bookmark / bad redirect loop).
+ * Call once at boot and when switching to sign-in / sign-up.
+ */
+export function repairClerkAuthLocationHash(): void {
+  const h = window.location.hash;
+  const raw = h.startsWith('#') ? h.slice(1) : h;
+  if (raw.startsWith('/')) {
+    const q = raw.indexOf('?');
+    const path = q === -1 ? raw : raw.slice(0, q);
+    if (AUTH_HASH_PATH.test(path)) {
+      const queryLen = q === -1 ? 0 : raw.length - q - 1;
+      if (queryLen > MAX_AUTH_HASH_QUERY_LEN) {
+        replaceScreen(
+          path.startsWith('/sign-up') || path.startsWith('/signup')
+            ? { kind: 'signup' }
+            : { kind: 'login' },
+        );
+        return;
+      }
+    }
+  }
+
+  if (migrateLegacyAuthHashToPathname()) {
+    return;
+  }
+  stripAuthHashIfPathnameAuth();
+
+  if (!raw.startsWith('/')) {
+    return;
+  }
+  const q = raw.indexOf('?');
+  const path = q === -1 ? raw : raw.slice(0, q);
+  if (!AUTH_HASH_PATH.test(path)) {
+    return;
+  }
+  if (q === -1) {
+    return;
+  }
+  const sanitized = sanitizeClerkAuthHashFragment(raw);
+  if (sanitized !== raw) {
+    const url = new URL(window.location.href);
+    applyClerkRouterTarget(url, sanitized, (u) => {
+      window.history.replaceState(window.history.state, '', u.toString());
+    });
+    return;
+  }
+  if (isRootAuthPath(path) && authHashFragmentStillPoisoned(raw)) {
+    replaceScreen(
+      path.startsWith('/sign-up') || path.startsWith('/signup')
+        ? { kind: 'signup' }
+        : { kind: 'login' },
+    );
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener(NOTA_HASH_HISTORY_EVENT, () => {
+    queueMicrotask(() => {
+      repairClerkAuthLocationHash();
+    });
+  });
+  /**
+   * Clerk hash routing may assign `location.hash` directly; that fires `hashchange` but not
+   * `history.pushState` / `replaceState`, so `NOTA_HASH_HISTORY_EVENT` alone misses it.
+   */
+  window.addEventListener(
+    'hashchange',
+    () => {
+      queueMicrotask(() => {
+        repairClerkAuthLocationHash();
+      });
+    },
+    { passive: true },
+  );
+}

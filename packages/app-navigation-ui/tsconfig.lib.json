@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "vite/client"],
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
+  "references": [
+    { "path": "../app-navigation-core/tsconfig.lib.json" },
+    { "path": "../data-source/tsconfig.lib.json" },
+    { "path": "../database-types/tsconfig.lib.json" },
+    { "path": "../nota-motion-ui/tsconfig.lib.json" },
+    { "path": "../note-runtime/tsconfig.lib.json" },
+    { "path": "../notes-offline/tsconfig.lib.json" }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@nota/writing-activity-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./writing-activity": {
+      "@nota/source": {
+        "types": "./src/writing-activity.ts",
+        "import": "./src/writing-activity.ts",
+        "default": "./src/writing-activity.ts"
+      },
+      "types": "./src/writing-activity.ts",
+      "import": "./src/writing-activity.ts",
+      "default": "./src/writing-activity.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:shared"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/writing-activity-core",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/note-journal-core": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

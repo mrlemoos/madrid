@@ -5,11 +5,7 @@ import {
 } from 'y-prosemirror';
 import * as Y from 'yjs';
 
-import {
-  NOTA_YDOC_FIELD,
-  type ProseMirrorJSON,
-  type YjsUpdate,
-} from './types.js';
+import { NOTA_YDOC_FIELD, type ProseMirrorJSON, type YjsUpdate } from './types';
 
 /**
  * Build the first Yjs update for a note from its existing `content` jsonb.

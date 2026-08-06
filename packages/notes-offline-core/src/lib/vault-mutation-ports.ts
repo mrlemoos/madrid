@@ -1,10 +1,10 @@
 import type { Json, Note } from '@nota/database-types';
-import type { OutboxDrainer } from './drain-outbox.js';
+import type { OutboxDrainer } from './drain-outbox';
 import type {
   LocalNoteOutboxStore,
   RemoteNoteSync,
   VaultConnectivity,
-} from './outbox-ports.js';
+} from './outbox-ports';
 
 export type LocalNoteDraftPatch = {
   id: string;
@@ -54,7 +54,8 @@ export type PatchNoteMutationInput = {
 };
 
 export type PatchNoteMutationResult =
-  { outcome: 'patched-remote'; note: Note } | { outcome: 'patched-local' };
+  | { outcome: 'patched-remote'; note: Note }
+  | { outcome: 'patched-local' };
 
 /** Local store seam for note mutations (extends outbox drain surface). */
 export interface LocalNoteMutationStore extends LocalNoteOutboxStore {
@@ -83,7 +84,8 @@ export type CreateNoteMutationResult =
   | { outcome: 'created-local'; noteId: string };
 
 export type DeleteNoteMutationResult =
-  { outcome: 'deleted-remote' } | { outcome: 'queued-local-delete' };
+  | { outcome: 'deleted-remote' }
+  | { outcome: 'queued-local-delete' };
 
 export type VaultMutatorDeps = {
   local: LocalNoteMutationStore;

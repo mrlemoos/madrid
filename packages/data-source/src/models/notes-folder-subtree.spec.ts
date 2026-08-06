@@ -1,10 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { Folder } from '~/types/database.types';
+import type { Folder } from '@nota/database-types';
 import { moveAllNotesInFolderSubtree } from './notes';
 import type { TypedSupabaseClient } from './notes';
 
 const baseFolder = {
   user_id: 'u1',
+  tint: null as string | null,
   created_at: '2026-01-01T00:00:00.000Z',
   updated_at: '2026-01-01T00:00:00.000Z',
 };

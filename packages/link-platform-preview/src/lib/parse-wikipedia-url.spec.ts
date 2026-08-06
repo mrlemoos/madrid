@@ -4,7 +4,7 @@ import {
   parseWikipediaUrl,
   wikipediaSummaryApiUrl,
   wikipediaTitleFromSlug,
-} from './parse-wikipedia-url.js';
+} from './parse-wikipedia-url';
 
 describe('parseWikipediaUrl', () => {
   it('detects a standard article URL', () => {

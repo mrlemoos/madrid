@@ -1,10 +1,8 @@
-import { getClerkAccessToken } from './clerk-token-ref';
-import type { AudioNoteStudyResult } from './audio-note-blocks-to-doc';
+import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
 import {
   ensureBlobForXaiStt,
   filenameForSttUpload,
 } from './audio-to-xai-stt-format';
-import { notaServerBaseUrl } from './vite-env';
 
 export type AudioToNoteSseEvent =
   | { event: 'transcript'; data: { text: string; duration: number } }
@@ -25,17 +23,6 @@ export async function postAudioToNoteStream(
     onEvent?: (ev: AudioToNoteSseEvent) => void;
   } = {},
 ): Promise<AudioNoteStudyResult> {
-  const base = notaServerBaseUrl();
-  if (!base) {
-    throw new Error(
-      'Audio-to-note requires VITE_NOTA_SERVER_API_URL (apps/nota-server).',
-    );
-  }
-  const token = await getClerkAccessToken();
-  if (!token) {
-    throw new Error('Unauthorized');
-  }
-
   const payload = await ensureBlobForXaiStt(audio);
   const form = new FormData();
   form.append('audio', payload, filenameForSttUpload(payload));
@@ -46,9 +33,9 @@ export async function postAudioToNoteStream(
     form.append('courseName', options.courseName);
   }
 
-  const res = await fetch(`${base}/api/audio-to-note`, {
+  // Same-origin Next route (Clerk session cookie auth); no Bearer needed.
+  const res = await fetch('/api/audio-to-note', {
     method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
     body: form,
     signal: options.signal,
   });
