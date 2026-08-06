@@ -329,6 +329,15 @@ function installApplicationMenu(): void {
           onStudyNotesFromRecording: () => {
             sendMenubarAction({ kind: 'study-recording' });
           },
+          onZoomIn: () => {
+            sendMenubarAction({ kind: 'zoom-in' });
+          },
+          onZoomOut: () => {
+            sendMenubarAction({ kind: 'zoom-out' });
+          },
+          onZoomReset: () => {
+            sendMenubarAction({ kind: 'zoom-reset' });
+          },
         },
         { isMac: isDarwin },
       ),

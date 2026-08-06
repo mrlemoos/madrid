@@ -68,8 +68,10 @@ import {
 } from '@nota/note-palette-core/palette-mode';
 import {
   buildAppearanceCommands,
+  buildZoomCommands,
   type PaletteActionCommand,
 } from '@nota/note-palette-core/palette-commands';
+import { useNotaZoomStore } from '@nota/note-runtime/stores/zoom';
 
 const PALETTE_EMPTY_ID_SET: ReadonlySet<string> = new Set();
 
@@ -358,6 +360,15 @@ export function CommandPalette(): JSX.Element {
   const appearanceCommands = buildAppearanceCommands({
     theme,
     setTheme,
+    close: closePalette,
+  });
+
+  const zoom = useNotaZoomStore((s) => s.zoom);
+  const zoomCommands = buildZoomCommands({
+    zoom,
+    zoomIn: useNotaZoomStore.getState().zoomIn,
+    zoomOut: useNotaZoomStore.getState().zoomOut,
+    resetZoom: useNotaZoomStore.getState().resetZoom,
     close: closePalette,
   });
 
@@ -1673,6 +1684,9 @@ export function CommandPalette(): JSX.Element {
                   className={groupHeadingClassName}
                 >
                   {appearanceCommands.map((command) => (
+                    <PaletteActionItem key={command.value} command={command} />
+                  ))}
+                  {zoomCommands.map((command) => (
                     <PaletteActionItem key={command.value} command={command} />
                   ))}
                 </Command.Group>

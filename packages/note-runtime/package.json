@@ -64,6 +64,16 @@
       "import": "./src/stores/notes-sidebar.ts",
       "default": "./src/stores/notes-sidebar.ts"
     },
+    "./stores/zoom": {
+      "@nota/source": {
+        "types": "./src/stores/nota-zoom.ts",
+        "import": "./src/stores/nota-zoom.ts",
+        "default": "./src/stores/nota-zoom.ts"
+      },
+      "types": "./src/stores/nota-zoom.ts",
+      "import": "./src/stores/nota-zoom.ts",
+      "default": "./src/stores/nota-zoom.ts"
+    },
     "./stores/audio-session": {
       "@nota/source": {
         "types": "./src/stores/audio-to-note-session.ts",

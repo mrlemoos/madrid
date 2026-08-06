@@ -21,6 +21,55 @@ export type PaletteActionCommand = {
   run: () => void;
 };
 
+export type ZoomCommandContext = {
+  zoom: number;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetZoom: () => void;
+  close: () => void;
+};
+
+const ZOOM_KEYWORDS = ['zoom', 'scale', 'text size', 'font size'];
+
+/** ⌘= / ⌘- / ⌘0 as palette entries, for discoverability and pointer users. */
+export function buildZoomCommands(
+  ctx: ZoomCommandContext,
+): PaletteActionCommand[] {
+  const run = (action: () => void) => () => {
+    action();
+    ctx.close();
+  };
+  return [
+    {
+      value: 'zoom-in',
+      label: 'Zoom in',
+      keywords: ['in', 'bigger', 'larger', ...ZOOM_KEYWORDS],
+      icon: 'arrow-narrow-up',
+      tone: 'default',
+      current: false,
+      run: run(ctx.zoomIn),
+    },
+    {
+      value: 'zoom-out',
+      label: 'Zoom out',
+      keywords: ['out', 'smaller', ...ZOOM_KEYWORDS],
+      icon: 'arrow-narrow-down',
+      tone: 'default',
+      current: false,
+      run: run(ctx.zoomOut),
+    },
+    {
+      value: 'zoom-reset',
+      label: 'Reset zoom',
+      keywords: ['reset', 'default', 'actual size', '100%', ...ZOOM_KEYWORDS],
+      icon: 'history-circle',
+      tone: 'default',
+      current: ctx.zoom === 1,
+      run: run(ctx.resetZoom),
+    },
+  ];
+}
+
 export type AppearanceCommandContext = {
   theme: string;
   setTheme: (theme: NotaThemeChoice) => void;

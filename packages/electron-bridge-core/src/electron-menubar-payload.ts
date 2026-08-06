@@ -11,6 +11,9 @@ export type NotaMenubarActionPayload =
   | { kind: 'create-folder' }
   | { kind: 'move-note' }
   | { kind: 'study-recording' }
+  | { kind: 'zoom-in' }
+  | { kind: 'zoom-out' }
+  | { kind: 'zoom-reset' }
   | { kind: 'clipboard-note'; clipboard: NotaMenubarClipboardPayload };
 
 export function isNotaMenubarActionPayload(
@@ -23,7 +26,12 @@ export function isNotaMenubarActionPayload(
   if (k === 'create-note' || k === 'create-folder' || k === 'move-note') {
     return true;
   }
-  if (k === 'study-recording') {
+  if (
+    k === 'study-recording' ||
+    k === 'zoom-in' ||
+    k === 'zoom-out' ||
+    k === 'zoom-reset'
+  ) {
     return true;
   }
   if (k !== 'clipboard-note') {
