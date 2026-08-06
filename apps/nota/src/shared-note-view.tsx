@@ -1,38 +1,53 @@
-import { useEffect, useState, type JSX } from 'react';
+'use client';
+
+import { Suspense, useEffect, useState, type JSX } from 'react';
+import dynamic from 'next/dynamic';
 import {
-  TipTapEditor,
   noteSurfaceClassNames,
   parseNoteEditorSettings,
-} from '@nota/editor';
+} from '@nota/note-editor-settings';
 import { cn } from './lib/utils';
 import { useNotaTranslator } from './lib/use-nota-translator';
 
 import {
   fetchSharedNote,
   subscribeSharedNote,
-  SHARED_NOTE_PATH_PREFIX,
   type SharedNote,
 } from '@nota/data-source/note-share-client';
 
 // Reuse the real editor in read-only mode so the preview matches the app
-// exactly. Imported statically like the rest of the app (the editor is already
-// in the main chunk; a lazy import here would trip the module-boundary rule).
+// exactly. `useEditor` throws when it detects a server render, so the body loads
+// in the browser only and suspends behind a placeholder; everything around it
+// (title, chrome, empty states) still renders on the server. Surface helpers come
+// from `@nota/note-editor-settings` so TipTap stays out of the server graph.
+const SharedNoteBody = dynamic(() => import('./shared-note-body'), {
+  ssr: false,
+});
 
 type LoadState =
-  | { status: 'loading' }
   | { status: 'ready'; note: SharedNote }
   | { status: 'not-found' }
   | { status: 'error'; message: string };
 
-function tokenFromPath(): string {
-  const path = window.location.pathname;
-  if (!path.startsWith(SHARED_NOTE_PATH_PREFIX)) {
-    return '';
+export interface SharedNoteViewProps {
+  /** Share token from the route; empty when the URL carried none. */
+  token: string;
+  /** Note as read on the server; `null` when the token matched nothing. */
+  initialNote: SharedNote | null;
+  /** Server-side load failure, surfaced instead of the note. */
+  loadError: string | null;
+}
+
+function initialState({
+  initialNote,
+  loadError,
+}: SharedNoteViewProps): LoadState {
+  if (loadError) {
+    return { status: 'error', message: loadError };
   }
-  return decodeURIComponent(path.slice(SHARED_NOTE_PATH_PREFIX.length)).replace(
-    /\/+$/,
-    '',
-  );
+  return initialNote
+    ? { status: 'ready', note: initialNote }
+    : { status: 'not-found' };
 }
 
 /** Follow the OS colour scheme on this standalone page (no ThemeProvider here). */
@@ -50,52 +65,45 @@ function useSystemTheme(): void {
   }, []);
 }
 
-export function SharedNoteView(): JSX.Element {
-  const [state, setState] = useState<LoadState>({ status: 'loading' });
+export function SharedNoteView(props: SharedNoteViewProps): JSX.Element {
+  const { token } = props;
+  const [state, setState] = useState<LoadState>(() => initialState(props));
   const { t } = useNotaTranslator();
   useSystemTheme();
 
   useEffect(() => {
-    const token = tokenFromPath();
     if (!token) {
-      setState({ status: 'not-found' });
       return;
     }
 
     let active = true;
-    const load = async () => {
-      try {
-        const note = await fetchSharedNote(token);
-        if (!active) return;
-        setState(note ? { status: 'ready', note } : { status: 'not-found' });
-      } catch (error) {
-        if (!active) return;
-        setState({
-          status: 'error',
-          message:
-            error instanceof Error ? error.message : 'Something went wrong',
-        });
-      }
-    };
-
-    void load();
-    // Live updates: DB trigger broadcasts on every edit -> refetch.
+    // Live updates: DB trigger broadcasts on every edit -> refetch. The first
+    // read already happened on the server, so nothing loads on mount.
     const unsubscribe = subscribeSharedNote(token, () => {
-      void load();
+      void (async () => {
+        try {
+          const note = await fetchSharedNote(token);
+          if (!active) return;
+          setState(note ? { status: 'ready', note } : { status: 'not-found' });
+        } catch (error) {
+          if (!active) return;
+          setState({
+            status: 'error',
+            message:
+              error instanceof Error ? error.message : 'Something went wrong',
+          });
+        }
+      })();
     });
     return () => {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [token]);
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <main className="mx-auto w-full max-w-2xl px-6 py-16 md:py-24">
-        {state.status === 'loading' && (
-          <p className="text-muted-foreground">Loading…</p>
-        )}
-
         {state.status === 'not-found' && (
           <div className="space-y-2">
             <h1 className="text-2xl font-extrabold">Note not found</h1>
@@ -132,13 +140,20 @@ export function SharedNoteView(): JSX.Element {
                   {state.note.title || t('Untitled Note')}
                 </h1>
                 <div className={bodyFontClass}>
-                  <TipTapEditor
-                    readOnly
-                    content={state.note.content}
-                    noteId={state.note.id}
-                    contentRevision={state.note.updatedAt ?? undefined}
-                    placeholder=""
-                  />
+                  <Suspense
+                    fallback={
+                      <div
+                        className="h-40 w-full animate-pulse rounded-md bg-muted/40"
+                        aria-hidden
+                      />
+                    }
+                  >
+                    <SharedNoteBody
+                      content={state.note.content}
+                      noteId={state.note.id}
+                      contentRevision={state.note.updatedAt ?? undefined}
+                    />
+                  </Suspense>
                 </div>
               </article>
             );

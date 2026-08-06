@@ -91,6 +91,9 @@
       "path": "../../packages/note-editor-ui"
     },
     {
+      "path": "../../packages/note-editor-settings"
+    },
+    {
       "path": "../../packages/note-editor-core"
     },
     {

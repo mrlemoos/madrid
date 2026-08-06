@@ -97,6 +97,9 @@
       "path": "../../packages/note-editor-ui/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/note-editor-settings/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-editor-core/tsconfig.lib.json"
     },
     {

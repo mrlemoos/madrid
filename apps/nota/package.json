@@ -38,6 +38,7 @@
     "@nota/note-capture-ui": "workspace:*",
     "@nota/note-doc-plain-text": "workspace:*",
     "@nota/note-editor-core": "workspace:*",
+    "@nota/note-editor-settings": "workspace:*",
     "@nota/note-editor-ui": "workspace:*",
     "@nota/note-folders-core": "workspace:*",
     "@nota/note-folders-ui": "workspace:*",

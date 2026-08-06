@@ -451,6 +451,9 @@ importers:
       '@nota/note-editor-core':
         specifier: workspace:*
         version: link:../../packages/note-editor-core
+      '@nota/note-editor-settings':
+        specifier: workspace:*
+        version: link:../../packages/note-editor-settings
       '@nota/note-editor-ui':
         specifier: workspace:*
         version: link:../../packages/note-editor-ui
