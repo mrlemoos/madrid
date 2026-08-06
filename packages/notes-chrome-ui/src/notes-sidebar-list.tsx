@@ -480,7 +480,7 @@ function FolderRow(options: {
                         <span
                           className={cn(
                             notesSidebarTreeFolderLabelClass,
-                            'relative z-0 cursor-text decoration-dotted underline-offset-2 hover:underline',
+                            'relative z-0 cursor-default decoration-dotted underline-offset-2 hover:underline',
                             hasTint && 'nota-folder-tint-accent',
                           )}
                           onDoubleClick={(event) => {
