@@ -11,7 +11,8 @@
     "rootDir": "src",
     "jsx": "react-jsx",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
-    "lib": ["dom"]
+    "lib": ["dom"],
+    "ignoreDeprecations": "6.0"
   },
   "exclude": [
     "out-tsc",
@@ -22,7 +23,11 @@
     "**/*.test.tsx",
     "vite.config.mts",
     "vitest.config.mts",
-    "eslint.config.mjs"
+    "eslint.config.mjs",
+    "**/*.stories.ts",
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.tsx"
   ],
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [

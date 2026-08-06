@@ -10,7 +10,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client"],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/nota-electron-globals.d.ts"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"],

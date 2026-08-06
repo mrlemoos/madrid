@@ -7,7 +7,8 @@
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "moduleResolution": "bundler",
     "types": ["vite/client", "node"],
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo"
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": [

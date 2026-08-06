@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 // Standalone Vitest config (the app builds with Next now; this replaces the
-// test half of the former vite.config.mts). No React plugin — esbuild's
-// automatic JSX runtime is enough for specs and avoids "React is not defined".
+// test half of the former vite.config.mts). No React plugin — Oxc's automatic
+// JSX runtime is enough for specs and avoids "React is not defined".
 const srcDir = path.join(fileURLToPath(new URL('.', import.meta.url)), 'src');
 
 export default defineConfig({
@@ -19,7 +19,8 @@ export default defineConfig({
       { find: '@', replacement: srcDir },
     ],
   },
-  esbuild: { jsx: 'automatic' },
+  // Vite 8 transforms with Oxc; the old `esbuild` option is ignored (JSX would go untransformed).
+  oxc: { jsx: { runtime: 'automatic' } },
   ssr: { noExternal: ['gsap', '@gsap/react', 'motion'] },
   test: {
     name: '@nota/nota',

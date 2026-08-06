@@ -82,3 +82,8 @@ cache/
 # Next.js
 apps/nota/.next/
 apps/nota/next-env.d.ts
+# Storybook
+storybook-static/
+
+.nx/self-healing
+.nx/migrate-runs

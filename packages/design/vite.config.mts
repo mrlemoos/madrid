@@ -47,7 +47,7 @@ export default defineConfig(() => ({
       formats: ['es' as const],
       fileName: (format, entryName) => `${entryName}.js`,
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: (id) =>
         id === 'react' ||
         id === 'react-dom' ||

@@ -1,5 +1,5 @@
 const { getDefaultConfig } = require('expo/metro-config');
-const { resolve } = require('metro-resolver');
+const { resolve } = require('@expo/metro/metro-resolver');
 const fs = require('fs');
 const path = require('path');
 

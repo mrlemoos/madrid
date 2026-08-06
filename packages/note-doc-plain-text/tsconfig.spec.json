@@ -10,7 +10,9 @@
       "vitest"
     ],
     "lib": ["ES2022", "DOM"],
-    "noEmit": true
+    "noEmit": true,
+    "ignoreDeprecations": "6.0",
+    "rootDir": "."
   },
   "include": ["vite.config.mts", "src/**/*.spec.ts"],
   "references": [{ "path": "./tsconfig.lib.json" }]

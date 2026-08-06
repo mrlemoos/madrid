@@ -126,5 +126,8 @@
     {
       "path": "./packages/note-palette-ui"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0"
+  }
 }
