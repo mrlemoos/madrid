@@ -13,6 +13,7 @@ const meta = {
         'default',
         'outline',
         'secondary',
+        'shaded',
         'ghost',
         'destructive',
         'link',
@@ -46,6 +47,7 @@ export const Variants: Story = {
       <Button {...args} variant="default" />
       <Button {...args} variant="outline" />
       <Button {...args} variant="secondary" />
+      <Button {...args} variant="shaded" />
       <Button {...args} variant="ghost" />
       <Button {...args} variant="destructive" />
       <Button {...args} variant="link" />

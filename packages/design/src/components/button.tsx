@@ -40,6 +40,9 @@ export const buttonVariants = cva(
           'border-border hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-input/30',
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground',
+        /** Flat shaded pill: fill one step off the page surface, no border, no gradient. */
+        shaded:
+          'rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary',
         ghost:
           'hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50',
         destructive:
