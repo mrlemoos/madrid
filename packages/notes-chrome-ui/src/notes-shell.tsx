@@ -22,6 +22,7 @@ import { useNotesHistoryShortcut } from '@nota/app-navigation-ui/use-notes-histo
 import { useNotesSidebarShortcut } from '@nota/app-navigation-ui/use-notes-sidebar-shortcut';
 import { useCreateFolderShortcut } from '@nota/note-folders-ui/use-create-folder-shortcut';
 import { useSettingsShortcut } from '@nota/app-navigation-ui/use-settings-shortcut';
+import { useNotaZoomShortcut } from '@nota/app-navigation-ui/use-nota-zoom-shortcut';
 import { useTodaysNoteShortcut } from '@nota/app-navigation-ui/use-todays-note-shortcut';
 import {
   useSyncUserPreferences,
@@ -134,6 +135,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   useNotesHistoryShortcut(user?.id, shellReady);
   useNotesSidebarShortcut(user?.id, shellReady);
   useSettingsShortcut(user?.id, shellReady);
+  useNotaZoomShortcut(user?.id, shellReady);
   useTodaysNoteShortcut(
     notes,
     user?.id,

@@ -44,6 +44,16 @@
       "import": "./src/use-notes-sidebar-shortcut.ts",
       "default": "./src/use-notes-sidebar-shortcut.ts"
     },
+    "./use-nota-zoom-shortcut": {
+      "@nota/source": {
+        "types": "./src/use-nota-zoom-shortcut.ts",
+        "import": "./src/use-nota-zoom-shortcut.ts",
+        "default": "./src/use-nota-zoom-shortcut.ts"
+      },
+      "types": "./src/use-nota-zoom-shortcut.ts",
+      "import": "./src/use-nota-zoom-shortcut.ts",
+      "default": "./src/use-nota-zoom-shortcut.ts"
+    },
     "./use-todays-note-shortcut": {
       "@nota/source": {
         "types": "./src/use-todays-note-shortcut.ts",

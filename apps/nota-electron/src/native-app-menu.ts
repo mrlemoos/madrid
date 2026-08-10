@@ -6,6 +6,9 @@ export type NotaAppMenuActions = {
   onNewFolder: () => void;
   onNewNoteFromClipboard: () => void;
   onStudyNotesFromRecording: () => void;
+  onZoomIn: () => void;
+  onZoomOut: () => void;
+  onZoomReset: () => void;
 };
 
 export type NotaAppMenuTemplateOptions = {
@@ -108,6 +111,24 @@ export function buildNotaAppMenuTemplate(
           label: 'Refresh',
           role: 'reload',
           accelerator: 'CmdOrCtrl+R',
+        },
+        { type: 'separator' },
+        // Drives the SPA's own zoom store (rem scale), not webContents zoom, so
+        // the desktop app and the web app scale identically.
+        {
+          label: 'Zoom In',
+          accelerator: 'CmdOrCtrl+=',
+          click: actions.onZoomIn,
+        },
+        {
+          label: 'Zoom Out',
+          accelerator: 'CmdOrCtrl+-',
+          click: actions.onZoomOut,
+        },
+        {
+          label: 'Actual Size',
+          accelerator: 'CmdOrCtrl+0',
+          click: actions.onZoomReset,
         },
         { type: 'separator' },
         {

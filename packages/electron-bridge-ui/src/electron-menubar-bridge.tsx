@@ -11,6 +11,7 @@ import {
   isNotaMenubarActionPayload,
   type NotaMenubarActionPayload,
 } from '@nota/electron-bridge-core/menubar-payload';
+import { useNotaZoomStore } from '@nota/note-runtime/stores/zoom';
 import { createNoteFromMenubarClipboard } from './electron-clipboard-note';
 
 /**
@@ -78,6 +79,21 @@ export function ElectronMenubarBridge(): null {
             return;
           }
           dispatchMenubarMoveNoteRequest();
+          return;
+        }
+        if (
+          action.kind === 'zoom-in' ||
+          action.kind === 'zoom-out' ||
+          action.kind === 'zoom-reset'
+        ) {
+          const zoom = useNotaZoomStore.getState();
+          if (action.kind === 'zoom-in') {
+            zoom.zoomIn();
+          } else if (action.kind === 'zoom-out') {
+            zoom.zoomOut();
+          } else {
+            zoom.resetZoom();
+          }
           return;
         }
         if (action.kind === 'study-recording') {

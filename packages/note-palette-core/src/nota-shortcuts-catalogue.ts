@@ -57,6 +57,22 @@ export const NOTA_SHORTCUT_SECTIONS: ShortcutCatalogSection[] = [
         requiresTodaysNotePreference: true,
       },
       {
+        description: 'Zoom in',
+        detail: 'Scales the whole interface; steps up to 200%.',
+        keysApple: '⌘=',
+        keysOther: 'Ctrl+=',
+      },
+      {
+        description: 'Zoom out',
+        keysApple: '⌘-',
+        keysOther: 'Ctrl+-',
+      },
+      {
+        description: 'Reset zoom',
+        keysApple: '⌘0',
+        keysOther: 'Ctrl+0',
+      },
+      {
         description: 'Create new folder',
         detail:
           'Opens the name dialog. Some browsers reserve Ctrl+Shift+N; use the palette or sidebar if the shortcut does not fire.',

@@ -32,6 +32,9 @@ function noopActions() {
     onNewFolder: vi.fn(),
     onNewNoteFromClipboard: vi.fn(),
     onStudyNotesFromRecording: vi.fn(),
+    onZoomIn: vi.fn(),
+    onZoomOut: vi.fn(),
+    onZoomReset: vi.fn(),
   };
 }
 
@@ -193,6 +196,9 @@ describe('buildNotaAppMenuTemplate', () => {
     const onNewFolder = vi.fn();
     const onNewNoteFromClipboard = vi.fn();
     const onStudyNotesFromRecording = vi.fn();
+    const onZoomIn = vi.fn();
+    const onZoomOut = vi.fn();
+    const onZoomReset = vi.fn();
 
     // Act
     const template = buildNotaAppMenuTemplate(
@@ -202,6 +208,9 @@ describe('buildNotaAppMenuTemplate', () => {
         onNewFolder,
         onNewNoteFromClipboard,
         onStudyNotesFromRecording,
+        onZoomIn,
+        onZoomOut,
+        onZoomReset,
       },
       { isMac: true },
     );
@@ -222,6 +231,13 @@ describe('buildNotaAppMenuTemplate', () => {
       ?.click?.();
     foldersItems.find((item) => item.label === 'Move to folder')?.click?.();
     foldersItems.find((item) => item.label === 'New folder')?.click?.();
+    const viewItems = submenuOf(template, 'View') as Array<{
+      label?: string;
+      click?: () => void;
+    }>;
+    viewItems.find((item) => item.label === 'Zoom In')?.click?.();
+    viewItems.find((item) => item.label === 'Zoom Out')?.click?.();
+    viewItems.find((item) => item.label === 'Actual Size')?.click?.();
 
     // Assert
     expect(onNewNote).toHaveBeenCalledTimes(1);
@@ -229,5 +245,8 @@ describe('buildNotaAppMenuTemplate', () => {
     expect(onNewFolder).toHaveBeenCalledTimes(1);
     expect(onNewNoteFromClipboard).toHaveBeenCalledTimes(1);
     expect(onStudyNotesFromRecording).toHaveBeenCalledTimes(1);
+    expect(onZoomIn).toHaveBeenCalledTimes(1);
+    expect(onZoomOut).toHaveBeenCalledTimes(1);
+    expect(onZoomReset).toHaveBeenCalledTimes(1);
   });
 });

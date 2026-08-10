@@ -15,8 +15,69 @@ html.light {
   --nota-spring-shell-response: 0.3s;
   --nota-spring-popover-response: 0.2s;
   --nota-spring-settle-response: 0.3s;
+  /* Beam border — work-in-progress surfaces (see [data-busy='true']) */
+  --nota-beam-width: 1.5px;
+  --nota-beam-duration: 1.6s;
+  --nota-beam-color: var(--primary);
 }
 
 html:not(.nota-electron) body {
   background-color: var(--background-hex);
+}
+
+/**
+ * Beam border: a light travels around the edge while a surface is working.
+ * Opt in with `data-busy="true"` on any rounded element (Button, Card, Dialog);
+ * no props, no component wrapper. Radius is inherited, so it follows the host.
+ * Pair with an accessible status (`aria-busy`, `LoadingStatus`) — this is decoration.
+ */
+@property --nota-beam-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+[data-busy='true'] {
+  position: relative;
+}
+
+[data-busy='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: var(--nota-beam-width);
+  background: conic-gradient(
+    from var(--nota-beam-angle),
+    transparent 0turn,
+    transparent 0.6turn,
+    color-mix(in oklab, var(--nota-beam-color) 40%, transparent) 0.72turn,
+    var(--nota-beam-color) 0.78turn,
+    transparent 0.88turn
+  );
+  /* Border-only: punch the content box out of the padding-box paint. */
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  animation: nota-beam-spin var(--nota-beam-duration) linear infinite;
+}
+
+@keyframes nota-beam-spin {
+  to {
+    --nota-beam-angle: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-busy='true']::after {
+    animation: none;
+    background: color-mix(in oklab, var(--nota-beam-color) 55%, transparent);
+  }
 }

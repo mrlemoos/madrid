@@ -67,3 +67,14 @@ export const Sizes: Story = {
 export const Disabled: Story = {
   args: { disabled: true },
 };
+
+/** Beam border while an action is in flight — `data-busy` + `aria-busy`, no spinner swap. */
+export const Busy: Story = {
+  args: { children: 'Transcribing…', 'aria-busy': true },
+  render: (args) => (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button {...args} data-busy="true" variant="outline" />
+      <Button {...args} data-busy="true" variant="secondary" />
+    </div>
+  ),
+};
