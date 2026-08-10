@@ -522,10 +522,17 @@ if (!gotTheLock) {
       createTray();
       applyDockIcon();
       nativeTheme.on('updated', applyDockIcon);
-      await startPackagedNotaUpdater();
     } catch (error) {
       console.error('Failed to start app:', error);
       app.quit();
+      return;
+    }
+
+    // Updates are optional: a failure here must never take the window down with it.
+    try {
+      await startPackagedNotaUpdater();
+    } catch (error) {
+      console.error('[nota-electron] updater failed to start', error);
     }
   });
 

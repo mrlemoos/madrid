@@ -3,6 +3,10 @@ productName: Nota
 electronVersion: 35.7.5
 # Workspaces: production install in appDir prunes the repo root node_modules.
 npmRebuild: false
+# electron-builder only collects top-level node_modules, so anything pnpm nests
+# (e.g. electron-updater's `semver`) is silently dropped from the asar and the app
+# dies on boot. Keep such packages declared as direct deps of this app so they stay
+# hoisted — watch the builder's "dependency not found on disk" warning.
 publish:
   provider: github
   owner: mrlemoos

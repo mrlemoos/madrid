@@ -12,14 +12,15 @@
   "dependencies": {
     "@nota/clerk-oauth-protocol": "workspace:*",
     "electron-updater": "^6.8.3",
-    "wait-on": "^8.0.0"
+    "semver": "^7.7.3"
   },
   "devDependencies": {
     "@types/wait-on": "^5.3.4",
     "electron": "catalog:",
     "electron-builder": "^26.0.12",
     "rimraf": "^6.0.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "wait-on": "^8.0.0"
   },
   "nx": {
     "sourceRoot": "apps/nota-electron/src",
