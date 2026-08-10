@@ -1,19 +1,20 @@
-// Regenerates derived brand assets from source SVG/PNG files.
+// Regenerates derived brand assets from liquid-glass SVG sources.
 //
 // Usage (repo root): `pnpm run generate:nota-icons`
 //
 // Inputs:
-// - `../nota-electron/buildResources/icon-light.svg` (light dock / .icns source)
-// - `../nota-electron/buildResources/icon-dark.svg` (dark dock raster source)
-// - `public/apple-touch-icon.png`
+// - `../nota-electron/buildResources/icon-light.svg` (light dock / .icns / apple-touch)
+// - `../nota-electron/buildResources/icon-dark.svg` (dark dock raster)
+// - `public/favicon.svg` (hand-authored light+dark; synced to marketing)
 //
 // Outputs:
 // - `../nota-electron/buildResources/icon.png` (light dock / .icns source)
 // - `../nota-electron/buildResources/icon.icns` (macOS only, via iconutil)
 // - `../nota-electron/buildResources/icon-dark.png` (1024; Electron dock via nativeTheme)
-//
-// Optional (`NOTA_REGENERATE_EMBEDDED_FAVICON=1`): overwrite `public/favicon.svg` with a PNG
-// embedding of `apple-touch-icon.png`. The committed favicon is hand-authored; default is skip.
+// - `public/apple-touch-icon.png` (180×180 from light SVG)
+// - `../nota-marketing/public/favicon.svg` (copy of app favicon)
+// - `../nota-marketing/public/apple-touch-icon.png` (copy)
+// - `../nota-marketing/public/favicon.ico` (16+32 from light SVG)
 
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -149,16 +150,27 @@ async function writeIcns() {
   }
 }
 
-async function writeFaviconSvg() {
-  const pngBuf = fs.readFileSync(APPLE_TOUCH_ICON_PATH);
-  const b64 = pngBuf.toString('base64');
-  const { width, height } = await sharp(APPLE_TOUCH_ICON_PATH).metadata();
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${width} ${height}">
-  <image width="${width}" height="${height}" xlink:href="data:image/png;base64,${b64}"/>
-</svg>
-`;
-  fs.writeFileSync(FAVICON_SVG_PATH, svg);
-  console.log('Wrote public/favicon.svg');
+async function writeAppleTouchIcon() {
+  await sharp(ICON_LIGHT_SVG_PATH, { density: 288 })
+    .resize(180, 180, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
+    .png()
+    .toFile(APPLE_TOUCH_ICON_PATH);
+  console.log('Wrote', APPLE_TOUCH_ICON_PATH);
+}
+
+async function syncMarketingAssets() {
+  const marketingFavicons = path.resolve(
+    NOTA_APP_ROOT,
+    '..',
+    'nota-marketing',
+    'scripts',
+    'generate-favicons.mjs',
+  );
+  execFileSync(process.execPath, [marketingFavicons], { stdio: 'inherit' });
+  console.log('Synced marketing favicons via generate-favicons.mjs');
 }
 
 await writeIconPng();
@@ -166,10 +178,5 @@ await writeIconDarkPng();
 await assertDockIconSafeZone(ICON_PNG_PATH, 'icon.png');
 await assertDockIconSafeZone(ICON_DARK_PNG_PATH, 'icon-dark.png');
 await writeIcns();
-if (process.env.NOTA_REGENERATE_EMBEDDED_FAVICON === '1') {
-  await writeFaviconSvg();
-} else {
-  console.log(
-    'Skipping public/favicon.svg (set NOTA_REGENERATE_EMBEDDED_FAVICON=1 to embed apple-touch-icon).',
-  );
-}
+await writeAppleTouchIcon();
+await syncMarketingAssets();

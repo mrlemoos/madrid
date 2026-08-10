@@ -1,9 +1,11 @@
 /**
- * Writes `public/favicon.ico` and `public/apple-touch-icon.png` from the stacked-sheet mark
- * (aligned with `public/favicon.svg` geometry, light-tab raster fills).
+ * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the liquid-glass
+ * light SVG (same source as Electron dock / app favicon).
  *
- * Run from monorepo root: node apps/nota-marketing/scripts/generate-favicons.mjs
- * Requires root dependency `sharp` and workspace devDependency `to-ico`.
+ * Prefer `pnpm run generate:nota-icons` from the monorepo root (covers Electron
+ * + app + marketing). This script remains for marketing-only regenerations.
+ *
+ * Run: node apps/nota-marketing/scripts/generate-favicons.mjs
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -14,45 +16,42 @@ import toIco from 'to-ico';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicRoot = path.join(__dirname, '../public');
-
-const MARK_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44" height="44">
-  <rect x="4" y="4" width="30" height="30" rx="5.5" fill="#171717" fill-opacity="0.35"/>
-  <rect x="7" y="7" width="30" height="30" rx="5.5" fill="#171717" fill-opacity="0.7"/>
-  <rect x="10" y="10" width="30" height="30" rx="5.5" fill="#171717" fill-opacity="1"/>
-</svg>`;
+const iconLightSvg = path.resolve(
+  __dirname,
+  '../../nota-electron/buildResources/icon-light.svg',
+);
+const appFaviconSvg = path.resolve(__dirname, '../../nota/public/favicon.svg');
 
 async function main() {
   await fs.promises.mkdir(publicRoot, { recursive: true });
 
-  const png16 = await sharp(Buffer.from(MARK_SVG))
+  await fs.promises.copyFile(
+    appFaviconSvg,
+    path.join(publicRoot, 'favicon.svg'),
+  );
+
+  const png16 = await sharp(iconLightSvg, { density: 288 })
     .resize(16, 16)
     .png()
     .toBuffer();
-  const png32 = await sharp(Buffer.from(MARK_SVG))
+  const png32 = await sharp(iconLightSvg, { density: 288 })
     .resize(32, 32)
     .png()
     .toBuffer();
   const ico = await toIco([png16, png32]);
   await fs.promises.writeFile(path.join(publicRoot, 'favicon.ico'), ico);
 
-  const markSize = 140;
-  const markBuf = await sharp(Buffer.from(MARK_SVG))
-    .resize(markSize, markSize)
-    .png()
-    .toBuffer();
-  await sharp({
-    create: {
-      width: 180,
-      height: 180,
-      channels: 4,
-      background: { r: 255, g: 255, b: 255, alpha: 1 },
-    },
-  })
-    .composite([{ input: markBuf, gravity: 'centre' }])
+  await sharp(iconLightSvg, { density: 288 })
+    .resize(180, 180, {
+      fit: 'contain',
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    })
     .png()
     .toFile(path.join(publicRoot, 'apple-touch-icon.png'));
 
-  console.log('Wrote public/favicon.ico and public/apple-touch-icon.png');
+  console.log(
+    'Wrote public/favicon.svg, favicon.ico, and apple-touch-icon.png',
+  );
 }
 
 main().catch((err) => {

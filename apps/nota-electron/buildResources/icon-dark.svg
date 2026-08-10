@@ -1,17 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Nota liquid-glass note stack · dark (macOS 26) -->
   <defs>
-    <linearGradient id="bgD" x1="0.25" y1="0" x2="0.75" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#1c2632"/>
-      <stop offset="100%" stop-color="#243040"/>
+    <linearGradient id="glassBaseFill" x1="0.15" y1="0" x2="0.85" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#3A4A60"/>
+      <stop offset="40%" stop-color="#1E2A3A"/>
+      <stop offset="100%" stop-color="#0E141C"/>
+    </linearGradient>
+    <radialGradient id="specOrb" cx="0.35" cy="0.18" r="0.65" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.32"/>
+      <stop offset="35%" stop-color="#A8C4E0" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sheetBackFill" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#DCE8F6" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#8FA6BE" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="sheetMidFill" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#E8F0FA" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#A8BDD4" stop-opacity="0.14"/>
+    </linearGradient>
+    <linearGradient id="sheetFrontFill" x1="0.3" y1="0" x2="0.65" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#F4F8FC" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#C4D6EA" stop-opacity="0.32"/>
+      <stop offset="100%" stop-color="#7E98B4" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0.5" y1="0" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.04"/>
     </linearGradient>
   </defs>
-  <rect fill="url(#bgD)" width="512" height="512" rx="108"/>
-  <g stroke="#c8d8ea" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path stroke-width="13" d="M 202,147 C 194,155 185,172 179,192 L 158,272 C 146,310 133,332 130,352 L 138,363 L 145,370"/>
-    <path stroke-width="13" d="M 215,147 C 223,158 230,174 232,194 L 226,272 C 221,308 212,330 202,344 L 186,358 L 174,366 L 160,373"/>
-    <path stroke-width="6" d="M 152,318 L 152,364"/>
-    <path stroke-width="13" d="M 370,143 C 349,154 322,168 308,188 L 292,238 C 284,266 284,294 290,318 L 295,344 C 287,352 286,362 290,370"/>
-    <path stroke-width="13" d="M 376,143 C 379,158 380,178 379,202 L 373,248 C 366,280 352,304 336,322 L 314,342 C 302,352 298,360 300,368"/>
-    <path stroke-width="6" d="M 372,146 C 358,204 336,272 302,362"/>
+
+  <rect id="glassBase" width="512" height="512" rx="114" fill="url(#glassBaseFill)"/>
+  <rect width="512" height="512" rx="114" fill="url(#specOrb)"/>
+  <rect width="512" height="512" rx="114" fill="none" stroke="url(#rim)" stroke-width="4"/>
+
+  <g id="sheetBack" transform="rotate(-10 256 256)">
+    <rect x="142" y="112" width="228" height="288" rx="36"
+      fill="url(#sheetBackFill)" stroke="#DCE8F6" stroke-opacity="0.28" stroke-width="3"/>
+  </g>
+
+  <g id="sheetMid" transform="rotate(6 256 256)">
+    <rect x="148" y="120" width="224" height="284" rx="36"
+      fill="url(#sheetMidFill)" stroke="#E8F0FA" stroke-opacity="0.38" stroke-width="3"/>
+  </g>
+
+  <g id="sheetFront">
+    <rect x="154" y="130" width="204" height="268" rx="34"
+      fill="url(#sheetFrontFill)" stroke="#F4F8FC" stroke-opacity="0.55" stroke-width="3.5"/>
+    <rect x="168" y="144" width="176" height="52" rx="18" fill="#FFFFFF" fill-opacity="0.14"/>
+    <g stroke="#EAF2FA" stroke-opacity="0.62" stroke-width="12" stroke-linecap="round">
+      <line x1="186" y1="216" x2="326" y2="216"/>
+      <line x1="186" y1="262" x2="298" y2="262"/>
+      <line x1="186" y1="308" x2="318" y2="308"/>
+    </g>
   </g>
 </svg>
