@@ -333,6 +333,9 @@ export function AudioToNoteDock(): JSX.Element | null {
       )}
       role="region"
       aria-label="Assistive study notes from recording"
+      /** Beam border while transcription runs — decoration; `aria-busy` carries the semantics. */
+      data-busy={phase === 'processing' ? 'true' : undefined}
+      aria-busy={phase === 'processing' || undefined}
     >
       {phase === 'error' && error ? (
         <div className="flex flex-col gap-2">
