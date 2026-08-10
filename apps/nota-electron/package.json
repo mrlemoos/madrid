@@ -66,10 +66,6 @@
         "dependsOn": [
           {
             "target": "build",
-            "projects": "nota"
-          },
-          {
-            "target": "build",
             "projects": "self"
           }
         ],
@@ -82,10 +78,6 @@
       "electron:release": {
         "executor": "nx:run-commands",
         "dependsOn": [
-          {
-            "target": "build",
-            "projects": "nota"
-          },
           {
             "target": "build",
             "projects": "self"

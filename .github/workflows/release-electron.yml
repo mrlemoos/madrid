@@ -92,10 +92,9 @@ jobs:
           fi
           echo "draft=$DRAFT" >> "$GITHUB_OUTPUT"
 
-      - name: Build web app and publish Electron release
-        # No NEXT_PUBLIC_* client env here: the packaged shell loads the hosted
-        # SPA (app.nota.mrlemoos.dev), whose env comes from Vercel. The bundled
-        # nota/dist is not the runtime source, so baking client keys in is moot.
+      - name: Build Electron shell and publish release
+        # Packaged app loads https://app.nota.mrlemoos.dev (Vercel). No @nota/nota
+        # / Next build in this job — shell only.
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}

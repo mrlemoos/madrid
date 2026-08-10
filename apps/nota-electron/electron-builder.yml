@@ -19,10 +19,6 @@ protocols:
       - nota
 files:
   - dist/**/*
-  - from: ../nota/dist
-    to: nota/dist
-    filter:
-      - '**/*'
 extraResources:
   - from: buildResources/TrayTemplate.png
     to: TrayTemplate.png

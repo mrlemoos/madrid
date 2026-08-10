@@ -36,7 +36,7 @@ Or the equivalent shorthand:
 pnpm run electron:pack
 ```
 
-`electron-builder` copies `../nota/dist` into the app bundle. Output is under `apps/nota-electron/release/` (DMG and ZIP per architecture). **macOS** is required for the current `electron-builder.yml` targets.
+`electron-builder` packages the Electron shell only (`dist/**/*` + icons). The packaged app loads **`https://app.nota.mrlemoos.dev`** (Vercel); it does not embed the Next app. Output is under `apps/nota-electron/release/` (DMG and ZIP per architecture). **macOS** is required for the current `electron-builder.yml` targets.
 
 ## Publish to GitHub Releases (local)
 
@@ -66,18 +66,11 @@ If you omit `--version`, the version already in `apps/nota-electron/package.json
 - **`main.ts`** wires **`registerNotaUpdaterIpc()`** / **`startPackagedNotaUpdater()`** ([`nota-updater.ts`](src/nota-updater.ts)): **`checkForUpdates()`** on launch (no duplicate OS notify), status events to the renderer, **`quitAndInstall(false, true)`** after download. **Settings** ([`electron-update-settings-section.tsx`](../nota/src/components/electron-update-settings-section.tsx)) calls the same check path via preload.
 - **CI**: `.github/workflows/release-electron.yml` runs on **`v*`** tags and on **`workflow_dispatch`** (semver + **release kind**: production vs release candidate / draft). It syncs `apps/nota-electron/package.json` version, then runs **`pnpm exec nx run @nota/nota-electron:electron:release`** (build + **`electron-builder --publish always`** via [`tools/electron-github-release.mjs`](../../tools/electron-github-release.mjs)). Actions sets **`GH_TOKEN`** from **`GITHUB_TOKEN`** to upload assets and `latest-mac.yml`.
 
-### Required secrets (embedded SPA, CI)
+### CI secrets (signing / notarisation)
 
-The **`macos` job** in [`.github/workflows/release-electron.yml`](../../.github/workflows/release-electron.yml) uses **`environment: Production`**, so **`${{ secrets.* }}`** resolves **Production environment secrets** first (and repository secrets where you do not override by name). Define the `VITE_*` keys there (or duplicate them as **repository** secrets if you prefer not to use an environment). Mirror Vercel / [`apps/nota/.env.example`](../nota/.env.example). **`VITE_SUPABASE_URL`** and **`VITE_SUPABASE_ANON_KEY`** are required: the workflow **fails** if either is unset so the app cannot ship with a broken login. Other `VITE_*` secrets may still be empty (features degrade until you add them).
+The **`macos` job** uses **`environment: Production`**. Client `NEXT_PUBLIC_*` keys live on **Vercel** for the hosted SPA; this workflow does not build Next and does not need them. Optional Apple signing / notarisation secrets are listed below.
 
 If **Production** has protection rules (required reviewers, wait timers), each release run waits for them before the build starts.
-
-| Secret                       | Purpose                                                                                                                                                                                                                           |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_SUPABASE_URL`          | Supabase project URL                                                                                                                                                                                                              |
-| `VITE_SUPABASE_ANON_KEY`     | Supabase anon (public) key                                                                                                                                                                                                        |
-| `VITE_CLERK_PUBLISHABLE_KEY` | Clerk publishable key (same instance as the web app)                                                                                                                                                                              |
-| `VITE_NOTA_SERVER_API_URL`   | **Required** for Nota Pro and link previews: nota-server HTTPS origin, no trailing slash (production Railway example: `https://notaappnota-server-production.up.railway.app`). OG fetch runs on the server, not in the SPA build. |
 
 ### Triggering CI release
 
@@ -89,15 +82,7 @@ If **Production** has protection rules (required reviewers, wait timers), each r
 
 Confirm the new **Release** lists DMG and ZIP assets per architecture plus **`latest-mac.yml`** (used by auto-update). Draft releases stay off the default “latest” path until you publish them on GitHub.
 
-After fixing secrets, **push a new `v*` tag** or run **Release Electron (macOS)** again via **workflow_dispatch** so a fresh build picks up the values.
-
-### Packaged app: “Missing Supabase environment variables”
-
-That message comes from [`apps/nota/src/lib/supabase/browser.ts`](../nota/src/lib/supabase/browser.ts): the **Vite build** inlined empty `VITE_SUPABASE_*` strings. GitHub Actions does not inject secrets at runtime on the user’s machine.
-
-1. Add **`VITE_SUPABASE_URL`** and **`VITE_SUPABASE_ANON_KEY`** under **Production** environment secrets (or **repository** secrets), with those exact names — this workflow reads `${{ secrets.* }}` only.
-2. If the URL lives under **Variables**, either duplicate it into **Secrets** or change the workflow to use `${{ vars.VITE_SUPABASE_URL }}` for that key.
-3. Trigger a **new** release build (tag or manual workflow); re-download the app.
+After fixing signing secrets, **push a new `v*` tag** or run **Release Electron (macOS)** again via **workflow_dispatch** so a fresh build picks up the values.
 
 ### Optional secrets (macOS signing / notarisation)
 
@@ -119,8 +104,8 @@ The Dock icon follows **system light/dark**: [`buildResources/icon.png`](buildRe
 
 ## Architecture
 
-- **Dev mode**: Loads from `http://localhost:4200` (Vite dev server).
-- **Prod mode (packaged)**: Loads **`https://app.nota.mrlemoos.dev`** — the same deployed **`nota`** SPA as the web client ([`src/app-load-url.ts`](src/app-load-url.ts)). Release builds still embed **`nota/dist`** via `electron-builder` until that dependency is removed.
-- **Link preview**: Same as the web app—the SPA calls **`nota-server`** `GET /api/og-preview` using **`VITE_NOTA_SERVER_API_URL`** and the Clerk session JWT. **`CLERK_SECRET_KEY`** belongs only on the **`nota-server`** host, not in the Electron or Vercel SPA builds.
-- **Nota Pro entitlement**: The deployed app must be built with **`VITE_NOTA_SERVER_API_URL`** pointing at **[`nota-server`](../nota-server)**. Ensure **`NOTA_SERVER_CORS_ORIGINS`** on the server includes **`https://app.nota.mrlemoos.dev`** when you use an explicit allowlist.
+- **Dev mode**: Loads from `http://localhost:3000` (Next dev server).
+- **Prod mode (packaged)**: Loads **`https://app.nota.mrlemoos.dev`** — the same deployed **`nota`** app as the web client ([`src/app-load-url.ts`](src/app-load-url.ts)). The DMG/ZIP contain the Electron shell only; no Next/`nota/dist` embed.
+- **Link preview**: Same as the web app—the SPA calls the hosted App Router / API using the Clerk session JWT. **`CLERK_SECRET_KEY`** belongs only on the server host, not in the Electron shell.
+- **Nota Pro entitlement**: The hosted app must have billing / entitlement configured on Vercel (and related server secrets). Ensure CORS allowlists include **`https://app.nota.mrlemoos.dev`** when you use an explicit list.
 - **Clerk session tokens in Electron**: Packaged builds load **`https://app.nota.mrlemoos.dev`** and call the Clerk Frontend API on **`https://clerk.nota.mrlemoos.dev`**. If Chromium logs a CORS error on `/v1/client/sessions/.../tokens`, confirm the Clerk **custom domain** DNS record is **DNS only** (not proxied through Cloudflare) per [Clerk production DNS](https://clerk.com/docs/guides/development/deployment/production). The shell also patches missing `Access-Control-Allow-Origin` on Clerk FAPI responses via [`clerk-fapi-cors.ts`](src/clerk-fapi-cors.ts) (`session.webRequest.onHeadersReceived`).
