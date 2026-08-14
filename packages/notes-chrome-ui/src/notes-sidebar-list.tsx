@@ -148,6 +148,8 @@ function NoteRow(options: {
                   : notesSidebarTreeRowVariants({ selected: isActive }),
                 noteIsDragged && 'opacity-60',
               )}
+              data-slot="sidebar-note-row"
+              data-selected={isActive ? '' : undefined}
               draggable
               onDragStart={(event: DragEvent<HTMLDivElement>) => {
                 event.dataTransfer.effectAllowed = 'move';
@@ -375,6 +377,7 @@ function FolderRow(options: {
                 notesSidebarTreeFolderRowVariants({ dragOver: isDropTarget }),
                 'px-1.5 text-muted-foreground',
               )}
+              data-slot="sidebar-folder-row"
               data-folder-tint={hasTint ? folder.tint : undefined}
               onDragEnter={(event) => {
                 if (!draggedNoteId) {
@@ -410,6 +413,7 @@ function FolderRow(options: {
             >
               <button
                 type="button"
+                data-slot="sidebar-folder-trigger"
                 className={notesSidebarTreeFolderTriggerClass}
                 aria-label={
                   isCollapsed
@@ -1046,6 +1050,7 @@ export function NotesSidebarList({
                     dropTargetId === 'root' &&
                       notesSidebarTreeRowVariants({ dragOver: true }),
                   )}
+                  data-slot="sidebar-root-drop"
                   onDragEnter={(event) => {
                     if (!draggedNoteId) {
                       return;

@@ -2,7 +2,7 @@ import { act, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MockInstance } from 'vitest';
 import type { JSX } from 'react';
-import { gsap } from './nota-motion';
+import { gsap, NOTA_SIDEBAR_RAIL_WIDTH_PX } from './nota-motion';
 import { useNotesSidebarShellMotion } from './use-notes-sidebar-shell-motion';
 
 type FrameCallback = FrameRequestCallback;
@@ -95,7 +95,7 @@ describe('useNotesSidebarShellMotion', () => {
     clock.runToRest();
   });
 
-  it('snaps the clip to zero width after the close spring settles', () => {
+  it('snaps the clip to the icon-rail width after the close spring settles', () => {
     // Arrange
     const clock = installManualClock();
     const { container, rerender } = render(
@@ -111,7 +111,10 @@ describe('useNotesSidebarShellMotion', () => {
     // Assert
     expect(setSpy).toHaveBeenCalledWith(
       aside,
-      expect.objectContaining({ width: 0, maxWidth: 'none' }),
+      expect.objectContaining({
+        width: NOTA_SIDEBAR_RAIL_WIDTH_PX,
+        maxWidth: 'none',
+      }),
     );
   });
 
@@ -138,7 +141,10 @@ describe('useNotesSidebarShellMotion', () => {
     );
     expect(setSpy).not.toHaveBeenCalledWith(
       aside,
-      expect.objectContaining({ width: 0, maxWidth: 'none' }),
+      expect.objectContaining({
+        width: NOTA_SIDEBAR_RAIL_WIDTH_PX,
+        maxWidth: 'none',
+      }),
     );
   });
 

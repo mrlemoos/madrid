@@ -1,15 +1,22 @@
-import type { JSX, ReactNode } from 'react';
+import type { ComponentProps, JSX, ReactNode } from 'react';
 import { useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@nota/design/button';
 import { Icon } from '@nota/design/icon';
 import { cn } from '@nota/design/utils';
 import { replaceScreen } from '@nota/app-navigation-core/navigation';
 import {
   consumeNavIntent,
+  markNavIntent,
   resolvePanelMotion,
   type NavIntent,
 } from '@nota/nota-motion-ui/panel-motion';
+import {
+  NOTA_PRESSABLE_CLASS,
+  NOTA_SHELL_NAV_ITEM_CLASS,
+} from '@nota/nota-motion-ui/interaction';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
+import { NOTA_SIDEBAR_RAIL_WIDTH_PX } from '@nota/nota-motion-ui/motion';
 import {
   NOTA_CHROME_CONTROL_COMPACT_CLASS,
   NOTA_SECTION_HEAD_CLASS,
@@ -78,6 +85,117 @@ export function SidebarToggle({
         </TooltipPortal>
       </Tooltip>
     </TooltipProvider>
+  );
+}
+
+/** One footer nav destination, rendered as a full row or as an icon-rail button. */
+export type ShellNavItem = {
+  key: string;
+  href: string;
+  label: string;
+  icon: ComponentProps<typeof Icon>['name'];
+  active: boolean;
+};
+
+/**
+ * Footer nav links. `collapsed` renders the icon-only rail variant (tooltip
+ * carries the label) so the expanded and collapsed sidebars stay one list.
+ */
+export function ShellNavLinks({
+  items,
+  collapsed = false,
+}: {
+  items: ShellNavItem[];
+  collapsed?: boolean;
+}): JSX.Element {
+  return (
+    <div
+      className={cn('flex flex-col gap-3', collapsed && 'items-center gap-1')}
+      data-slot="shell-nav"
+    >
+      {items.map((item) => {
+        const link = (
+          <Link
+            href={item.href}
+            aria-current={item.active ? 'page' : undefined}
+            aria-label={collapsed ? item.label : undefined}
+            data-slot="shell-nav-item"
+            onClick={() => {
+              markNavIntent('pointer');
+            }}
+            className={cn(
+              NOTA_SHELL_NAV_ITEM_CLASS,
+              NOTA_PRESSABLE_CLASS,
+              'flex items-center rounded-md text-sm',
+              collapsed ? 'size-9 justify-center' : 'gap-2 px-3 py-2',
+              item.active
+                ? 'bg-muted font-medium text-foreground'
+                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+            )}
+          >
+            <span className="inline-flex shrink-0" aria-hidden>
+              <Icon name={item.icon} size={16} />
+            </span>
+            {collapsed ? null : item.label}
+          </Link>
+        );
+
+        if (!collapsed) {
+          return <div key={item.key}>{link}</div>;
+        }
+
+        return (
+          <Tooltip key={item.key}>
+            <TooltipTrigger render={link} />
+            <TooltipPortal>
+              <TooltipPositioner side="right" sideOffset={6}>
+                <TooltipPopup>{item.label}</TooltipPopup>
+              </TooltipPositioner>
+            </TooltipPortal>
+          </Tooltip>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Collapsed sidebar: a fixed-width icon rail pinned to the left edge of the
+ * `<aside>` clip. Holds the expand toggle plus the footer nav icons so the
+ * sidebar never goes fully off-canvas. Fades in as the wide rail springs out.
+ */
+export function SidebarIconRail({
+  items,
+  visible,
+}: {
+  items: ShellNavItem[];
+  visible: boolean;
+}): JSX.Element {
+  const isElectron = useIsElectron();
+
+  return (
+    <div
+      data-slot="sidebar-icon-rail"
+      aria-hidden={!visible}
+      inert={!visible ? true : undefined}
+      style={{ width: NOTA_SIDEBAR_RAIL_WIDTH_PX }}
+      className={cn(
+        'absolute inset-y-0 left-0 z-40 flex flex-col items-center pb-3',
+        'motion-safe:transition-opacity motion-safe:duration-[180ms] motion-safe:ease-out',
+        visible ? 'opacity-100 delay-100' : 'pointer-events-none opacity-0',
+        isElectron
+          ? cn(
+              'pt-[max(3.25rem,calc(env(safe-area-inset-top)+2.5rem))]',
+              ELECTRON_WINDOW_NO_DRAG_CLASS,
+            )
+          : 'pt-4',
+      )}
+    >
+      <SidebarToggle />
+      <div className="mt-auto pt-4">
+        <ShellNavLinks items={items} collapsed />
+      </div>
+    </div>
   );
 }
 

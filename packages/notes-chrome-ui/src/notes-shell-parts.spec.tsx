@@ -1,6 +1,11 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { ShellPanel, SidebarToggle } from './notes-shell-parts';
+import {
+  ShellPanel,
+  SidebarIconRail,
+  SidebarToggle,
+  type ShellNavItem,
+} from './notes-shell-parts';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import {
   markNavIntent,
@@ -137,5 +142,60 @@ describe('ShellPanel panel motion', () => {
     const panel = container.querySelector('#nota-panel-settings');
     expect(panel?.className).not.toContain(NOTA_PANEL_FADE_CLASS);
     expect(panel?.getAttribute('data-nav-intent')).toBe('keyboard');
+  });
+});
+
+describe('SidebarIconRail', () => {
+  const items: ShellNavItem[] = [
+    {
+      key: 'graph',
+      href: '/notes/graph',
+      label: 'Note Graph',
+      icon: 'brain-circuit',
+      active: false,
+    },
+    {
+      key: 'settings',
+      href: '/notes/settings',
+      label: 'Settings',
+      icon: 'gear',
+      active: true,
+    },
+  ];
+
+  beforeEach(() => {
+    useNotesSidebarStore.setState({ open: false });
+  });
+
+  it('keeps the expand toggle and nav icons reachable while collapsed', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: false });
+
+    // Act
+    render(<SidebarIconRail items={items} visible />);
+
+    // Assert
+    expect(screen.getByRole('button', { name: 'Open sidebar' })).toBeTruthy();
+    expect(
+      screen
+        .getByRole('link', { name: 'Settings' })
+        .getAttribute('aria-current'),
+    ).toBe('page');
+    expect(screen.getByRole('link', { name: 'Note Graph' })).toBeTruthy();
+  });
+
+  it('is inert and hidden from a11y while the wide sidebar is open', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: true });
+
+    // Act
+    const { container } = render(
+      <SidebarIconRail items={items} visible={false} />,
+    );
+    const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
+
+    // Assert
+    expect(rail?.getAttribute('aria-hidden')).toBe('true');
+    expect(rail?.hasAttribute('inert')).toBe(true);
   });
 });

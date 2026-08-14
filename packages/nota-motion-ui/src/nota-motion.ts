@@ -9,7 +9,10 @@ import {
   NOTA_SPRING_SETTLE,
   NOTA_SPRING_SHELL,
 } from '@nota/design/motion-tokens';
-import { NOTA_SIDEBAR_DEFAULT_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
+import {
+  NOTA_SIDEBAR_DEFAULT_WIDTH_PX,
+  NOTA_SIDEBAR_ICON_WIDTH_PX,
+} from '@nota/nota-motion-core/sidebar-width';
 import { usePrefersReducedMotion } from './use-prefers-reduced-motion';
 
 gsap.registerPlugin(useGSAP);
@@ -28,6 +31,9 @@ export const NOTA_MOTION_EASE_IN_OUT = 'sine.inOut';
 export const NOTA_SIDEBAR_S = NOTA_SPRING_SHELL.response;
 /** Default notes sidebar width (px) — canonical value lives in `@nota/nota-motion-core`. */
 export const NOTA_SIDEBAR_WIDTH_PX = NOTA_SIDEBAR_DEFAULT_WIDTH_PX;
+
+/** Collapsed sidebar icon-rail width (px). */
+export const NOTA_SIDEBAR_RAIL_WIDTH_PX = NOTA_SIDEBAR_ICON_WIDTH_PX;
 /** Horizontal slide (px) when the notes sidebar closes :  content exits to the left. */
 export const NOTA_SIDEBAR_SLIDE_PX = 20;
 

@@ -12,6 +12,7 @@ import {
   type CriticallyDampedSpringConfig,
   type SpringAnimationHandle,
 } from '@nota/nota-motion-core/critically-damped-spring';
+import { NOTA_SIDEBAR_ICON_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
 
 type NotaSidebarClipLayout = {
   width: number;
@@ -23,10 +24,13 @@ type NotaSidebarRailMotionTargets = {
   opacity: number;
 };
 
-/** Layout width for the notes shell sidebar clip (instant snap, not tweened). */
+/**
+ * Layout width for the notes shell sidebar clip (instant snap, not tweened).
+ * Collapsed keeps the icon rail's width so the toggle + footer nav stay on screen.
+ */
 function clipLayout(open: boolean, widthPx: number): NotaSidebarClipLayout {
   return {
-    width: open ? widthPx : 0,
+    width: open ? widthPx : NOTA_SIDEBAR_ICON_WIDTH_PX,
     maxWidth: open ? widthPx : 'none',
   };
 }

@@ -5,7 +5,6 @@ import {
   type JSX,
   type ReactNode,
 } from 'react';
-import { Icon } from '@nota/design/icon';
 import { TooltipProvider } from '@nota/design/tooltip';
 import { LoadingStatus } from '@nota/design/spinner';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
@@ -32,10 +31,6 @@ import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
 import { useNotesSidebarShellMotion } from '@nota/nota-motion-ui/use-notes-sidebar-shell-motion';
 import { useNotesSidebarResize } from '@nota/nota-motion-ui/use-notes-sidebar-resize';
 import { hasJournalNotes } from '@nota/note-journal-core/notes';
-import {
-  NOTA_PRESSABLE_CLASS,
-  NOTA_SHELL_NAV_ITEM_CLASS,
-} from '@nota/nota-motion-ui/interaction';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
@@ -45,8 +40,6 @@ import {
   replaceScreen,
   type NotesShellPanel,
 } from '@nota/app-navigation-core/navigation';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
-import Link from 'next/link';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
 import { NotesSidebarList } from './notes-sidebar-list';
@@ -56,7 +49,12 @@ import { ElectronTrafficLightsController } from '@nota/electron-bridge-ui/traffi
 import { StudyRecordingUploadWarningBanner } from '@nota/note-capture-ui/study-recording-upload-warning-banner';
 import { useAudioNotePendingDrain } from '@nota/note-capture-ui/use-audio-note-pending-drain';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
-import { SidebarToggle } from './notes-shell-parts';
+import {
+  ShellNavLinks,
+  SidebarIconRail,
+  SidebarToggle,
+  type ShellNavItem,
+} from './notes-shell-parts';
 import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-resize-handle';
 
 /**
@@ -213,6 +211,41 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   });
   const showJournalNav = hasJournalNotes(notes);
 
+  const navItems: ShellNavItem[] = [
+    {
+      key: 'graph',
+      href: graphHref,
+      label: t('Note Graph'),
+      icon: 'brain-circuit',
+      active: panel === 'graph',
+    },
+    {
+      key: 'shortcuts',
+      href: shortcutsHref,
+      label: t('Shortcuts'),
+      icon: 'sparkles',
+      active: panel === 'shortcuts',
+    },
+    {
+      key: 'settings',
+      href: settingsHref,
+      label: t('Settings'),
+      icon: 'gear',
+      active: panel === 'settings',
+    },
+    ...(showJournalNav
+      ? [
+          {
+            key: 'journal',
+            href: journalHref,
+            label: t('Journal'),
+            icon: 'clock',
+            active: panel === 'journal',
+          } satisfies ShellNavItem,
+        ]
+      : []),
+  ];
+
   return (
     <>
       <ElectronMenubarBridge />
@@ -240,20 +273,6 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
             'nota-notes-root flex h-full min-h-0 flex-1 bg-linear-to-b from-muted/25 to-background',
           )}
         >
-          {!paywalled && !open ? (
-            <div
-              className={cn(
-                'fixed z-40 flex items-center',
-                isElectron
-                  ? 'pointer-events-none top-0 left-0 min-h-[52px] pl-20 pt-[env(safe-area-inset-top)]'
-                  : 'left-4 top-4',
-              )}
-            >
-              <SidebarToggle
-                className={cn(isElectron && 'pointer-events-auto')}
-              />
-            </div>
-          ) : null}
           {!paywalled ? (
             <aside
               ref={asideRef}
@@ -261,15 +280,21 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
                 'relative flex h-full min-h-0 min-w-0 shrink-0 flex-col overflow-hidden',
                 isElectron && 'z-[35]',
                 notesSidebarChrome,
-                !open && 'pointer-events-none',
               )}
-              aria-hidden={!open}
             >
+              <TooltipProvider>
+                <SidebarIconRail items={navItems} visible={!open} />
+              </TooltipProvider>
               <div
                 ref={railRef}
                 data-nota-sidebar-rail
-                className="flex h-full min-h-0 w-full min-w-0 flex-col"
+                className={cn(
+                  'flex h-full min-h-0 w-full min-w-0 flex-col',
+                  !open && 'pointer-events-none',
+                )}
                 style={{ width: widthPx }}
+                aria-hidden={!open}
+                inert={!open ? true : undefined}
               >
                 <TooltipProvider>
                   <div
@@ -323,96 +348,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
 
                   {user ? (
                     <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
-                      <div className="flex flex-col gap-3">
-                        <Link
-                          href={graphHref}
-                          aria-current={panel === 'graph' ? 'page' : undefined}
-                          onClick={() => {
-                            markNavIntent('pointer');
-                          }}
-                          className={cn(
-                            NOTA_SHELL_NAV_ITEM_CLASS,
-                            NOTA_PRESSABLE_CLASS,
-                            'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                            panel === 'graph'
-                              ? 'bg-muted font-medium text-foreground'
-                              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                          )}
-                        >
-                          <span className="inline-flex shrink-0" aria-hidden>
-                            <Icon name="brain-circuit" size={16} />
-                          </span>
-                          {t('Note Graph')}
-                        </Link>
-                        <Link
-                          href={shortcutsHref}
-                          aria-current={
-                            panel === 'shortcuts' ? 'page' : undefined
-                          }
-                          onClick={() => {
-                            markNavIntent('pointer');
-                          }}
-                          className={cn(
-                            NOTA_SHELL_NAV_ITEM_CLASS,
-                            NOTA_PRESSABLE_CLASS,
-                            'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                            panel === 'shortcuts'
-                              ? 'bg-muted font-medium text-foreground'
-                              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                          )}
-                        >
-                          <span className="inline-flex shrink-0" aria-hidden>
-                            <Icon name="sparkles" size={16} />
-                          </span>
-                          {t('Shortcuts')}
-                        </Link>
-                        <Link
-                          href={settingsHref}
-                          aria-current={
-                            panel === 'settings' ? 'page' : undefined
-                          }
-                          onClick={() => {
-                            markNavIntent('pointer');
-                          }}
-                          className={cn(
-                            NOTA_SHELL_NAV_ITEM_CLASS,
-                            NOTA_PRESSABLE_CLASS,
-                            'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                            panel === 'settings'
-                              ? 'bg-muted font-medium text-foreground'
-                              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                          )}
-                        >
-                          <span className="inline-flex shrink-0" aria-hidden>
-                            <Icon name="gear" size={16} />
-                          </span>
-                          {t('Settings')}
-                        </Link>
-                        {showJournalNav ? (
-                          <Link
-                            href={journalHref}
-                            aria-current={
-                              panel === 'journal' ? 'page' : undefined
-                            }
-                            onClick={() => {
-                              markNavIntent('pointer');
-                            }}
-                            className={cn(
-                              NOTA_SHELL_NAV_ITEM_CLASS,
-                              NOTA_PRESSABLE_CLASS,
-                              'flex items-center gap-2 rounded-md px-3 py-2 text-sm',
-                              panel === 'journal'
-                                ? 'bg-muted font-medium text-foreground'
-                                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-                            )}
-                          >
-                            <span className="inline-flex shrink-0" aria-hidden>
-                              <Icon name="clock" size={16} />
-                            </span>
-                            {t('Journal')}
-                          </Link>
-                        ) : null}
-                      </div>
+                      <ShellNavLinks items={navItems} />
                     </footer>
                   ) : null}
                 </TooltipProvider>

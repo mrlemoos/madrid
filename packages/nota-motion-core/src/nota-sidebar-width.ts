@@ -10,6 +10,12 @@ export const NOTA_SIDEBAR_MIN_WIDTH_PX = 240;
 /** Widest notes sidebar (px). */
 export const NOTA_SIDEBAR_MAX_WIDTH_PX = 480;
 
+/**
+ * Collapsed notes sidebar (px) — the icon rail keeps the toggle and footer nav
+ * reachable instead of going fully off-canvas.
+ */
+export const NOTA_SIDEBAR_ICON_WIDTH_PX = 48;
+
 export function clampNotaSidebarWidthPx(widthPx: number): number {
   if (!Number.isFinite(widthPx)) {
     return NOTA_SIDEBAR_DEFAULT_WIDTH_PX;
