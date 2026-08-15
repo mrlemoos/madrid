@@ -4,6 +4,10 @@ The note flight-code feature needs live aircraft position from an IATA flight
 code, shown to anonymous viewers on the shared `/s/` page. We source data from
 **AirLabs** (free tier maps `flight_iata` → live `lat/lng/dir` with a schedule
 fallback) behind a **public, per-IP-rate-limited proxy** on `apps/nota-server`
+
+<!-- The proxy now lives at apps/nota/src/app/api/flight; apps/nota-server was
+     deleted per ADR 0004. The decision below is unchanged. -->
+
 (`GET /api/flight`) so the key stays server-side and the anon shared page can
 call the same endpoint — unlike the Bearer-gated `og-preview` route. Rendering
 uses **d3-geo with a bundled world TopoJSON** (flat map in the hover card,

@@ -2,7 +2,7 @@
 
 Date: 2026-08-01
 
-Status: Accepted
+Status: Accepted (point 6 superseded by [ADR 0004](0004-absorb-nota-server-into-the-next-app.md))
 
 ## Context
 
@@ -49,6 +49,10 @@ app share one platform.
 6. **`nota-server` stays** through the Next cutover (entitlement, external link OG fetch,
    assistive capture). **Intent:** later move those APIs into the Next app (Route
    Handlers / server modules). Share Card SSR is not a reason to grow `nota-server`.
+
+   > **Superseded by [ADR 0004](0004-absorb-nota-server-into-the-next-app.md)
+   > (2026-08-15).** The deferred follow-up landed: the APIs are Route Handlers in
+   > `apps/nota/src/app/api/*` and `apps/nota-server` is deleted.
 
 7. **Electron unchanged** in role: loads the hosted app URL; share links already point at
    `VITE_NOTA_WEB_APP_ORIGIN` / prod web origin.
