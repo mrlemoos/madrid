@@ -48,7 +48,12 @@ describe('SharedNoteView', () => {
 
     // Act
     render(
-      <SharedNoteView token="tok-1" initialNote={note} loadError={null} />,
+      <SharedNoteView
+        token="tok-1"
+        initialNote={note}
+        initialAttachments={[]}
+        loadError={null}
+      />,
     );
 
     // Assert
@@ -59,7 +64,12 @@ describe('SharedNoteView', () => {
   it('shows the not-found copy when the server found no note', () => {
     // Arrange + Act
     render(
-      <SharedNoteView token="tok-1" initialNote={null} loadError={null} />,
+      <SharedNoteView
+        token="tok-1"
+        initialNote={null}
+        initialAttachments={[]}
+        loadError={null}
+      />,
     );
 
     // Assert
@@ -72,6 +82,7 @@ describe('SharedNoteView', () => {
       <SharedNoteView
         token="tok-1"
         initialNote={null}
+        initialAttachments={[]}
         loadError="Failed to load shared note: boom"
       />,
     );
@@ -106,7 +117,14 @@ describe('SharedNoteView', () => {
 
   it('does not subscribe when the URL carried no token', () => {
     // Arrange + Act
-    render(<SharedNoteView token="" initialNote={null} loadError={null} />);
+    render(
+      <SharedNoteView
+        token=""
+        initialNote={null}
+        initialAttachments={[]}
+        loadError={null}
+      />,
+    );
 
     // Assert
     expect(shareMocks.subscribeSharedNote).not.toHaveBeenCalled();

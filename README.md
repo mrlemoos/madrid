@@ -18,11 +18,11 @@ We leave silence alone on purpose. Boredom at the cursor is the sound of a thoug
 
 Nota is a personal notes app built as an [Nx](https://nx.dev) monorepo.
 
-The main client ([apps/nota](apps/nota)) is a **Vite** single-page app with **React 19**; in-app navigation uses the location **hash** (see `app/lib/app-navigation.ts`).
+The main client ([apps/nota](apps/nota)) is a **Next.js** App Router app with **React 19**. It also serves the API routes under `src/app/api/*` (entitlement, link previews, semantic search, assistive capture).
 
 Notes use **Supabase** (Postgres, Storage, and row-level security) with **Clerk** for sign-in (third-party JWTs). The editor is **TipTap** (ProseMirror).
 
-Subscriptions use **Clerk Billing** (checkout in the SPA; server-side entitlement checks on Vercel `api/*` or optional **[nota-server](apps/nota-server)**).
+Subscriptions use **Clerk Billing** (in-app checkout; server-side entitlement checks in the Next route handlers).
 
 An **Electron** desktop shell wraps the same build—see [apps/nota-electron/README.md](apps/nota-electron/README.md). The public marketing site lives in [apps/nota-marketing](apps/nota-marketing) (Astro).
 
@@ -44,10 +44,10 @@ pnpm install
 
 Copy [apps/nota/.env.example](apps/nota/.env.example) to `apps/nota/.env` and set at least:
 
-- `VITE_SUPABASE_URL` — your Supabase project URL
-- `VITE_SUPABASE_ANON_KEY` — your Supabase anon (public) key
+- `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — your Supabase publishable key (`sb_publishable_…`)
 
-For Clerk sign-in and subscription flows, follow the same file for `VITE_CLERK_PUBLISHABLE_KEY`, optional `VITE_NOTA_SERVER_API_URL`, and **server-only** secrets (`CLERK_SECRET_KEY`, etc.—never commit real values). Schema, RLS policies, and migrations are applied in Supabase from the SQL in this repo—environment variables alone do not create the database.
+For Clerk sign-in and subscription flows, follow the same file for `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and the **server-only** secrets (`CLERK_SECRET_KEY`, `SUPABASE_SECRET_KEY`, etc.—never commit real values, never prefix them `NEXT_PUBLIC_`). Schema, RLS policies, and migrations are applied in Supabase from the SQL in this repo—environment variables alone do not create the database.
 
 ## Database
 
@@ -61,17 +61,13 @@ pnpm exec nx dev @nota/nota
 
 (`pnpm exec nx dev nota` resolves to the same project.)
 
-The Vite dev server listens on **[http://localhost:4200](http://localhost:4200)**.
+The Next dev server listens on **[http://localhost:3000](http://localhost:3000)**.
 
 ## Marketing site (local)
 
 ```sh
 pnpm exec nx run @nota/nota-marketing:dev
 ```
-
-## Optional API server
-
-For Nota Pro entitlement and related routes outside Vercel serverless, run [nota-server](apps/nota-server) and point the SPA at it with `VITE_NOTA_SERVER_API_URL`. See [apps/nota-server/README.md](apps/nota-server/README.md).
 
 ## Build and test
 
@@ -84,22 +80,21 @@ Tests use **Vitest** via the Nx Vitest plugin.
 
 ## Electron
 
-The desktop app expects the web dev server at `http://localhost:4200`. From the repository root you can run:
+The desktop app expects the web dev server at `http://localhost:3000` (`DEV_PORT` in [apps/nota-electron/src/app-load-url.ts](apps/nota-electron/src/app-load-url.ts)). From the repository root you can run:
 
-- `pnpm run electron:dev` — Electron only (start the web app in another terminal with `pnpm exec nx dev @nota/nota`, or run `pnpm exec nx run-many -t dev` to start Vite and Electron together)
+- `pnpm run electron:dev` — Electron only (start the web app in another terminal with `pnpm exec nx dev @nota/nota`, or run `pnpm exec nx run-many -t dev` to start the web app and Electron together)
 
 More detail: [apps/nota-electron/README.md](apps/nota-electron/README.md).
 
 ## Repository layout
 
-| Path                   | Purpose                                              |
-| ---------------------- | ---------------------------------------------------- |
-| `apps/nota/`           | Main Vite SPA (notes, auth, TipTap)                  |
-| `apps/nota-electron/`  | Electron shell                                       |
-| `apps/nota-server/`    | Optional Node API (entitlement, shared server logic) |
-| `apps/nota-marketing/` | Astro marketing site                                 |
-| `supabase/`            | Supabase config and SQL migrations                   |
-| `assets/`              | Shared assets (e.g. screenshots for docs)            |
+| Path                   | Purpose                                            |
+| ---------------------- | -------------------------------------------------- |
+| `apps/nota/`           | Main Next.js app (notes, auth, TipTap, API routes) |
+| `apps/nota-electron/`  | Electron shell                                     |
+| `apps/nota-marketing/` | Astro marketing site                               |
+| `supabase/`            | Supabase config and SQL migrations                 |
+| `assets/`              | Shared assets (e.g. screenshots for docs)          |
 
 ## Licence
 

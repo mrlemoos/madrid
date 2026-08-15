@@ -35,6 +35,6 @@ _Avoid_: link preview (that term is for TipTap external URL cards inside the edi
 The signed-in notes UI under `/notes/*`: a client-rendered app (vault, editor, chrome) hosted in the App Router, not server-rendered note bodies.
 _Avoid_: SSR notes, server vault
 
-**Nota API** (`nota-server`):
-The separate Node service that today owns entitlement, external link Open Graph fetch, and assistive capture. Planned to move into the Next app later; stays separate through the Vite→Next cutover.
-_Avoid_: treating Share Card SSR as a reason to expand Nota API
+**Nota API**:
+The route handlers under `src/app/api/*` that own entitlement, external link Open Graph fetch, semantic search, releases, flight lookup, and assistive capture. Absorbed from the former standalone `nota-server` Node service, which no longer exists; every endpoint is same-origin and authenticated by the Clerk session cookie.
+_Avoid_: nota-server, "the API server", Bearer-token API clients

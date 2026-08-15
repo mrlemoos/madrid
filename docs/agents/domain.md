@@ -22,7 +22,7 @@ Multi-context monorepo (see `CONTEXT-MAP.md` at the root):
 │   ├── nota/
 │   │   ├── CONTEXT.md
 │   │   └── docs/adr/
-│   ├── nota-server/
+│   ├── nota-marketing/
 │   │   ├── CONTEXT.md
 │   │   └── docs/adr/
 │   └── …

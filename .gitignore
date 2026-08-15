@@ -54,13 +54,11 @@ supabase/.temp/
 # Astro generated types (marketing site)
 apps/nota-marketing/.astro/
 
-# Marketing site local env (see apps/nota-marketing/.env.example)
-apps/nota-marketing/.env
-apps/nota-marketing/.env.local
-
-# Mobile app local env (see apps/nota-mobile/.env.example)
-apps/nota-mobile/.env
-apps/nota-mobile/.env.local
+# Local env anywhere in the workspace; only the .example templates are tracked.
+# Repo-wide so a new app can never leak secrets by omitting its own rule.
+**/.env
+**/.env.*
+!**/.env.example
 .nx/polygraph
 
 # Expo

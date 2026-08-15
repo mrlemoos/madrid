@@ -13,7 +13,6 @@ const NEXT_PUBLIC_ENV: Record<string, string | undefined> = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-  NEXT_PUBLIC_NOTA_SERVER_API_URL: process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL,
   NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN: process.env.NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN,
   NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN:
@@ -33,10 +32,4 @@ export function viteEnvString(key: string): string | undefined {
     fromVite = undefined;
   }
   return typeof fromVite === 'string' ? fromVite : undefined;
-}
-
-/** Trimmed `NEXT_PUBLIC_NOTA_SERVER_API_URL` without a trailing slash, or `undefined` when unset. */
-export function notaServerBaseUrl(): string | undefined {
-  const base = viteEnvString('NEXT_PUBLIC_NOTA_SERVER_API_URL')?.trim();
-  return base ? base.replace(/\/$/, '') : undefined;
 }

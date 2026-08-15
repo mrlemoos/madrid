@@ -15,18 +15,18 @@ Offline sync (`@nota/notes-offline`) is web-only for now; mobile reads/writes Su
 
 Copy [`.env.example`](.env.example) to `.env`. Required for a signed-in vault:
 
-| Variable                            | Purpose                                  |
-| ----------------------------------- | ---------------------------------------- |
-| `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key                    |
-| `EXPO_PUBLIC_SUPABASE_URL`          | Supabase project URL                     |
-| `EXPO_PUBLIC_SUPABASE_ANON_KEY`     | Supabase anon key (RLS)                  |
-| `EXPO_PUBLIC_NOTA_SERVER_API_URL`   | Nota server base URL (no trailing slash) |
-| `EXPO_PUBLIC_WEB_APP_URL`           | Web app for Nota Pro checkout            |
+| Variable                            | Purpose                                                  |
+| ----------------------------------- | -------------------------------------------------------- |
+| `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key                                    |
+| `EXPO_PUBLIC_SUPABASE_URL`          | Supabase project URL                                     |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY`     | Supabase anon key (RLS)                                  |
+| `EXPO_PUBLIC_NOTA_SERVER_API_URL`   | Nota web app origin serving `/api/*` (no trailing slash) |
+| `EXPO_PUBLIC_WEB_APP_URL`           | Web app for Nota Pro checkout                            |
 
-Start **nota-server** before signing in (entitlement runs immediately after auth):
+Start the **Next web app** before signing in (it serves `/api/*`; entitlement runs immediately after auth):
 
 ```bash
-pnpm exec nx dev @nota/nota-server
+pnpm exec nx dev @nota/nota
 ```
 
 On a **physical device**, loopback in `.env` is rewritten to your Mac’s Metro IP in dev builds. The server must be reachable on the configured port.

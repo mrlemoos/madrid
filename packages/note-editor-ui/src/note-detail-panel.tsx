@@ -34,10 +34,16 @@ import {
 } from '@nota/data-source/attachment-signed-url-cache';
 import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { postSearchIndexNote } from '@nota/nota-server-client';
-import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
-import { notaServerBaseUrl } from './vite-env';
 import { noteBannerNoteSurfaceClass } from '@nota/notes-chrome-core/banner-chrome';
+
+/** `POST /api/search/index-note` — same-origin Next route, Clerk cookie auth. */
+function postSearchIndexNote(body: { noteId: string }): Promise<Response> {
+  return fetch('/api/search/index-note', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}
 
 export function NoteDetailPanel({
   noteId,
@@ -379,8 +385,7 @@ export function NoteDetailPanel({
       setNote(updatedNote);
       patchNoteInList(updatedNote.id, updatedNote);
 
-      const apiUrl = notaServerBaseUrl();
-      if (!notaProEntitled || !apiUrl) {
+      if (!notaProEntitled) {
         return;
       }
 
@@ -390,11 +395,7 @@ export function NoteDetailPanel({
       semanticIndexTimerRef.current = setTimeout(() => {
         semanticIndexTimerRef.current = null;
         void (async () => {
-          const res = await postSearchIndexNote(
-            apiUrl,
-            await getClerkAccessToken(),
-            { noteId: updatedNote.id },
-          );
+          const res = await postSearchIndexNote({ noteId: updatedNote.id });
           if (!res.ok && process.env.NODE_ENV !== 'production') {
             console.warn('[semantic-index]', res.status, await res.text());
           }

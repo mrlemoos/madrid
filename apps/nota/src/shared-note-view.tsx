@@ -13,6 +13,7 @@ import {
   fetchSharedNote,
   subscribeSharedNote,
   type SharedNote,
+  type SharedNoteAttachment,
 } from '@nota/data-source/note-share-client';
 
 // Reuse the real editor in read-only mode so the preview matches the app
@@ -34,6 +35,8 @@ export interface SharedNoteViewProps {
   token: string;
   /** Note as read on the server; `null` when the token matched nothing. */
   initialNote: SharedNote | null;
+  /** Attachment metadata for the note, read on the server alongside it. */
+  initialAttachments: SharedNoteAttachment[];
   /** Server-side load failure, surfaced instead of the note. */
   loadError: string | null;
 }
@@ -152,6 +155,8 @@ export function SharedNoteView(props: SharedNoteViewProps): JSX.Element {
                       content={state.note.content}
                       noteId={state.note.id}
                       contentRevision={state.note.updatedAt ?? undefined}
+                      token={token}
+                      attachments={props.initialAttachments}
                     />
                   </Suspense>
                 </div>

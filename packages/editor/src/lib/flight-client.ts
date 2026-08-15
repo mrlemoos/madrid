@@ -1,6 +1,6 @@
-// Client for the public flight lookup on apps/nota-server. No auth header: the
+// Client for the public flight lookup route. No auth header: the
 // route is public so this same call works in the editor AND on the anon shared
-// `/s/` page. Reads NEXT_PUBLIC_NOTA_SERVER_API_URL from the bundling app's env.
+// `/s/` page. Same-origin, so it needs no configured base URL.
 
 export type FlightInfo = {
   code: string;

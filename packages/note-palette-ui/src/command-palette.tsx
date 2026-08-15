@@ -281,12 +281,9 @@ export function CommandPalette(): JSX.Element {
   const semanticSearchUserPref = useNotaPreferencesStore(
     (s) => s.semanticSearchEnabled,
   );
-  const notaServerUrl =
-    typeof process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL === 'string'
-      ? process.env.NEXT_PUBLIC_NOTA_SERVER_API_URL.trim()
-      : '';
-  const semanticSearchEnabled =
-    notaProEntitled && notaServerUrl.length > 0 && semanticSearchUserPref;
+  // The search API is served same-origin by the Next app, so entitlement plus
+  // the user's preference is the whole gate.
+  const semanticSearchEnabled = notaProEntitled && semanticSearchUserPref;
 
   const handleSemanticOrderedIds = useCallback((ids: string[] | null) => {
     setSemanticOrderedIds(ids);

@@ -2,9 +2,11 @@ import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
 import { Button } from '@nota/design/button';
 import { cn } from '@nota/design/utils';
-import { fetchReleases } from '@nota/nota-server-client';
-import { getClerkAccessToken } from '@nota/data-source/clerk-token-ref';
-import { notaServerBaseUrl } from './vite-env';
+
+/** `GET /api/releases` — same-origin Next route, Clerk cookie auth. */
+function fetchReleases(limit: number): Promise<Response> {
+  return fetch(`/api/releases?limit=${String(limit)}`);
+}
 
 type Release = {
   tagName: string;
@@ -51,11 +53,7 @@ export function ReleaseNotesDialog({
     setError(null);
     void (async () => {
       try {
-        const res = await fetchReleases(
-          notaServerBaseUrl(),
-          await getClerkAccessToken(),
-          5,
-        );
+        const res = await fetchReleases(5);
         if (!res.ok) {
           throw new Error('Could not load release notes.');
         }
