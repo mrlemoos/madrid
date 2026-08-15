@@ -11,7 +11,6 @@ System-wide ADRs live in [`docs/adr/`](docs/adr/).
 | Web SPA (`@nota/nota`) | [`apps/nota/CONTEXT.md`](apps/nota/CONTEXT.md)                     | [`apps/nota/docs/adr/`](apps/nota/docs/adr/)                     |
 | Marketing site         | [`apps/nota-marketing/CONTEXT.md`](apps/nota-marketing/CONTEXT.md) | [`apps/nota-marketing/docs/adr/`](apps/nota-marketing/docs/adr/) |
 | Electron desktop       | [`apps/nota-electron/CONTEXT.md`](apps/nota-electron/CONTEXT.md)   | [`apps/nota-electron/docs/adr/`](apps/nota-electron/docs/adr/)   |
-| Mobile (Expo)          | [`apps/nota-mobile/CONTEXT.md`](apps/nota-mobile/CONTEXT.md)       | [`apps/nota-mobile/docs/adr/`](apps/nota-mobile/docs/adr/)       |
 
 ## Packages
 
@@ -34,10 +33,8 @@ feature cluster.
 | `@nota/i18n`                  | [`packages/i18n/CONTEXT.md`](packages/i18n/CONTEXT.md)                                   | [`packages/i18n/docs/adr/`](packages/i18n/docs/adr/)                                   |
 | `@nota/internal-note-link`    | [`packages/internal-note-link/CONTEXT.md`](packages/internal-note-link/CONTEXT.md)       | [`packages/internal-note-link/docs/adr/`](packages/internal-note-link/docs/adr/)       |
 | `@nota/link-platform-preview` | [`packages/link-platform-preview/CONTEXT.md`](packages/link-platform-preview/CONTEXT.md) | [`packages/link-platform-preview/docs/adr/`](packages/link-platform-preview/docs/adr/) |
-| `@nota/mobile-editor`         | [`packages/mobile-editor/CONTEXT.md`](packages/mobile-editor/CONTEXT.md)                 | [`packages/mobile-editor/docs/adr/`](packages/mobile-editor/docs/adr/)                 |
 | `@nota/nota-motion-core`      | [`packages/nota-motion-core/CONTEXT.md`](packages/nota-motion-core/CONTEXT.md)           | [`packages/nota-motion-core/docs/adr/`](packages/nota-motion-core/docs/adr/)           |
 | `@nota/nota-motion-ui`        | [`packages/nota-motion-ui/CONTEXT.md`](packages/nota-motion-ui/CONTEXT.md)               | [`packages/nota-motion-ui/docs/adr/`](packages/nota-motion-ui/docs/adr/)               |
-| `@nota/nota-server-client`    | [`packages/nota-server-client/CONTEXT.md`](packages/nota-server-client/CONTEXT.md)       | [`packages/nota-server-client/docs/adr/`](packages/nota-server-client/docs/adr/)       |
 | `@nota/note-capture-core`     | [`packages/note-capture-core/CONTEXT.md`](packages/note-capture-core/CONTEXT.md)         | [`packages/note-capture-core/docs/adr/`](packages/note-capture-core/docs/adr/)         |
 | `@nota/note-capture-ui`       | [`packages/note-capture-ui/CONTEXT.md`](packages/note-capture-ui/CONTEXT.md)             | [`packages/note-capture-ui/docs/adr/`](packages/note-capture-ui/docs/adr/)             |
 | `@nota/note-doc-plain-text`   | [`packages/note-doc-plain-text/CONTEXT.md`](packages/note-doc-plain-text/CONTEXT.md)     | [`packages/note-doc-plain-text/docs/adr/`](packages/note-doc-plain-text/docs/adr/)     |

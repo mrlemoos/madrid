@@ -40,10 +40,6 @@ export default tseslint.config(
               sourceTag: 'platform:node',
               onlyDependOnLibsWithTags: ['platform:shared', 'platform:node'],
             },
-            {
-              sourceTag: 'platform:mobile',
-              onlyDependOnLibsWithTags: ['platform:shared', 'platform:mobile'],
-            },
           ],
         },
       ],

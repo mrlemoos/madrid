@@ -32,22 +32,17 @@
     ]
   },
   "dependencies": {
-    "@expo/metro": "~56.0.0",
     "electron": "catalog:",
-    "expo": "~56.0.0",
     "node-abort-controller": "^3.1.1",
     "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-native": "0.85.3"
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
     "@eslint/js": "^9.8.0",
-    "@expo/cli": "56.1.22",
     "@nx/eslint": "23.1.1",
     "@nx/eslint-plugin": "23.1.1",
-    "@nx/expo": "23.1.1",
     "@nx/js": "23.1.1",
     "@nx/next": "23.1.1",
     "@nx/react": "23.1.1",
@@ -146,7 +141,6 @@
       "metro-babel-transformer": "0.83.3",
       "metro-cache-key": "0.83.3",
       "metro-minify-terser": "0.83.3",
-      "@expo/metro": "54.2.0",
       "ws@>=8.0.0 <8.20.1": ">=8.20.1"
     },
     "onlyBuiltDependencies": [

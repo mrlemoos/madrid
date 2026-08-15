@@ -13,9 +13,6 @@
       "path": "./packages/validation"
     },
     {
-      "path": "./packages/nota-server-client"
-    },
-    {
       "path": "./packages/database-types"
     },
     {
@@ -50,9 +47,6 @@
     },
     {
       "path": "./packages/link-platform-preview"
-    },
-    {
-      "path": "./packages/mobile-editor"
     },
     {
       "path": "./packages/notes-yjs-core"
