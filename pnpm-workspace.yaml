@@ -7,7 +7,7 @@ storeDir: .pnpm-store
 
 catalog:
   next: ^16.2.12
-  electron: 41.2.1
+  electron: 41.10.5
   react: 19.2.3
   react-dom: 19.2.3
   zod: ^3.23.0

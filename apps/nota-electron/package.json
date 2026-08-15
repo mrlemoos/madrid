@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@nota/clerk-oauth-protocol": "workspace:*",
-    "electron-updater": "^6.8.3",
+    "electron-updater": "^6.8.9",
     "semver": "^7.7.3"
   },
   "devDependencies": {
     "@types/wait-on": "^5.3.4",
     "electron": "catalog:",
-    "electron-builder": "^26.0.12",
+    "electron-builder": "^26.15.3",
     "rimraf": "^6.0.1",
     "typescript": "catalog:",
     "wait-on": "^8.0.0"
@@ -57,7 +57,7 @@
         ],
         "options": {
           "commands": [
-            "echo 'Loads http://localhost:4200 — run `nx run-many -t dev` to start Vite and Electron together.'",
+            "echo 'Loads http://localhost:3000 — run `nx run-many -t dev` to start the Next app and Electron together.'",
             "cd apps/nota-electron && pnpm run build && pnpm exec electron ."
           ]
         }
