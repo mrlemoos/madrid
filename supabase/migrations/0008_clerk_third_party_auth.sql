@@ -21,6 +21,9 @@ COMMENT ON TABLE public.supabase_clerk_account_link IS
     'Admin migration: map legacy auth.users ids to Clerk user ids before cutting over RLS.';
 
 -- Optional welcome-seed flag (replaces Supabase auth user_metadata.welcome_seeded).
+-- NOTE: this statement was added after 0008 had already been applied, so it never
+-- reached existing projects (migrations run once). 0025 re-adds the column for them.
+-- Do not rely on this line; do not re-add the column by editing this file.
 ALTER TABLE public.user_preferences
     ADD COLUMN IF NOT EXISTS welcome_seeded BOOLEAN NOT NULL DEFAULT false;
 
