@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, it } from 'bun:test';
-import { notaServerExposeErrorDetails } from './nota-server-error-detail.server.ts';
+import { afterEach, describe, expect, it } from 'vitest';
+import { notaServerExposeErrorDetails } from './nota-server-error-detail.server';
 
 describe('notaServerExposeErrorDetails', () => {
   const prevNodeEnv = process.env.NODE_ENV;

@@ -1,5 +1,5 @@
-import { describe, expect, test } from 'bun:test';
-import { parseSemanticSearchQuery } from './semantic-search-query.server.ts';
+import { describe, expect, test } from 'vitest';
+import { parseSemanticSearchQuery } from './semantic-search-query.server';
 
 describe('parseSemanticSearchQuery', () => {
   test('semantic only', () => {

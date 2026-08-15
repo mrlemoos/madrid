@@ -64,6 +64,9 @@
       "path": "../../packages/notes-chrome-core"
     },
     {
+      "path": "../../packages/note-share-og"
+    },
+    {
       "path": "../../packages/note-palette-ui"
     },
     {
@@ -71,9 +74,6 @@
     },
     {
       "path": "../../packages/note-link-graph"
-    },
-    {
-      "path": "../../packages/note-share-og"
     },
     {
       "path": "../../packages/note-journal-ui"
@@ -107,9 +107,6 @@
     },
     {
       "path": "../../packages/note-capture-core"
-    },
-    {
-      "path": "../../packages/nota-server-client"
     },
     {
       "path": "../../packages/nota-motion-ui"

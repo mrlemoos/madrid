@@ -70,6 +70,9 @@
       "path": "../../packages/notes-chrome-core/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/note-share-og/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-palette-ui/tsconfig.lib.json"
     },
     {
@@ -77,9 +80,6 @@
     },
     {
       "path": "../../packages/note-link-graph/tsconfig.lib.json"
-    },
-    {
-      "path": "../../packages/note-share-og/tsconfig.lib.json"
     },
     {
       "path": "../../packages/note-journal-ui/tsconfig.lib.json"
@@ -113,9 +113,6 @@
     },
     {
       "path": "../../packages/note-capture-core/tsconfig.lib.json"
-    },
-    {
-      "path": "../../packages/nota-server-client/tsconfig.lib.json"
     },
     {
       "path": "../../packages/nota-motion-ui/tsconfig.lib.json"

@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, test } from 'vitest';
 import {
   buildStudyNotesSystemPrompt,
   fallbackStudyNotesFromTranscript,
@@ -6,7 +6,7 @@ import {
   sanitizeAudioToNoteTextField,
   studyNotesResultSchema,
   transcriptUserMessage,
-} from './xai-audio-note.server.ts';
+} from './xai-audio-note.server';
 
 describe('parseStudyNotesJson', () => {
   test('parses strict JSON', () => {

@@ -1,10 +1,10 @@
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const clientAppDir = join(__dirname, '../../../nota/src');
+const clientAppDir = __dirname;
 
 /** Server halves of the app after nota-server was absorbed; they may use server-only Clerk. */
 const SERVER_DIRS = [

@@ -217,7 +217,7 @@ export function validateUserBillingPlansAgainstExpectations(
     level: 'warn',
     code: 'trialing_status_note',
     message:
-      'apps/nota-server/src/lib/clerk-billing.server.ts grants vault for subscription status `trialing`. If Stripe/Clerk ever enables a trial on a price, users would get the vault during trial while marketing says no free trial — keep trials disabled on prices or adjust code/copy.',
+      'apps/nota/src/server/nota-pro-entitlement.ts grants vault for subscription status `trialing`. If Stripe/Clerk ever enables a trial on a price, users would get the vault during trial while marketing says no free trial — keep trials disabled on prices or adjust code/copy.',
   });
 
   return issues;

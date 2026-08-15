@@ -3,13 +3,13 @@
  * Fetches Clerk Billing plans (user payer) and validates them against
  * `AGENTS.md` policy and guide USD amounts in `apps/nota-marketing`.
  *
- * **Nx (loads `apps/nota-server/.env` via `envFile`):** from monorepo root:
- *   npx nx run @nota/nota-server:validate-billing
+ * **Nx (loads `apps/nota/.env` via `envFile`):** from monorepo root:
+ *   npx nx run @nota/nota:validate-billing
  *
- * **Direct:** `cd apps/nota-server && bun run scripts/validate-clerk-billing-alignment.ts`
+ * **Direct:** `cd apps/nota && bun run scripts/validate-clerk-billing-alignment.ts`
  *   (the script also merges `.env` for keys unset in the environment).
  *
- * If `apps/nota-server/.env` is missing, it is created by copying `.env.example` (you must set `CLERK_SECRET_KEY`).
+ * If `apps/nota/.env` is missing, it is created by copying `.env.example` (you must set `CLERK_SECRET_KEY`).
  */
 
 import { copyFileSync, existsSync, readFileSync } from 'node:fs';
@@ -19,14 +19,14 @@ import { createClerkClient, type BillingPlan } from '@clerk/backend';
 import {
   readMarketingGuidePrices,
   validateUserBillingPlansAgainstExpectations,
-} from '../src/lib/clerk-billing-marketing-expectations.ts';
+} from '../src/server/clerk-billing-marketing-expectations.ts';
 
-const notaServerRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
-const repoRoot = join(notaServerRoot, '..', '..');
+const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
+const repoRoot = join(appRoot, '..', '..');
 
 function ensureEnvFile(): void {
-  const envPath = join(notaServerRoot, '.env');
-  const examplePath = join(notaServerRoot, '.env.example');
+  const envPath = join(appRoot, '.env');
+  const examplePath = join(appRoot, '.env.example');
   if (!existsSync(envPath)) {
     copyFileSync(examplePath, envPath);
     console.warn(
@@ -37,7 +37,7 @@ function ensureEnvFile(): void {
 
 /** Dotenv-style merge without extra deps: does not override existing process.env keys. */
 function loadLocalEnv(): void {
-  const envPath = join(notaServerRoot, '.env');
+  const envPath = join(appRoot, '.env');
   if (!existsSync(envPath)) {
     return;
   }
@@ -101,14 +101,14 @@ function printIssues(
 }
 
 async function main(): Promise<void> {
-  process.chdir(notaServerRoot);
+  process.chdir(appRoot);
   ensureEnvFile();
   loadLocalEnv();
 
   const secret = process.env.CLERK_SECRET_KEY?.trim();
   if (!secret) {
     console.error(
-      'CLERK_SECRET_KEY is missing or empty in apps/nota-server/.env (or process env).',
+      'CLERK_SECRET_KEY is missing or empty in apps/nota/.env (or process env).',
     );
     process.exitCode = 1;
     return;

@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'bun:test';
-import { createUserRateLimiter } from './user-rate-limit.server.ts';
+import { describe, expect, it } from 'vitest';
+import { createUserRateLimiter } from './user-rate-limit.server';
 
 let rateLimitSpecKey = 0;
 

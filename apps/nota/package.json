@@ -33,7 +33,6 @@
     "@nota/link-platform-preview": "workspace:*",
     "@nota/nota-motion-core": "workspace:*",
     "@nota/nota-motion-ui": "workspace:*",
-    "@nota/nota-server-client": "workspace:*",
     "@nota/note-capture-core": "workspace:*",
     "@nota/note-capture-ui": "workspace:*",
     "@nota/note-doc-plain-text": "workspace:*",
@@ -96,6 +95,16 @@
       "scope:nota",
       "type:app",
       "platform:web"
-    ]
+    ],
+    "targets": {
+      "validate-billing": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "apps/nota",
+          "envFile": "apps/nota/.env",
+          "command": "bun run scripts/validate-clerk-billing-alignment.ts"
+        }
+      }
+    }
   }
 }

@@ -28,7 +28,7 @@ export function formatEntitlementNetworkError(
     message.includes('Failed to connect') ||
     message.includes('ECONNREFUSED')
   ) {
-    return `Cannot reach Nota server at ${target}. For local dev, run: pnpm exec nx dev @nota/nota-server`;
+    return `Cannot reach Nota server at ${target}. For local dev, run: pnpm exec nx dev @nota/nota`;
   }
 
   return message || 'Network error during entitlement check';

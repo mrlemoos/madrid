@@ -102,7 +102,6 @@
     "@nota/database-types": "workspace:*",
     "@nota/electron-bridge-core": "workspace:*",
     "@nota/i18n": "workspace:*",
-    "@nota/nota-server-client": "workspace:*",
     "@nota/note-capture-ui": "workspace:*",
     "@nota/note-folders-ui": "workspace:*",
     "@nota/note-runtime": "workspace:*",

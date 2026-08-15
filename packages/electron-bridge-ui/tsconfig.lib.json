@@ -21,7 +21,6 @@
     { "path": "../database-types/tsconfig.lib.json" },
     { "path": "../electron-bridge-core/tsconfig.lib.json" },
     { "path": "../i18n/tsconfig.lib.json" },
-    { "path": "../nota-server-client/tsconfig.lib.json" },
     { "path": "../note-capture-ui/tsconfig.lib.json" },
     { "path": "../note-folders-ui/tsconfig.lib.json" },
     { "path": "../note-runtime/tsconfig.lib.json" },

@@ -1,12 +1,18 @@
 import * as dns from 'node:dns/promises';
-import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   assertResolvedAddressesSafeForOgFetch,
   assertUrlSafeForOgFetch,
   fetchOgPreview,
   parseOgFromHtml,
   sanitizeOgImageUrl,
-} from './og-preview.server.ts';
+} from './og-preview.server';
+
+// ESM namespace exports are frozen, so `vi.spyOn(dns, 'lookup')` cannot redefine
+// the binding. Re-exporting through `vi.mock` gives a writable module object.
+vi.mock('node:dns/promises', async (importOriginal) => ({
+  ...(await importOriginal<typeof dns>()),
+}));
 
 describe('parseOgFromHtml', () => {
   it('extracts og tags and resolves relative image', () => {
@@ -79,12 +85,12 @@ describe('parseOgFromHtml', () => {
 });
 
 describe('tryFetchPlatformLinkPreview via fetchOgPreview', () => {
-  let lookupSpy: ReturnType<typeof spyOn>;
+  let lookupSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    lookupSpy = spyOn(dns, 'lookup').mockImplementation(async () => [
-      { address: '8.8.8.8', family: 4 },
-    ]);
+    lookupSpy = vi
+      .spyOn(dns, 'lookup')
+      .mockImplementation(async () => [{ address: '8.8.8.8', family: 4 }]);
   });
 
   afterEach(() => {
@@ -233,9 +239,9 @@ describe('assertResolvedAddressesSafeForOgFetch', () => {
 
   it('rejects when DNS resolves to a private address', async () => {
     // Arrange
-    const spy = spyOn(dns, 'lookup').mockImplementation(async () => [
-      { address: '10.0.0.1', family: 4 },
-    ]);
+    const spy = vi
+      .spyOn(dns, 'lookup')
+      .mockImplementation(async () => [{ address: '10.0.0.1', family: 4 }]);
     const host = 'example.com';
 
     try {
@@ -251,27 +257,36 @@ describe('assertResolvedAddressesSafeForOgFetch', () => {
 });
 
 describe('fetchOgPreview', () => {
-  let lookupSpy: ReturnType<typeof spyOn>;
+  let lookupSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    lookupSpy = spyOn(dns, 'lookup').mockImplementation(async () => [
-      { address: '8.8.8.8', family: 4 },
-    ]);
+    lookupSpy = vi
+      .spyOn(dns, 'lookup')
+      .mockImplementation(async () => [{ address: '8.8.8.8', family: 4 }]);
   });
 
   afterEach(() => {
     lookupSpy.mockRestore();
   });
 
+  // `response.url` is '' on a hand-built Response, and Node's URL rejects '' as a
+  // base even when the Location is absolute (Bun tolerated it). Stamp the real
+  // request URL on so the redirect resolution matches production.
+  function redirectTo(location: string, from: string): Response {
+    const res = new Response(null, {
+      status: 302,
+      headers: { Location: location },
+    });
+    Object.defineProperty(res, 'url', { value: from });
+    return res;
+  }
+
   it('does not follow a redirect to a blocked host (SSRF hardening)', async () => {
     // Arrange
     const orig = globalThis.fetch;
     const startUrl = 'https://example.com/start';
     globalThis.fetch = async () =>
-      new Response(null, {
-        status: 302,
-        headers: { Location: 'http://127.0.0.1/secret' },
-      });
+      redirectTo('http://127.0.0.1/secret', startUrl);
 
     try {
       // Act
@@ -291,10 +306,7 @@ describe('fetchOgPreview', () => {
     let n = 0;
     globalThis.fetch = async () => {
       n += 1;
-      return new Response(null, {
-        status: 302,
-        headers: { Location: `https://hop${n}.example/next` },
-      });
+      return redirectTo(`https://hop${n}.example/next`, startUrl);
     };
 
     try {

@@ -27,12 +27,6 @@ jobs:
         with:
           node-version: '22'
 
-      # `@nota/nota-server` runs its suite with `bun test`; without this the task
-      # fails on `bun: not found`.
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
       - run: corepack enable pnpm
 
       - run: pnpm install --frozen-lockfile

@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -8,7 +8,7 @@ import {
   validateUserBillingPlansAgainstExpectations,
   withinUsdTolerance,
   type BillingPlanLike,
-} from './clerk-billing-marketing-expectations.ts';
+} from './clerk-billing-marketing-expectations';
 
 describe('usdMinorUnitsToDecimal', () => {
   it('converts cents to dollars', () => {
@@ -82,7 +82,7 @@ describe('readMarketingGuidePrices', () => {
   });
 });
 
-/** This spec lives in `apps/nota-server/src/lib/` → monorepo root is four parents up. */
+/** This spec lives in `apps/nota/src/server/` → monorepo root is four parents up. */
 function repoRootFromThisFile(): string {
   return join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..');
 }

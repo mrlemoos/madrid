@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 import {
   AUDIO_UPLOAD_MAX_BYTES,
   isAllowedAudioUploadMime,
-} from './audio-upload.server.ts';
+} from './audio-upload.server';
 
 describe('isAllowedAudioUploadMime', () => {
   it('allows known browser / STT types', () => {
