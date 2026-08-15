@@ -61,7 +61,7 @@ pnpm exec nx dev @nota/nota
 
 (`pnpm exec nx dev nota` resolves to the same project.)
 
-The Vite dev server listens on **[http://localhost:4200](http://localhost:4200)**.
+The Next dev server listens on **[http://localhost:3000](http://localhost:3000)**.
 
 ## Marketing site (local)
 
@@ -80,9 +80,9 @@ Tests use **Vitest** via the Nx Vitest plugin.
 
 ## Electron
 
-The desktop app expects the web dev server at `http://localhost:4200`. From the repository root you can run:
+The desktop app expects the web dev server at `http://localhost:3000` (`DEV_PORT` in [apps/nota-electron/src/app-load-url.ts](apps/nota-electron/src/app-load-url.ts)). From the repository root you can run:
 
-- `pnpm run electron:dev` — Electron only (start the web app in another terminal with `pnpm exec nx dev @nota/nota`, or run `pnpm exec nx run-many -t dev` to start Vite and Electron together)
+- `pnpm run electron:dev` — Electron only (start the web app in another terminal with `pnpm exec nx dev @nota/nota`, or run `pnpm exec nx run-many -t dev` to start the web app and Electron together)
 
 More detail: [apps/nota-electron/README.md](apps/nota-electron/README.md).
 
