@@ -102,6 +102,39 @@ export async function fetchSharedNote(
 }
 
 /**
+ * Attachment metadata for a shared note, shaped like a `note_attachments` row
+ * minus `user_id` -- the public RPC does not expose the owner. The editor's
+ * attachment map is keyed by `id`; `storage_path` identifies the file but is not
+ * fetchable by an anon client, which is why bytes go through
+ * `/s/<token>/attachment/<id>` instead.
+ */
+export interface SharedNoteAttachment {
+  id: string;
+  note_id: string;
+  storage_path: string;
+  filename: string;
+  content_type: string;
+  size_bytes: number | null;
+  created_at: string | null;
+}
+
+/** Fetch a shared note's attachment metadata by token (anon-safe). */
+export async function fetchSharedNoteAttachments(
+  token: string,
+): Promise<SharedNoteAttachment[]> {
+  const result = await getSupabaseAnonClient().rpc(
+    'get_shared_note_attachments',
+    { p_token: token },
+  );
+  if (result.error) {
+    throw new Error(
+      `Failed to load shared note attachments: ${result.error.message}`,
+    );
+  }
+  return (result.data ?? []) as SharedNoteAttachment[];
+}
+
+/**
  * Subscribe to live updates for a shared note. The DB trigger broadcasts to the
  * public `share:<token>` topic on every edit; `onUpdate` fires so the viewer can
  * refetch. Returns an unsubscribe function.
