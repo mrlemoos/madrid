@@ -153,6 +153,41 @@ export type Database = {
           },
         ];
       };
+      note_yjs_updates: {
+        Row: {
+          actor: string;
+          created_at: string;
+          is_snapshot: boolean;
+          note_id: string;
+          seq: number;
+          update: string;
+        };
+        Insert: {
+          actor: string;
+          created_at?: string;
+          is_snapshot?: boolean;
+          note_id: string;
+          seq?: never;
+          update: string;
+        };
+        Update: {
+          actor?: string;
+          created_at?: string;
+          is_snapshot?: boolean;
+          note_id?: string;
+          seq?: never;
+          update?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'note_yjs_updates_note_id_fkey';
+            columns: ['note_id'];
+            isOneToOne: false;
+            referencedRelation: 'notes';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       notes: {
         Row: {
           banner_attachment_id: string | null;
@@ -225,7 +260,6 @@ export type Database = {
           show_writing_activity_graph: boolean;
           updated_at: string;
           user_id: string;
-          welcome_seeded: boolean;
           writing_activity_color: string;
           writing_activity_days: Json;
         };
@@ -240,7 +274,6 @@ export type Database = {
           show_writing_activity_graph?: boolean;
           updated_at?: string;
           user_id: string;
-          welcome_seeded?: boolean;
           writing_activity_color?: string;
           writing_activity_days?: Json;
         };
@@ -255,7 +288,6 @@ export type Database = {
           show_writing_activity_graph?: boolean;
           updated_at?: string;
           user_id?: string;
-          welcome_seeded?: boolean;
           writing_activity_color?: string;
           writing_activity_days?: Json;
         };
@@ -275,6 +307,18 @@ export type Database = {
           id: string;
           title: string;
           updated_at: string;
+        }[];
+      };
+      get_shared_note_attachments: {
+        Args: { p_token: string };
+        Returns: {
+          content_type: string;
+          created_at: string;
+          filename: string;
+          id: string;
+          note_id: string;
+          size_bytes: number;
+          storage_path: string;
         }[];
       };
       match_note_semantic_index: {
