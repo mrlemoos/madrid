@@ -6,13 +6,12 @@ System-wide ADRs live in [`docs/adr/`](docs/adr/).
 
 ## Apps
 
-| Context                          | `CONTEXT.md`                                                       | ADRs                                                             |
-| -------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| Web SPA (`@nota/nota`)           | [`apps/nota/CONTEXT.md`](apps/nota/CONTEXT.md)                     | [`apps/nota/docs/adr/`](apps/nota/docs/adr/)                     |
-| API server (`@nota/nota-server`) | [`apps/nota-server/CONTEXT.md`](apps/nota-server/CONTEXT.md)       | [`apps/nota-server/docs/adr/`](apps/nota-server/docs/adr/)       |
-| Marketing site                   | [`apps/nota-marketing/CONTEXT.md`](apps/nota-marketing/CONTEXT.md) | [`apps/nota-marketing/docs/adr/`](apps/nota-marketing/docs/adr/) |
-| Electron desktop                 | [`apps/nota-electron/CONTEXT.md`](apps/nota-electron/CONTEXT.md)   | [`apps/nota-electron/docs/adr/`](apps/nota-electron/docs/adr/)   |
-| Mobile (Expo)                    | [`apps/nota-mobile/CONTEXT.md`](apps/nota-mobile/CONTEXT.md)       | [`apps/nota-mobile/docs/adr/`](apps/nota-mobile/docs/adr/)       |
+| Context                | `CONTEXT.md`                                                       | ADRs                                                             |
+| ---------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Web SPA (`@nota/nota`) | [`apps/nota/CONTEXT.md`](apps/nota/CONTEXT.md)                     | [`apps/nota/docs/adr/`](apps/nota/docs/adr/)                     |
+| Marketing site         | [`apps/nota-marketing/CONTEXT.md`](apps/nota-marketing/CONTEXT.md) | [`apps/nota-marketing/docs/adr/`](apps/nota-marketing/docs/adr/) |
+| Electron desktop       | [`apps/nota-electron/CONTEXT.md`](apps/nota-electron/CONTEXT.md)   | [`apps/nota-electron/docs/adr/`](apps/nota-electron/docs/adr/)   |
+| Mobile (Expo)          | [`apps/nota-mobile/CONTEXT.md`](apps/nota-mobile/CONTEXT.md)       | [`apps/nota-mobile/docs/adr/`](apps/nota-mobile/docs/adr/)       |
 
 ## Packages
 
