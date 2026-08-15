@@ -79,6 +79,9 @@
       "path": "../../packages/note-link-graph/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/note-share-og/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-journal-ui/tsconfig.lib.json"
     },
     {

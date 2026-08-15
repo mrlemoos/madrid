@@ -125,6 +125,9 @@
     },
     {
       "path": "./packages/note-palette-ui"
+    },
+    {
+      "path": "./packages/note-share-og"
     }
   ],
   "compilerOptions": {

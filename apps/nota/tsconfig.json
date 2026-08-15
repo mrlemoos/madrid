@@ -73,6 +73,9 @@
       "path": "../../packages/note-link-graph"
     },
     {
+      "path": "../../packages/note-share-og"
+    },
+    {
       "path": "../../packages/note-journal-ui"
     },
     {

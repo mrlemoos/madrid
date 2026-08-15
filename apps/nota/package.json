@@ -48,6 +48,7 @@
     "@nota/note-link-graph": "workspace:*",
     "@nota/note-palette-core": "workspace:*",
     "@nota/note-palette-ui": "workspace:*",
+    "@nota/note-share-og": "workspace:*",
     "@nota/note-runtime": "workspace:*",
     "@nota/notes-chrome-core": "workspace:*",
     "@nota/notes-chrome-ui": "workspace:*",
