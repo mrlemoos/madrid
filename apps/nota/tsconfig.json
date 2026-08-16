@@ -121,6 +121,9 @@
       "path": "../../packages/internal-note-link"
     },
     {
+      "path": "../../packages/isomorphic-helpers"
+    },
+    {
       "path": "../../packages/i18n"
     },
     {

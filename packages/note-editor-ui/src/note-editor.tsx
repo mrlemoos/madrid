@@ -62,6 +62,7 @@ import { createTypewriterScrollUserGuard } from '@nota/nota-motion-core/typewrit
 import { NOTA_SAVE_PULSE_CLASS } from '@nota/nota-motion-ui/interaction';
 import { createWritingActivitySessionRecorder } from '@nota/writing-activity-ui/tracking';
 import { useNoteYjsDoc } from './notes-yjs/use-note-yjs-doc';
+import { debounce } from '@nota/isomorphic-helpers';
 
 function buildStorageOps(
   noteId: string,
@@ -169,8 +170,6 @@ function NoteEditorImpl({
   const titleRowRef = useRef<HTMLDivElement>(null);
   const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const bodyEditorRef = useRef<Editor | null>(null);
-  const contentDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const titleDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const typewriterRafRef = useRef<number | null>(null);
   const prefersReducedMotionRef = useRef(false);
   const lastSavedContent = useRef(note.content);
@@ -209,6 +208,63 @@ function NoteEditorImpl({
     [],
   );
 
+  const scheduleTitleSave = useMemo(
+    () =>
+      debounce(() => {
+        void (async () => {
+          const next = persistedDisplayTitle(titleRef.current);
+          if (next === lastSavedTitle.current) {
+            return;
+          }
+          if (!user?.id) {
+            return;
+          }
+          const result = await saveNoteFields({
+            fields: { title: next },
+            draftContent: lastSavedContent.current,
+            fallbackContent: lastSavedContent.current,
+            errorMessage: 'Failed to save title:',
+          });
+          if (result.ok) {
+            lastSavedTitle.current = next;
+          }
+        })();
+      }, SAVE_DEBOUNCE_MS),
+    [saveNoteFields, user?.id],
+  );
+
+  const scheduleContentSave = useMemo(
+    () =>
+      debounce(() => {
+        void (async () => {
+          const toSave = pendingContentRef.current;
+          if (toSave === null || toSave === undefined) {
+            return;
+          }
+          if (
+            JSON.stringify(toSave) === JSON.stringify(lastSavedContent.current)
+          ) {
+            setSaveStatus('saved');
+            return;
+          }
+          if (!user?.id) {
+            return;
+          }
+          const result = await saveNoteFields({
+            fields: { content: toSave as Json },
+            draftContent: toSave as Json,
+            fallbackContent: toSave as Json,
+            errorMessage: 'Failed to save note:',
+          });
+          if (result.ok) {
+            lastSavedContent.current = (pendingContentRef.current ??
+              toSave) as Json;
+          }
+        })();
+      }, SAVE_DEBOUNCE_MS),
+    [saveNoteFields, user?.id],
+  );
+
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -232,14 +288,8 @@ function NoteEditorImpl({
     lastSavedTitle.current = persistedDisplayTitle(initialTitle);
     lastSavedContent.current = note.content;
     pendingContentRef.current = null;
-    if (contentDebounceRef.current) {
-      clearTimeout(contentDebounceRef.current);
-      contentDebounceRef.current = null;
-    }
-    if (titleDebounceRef.current) {
-      clearTimeout(titleDebounceRef.current);
-      titleDebounceRef.current = null;
-    }
+    scheduleContentSave.cancel();
+    scheduleTitleSave.cancel();
     if (typewriterRafRef.current !== null) {
       cancelAnimationFrame(typewriterRafRef.current);
       typewriterRafRef.current = null;
@@ -349,33 +399,6 @@ function NoteEditorImpl({
     };
   }, [resetSticky]);
 
-  const scheduleTitleSave = useCallback(() => {
-    if (titleDebounceRef.current) {
-      clearTimeout(titleDebounceRef.current);
-    }
-    titleDebounceRef.current = setTimeout(() => {
-      void (async () => {
-        titleDebounceRef.current = null;
-        const next = persistedDisplayTitle(titleRef.current);
-        if (next === lastSavedTitle.current) {
-          return;
-        }
-        if (!user?.id) {
-          return;
-        }
-        const result = await saveNoteFields({
-          fields: { title: next },
-          draftContent: lastSavedContent.current,
-          fallbackContent: lastSavedContent.current,
-          errorMessage: 'Failed to save title:',
-        });
-        if (result.ok) {
-          lastSavedTitle.current = next;
-        }
-      })();
-    }, SAVE_DEBOUNCE_MS);
-  }, [saveNoteFields, user?.id]);
-
   const handleTitleChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
       const v = e.target.value;
@@ -464,40 +487,6 @@ function NoteEditorImpl({
     });
   }, [alignTypewriterScroll]);
 
-  const scheduleContentSave = useCallback(() => {
-    if (contentDebounceRef.current) {
-      clearTimeout(contentDebounceRef.current);
-    }
-    contentDebounceRef.current = setTimeout(() => {
-      void (async () => {
-        contentDebounceRef.current = null;
-        const toSave = pendingContentRef.current;
-        if (toSave === null || toSave === undefined) {
-          return;
-        }
-        if (
-          JSON.stringify(toSave) === JSON.stringify(lastSavedContent.current)
-        ) {
-          setSaveStatus('saved');
-          return;
-        }
-        if (!user?.id) {
-          return;
-        }
-        const result = await saveNoteFields({
-          fields: { content: toSave as Json },
-          draftContent: toSave as Json,
-          fallbackContent: toSave as Json,
-          errorMessage: 'Failed to save note:',
-        });
-        if (result.ok) {
-          lastSavedContent.current = (pendingContentRef.current ??
-            toSave) as Json;
-        }
-      })();
-    }, SAVE_DEBOUNCE_MS);
-  }, [saveNoteFields, user?.id]);
-
   const handleUpdate = useCallback(
     (content: unknown) => {
       pendingContentRef.current = content;
@@ -552,16 +541,13 @@ function NoteEditorImpl({
 
   useEffect(() => {
     return () => {
-      if (contentDebounceRef.current) {
-        clearTimeout(contentDebounceRef.current);
-      }
-      if (titleDebounceRef.current) {
-        clearTimeout(titleDebounceRef.current);
-      }
+      scheduleContentSave.cancel();
+      scheduleTitleSave.cancel();
       if (typewriterRafRef.current !== null) {
         cancelAnimationFrame(typewriterRafRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- debounced savers are memo-stable; cancel only on unmount
   }, []);
 
   return (

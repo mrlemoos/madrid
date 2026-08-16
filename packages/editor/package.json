@@ -40,6 +40,7 @@
     "@nota/database-types": "workspace:*",
     "@nota/design": "workspace:*",
     "@nota/internal-note-link": "workspace:*",
+    "@nota/isomorphic-helpers": "workspace:*",
     "@nota/link-platform-preview": "workspace:*",
     "@nota/note-editor-settings": "workspace:*",
     "@nota/notes-yjs-core": "workspace:*",

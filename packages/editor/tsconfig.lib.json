@@ -38,6 +38,9 @@
       "path": "../internal-note-link/tsconfig.lib.json"
     },
     {
+      "path": "../isomorphic-helpers/tsconfig.lib.json"
+    },
+    {
       "path": "../note-editor-settings/tsconfig.lib.json"
     },
     {

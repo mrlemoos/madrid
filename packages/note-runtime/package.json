@@ -130,6 +130,7 @@
     "@nota/data-source": "workspace:*",
     "@nota/database-types": "workspace:*",
     "@nota/helper-hooks": "workspace:*",
+    "@nota/isomorphic-helpers": "workspace:*",
     "@nota/notes-offline": "workspace:*",
     "react": "catalog:",
     "zustand": "^5.0.0"

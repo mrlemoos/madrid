@@ -19,6 +19,7 @@
     { "path": "../data-source/tsconfig.lib.json" },
     { "path": "../database-types/tsconfig.lib.json" },
     { "path": "../notes-offline/tsconfig.lib.json" },
-    { "path": "../helper-hooks/tsconfig.lib.json" }
+    { "path": "../helper-hooks/tsconfig.lib.json" },
+    { "path": "../isomorphic-helpers/tsconfig.lib.json" }
   ]
 }

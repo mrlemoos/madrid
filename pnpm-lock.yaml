@@ -889,6 +889,9 @@ importers:
       '@nota/internal-note-link':
         specifier: workspace:*
         version: link:../internal-note-link
+      '@nota/isomorphic-helpers':
+        specifier: workspace:*
+        version: link:../isomorphic-helpers
       '@nota/link-platform-preview':
         specifier: workspace:*
         version: link:../link-platform-preview
@@ -1111,6 +1114,18 @@ importers:
         specifier: 'catalog:'
         version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@2.3.0))(msw@2.13.6(@types/node@25.6.0)(typescript@6.0.3))(vite@8.2.0(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))
 
+  packages/isomorphic-helpers:
+    devDependencies:
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.2.0(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.5(@opentelemetry/api@1.9.1)(@types/node@25.6.0)(@vitest/coverage-v8@4.1.5)(@vitest/ui@4.1.5)(jsdom@29.0.2(@noble/hashes@2.3.0))(msw@2.13.6(@types/node@25.6.0)(typescript@6.0.3))(vite@8.2.0(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))
+
   packages/link-platform-preview:
     devDependencies:
       typescript:
@@ -1301,6 +1316,9 @@ importers:
       '@nota/internal-note-link':
         specifier: workspace:*
         version: link:../internal-note-link
+      '@nota/isomorphic-helpers':
+        specifier: workspace:*
+        version: link:../isomorphic-helpers
       '@nota/link-platform-preview':
         specifier: workspace:*
         version: link:../link-platform-preview
@@ -1691,6 +1709,9 @@ importers:
       '@nota/helper-hooks':
         specifier: workspace:*
         version: link:../helper-hooks
+      '@nota/isomorphic-helpers':
+        specifier: workspace:*
+        version: link:../isomorphic-helpers
       '@nota/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline

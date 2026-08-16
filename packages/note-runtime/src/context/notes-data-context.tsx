@@ -26,6 +26,7 @@ import {
   syncNotaServerEntitledSession,
 } from '@nota/data-source/nota-pro-entitled-session';
 import { useAppSession } from './session-context';
+import { debounce } from '@nota/isomorphic-helpers';
 
 /**
  * App-owned collaborators injected at composition time. These live in feature
@@ -275,15 +276,12 @@ export function NotesDataProvider({
     if (!userId || !isLikelyOnline()) {
       return;
     }
-    let cancelled = false;
-    const id = window.setTimeout(() => {
-      if (!cancelled) {
-        void refreshNotesList({ silent: true });
-      }
+    const schedule = debounce(() => {
+      void refreshNotesList({ silent: true });
     }, 300);
+    schedule();
     return () => {
-      cancelled = true;
-      window.clearTimeout(id);
+      schedule.cancel();
     };
   }, [userId, refreshNotesList]);
 

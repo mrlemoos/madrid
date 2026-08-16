@@ -24,6 +24,7 @@
     { "path": "../electron-bridge-ui/tsconfig.lib.json" },
     { "path": "../i18n/tsconfig.lib.json" },
     { "path": "../internal-note-link/tsconfig.lib.json" },
+    { "path": "../isomorphic-helpers/tsconfig.lib.json" },
     { "path": "../link-platform-preview/tsconfig.lib.json" },
     { "path": "../note-editor-core/tsconfig.lib.json" },
     { "path": "../note-link-graph/tsconfig.lib.json" },

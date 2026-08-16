@@ -31,6 +31,7 @@ import { FlightCode } from './tiptap/flight-code-extension';
 import { useFlightCode } from './tiptap/flight-code-ui';
 import { NotaLink } from './tiptap/nota-link';
 import { convertLinkOnlyParagraphs } from './tiptap/link-preview-scan';
+import { debounce } from '@nota/isomorphic-helpers';
 import {
   NotePdf,
   NotePdfDocProvider,
@@ -596,17 +597,13 @@ export function TipTapEditor({
 
   useEffect(() => {
     if (!editor) return;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const schedule = () => {
-      if (timer !== undefined) clearTimeout(timer);
-      timer = setTimeout(() => {
-        convertLinkOnlyParagraphs(editor);
-      }, 500);
-    };
+    const schedule = debounce(() => {
+      convertLinkOnlyParagraphs(editor);
+    }, 500);
     editor.on('update', schedule);
     return () => {
       editor.off('update', schedule);
-      if (timer !== undefined) clearTimeout(timer);
+      schedule.cancel();
     };
   }, [editor]);
 

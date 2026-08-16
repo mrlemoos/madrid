@@ -9,6 +9,7 @@ import {
 } from '@tiptap/react';
 import { useEffect, useId, useRef, useState, type JSX } from 'react';
 import { cn } from '@nota/design/utils';
+import { debounce } from '@nota/isomorphic-helpers';
 
 /** Wider than TipTap default `[a-z]+` so fences like ```c++``` / ```f#``` work when typed. */
 const backtickFenceRegex = /^```([\w+#.-]+)?[\s\n]$/;
@@ -118,11 +119,12 @@ function NotaCodeBlockView(props: NodeViewProps): JSX.Element {
   const isDark = useDocumentDarkClass();
 
   useEffect(() => {
-    const t = setTimeout(() => {
+    const schedule = debounce(() => {
       setDebouncedText(rawText);
     }, MERMAID_DEBOUNCE_MS);
+    schedule();
     return () => {
-      clearTimeout(t);
+      schedule.cancel();
     };
   }, [rawText]);
 
