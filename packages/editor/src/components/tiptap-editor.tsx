@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-deprecated -- `MutableRefObject` for parent-assigned body editor ref */
 import type { Editor } from '@tiptap/core';
 import { Node as PMNode } from '@tiptap/pm/model';
 import type { EditorView } from '@tiptap/pm/view';
@@ -25,7 +24,7 @@ import {
   useRef,
   useState,
   type JSX,
-  type MutableRefObject,
+  type RefObject,
 } from 'react';
 import { LinkPreview } from './tiptap/link-preview-extension';
 import { FlightCode } from './tiptap/flight-code-extension';
@@ -129,7 +128,7 @@ export interface TipTapEditorProps {
   userId?: string;
   noteMentionCandidates?: Note[];
   attachments?: NoteAttachment[];
-  bodyEditorRef?: MutableRefObject<Editor | null>;
+  bodyEditorRef?: RefObject<Editor | null>;
 
   proEntitled?: boolean;
   emojiReplacerEnabled?: boolean;
