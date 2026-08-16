@@ -1,104 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <!-- Nota liquid-glass note stack · favicon (light + dark) -->
-  <defs>
-    <linearGradient id="glassBaseFillL" x1="0.15" y1="0" x2="0.85" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#EEF4FA"/>
-      <stop offset="35%" stop-color="#C5D5E8"/>
-      <stop offset="70%" stop-color="#9BB0CB"/>
-      <stop offset="100%" stop-color="#7A93B0"/>
-    </linearGradient>
-    <linearGradient id="glassBaseFillD" x1="0.15" y1="0" x2="0.85" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#3A4A60"/>
-      <stop offset="40%" stop-color="#1E2A3A"/>
-      <stop offset="100%" stop-color="#0E141C"/>
-    </linearGradient>
-    <radialGradient id="specOrbL" cx="0.35" cy="0.18" r="0.65" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
-      <stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="specOrbD" cx="0.35" cy="0.18" r="0.65" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.32"/>
-      <stop offset="35%" stop-color="#A8C4E0" stop-opacity="0.1"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="sheetBackFillL" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#D0DCEB" stop-opacity="0.28"/>
-    </linearGradient>
-    <linearGradient id="sheetBackFillD" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#DCE8F6" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="#8FA6BE" stop-opacity="0.08"/>
-    </linearGradient>
-    <linearGradient id="sheetMidFillL" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.72"/>
-      <stop offset="100%" stop-color="#E2EAF4" stop-opacity="0.42"/>
-    </linearGradient>
-    <linearGradient id="sheetMidFillD" x1="0.2" y1="0" x2="0.8" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#E8F0FA" stop-opacity="0.34"/>
-      <stop offset="100%" stop-color="#A8BDD4" stop-opacity="0.14"/>
-    </linearGradient>
-    <linearGradient id="sheetFrontFillL" x1="0.3" y1="0" x2="0.65" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.98"/>
-      <stop offset="45%" stop-color="#F7FAFD" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#D8E4F0" stop-opacity="0.78"/>
-    </linearGradient>
-    <linearGradient id="sheetFrontFillD" x1="0.3" y1="0" x2="0.65" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#F4F8FC" stop-opacity="0.5"/>
-      <stop offset="50%" stop-color="#C4D6EA" stop-opacity="0.32"/>
-      <stop offset="100%" stop-color="#7E98B4" stop-opacity="0.22"/>
-    </linearGradient>
-    <linearGradient id="rimL" x1="0.5" y1="0" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
-      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08"/>
-    </linearGradient>
-    <linearGradient id="rimD" x1="0.5" y1="0" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.4"/>
-      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.1"/>
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.04"/>
-    </linearGradient>
-    <style>
-      .glassBase { fill: url(#glassBaseFillL); }
-      .spec { fill: url(#specOrbL); }
-      .rim { stroke: url(#rimL); }
-      .sheetBackRect { fill: url(#sheetBackFillL); stroke: #FFFFFF; stroke-opacity: 0.55; }
-      .sheetMidRect { fill: url(#sheetMidFillL); stroke: #FFFFFF; stroke-opacity: 0.7; }
-      .sheetFrontRect { fill: url(#sheetFrontFillL); stroke: #FFFFFF; stroke-opacity: 1; }
-      .sheetShine { fill: #FFFFFF; fill-opacity: 0.45; }
-      .rules { stroke: #4A5C72; stroke-opacity: 0.42; }
-      @media (prefers-color-scheme: dark) {
-        .glassBase { fill: url(#glassBaseFillD); }
-        .spec { fill: url(#specOrbD); }
-        .rim { stroke: url(#rimD); }
-        .sheetBackRect { fill: url(#sheetBackFillD); stroke: #DCE8F6; stroke-opacity: 0.28; }
-        .sheetMidRect { fill: url(#sheetMidFillD); stroke: #E8F0FA; stroke-opacity: 0.38; }
-        .sheetFrontRect { fill: url(#sheetFrontFillD); stroke: #F4F8FC; stroke-opacity: 0.55; }
-        .sheetShine { fill: #FFFFFF; fill-opacity: 0.14; }
-        .rules { stroke: #EAF2FA; stroke-opacity: 0.62; }
-      }
-    </style>
-  </defs>
-
-  <rect id="glassBase" class="glassBase" width="512" height="512" rx="114"/>
-  <rect class="spec" width="512" height="512" rx="114"/>
-  <rect class="rim" width="512" height="512" rx="114" fill="none" stroke-width="4"/>
-
-  <g id="sheetBack" transform="rotate(-10 256 256)">
-    <rect class="sheetBackRect" x="142" y="112" width="228" height="288" rx="36" stroke-width="3"/>
-  </g>
-
-  <g id="sheetMid" transform="rotate(6 256 256)">
-    <rect class="sheetMidRect" x="148" y="120" width="224" height="284" rx="36" stroke-width="3"/>
-  </g>
-
-  <g id="sheetFront">
-    <rect class="sheetFrontRect" x="154" y="130" width="204" height="268" rx="34" stroke-width="3.5"/>
-    <rect class="sheetShine" x="168" y="144" width="176" height="52" rx="18"/>
-    <g class="rules" stroke-width="12" stroke-linecap="round">
-      <line x1="186" y1="216" x2="326" y2="216"/>
-      <line x1="186" y1="262" x2="298" y2="262"/>
-      <line x1="186" y1="308" x2="318" y2="308"/>
-    </g>
+  <!-- Nota geometric N · favicon (light + dark) -->
+  <style>
+    .plate { fill: #D4CFC6; }
+    .n { stroke: #1F1D1A; }
+    @media (prefers-color-scheme: dark) {
+      .plate { fill: #2E2C29; }
+      .n { stroke: #F2EDE4; }
+    }
+  </style>
+  <rect id="notaPlate" class="plate" width="512" height="512"/>
+  <g id="notaN" class="n" stroke-linecap="round">
+    <line x1="148" y1="126" x2="148" y2="386" stroke-width="60"/>
+    <line x1="364" y1="126" x2="364" y2="386" stroke-width="60"/>
+    <line x1="148" y1="126" x2="364" y2="386" stroke-width="102"/>
   </g>
 </svg>

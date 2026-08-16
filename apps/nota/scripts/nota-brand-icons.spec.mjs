@@ -2,6 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import {
+  renderFaviconSvg,
+  renderIconDarkSvg,
+  renderIconLightSvg,
+} from '../src/lib/nota-n-mark.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const NOTA_PUBLIC = path.resolve(__dirname, '..', 'public');
@@ -20,54 +25,120 @@ const MARKETING_PUBLIC = path.resolve(
   'public',
 );
 
-/** Liquid-glass note stack must use layered sheet ids, not the retired pen/leaf mark. */
-const GLASS_SHEET_IDS = ['glassBase', 'sheetBack', 'sheetMid', 'sheetFront'];
+const RETIRED_GLASS_IDS = ['glassBase', 'sheetBack', 'sheetMid', 'sheetFront'];
+const STEM_WIDTH = 60;
+const DIAGONAL_WIDTH = 102;
 
 function read(filePath) {
   return fs.readFileSync(filePath, 'utf8');
 }
 
-describe('Nota liquid-glass brand icons', () => {
-  it('icon-light.svg layers a glass note stack', () => {
+function strokeWidths(svg) {
+  return [...svg.matchAll(/stroke-width="([\d.]+)"/g)].map((match) =>
+    Number(match[1]),
+  );
+}
+
+describe('Nota geometric N brand icons', () => {
+  it('icon-light.svg is a flat stone plate with a geometric N', () => {
     // Arrange
     const svg = read(path.join(ELECTRON_BUILD_RESOURCES, 'icon-light.svg'));
 
-    // Act / Assert
-    for (const id of GLASS_SHEET_IDS) {
-      expect(svg).toContain(`id="${id}"`);
-    }
-    expect(svg).not.toMatch(/pen nib/i);
+    // Act
+    const hasPlate = svg.includes('id="notaPlate"');
+    const hasN = svg.includes('id="notaN"');
+    const plateHasRadius = /id="notaPlate"[^>]*\brx=/.test(svg);
+    const hasGlassGradient = svg.includes('linearGradient');
+    const retiredIds = RETIRED_GLASS_IDS.filter((id) =>
+      svg.includes(`id="${id}"`),
+    );
+    const widths = strokeWidths(svg);
+    const stemWidth = Math.min(...widths);
+    const diagonalWidth = Math.max(...widths);
+
+    // Assert
+    expect(hasPlate).toBe(true);
+    expect(hasN).toBe(true);
+    expect(plateHasRadius).toBe(false);
+    expect(hasGlassGradient).toBe(false);
+    expect(retiredIds).toEqual([]);
+    expect(svg).toContain('#D4CFC6');
+    expect(svg).toContain('#1F1D1A');
+    expect(stemWidth).toBe(STEM_WIDTH);
+    expect(diagonalWidth).toBe(DIAGONAL_WIDTH);
+    expect(diagonalWidth / stemWidth).toBeCloseTo(1.7, 2);
   });
 
-  it('icon-dark.svg mirrors the same glass note stack', () => {
+  it('icon-dark.svg mirrors the N on a charcoal plate', () => {
     // Arrange
     const svg = read(path.join(ELECTRON_BUILD_RESOURCES, 'icon-dark.svg'));
 
-    // Act / Assert
-    for (const id of GLASS_SHEET_IDS) {
-      expect(svg).toContain(`id="${id}"`);
-    }
-    expect(svg).not.toMatch(/pen nib/i);
+    // Act
+    const hasPlate = svg.includes('id="notaPlate"');
+    const hasN = svg.includes('id="notaN"');
+    const retiredIds = RETIRED_GLASS_IDS.filter((id) =>
+      svg.includes(`id="${id}"`),
+    );
+
+    // Assert
+    expect(hasPlate).toBe(true);
+    expect(hasN).toBe(true);
+    expect(retiredIds).toEqual([]);
+    expect(svg).toContain('#2E2C29');
+    expect(svg).toContain('#F2EDE4');
+    expect(svg).not.toMatch(/linearGradient/);
   });
 
-  it('favicon.svg switches light/dark glass fills via prefers-color-scheme', () => {
+  it('favicon.svg switches stone/charcoal plates via prefers-color-scheme', () => {
     // Arrange
     const svg = read(path.join(NOTA_PUBLIC, 'favicon.svg'));
 
-    // Act / Assert
-    expect(svg).toMatch(/@media\s*\(prefers-color-scheme:\s*dark\)/);
-    for (const id of GLASS_SHEET_IDS) {
-      expect(svg).toContain(`id="${id}"`);
-    }
+    // Act
+    const hasColorScheme = /@media\s*\(prefers-color-scheme:\s*dark\)/.test(
+      svg,
+    );
+    const retiredIds = RETIRED_GLASS_IDS.filter((id) =>
+      svg.includes(`id="${id}"`),
+    );
+
+    // Assert
+    expect(hasColorScheme).toBe(true);
+    expect(svg).toContain('id="notaPlate"');
+    expect(svg).toContain('id="notaN"');
+    expect(retiredIds).toEqual([]);
     expect(svg).not.toMatch(/pen nib/i);
   });
 
-  it('marketing favicon.svg matches the app glass mark', () => {
+  it('marketing favicon.svg matches the app mark', () => {
     // Arrange
-    const app = read(path.join(NOTA_PUBLIC, 'favicon.svg'));
-    const marketing = read(path.join(MARKETING_PUBLIC, 'favicon.svg'));
+    const appPath = path.join(NOTA_PUBLIC, 'favicon.svg');
+    const marketingPath = path.join(MARKETING_PUBLIC, 'favicon.svg');
 
-    // Act / Assert
+    // Act
+    const app = read(appPath);
+    const marketing = read(marketingPath);
+
+    // Assert
     expect(marketing).toBe(app);
+  });
+
+  it('committed SVGs match the mark renderer', () => {
+    // Arrange
+    const lightPath = path.join(ELECTRON_BUILD_RESOURCES, 'icon-light.svg');
+    const darkPath = path.join(ELECTRON_BUILD_RESOURCES, 'icon-dark.svg');
+    const faviconPath = path.join(NOTA_PUBLIC, 'favicon.svg');
+
+    // Act
+    const light = read(lightPath);
+    const dark = read(darkPath);
+    const favicon = read(faviconPath);
+    const renderedLight = renderIconLightSvg();
+    const renderedDark = renderIconDarkSvg();
+    const renderedFavicon = renderFaviconSvg();
+
+    // Assert
+    expect(light).toBe(renderedLight);
+    expect(dark).toBe(renderedDark);
+    expect(favicon).toBe(renderedFavicon);
   });
 });

@@ -1,11 +1,11 @@
-// Regenerates derived brand assets from liquid-glass SVG sources.
+// Regenerates brand SVG sources + derived rasters from the geometric N mark.
 //
 // Usage (repo root): `pnpm run generate:nota-icons`
 //
-// Inputs:
+// Sources (written from `src/lib/nota-n-mark.mjs`):
 // - `../nota-electron/buildResources/icon-light.svg` (light dock / .icns / apple-touch)
 // - `../nota-electron/buildResources/icon-dark.svg` (dark dock raster)
-// - `public/favicon.svg` (hand-authored light+dark; synced to marketing)
+// - `public/favicon.svg` (light+dark via prefers-color-scheme; synced to marketing)
 //
 // Outputs:
 // - `../nota-electron/buildResources/icon.png` (light dock / .icns source)
@@ -26,6 +26,11 @@ import {
   DOCK_ICON_MAX_CONTENT_FILL_RATIO,
   measureDockIconPng,
 } from './dock-icon-metrics.mjs';
+import {
+  renderFaviconSvg,
+  renderIconDarkSvg,
+  renderIconLightSvg,
+} from '../src/lib/nota-n-mark.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const NOTA_APP_ROOT = path.resolve(__dirname, '..');
@@ -91,6 +96,15 @@ async function renderPaddedIconPng(inputPath, outputPath, label) {
     .toFile(outputPath);
 
   console.log('Wrote', outputPath);
+}
+
+function writeSvgSources() {
+  fs.writeFileSync(ICON_LIGHT_SVG_PATH, renderIconLightSvg());
+  fs.writeFileSync(ICON_DARK_SVG_PATH, renderIconDarkSvg());
+  fs.writeFileSync(FAVICON_SVG_PATH, renderFaviconSvg());
+  console.log('Wrote', ICON_LIGHT_SVG_PATH);
+  console.log('Wrote', ICON_DARK_SVG_PATH);
+  console.log('Wrote', FAVICON_SVG_PATH);
 }
 
 async function writeIconPng() {
@@ -173,6 +187,7 @@ async function syncMarketingAssets() {
   console.log('Synced marketing favicons via generate-favicons.mjs');
 }
 
+writeSvgSources();
 await writeIconPng();
 await writeIconDarkPng();
 await assertDockIconSafeZone(ICON_PNG_PATH, 'icon.png');

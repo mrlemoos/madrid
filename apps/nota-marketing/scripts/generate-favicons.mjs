@@ -1,5 +1,5 @@
 /**
- * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the liquid-glass
+ * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the geometric N
  * light SVG (same source as Electron dock / app favicon).
  *
  * Prefer `pnpm run generate:nota-icons` from the monorepo root (covers Electron
