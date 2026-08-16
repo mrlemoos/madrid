@@ -9,13 +9,14 @@ describe('NotaLogo', () => {
 
     // Act
     const { container } = render(ui);
-    const lines = container.querySelectorAll('line');
-    const strokeGroup = container.querySelector('g');
+    const path = container.querySelector('path');
     const sheets = container.querySelectorAll('rect');
 
     // Assert
-    expect(lines).toHaveLength(3);
-    expect(strokeGroup?.getAttribute('stroke')).toBe('currentColor');
+    expect(path).not.toBeNull();
+    expect(path?.getAttribute('fill')).toBe('currentColor');
+    expect(path?.getAttribute('stroke')).toBeNull();
+    expect(path?.getAttribute('stroke-linecap')).toBeNull();
     expect(sheets).toHaveLength(0);
   });
 });

@@ -26,8 +26,7 @@ const MARKETING_PUBLIC = path.resolve(
 );
 
 const RETIRED_GLASS_IDS = ['glassBase', 'sheetBack', 'sheetMid', 'sheetFront'];
-const STEM_WIDTH = 60;
-const DIAGONAL_WIDTH = 102;
+const PLATE_RADIUS = 114;
 
 function read(filePath) {
   return fs.readFileSync(filePath, 'utf8');
@@ -47,26 +46,25 @@ describe('Nota geometric N brand icons', () => {
     // Act
     const hasPlate = svg.includes('id="notaPlate"');
     const hasN = svg.includes('id="notaN"');
-    const plateHasRadius = /id="notaPlate"[^>]*\brx=/.test(svg);
+    const plateRadius = svg.match(/id="notaPlate"[^>]*\brx="([\d.]+)"/)?.[1];
     const hasGlassGradient = svg.includes('linearGradient');
     const retiredIds = RETIRED_GLASS_IDS.filter((id) =>
       svg.includes(`id="${id}"`),
     );
-    const widths = strokeWidths(svg);
-    const stemWidth = Math.min(...widths);
-    const diagonalWidth = Math.max(...widths);
+    const nMarkup = svg.match(/<path id="notaN"[^>]*>/)?.[0] ?? '';
 
     // Assert
     expect(hasPlate).toBe(true);
     expect(hasN).toBe(true);
-    expect(plateHasRadius).toBe(false);
+    expect(plateRadius).toBe(String(PLATE_RADIUS));
     expect(hasGlassGradient).toBe(false);
     expect(retiredIds).toEqual([]);
     expect(svg).toContain('#D4CFC6');
     expect(svg).toContain('#1F1D1A');
-    expect(stemWidth).toBe(STEM_WIDTH);
-    expect(diagonalWidth).toBe(DIAGONAL_WIDTH);
-    expect(diagonalWidth / stemWidth).toBeCloseTo(1.7, 2);
+    expect(svg).toMatch(/<path\b/);
+    expect(nMarkup).toMatch(/\bfill="/);
+    expect(nMarkup).not.toMatch(/stroke-linecap="round"/);
+    expect(strokeWidths(svg)).toEqual([]);
   });
 
   it('icon-dark.svg mirrors the N on a charcoal plate', () => {
@@ -76,6 +74,7 @@ describe('Nota geometric N brand icons', () => {
     // Act
     const hasPlate = svg.includes('id="notaPlate"');
     const hasN = svg.includes('id="notaN"');
+    const plateRadius = svg.match(/id="notaPlate"[^>]*\brx="([\d.]+)"/)?.[1];
     const retiredIds = RETIRED_GLASS_IDS.filter((id) =>
       svg.includes(`id="${id}"`),
     );
@@ -83,6 +82,7 @@ describe('Nota geometric N brand icons', () => {
     // Assert
     expect(hasPlate).toBe(true);
     expect(hasN).toBe(true);
+    expect(plateRadius).toBe(String(PLATE_RADIUS));
     expect(retiredIds).toEqual([]);
     expect(svg).toContain('#2E2C29');
     expect(svg).toContain('#F2EDE4');

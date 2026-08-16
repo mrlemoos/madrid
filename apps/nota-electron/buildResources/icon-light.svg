@@ -1,9 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <!-- Nota geometric N · flat plate (macOS 26 cuts the squircle) -->
-  <rect id="notaPlate" width="512" height="512" fill="#D4CFC6"/>
-  <g id="notaN" stroke="#1F1D1A" stroke-linecap="round">
-    <line x1="148" y1="126" x2="148" y2="386" stroke-width="60"/>
-    <line x1="364" y1="126" x2="364" y2="386" stroke-width="60"/>
-    <line x1="148" y1="126" x2="364" y2="386" stroke-width="102"/>
-  </g>
+  <!-- Nota geometric N · rounded plate (Electron Dock PNG is unmasked) -->
+  <rect id="notaPlate" width="512" height="512" rx="114" fill="#D4CFC6"/>
+    <path id="notaN" d="M170 372 L170 140 L206 140 L306 300 L306 140 L342 140 L342 372 L306 372 L206 212 L206 372 Z" fill="#1F1D1A"/>
 </svg>

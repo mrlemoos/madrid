@@ -1,43 +1,37 @@
-/** Geometric N mark: fat diagonal (~1.7× stem), round terminals, flat plate. */
+/** Geometric N mark: filled letterform, rounded plate. */
 
 export const NOTA_N_VIEWBOX = 512;
-export const NOTA_N_STEM_WIDTH = 60;
-export const NOTA_N_DIAGONAL_WIDTH = 102;
+/** Electron `dock.setIcon` paints the PNG as-is — plate must carry the radius. */
+export const NOTA_N_PLATE_RADIUS = 114;
 
 export const NOTA_PLATE_LIGHT = '#D4CFC6';
 export const NOTA_INK_LIGHT = '#1F1D1A';
 export const NOTA_PLATE_DARK = '#2E2C29';
 export const NOTA_INK_DARK = '#F2EDE4';
 
-export const NOTA_N_LINES = {
-  left: { x1: 148, y1: 126, x2: 148, y2: 386 },
-  right: { x1: 364, y1: 126, x2: 364, y2: 386 },
-  diagonal: { x1: 148, y1: 126, x2: 364, y2: 386 },
-};
+/**
+ * Filled grotesque N (square terminals, uniform stem).
+ * Left bar 170–206, right bar 306–342, y 140–372.
+ */
+export const NOTA_N_PATH =
+  'M170 372 L170 140 L206 140 L306 300 L306 140 L342 140 L342 372 L306 372 L206 212 L206 372 Z';
 
-export const NOTA_N_STROKES = [
-  { key: 'left', ...NOTA_N_LINES.left, width: NOTA_N_STEM_WIDTH },
-  { key: 'right', ...NOTA_N_LINES.right, width: NOTA_N_STEM_WIDTH },
-  { key: 'diagonal', ...NOTA_N_LINES.diagonal, width: NOTA_N_DIAGONAL_WIDTH },
-];
+/** Cropped to the N with a little optical padding. */
+export const NOTA_N_LOGO_VIEWBOX = '154 124 204 264';
 
-/** Cropped to the N, including round caps (r = half stroke). */
-export const NOTA_N_LOGO_VIEWBOX = '89 67 334 378';
+function nPath(fillAttr) {
+  return `    <path id="notaN" d="${NOTA_N_PATH}" ${fillAttr}/>`;
+}
 
-function nStrokes() {
-  return NOTA_N_STROKES.map(
-    (stroke) =>
-      `    <line x1="${stroke.x1}" y1="${stroke.y1}" x2="${stroke.x2}" y2="${stroke.y2}" stroke-width="${stroke.width}"/>`,
-  ).join('\n');
+function plateRect(fillAttr) {
+  return `<rect id="notaPlate" width="${NOTA_N_VIEWBOX}" height="${NOTA_N_VIEWBOX}" rx="${NOTA_N_PLATE_RADIUS}" ${fillAttr}/>`;
 }
 
 function iconSvg(plate, ink) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${NOTA_N_VIEWBOX} ${NOTA_N_VIEWBOX}" fill="none">
-  <!-- Nota geometric N · flat plate (macOS 26 cuts the squircle) -->
-  <rect id="notaPlate" width="${NOTA_N_VIEWBOX}" height="${NOTA_N_VIEWBOX}" fill="${plate}"/>
-  <g id="notaN" stroke="${ink}" stroke-linecap="round">
-${nStrokes()}
-  </g>
+  <!-- Nota geometric N · rounded plate (Electron Dock PNG is unmasked) -->
+  ${plateRect(`fill="${plate}"`)}
+${nPath(`fill="${ink}"`)}
 </svg>
 `;
 }
@@ -55,16 +49,14 @@ export function renderFaviconSvg() {
   <!-- Nota geometric N · favicon (light + dark) -->
   <style>
     .plate { fill: ${NOTA_PLATE_LIGHT}; }
-    .n { stroke: ${NOTA_INK_LIGHT}; }
+    .n { fill: ${NOTA_INK_LIGHT}; }
     @media (prefers-color-scheme: dark) {
       .plate { fill: ${NOTA_PLATE_DARK}; }
-      .n { stroke: ${NOTA_INK_DARK}; }
+      .n { fill: ${NOTA_INK_DARK}; }
     }
   </style>
-  <rect id="notaPlate" class="plate" width="${NOTA_N_VIEWBOX}" height="${NOTA_N_VIEWBOX}"/>
-  <g id="notaN" class="n" stroke-linecap="round">
-${nStrokes()}
-  </g>
+  ${plateRect('class="plate"')}
+    <path id="notaN" class="n" d="${NOTA_N_PATH}"/>
 </svg>
 `;
 }

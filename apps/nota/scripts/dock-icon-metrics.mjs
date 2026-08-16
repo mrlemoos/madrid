@@ -11,7 +11,12 @@ export const DOCK_ICON_MAX_CONTENT_FILL_RATIO =
 
 /**
  * @param {string} pngPath
- * @returns {Promise<{ outerBandOpaqueCount: number, contentFillRatio: number, size: number }>}
+ * @returns {Promise<{
+ *   outerBandOpaqueCount: number,
+ *   contentFillRatio: number,
+ *   size: number,
+ *   aabbCornerOpaque: boolean,
+ * }>}
  */
 export async function measureDockIconPng(pngPath) {
   if (!fs.existsSync(pngPath)) {
@@ -57,6 +62,8 @@ export async function measureDockIconPng(pngPath) {
   const contentW = maxX >= minX ? maxX - minX + 1 : 0;
   const contentH = maxY >= minY ? maxY - minY + 1 : 0;
   const contentFillRatio = Math.max(contentW, contentH) / size;
+  const aabbCornerOpaque =
+    minX < size && minY < size && data[(minY * size + minX) * 4 + 3] > 128;
 
-  return { outerBandOpaqueCount, contentFillRatio, size };
+  return { outerBandOpaqueCount, contentFillRatio, size, aabbCornerOpaque };
 }

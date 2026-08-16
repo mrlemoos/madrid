@@ -2,16 +2,12 @@
   <!-- Nota geometric N · favicon (light + dark) -->
   <style>
     .plate { fill: #D4CFC6; }
-    .n { stroke: #1F1D1A; }
+    .n { fill: #1F1D1A; }
     @media (prefers-color-scheme: dark) {
       .plate { fill: #2E2C29; }
-      .n { stroke: #F2EDE4; }
+      .n { fill: #F2EDE4; }
     }
   </style>
-  <rect id="notaPlate" class="plate" width="512" height="512"/>
-  <g id="notaN" class="n" stroke-linecap="round">
-    <line x1="148" y1="126" x2="148" y2="386" stroke-width="60"/>
-    <line x1="364" y1="126" x2="364" y2="386" stroke-width="60"/>
-    <line x1="148" y1="126" x2="364" y2="386" stroke-width="102"/>
-  </g>
+  <rect id="notaPlate" width="512" height="512" rx="114" class="plate"/>
+    <path id="notaN" class="n" d="M170 372 L170 140 L206 140 L306 300 L306 140 L342 140 L342 372 L306 372 L206 212 L206 372 Z"/>
 </svg>

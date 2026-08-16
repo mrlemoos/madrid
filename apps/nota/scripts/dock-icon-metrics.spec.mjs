@@ -22,11 +22,12 @@ describe('macOS dock icon assets', () => {
       const pngPath = path.join(ELECTRON_BUILD_RESOURCES, name);
 
       // Act
-      const { outerBandOpaqueCount, contentFillRatio } =
+      const { outerBandOpaqueCount, contentFillRatio, aabbCornerOpaque } =
         await measureDockIconPng(pngPath);
 
       // Assert
       expect(outerBandOpaqueCount).toBe(0);
+      expect(aabbCornerOpaque).toBe(false);
       expect(contentFillRatio).toBeLessThanOrEqual(
         DOCK_ICON_MAX_CONTENT_FILL_RATIO + 0.005,
       );

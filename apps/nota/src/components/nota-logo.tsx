@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { NOTA_N_LOGO_VIEWBOX, NOTA_N_STROKES } from '@/lib/nota-n-mark.mjs';
+import { NOTA_N_LOGO_VIEWBOX, NOTA_N_PATH } from '@/lib/nota-n-mark.mjs';
 
 interface NotaLogoProps {
   className?: string;
@@ -15,18 +15,7 @@ export function NotaLogo({ className }: NotaLogoProps) {
       className={cn(className)}
       aria-hidden="true"
     >
-      <g stroke="currentColor" strokeLinecap="round">
-        {NOTA_N_STROKES.map((stroke) => (
-          <line
-            key={stroke.key}
-            x1={stroke.x1}
-            y1={stroke.y1}
-            x2={stroke.x2}
-            y2={stroke.y2}
-            strokeWidth={stroke.width}
-          />
-        ))}
-      </g>
+      <path d={NOTA_N_PATH} fill="currentColor" />
     </svg>
   );
 }
