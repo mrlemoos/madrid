@@ -1,4 +1,4 @@
-import type { Editor } from '@tiptap/core';
+import type { Content, Editor } from '@tiptap/core';
 import { Node as PMNode } from '@tiptap/pm/model';
 import type { EditorView } from '@tiptap/pm/view';
 import { useEditor, EditorContent } from '@tiptap/react';
@@ -49,6 +49,7 @@ import { setNotaSmilieReplacerEnabled } from '../lib/nota-smilie-replacer-gate';
 import { NotaSmilieReplacer } from './tiptap/nota-smilie-replacer-extension';
 import { TableEditorMenu } from './tiptap/table-editor-menu';
 import { persistedDisplayTitle } from '../lib/note-title';
+import { scheduleEditorSetContent } from '../lib/schedule-editor-set-content';
 import { findNoteMentionTrigger } from '../lib/tiptap-note-mention';
 import { NoteLinkMentionMenu } from './tiptap/note-link-mention-menu';
 import {
@@ -515,25 +516,24 @@ export function TipTapEditor({
   useEffect(() => {
     // Collaborative mode never force-replaces the doc — remote edits merge via
     // Yjs, so the caret is never reset. This effect is the legacy path only.
-    if (ydoc) return;
-    if (!editor || !content) return;
+    if (ydoc || !editor || !content) return undefined;
+    let cancel: (() => void) | undefined;
     if (noteId !== prevNoteIdRef.current) {
       prevNoteIdRef.current = noteId;
       prevContentRevisionRef.current = contentRevision;
       if (!isDocContentEqual(editor, content)) {
-        editor.commands.setContent(content, false);
+        cancel = scheduleEditorSetContent(editor, content as Content);
       }
-      return;
-    }
-    if (
+    } else if (
       contentRevision !== undefined &&
       contentRevision !== prevContentRevisionRef.current
     ) {
       prevContentRevisionRef.current = contentRevision;
       if (!isDocContentEqual(editor, content)) {
-        editor.commands.setContent(content, false);
+        cancel = scheduleEditorSetContent(editor, content as Content);
       }
     }
+    return cancel;
   }, [editor, content, contentRevision, noteId, ydoc]);
 
   // One-time seed of an empty collaborative doc from the note's existing
@@ -543,11 +543,22 @@ export function TipTapEditor({
   useEffect(() => {
     if (!editor || !ydoc || !canSeed) return;
     if (seededDocRef.current === ydoc) return;
-    seededDocRef.current = ydoc;
     const fragment = ydoc.getXmlFragment(NOTA_YDOC_FIELD);
-    if (fragment.length === 0 && seedContentIfEmpty) {
-      editor.commands.setContent(seedContentIfEmpty, false);
+    if (fragment.length !== 0 || !seedContentIfEmpty) {
+      seededDocRef.current = ydoc;
+      return;
     }
+    seededDocRef.current = ydoc;
+    const cancel = scheduleEditorSetContent(
+      editor,
+      seedContentIfEmpty as Content,
+    );
+    return () => {
+      cancel();
+      if (ydoc.getXmlFragment(NOTA_YDOC_FIELD).length === 0) {
+        seededDocRef.current = null;
+      }
+    };
   }, [editor, ydoc, canSeed, seedContentIfEmpty]);
 
   useEffect(() => {
