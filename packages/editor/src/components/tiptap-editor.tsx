@@ -223,9 +223,10 @@ export function TipTapEditor({
   uploadingRef.current = uploading;
 
   useEffect(() => {
-    setPendingAttachments((prev) =>
-      prev.filter((p) => !attachments.some((a) => a.id === p.id)),
-    );
+    setPendingAttachments((prev) => {
+      const next = prev.filter((p) => !attachments.some((a) => a.id === p.id));
+      return next.length === prev.length ? prev : next;
+    });
   }, [attachments]);
 
   const attachmentsById = useMemo(() => {
