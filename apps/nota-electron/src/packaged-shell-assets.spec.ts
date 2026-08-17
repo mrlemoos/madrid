@@ -59,4 +59,23 @@ describe('Electron package does not embed the Next app', () => {
     expect(yml).not.toMatch(/NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:/);
     expect(yml).not.toMatch(/Verify Next client env/);
   });
+
+  it('release-electron workflow pre-creates the GitHub release and avoids gh release edit', () => {
+    // Arrange
+    const yml = fs.readFileSync(
+      path.join(REPO_ROOT, '.github/workflows/release-electron.yml'),
+      'utf8',
+    );
+
+    // Act
+    const usesNotesScript = yml.includes('tools/github-release-notes.mjs');
+    const usesReleaseEdit = /gh release edit/.test(yml);
+
+    // Assert — `gh release edit` PATCHes tag_name; GitHub 422s when a
+    // duplicate release already owns that tag (electron-builder race).
+    expect(usesNotesScript).toBe(true);
+    expect(usesReleaseEdit).toBe(false);
+    expect(yml).toMatch(/github-release-notes\.mjs ensure/);
+    expect(yml).toMatch(/github-release-notes\.mjs notes/);
+  });
 });

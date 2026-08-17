@@ -92,6 +92,22 @@ jobs:
           fi
           echo "draft=$DRAFT" >> "$GITHUB_OUTPUT"
 
+      - name: Ensure a single GitHub release for this tag
+        env:
+          TAG: ${{ steps.version_info.outputs.tag }}
+          VERSION: ${{ steps.version_info.outputs.version }}
+          SHA: ${{ github.sha }}
+        run: |
+          DRAFT_FLAG=()
+          if [ "${{ steps.release_draft.outputs.draft }}" = "true" ]; then
+            DRAFT_FLAG=(--draft)
+          fi
+          node tools/github-release-notes.mjs ensure \
+            --tag "$TAG" \
+            --title "$VERSION" \
+            --target "$SHA" \
+            "${DRAFT_FLAG[@]}"
+
       - name: Build Electron shell and publish release
         # Packaged app loads https://app.nota.mrlemoos.dev (Vercel). No @nota/nota
         # / Next build in this job — shell only.
@@ -134,10 +150,6 @@ jobs:
         env:
           TAG: ${{ steps.version_info.outputs.tag }}
         run: |
-          for _ in 1 2 3 4 5; do
-            if gh release view "$TAG" >/dev/null 2>&1; then
-              break
-            fi
-            sleep 2
-          done
-          gh release edit "$TAG" --notes-file "$RUNNER_TEMP/release-notes.md"
+          node tools/github-release-notes.mjs notes \
+            --tag "$TAG" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
