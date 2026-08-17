@@ -130,6 +130,9 @@
       "path": "../../packages/electron-bridge-ui"
     },
     {
+      "path": "../../packages/error-boundary"
+    },
+    {
       "path": "../../packages/electron-bridge-core"
     },
     {

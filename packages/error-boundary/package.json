@@ -1,0 +1,51 @@
+{
+  "name": "@nota/error-boundary",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./error-boundary": {
+      "@nota/source": {
+        "types": "./src/error-boundary.tsx",
+        "import": "./src/error-boundary.tsx",
+        "default": "./src/error-boundary.tsx"
+      },
+      "types": "./src/error-boundary.tsx",
+      "import": "./src/error-boundary.tsx",
+      "default": "./src/error-boundary.tsx"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:nota",
+      "type:util",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/error-boundary",
+          "command": "pnpm run build"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json"
+  },
+  "dependencies": {
+    "@nota/design": "workspace:*",
+    "@nota/i18n": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/react": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

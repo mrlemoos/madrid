@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { StrictMode, useEffect, type ReactNode } from 'react';
 import { setAppRouterNav } from '@nota/app-navigation-core/navigation';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
-import { AppErrorBoundary } from './components/app-error-boundary';
+import { ErrorBoundary } from '@nota/error-boundary/error-boundary';
 import { ThemeProvider } from '@nota/design/theme';
 import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
 import { NoteEditorCommandsProvider } from '@nota/editor';
@@ -73,7 +73,7 @@ export function AppProviders({ children }: AppProvidersProps) {
               <AppSessionProvider>
                 <StickyDocTitleProvider>
                   <NoteEditorCommandsProvider>
-                    <AppErrorBoundary>{children}</AppErrorBoundary>
+                    <ErrorBoundary>{children}</ErrorBoundary>
                   </NoteEditorCommandsProvider>
                 </StickyDocTitleProvider>
               </AppSessionProvider>

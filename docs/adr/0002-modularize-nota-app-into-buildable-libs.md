@@ -92,7 +92,7 @@ Additionally, **`@nota/note-doc-plain-text`** (`platform:shared`) extracts the e
 App composition only: `main.tsx`, `app-root.tsx`, `providers.tsx`, `routes/*`,
 `shared-note-view.tsx`, and top-level screens/one-offs not owned by a feature
 (`landing-page`, `not-found-screen`, auth screens, `clerk-sso-callback-route`,
-`deferred-posthog-root`, `app-error-boundary`, `nota-logo`, `theme-menu`,
+`deferred-posthog-root`, `nota-logo`, `theme-menu`,
 `nota-pro-gate`, `cartoon-landscape`, `welcome-note-*`). The editor surface itself
 (`note-editor`, `note-detail-panel`, `note-backlinks-panel`, …) moves out to
 `@nota/note-editor-ui`.

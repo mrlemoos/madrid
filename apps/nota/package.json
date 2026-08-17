@@ -27,6 +27,7 @@
     "@nota/editor": "workspace:*",
     "@nota/electron-bridge-core": "workspace:*",
     "@nota/electron-bridge-ui": "workspace:*",
+    "@nota/error-boundary": "workspace:*",
     "@nota/helper-hooks": "workspace:*",
     "@nota/i18n": "workspace:*",
     "@nota/internal-note-link": "workspace:*",

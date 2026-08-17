@@ -29,6 +29,7 @@ feature cluster.
 | `@nota/editor`                | [`packages/editor/CONTEXT.md`](packages/editor/CONTEXT.md)                               | [`packages/editor/docs/adr/`](packages/editor/docs/adr/)                               |
 | `@nota/electron-bridge-core`  | [`packages/electron-bridge-core/CONTEXT.md`](packages/electron-bridge-core/CONTEXT.md)   | [`packages/electron-bridge-core/docs/adr/`](packages/electron-bridge-core/docs/adr/)   |
 | `@nota/electron-bridge-ui`    | [`packages/electron-bridge-ui/CONTEXT.md`](packages/electron-bridge-ui/CONTEXT.md)       | [`packages/electron-bridge-ui/docs/adr/`](packages/electron-bridge-ui/docs/adr/)       |
+| `@nota/error-boundary`        | [`packages/error-boundary/CONTEXT.md`](packages/error-boundary/CONTEXT.md)               | [`packages/error-boundary/docs/adr/`](packages/error-boundary/docs/adr/)               |
 | `@nota/helper-hooks`          | [`packages/helper-hooks/CONTEXT.md`](packages/helper-hooks/CONTEXT.md)                   | [`packages/helper-hooks/docs/adr/`](packages/helper-hooks/docs/adr/)                   |
 | `@nota/i18n`                  | [`packages/i18n/CONTEXT.md`](packages/i18n/CONTEXT.md)                                   | [`packages/i18n/docs/adr/`](packages/i18n/docs/adr/)                                   |
 | `@nota/internal-note-link`    | [`packages/internal-note-link/CONTEXT.md`](packages/internal-note-link/CONTEXT.md)       | [`packages/internal-note-link/docs/adr/`](packages/internal-note-link/docs/adr/)       |

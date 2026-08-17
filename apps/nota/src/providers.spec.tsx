@@ -94,9 +94,9 @@ vi.mock('@nota/editor', () => ({
   ),
 }));
 
-vi.mock('./components/app-error-boundary', () => ({
-  AppErrorBoundary: ({ children }: { children: ReactNode }) => (
-    <div data-testid="app-error-boundary">{children}</div>
+vi.mock('@nota/error-boundary/error-boundary', () => ({
+  ErrorBoundary: ({ children }: { children: ReactNode }) => (
+    <div data-testid="error-boundary">{children}</div>
   ),
 }));
 
@@ -137,7 +137,7 @@ describe('AppProviders', () => {
     expect(screen.getByTestId('app-session-provider')).toBeTruthy();
     expect(screen.getByTestId('sticky-doc-title-provider')).toBeTruthy();
     expect(screen.getByTestId('note-editor-commands-provider')).toBeTruthy();
-    expect(screen.getByTestId('app-error-boundary')).toBeTruthy();
+    expect(screen.getByTestId('error-boundary')).toBeTruthy();
   });
 
   it('throws when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing', async () => {
