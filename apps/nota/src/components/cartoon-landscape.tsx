@@ -7,7 +7,7 @@ type CartoonLandscapeProps = {
 };
 
 /**
- * Decorative full-bleed landscape background (generated art + theme overlay).
+ * Welcome Landscape: full-bleed painting behind welcome/auth cards + theme overlay.
  */
 export function CartoonLandscape({
   className,
@@ -21,7 +21,7 @@ export function CartoonLandscape({
       <img
         src="/nota-landscape.png"
         alt=""
-        className="absolute inset-0 size-full min-h-full min-w-full object-cover object-bottom grayscale select-none"
+        className="absolute inset-0 size-full min-h-full min-w-full object-cover object-bottom select-none"
         draggable={false}
       />
       <div

@@ -38,3 +38,7 @@ _Avoid_: SSR notes, server vault
 **Nota API**:
 The route handlers under `src/app/api/*` that own entitlement, external link Open Graph fetch, semantic search, releases, flight lookup, and assistive capture. Absorbed from the former standalone `nota-server` Node service, which no longer exists; every endpoint is same-origin and authenticated by the Clerk session cookie.
 _Avoid_: nota-server, "the API server", Bearer-token API clients
+
+**Welcome Landscape**:
+The full-bleed painting behind the unsigned-in welcome and auth cards.
+_Avoid_: cartoon landscape, hero image, share card (that term is for Shared Note Open Graph)
