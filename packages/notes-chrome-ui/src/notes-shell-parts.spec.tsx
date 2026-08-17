@@ -4,6 +4,7 @@ import {
   ShellPanel,
   SidebarIconRail,
   SidebarToggle,
+  NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS,
   type ShellNavItem,
 } from './notes-shell-parts';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
@@ -167,14 +168,42 @@ describe('SidebarIconRail', () => {
     useNotesSidebarStore.setState({ open: false });
   });
 
-  it('keeps the expand toggle and nav icons reachable while collapsed', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('keeps the collapsed rail inert until the pointer enters the left-edge hit target', () => {
     // Arrange
     useNotesSidebarStore.setState({ open: false });
 
     // Act
-    render(<SidebarIconRail items={items} visible />);
+    const { container } = render(<SidebarIconRail items={items} />);
+    const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
+    const edge = container.querySelector('[data-slot="sidebar-hover-edge"]');
 
     // Assert
+    expect(edge).not.toBeNull();
+    expect(screen.queryByRole('button', { name: 'Open sidebar' })).toBeNull();
+    expect(rail?.getAttribute('data-open')).toBe('false');
+    expect(rail?.getAttribute('aria-hidden')).toBe('true');
+    expect(rail?.hasAttribute('inert')).toBe(true);
+  });
+
+  it('reveals the expand toggle and nav icons after hovering the left edge', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: false });
+    const { container } = render(<SidebarIconRail items={items} />);
+    const edge = container.querySelector('[data-slot="sidebar-hover-edge"]');
+    if (!(edge instanceof HTMLElement)) {
+      throw new Error('sidebar hover edge not found');
+    }
+
+    // Act
+    fireEvent.pointerEnter(edge);
+
+    // Assert
+    const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
+    expect(rail?.getAttribute('data-open')).toBe('true');
     expect(screen.getByRole('button', { name: 'Open sidebar' })).toBeTruthy();
     expect(
       screen
@@ -184,18 +213,27 @@ describe('SidebarIconRail', () => {
     expect(screen.getByRole('link', { name: 'Note Graph' })).toBeTruthy();
   });
 
-  it('is inert and hidden from a11y while the wide sidebar is open', () => {
+  it('hides the collapsed rail again after the pointer leaves the peek', () => {
     // Arrange
-    useNotesSidebarStore.setState({ open: true });
+    vi.useFakeTimers();
+    useNotesSidebarStore.setState({ open: false });
+    const { container } = render(<SidebarIconRail items={items} />);
+    const edge = container.querySelector('[data-slot="sidebar-hover-edge"]');
+    const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
+    if (!(edge instanceof HTMLElement) || !(rail instanceof HTMLElement)) {
+      throw new Error('sidebar peek targets not found');
+    }
+    fireEvent.pointerEnter(edge);
 
     // Act
-    const { container } = render(
-      <SidebarIconRail items={items} visible={false} />,
-    );
-    const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
+    fireEvent.pointerLeave(rail);
+    act(() => {
+      vi.advanceTimersByTime(NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS);
+    });
 
     // Assert
-    expect(rail?.getAttribute('aria-hidden')).toBe('true');
-    expect(rail?.hasAttribute('inert')).toBe(true);
+    expect(screen.queryByRole('button', { name: 'Open sidebar' })).toBeNull();
+    expect(rail.getAttribute('data-open')).toBe('false');
+    vi.useRealTimers();
   });
 });

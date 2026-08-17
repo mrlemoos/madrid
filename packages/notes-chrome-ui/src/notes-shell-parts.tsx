@@ -1,5 +1,5 @@
-import type { ComponentProps, JSX, ReactNode } from 'react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import type { ComponentProps, CSSProperties, JSX, ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@nota/design/button';
 import { Icon } from '@nota/design/icon';
@@ -16,7 +16,11 @@ import {
   NOTA_SHELL_NAV_ITEM_CLASS,
 } from '@nota/nota-motion-ui/interaction';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
-import { NOTA_SIDEBAR_RAIL_WIDTH_PX } from '@nota/nota-motion-ui/motion';
+import {
+  NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX,
+  NOTA_SIDEBAR_RAIL_WIDTH_PX,
+} from '@nota/nota-motion-ui/motion';
+import { notesSidebarChrome } from '@nota/notes-chrome-core/shell-chrome';
 import {
   NOTA_CHROME_CONTROL_COMPACT_CLASS,
   NOTA_SECTION_HEAD_CLASS,
@@ -159,41 +163,102 @@ export function ShellNavLinks({
   );
 }
 
+/** Hover-leave delay (ms). Covers the edge → rail pointer gap (`--duration-micro`). */
+export const NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS = 80;
+
 /**
- * Collapsed sidebar: a fixed-width icon rail pinned to the left edge of the
- * `<aside>` clip. Holds the expand toggle plus the footer nav icons so the
- * sidebar never goes fully off-canvas. Fades in as the wide rail springs out.
+ * Collapsed sidebar: overlay icon rail. Hidden until the pointer hits the
+ * left-edge target, then panel-reveals (slide + fade + cross-blur).
  */
 export function SidebarIconRail({
   items,
-  visible,
 }: {
   items: ShellNavItem[];
-  visible: boolean;
 }): JSX.Element {
   const isElectron = useIsElectron();
+  const [pointerOver, setPointerOver] = useState(false);
+  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelLeave = () => {
+    if (leaveTimerRef.current !== null) {
+      clearTimeout(leaveTimerRef.current);
+      leaveTimerRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (leaveTimerRef.current !== null) {
+        clearTimeout(leaveTimerRef.current);
+      }
+    };
+  }, []);
+
+  const peekOpen = pointerOver;
+  const peekHandlers = {
+    onPointerEnter: () => {
+      cancelLeave();
+      setPointerOver(true);
+    },
+    onPointerLeave: () => {
+      cancelLeave();
+      leaveTimerRef.current = setTimeout(() => {
+        leaveTimerRef.current = null;
+        setPointerOver(false);
+      }, NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS);
+    },
+  };
 
   return (
     <div
-      data-slot="sidebar-icon-rail"
-      aria-hidden={!visible}
-      inert={!visible ? true : undefined}
-      style={{ width: NOTA_SIDEBAR_RAIL_WIDTH_PX }}
-      className={cn(
-        'absolute inset-y-0 left-0 z-40 flex flex-col items-center pb-3',
-        'motion-safe:transition-opacity motion-safe:duration-[180ms] motion-safe:ease-out',
-        visible ? 'opacity-100 delay-100' : 'pointer-events-none opacity-0',
-        isElectron
-          ? cn(
-              'pt-[max(3.25rem,calc(env(safe-area-inset-top)+2.5rem))]',
-              ELECTRON_WINDOW_NO_DRAG_CLASS,
-            )
-          : 'pt-4',
-      )}
+      data-slot="collapsed-sidebar-peek"
+      className="pointer-events-none absolute inset-y-0 left-0 z-40"
+      style={
+        {
+          '--panel-open-dur': '180ms',
+          '--panel-close-dur': '150ms',
+          '--panel-translate-y': '12px',
+        } as CSSProperties
+      }
     >
-      <SidebarToggle />
-      <div className="mt-auto pt-4">
-        <ShellNavLinks items={items} collapsed />
+      <div
+        data-slot="sidebar-hover-edge"
+        aria-hidden
+        {...peekHandlers}
+        style={{ width: NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX }}
+        className={cn(
+          'pointer-events-auto absolute bottom-0 left-0',
+          isElectron
+            ? cn(
+                'top-[max(3.25rem,calc(env(safe-area-inset-top)+2.5rem))]',
+                ELECTRON_WINDOW_NO_DRAG_CLASS,
+              )
+            : 'top-0',
+        )}
+      />
+      <div
+        data-slot="sidebar-icon-rail"
+        data-axis="x"
+        data-open={peekOpen ? 'true' : 'false'}
+        aria-hidden={!peekOpen}
+        inert={!peekOpen ? true : undefined}
+        {...peekHandlers}
+        style={{ width: NOTA_SIDEBAR_RAIL_WIDTH_PX }}
+        className={cn(
+          't-panel-slide absolute inset-y-0 left-0 flex flex-col items-center pb-3',
+          notesSidebarChrome,
+          isElectron
+            ? cn(
+                'pt-[max(3.25rem,calc(env(safe-area-inset-top)+2.5rem))]',
+                ELECTRON_WINDOW_NO_DRAG_CLASS,
+              )
+            : 'pt-4',
+        )}
+      >
+        <SidebarToggle />
+        <div className="mt-auto pt-4">
+          <ShellNavLinks items={items} collapsed />
+        </div>
       </div>
     </div>
   );

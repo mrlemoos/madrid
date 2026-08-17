@@ -95,7 +95,7 @@ describe('useNotesSidebarShellMotion', () => {
     clock.runToRest();
   });
 
-  it('snaps the clip to the icon-rail width after the close spring settles', () => {
+  it('snaps the clip to zero width after the close spring settles', () => {
     // Arrange
     const clock = installManualClock();
     const { container, rerender } = render(
@@ -108,8 +108,15 @@ describe('useNotesSidebarShellMotion', () => {
     rerender(<Harness open={false} widthPx={288} mounted />);
     clock.runToRest();
 
-    // Assert
+    // Assert — collapsed clip reserves no layout; icon rail overlays on hover
     expect(setSpy).toHaveBeenCalledWith(
+      aside,
+      expect.objectContaining({
+        width: 0,
+        maxWidth: 'none',
+      }),
+    );
+    expect(setSpy).not.toHaveBeenCalledWith(
       aside,
       expect.objectContaining({
         width: NOTA_SIDEBAR_RAIL_WIDTH_PX,
@@ -142,7 +149,7 @@ describe('useNotesSidebarShellMotion', () => {
     expect(setSpy).not.toHaveBeenCalledWith(
       aside,
       expect.objectContaining({
-        width: NOTA_SIDEBAR_RAIL_WIDTH_PX,
+        width: 0,
         maxWidth: 'none',
       }),
     );

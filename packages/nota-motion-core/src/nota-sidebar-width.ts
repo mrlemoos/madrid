@@ -11,10 +11,16 @@ export const NOTA_SIDEBAR_MIN_WIDTH_PX = 240;
 export const NOTA_SIDEBAR_MAX_WIDTH_PX = 480;
 
 /**
- * Collapsed notes sidebar (px) — the icon rail keeps the toggle and footer nav
- * reachable instead of going fully off-canvas.
+ * Collapsed icon-rail width (px). Overlay only — the aside clip goes to 0 so
+ * the note uses the full shell until hover reveals this rail.
  */
 export const NOTA_SIDEBAR_ICON_WIDTH_PX = 48;
+
+/** Collapsed aside clip width (px). Zero: no layout reservation. */
+export const NOTA_SIDEBAR_COLLAPSED_CLIP_WIDTH_PX = 0;
+
+/** Invisible left-edge hit target (px) that reveals the collapsed icon rail. */
+export const NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX = 12;
 
 export function clampNotaSidebarWidthPx(widthPx: number): number {
   if (!Number.isFinite(widthPx)) {

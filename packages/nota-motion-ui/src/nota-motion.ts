@@ -34,6 +34,8 @@ export const NOTA_SIDEBAR_WIDTH_PX = NOTA_SIDEBAR_DEFAULT_WIDTH_PX;
 
 /** Collapsed sidebar icon-rail width (px). */
 export const NOTA_SIDEBAR_RAIL_WIDTH_PX = NOTA_SIDEBAR_ICON_WIDTH_PX;
+/** Left-edge hit target (px) that reveals the collapsed icon rail on hover. */
+export { NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
 /** Horizontal slide (px) when the notes sidebar closes :  content exits to the left. */
 export const NOTA_SIDEBAR_SLIDE_PX = 20;
 

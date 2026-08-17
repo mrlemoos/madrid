@@ -270,96 +270,100 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
       ) : (
         <div
           className={cn(
-            'nota-notes-root flex h-full min-h-0 flex-1 bg-linear-to-b from-muted/25 to-background',
+            'nota-notes-root relative flex h-full min-h-0 flex-1 bg-linear-to-b from-muted/25 to-background',
           )}
         >
           {!paywalled ? (
-            <aside
-              ref={asideRef}
-              className={cn(
-                'relative flex h-full min-h-0 min-w-0 shrink-0 flex-col overflow-hidden',
-                isElectron && 'z-[35]',
-                notesSidebarChrome,
-              )}
-            >
-              <TooltipProvider>
-                <SidebarIconRail items={navItems} visible={!open} />
-              </TooltipProvider>
-              <div
-                ref={railRef}
-                data-nota-sidebar-rail
+            <>
+              <aside
+                ref={asideRef}
                 className={cn(
-                  'flex h-full min-h-0 w-full min-w-0 flex-col',
-                  !open && 'pointer-events-none',
+                  'relative flex h-full min-h-0 min-w-0 shrink-0 flex-col overflow-hidden',
+                  isElectron && 'z-[35]',
+                  notesSidebarChrome,
                 )}
-                style={{ width: widthPx }}
-                aria-hidden={!open}
-                inert={!open ? true : undefined}
               >
-                <TooltipProvider>
-                  <div
-                    className={cn(
-                      'flex shrink-0 items-center justify-end pr-4 pb-4',
-                      isElectron
-                        ? cn(
-                            'relative z-40 pl-20 pt-[max(1rem,env(safe-area-inset-top))]',
-                            ELECTRON_WINDOW_NO_DRAG_CLASS,
-                          )
-                        : 'pl-4 pt-4',
-                    )}
-                  >
-                    <SidebarToggle />
-                  </div>
-
-                  {loadError && (
-                    <div
-                      className="m-4 shrink-0 rounded-md bg-destructive/15 p-3 text-sm text-destructive"
-                      role="alert"
-                    >
-                      {loadError}
-                    </div>
+                <div
+                  ref={railRef}
+                  data-nota-sidebar-rail
+                  className={cn(
+                    'flex h-full min-h-0 w-full min-w-0 flex-col',
+                    !open && 'pointer-events-none',
                   )}
+                  style={{ width: widthPx }}
+                  aria-hidden={!open}
+                  inert={!open ? true : undefined}
+                >
+                  <TooltipProvider>
+                    <div
+                      className={cn(
+                        'flex shrink-0 items-center justify-end pr-4 pb-4',
+                        isElectron
+                          ? cn(
+                              'relative z-40 pl-20 pt-[max(1rem,env(safe-area-inset-top))]',
+                              ELECTRON_WINDOW_NO_DRAG_CLASS,
+                            )
+                          : 'pl-4 pt-4',
+                      )}
+                    >
+                      <SidebarToggle />
+                    </div>
 
-                  <nav className="min-h-0 flex-1 overflow-y-auto p-2">
-                    <NotesSidebarList
-                      notes={notes}
-                      folders={folders}
-                      panel={panel}
-                      routeNoteId={routeNoteId}
+                    {loadError && (
+                      <div
+                        className="m-4 shrink-0 rounded-md bg-destructive/15 p-3 text-sm text-destructive"
+                        role="alert"
+                      >
+                        {loadError}
+                      </div>
+                    )}
+
+                    <nav className="min-h-0 flex-1 overflow-y-auto p-2">
+                      <NotesSidebarList
+                        notes={notes}
+                        folders={folders}
+                        panel={panel}
+                        routeNoteId={routeNoteId}
+                        userId={user?.id}
+                        notaProEntitled={notaProEntitled}
+                        userPreferences={userPreferences}
+                        insertNoteAtFront={insertNoteAtFront}
+                        insertFolderSorted={insertFolderSorted}
+                        patchNoteInList={patchNoteInList}
+                        patchFolderInList={patchFolderInList}
+                        removeNoteFromList={removeNoteFromList}
+                        removeFolderFromList={removeFolderFromList}
+                        refreshNotesList={refreshNotesList}
+                      />
+                    </nav>
+                    <FolderCreateDialog
+                      open={folderCreateOpen}
+                      onOpenChange={setFolderCreateOpen}
                       userId={user?.id}
-                      notaProEntitled={notaProEntitled}
-                      userPreferences={userPreferences}
-                      insertNoteAtFront={insertNoteAtFront}
                       insertFolderSorted={insertFolderSorted}
-                      patchNoteInList={patchNoteInList}
-                      patchFolderInList={patchFolderInList}
-                      removeNoteFromList={removeNoteFromList}
-                      removeFolderFromList={removeFolderFromList}
                       refreshNotesList={refreshNotesList}
                     />
-                  </nav>
-                  <FolderCreateDialog
-                    open={folderCreateOpen}
-                    onOpenChange={setFolderCreateOpen}
-                    userId={user?.id}
-                    insertFolderSorted={insertFolderSorted}
-                    refreshNotesList={refreshNotesList}
-                  />
 
-                  {user ? (
-                    <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
-                      <ShellNavLinks items={navItems} />
-                    </footer>
+                    {user ? (
+                      <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
+                        <ShellNavLinks items={navItems} />
+                      </footer>
+                    ) : null}
+                  </TooltipProvider>
+                  {open ? (
+                    <NotesSidebarResizeHandle
+                      ariaLabel={t('Resize sidebar')}
+                      onPointerDown={onResizePointerDown}
+                    />
                   ) : null}
+                </div>
+              </aside>
+              {!open ? (
+                <TooltipProvider>
+                  <SidebarIconRail items={navItems} />
                 </TooltipProvider>
-                {open ? (
-                  <NotesSidebarResizeHandle
-                    ariaLabel={t('Resize sidebar')}
-                    onPointerDown={onResizePointerDown}
-                  />
-                ) : null}
-              </div>
-            </aside>
+              ) : null}
+            </>
           ) : null}
 
           <main
