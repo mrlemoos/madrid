@@ -15,8 +15,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "types": ["node", "vitest/globals"],
-    "noUncheckedSideEffectImports": false,
-    "ignoreDeprecations": "6.0"
+    "noUncheckedSideEffectImports": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "release"],

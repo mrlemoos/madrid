@@ -16,7 +16,6 @@
       "@nx/react/typings/image.d.ts"
     ],
     "jsx": "react-jsx",
-    "ignoreDeprecations": "6.0",
     "rootDir": "."
   },
   "include": [

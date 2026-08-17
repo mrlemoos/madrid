@@ -19,7 +19,7 @@
     "customConditions": ["@nota/source"],
     "noUncheckedSideEffectImports": false,
     "types": ["*"],
-    "esModuleInterop": false,
-    "ignoreDeprecations": "6.0"
+    "esModuleInterop": true,
+    "stableTypeOrdering": true
   }
 }

@@ -12,14 +12,13 @@
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "jsx": "react-jsx",
     "noEmit": true,
-    "ignoreDeprecations": "6.0",
     "rootDir": "."
   },
   "include": [
     "vite.config.mts",
     "vitest.setup.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx"
   ],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

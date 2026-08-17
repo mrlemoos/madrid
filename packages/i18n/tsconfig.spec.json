@@ -13,7 +13,6 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "ignoreDeprecations": "6.0",
     "rootDir": "."
   },
   "include": [

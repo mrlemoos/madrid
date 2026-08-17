@@ -18,13 +18,13 @@
       {
         "name": "next"
       }
-    ],
-    "ignoreDeprecations": "6.0"
+    ]
   },
   "include": [
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
+    "src/**/*.mjs",
     ".next/types/**/*.ts",
     "../../packages/*/src/*.d.ts"
   ],

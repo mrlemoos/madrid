@@ -10,7 +10,6 @@
       "vitest"
     ],
     "noEmit": true,
-    "ignoreDeprecations": "6.0",
     "rootDir": "."
   },
   "include": ["vite.config.mts", "src/**/*.spec.ts"],

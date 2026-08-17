@@ -129,8 +129,5 @@
     {
       "path": "./packages/error-boundary"
     }
-  ],
-  "compilerOptions": {
-    "ignoreDeprecations": "6.0"
-  }
+  ]
 }

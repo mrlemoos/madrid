@@ -9,8 +9,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "vite/client"],
-    "ignoreDeprecations": "6.0"
+    "types": ["node", "vite/client"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts"],

@@ -14,7 +14,7 @@
 
 ## Package manager and dependency catalogue
 
-- **Toolchain versions:** nx **23.1.1** (all `@nx/*` + catalog entries pinned to it — bump via `nx migrate`, never one plugin alone), TypeScript **6.0.3**, Vite **8** (Rolldown; `build.rolldownOptions`, not `rollupOptions`; transforms run through **Oxc** so vite/vitest configs use `oxc: { jsx: … }`, not `esbuild:`), `@vitejs/plugin-react` **6** (no `babel` option), Vitest **4**. React pinned **19.2.3** in catalog + `pnpm.overrides` (was aligned to the Expo SDK; the pin stayed after the mobile app was removed).
+- **Toolchain versions:** nx **23.1.1** (all `@nx/*` + catalog entries pinned to it — bump via `nx migrate`, never one plugin alone), TypeScript **7.0.2** native `tsc` + **6.x** JS API shim (see TypeScript section), Vite **8** (Rolldown; `build.rolldownOptions`, not `rollupOptions`; transforms run through **Oxc** so vite/vitest configs use `oxc: { jsx: … }`, not `esbuild:`), `@vitejs/plugin-react` **6** (no `babel` option), Vitest **4**. React pinned **19.2.3** in catalog + `pnpm.overrides` (was aligned to the Expo SDK; the pin stayed after the mobile app was removed).
 - **pnpm only** at repo root ([`package.json`](package.json) **`packageManager`**). Use **`pnpm install`**, **`pnpm exec nx …`**, **`pnpm add -wD …`**. No **`package-lock.json`** / **`npm ci`** here. CI, Vercel, Docker use **`pnpm install --frozen-lockfile`** (with **`corepack enable pnpm`** where needed). **`storeDir`** is **repo-local** ([`pnpm-workspace.yaml`](pnpm-workspace.yaml) → **`.pnpm-store/`**, gitignored); disk grows w/ deps like any pnpm store.
 - **Catalogue:** Shared versions for external deps in **>1** of **`packages/*`** or **`apps/*`** live under **`catalog`** in [`pnpm-workspace.yaml`](pnpm-workspace.yaml); each consumer refs **`"catalog:"`** in **`package.json`** (not divergent semver). Internal **`@nota/*`** use **`workspace:*`**.
 - **Hoisting:** [`.npmrc`](.npmrc) **`node-linker=hoisted`** keeps **`node_modules`** compatible w/ **electron-builder** (see [`apps/nota-electron/electron-builder.yml`](apps/nota-electron/electron-builder.yml)).
@@ -31,6 +31,7 @@
 
 ## TypeScript and generated types
 
+- **TS 7 dual install:** catalog [`pnpm-workspace.yaml`](pnpm-workspace.yaml) `typescript` = `npm:@typescript/typescript6@6.0.2` (re-exports JS API **6.0.3**; `tsc6`); `@typescript/native` = `npm:typescript@7.0.2` (`tsc`). Root [`package.json`](package.json) depends on both. **7.0 has no programmatic API** — `typescript-eslint`, `vite-plugin-dts`, `ts-node` import `typescript` and must stay on the 6 shim until **7.1**. Never point the `typescript` catalog name at 7 alone. `pnpm exec tsc` = 7; `pnpm exec tsc6` = 6 (compare). No `ignoreDeprecations`. Base [`tsconfig.base.json`](tsconfig.base.json): `esModuleInterop` **true**, `stableTypeOrdering` **true**.
 - [`apps/nota/tsconfig.app.json`](apps/nota/tsconfig.app.json): `rootDir` `.`, includes `src/**` only—files outside break imports.
 - Generated types [`packages/database-types/src/lib/database.types.ts`](packages/database-types/src/lib/database.types.ts); app re-export [`apps/nota/src/types/database.types.ts`](apps/nota/src/types/database.types.ts) for `~/types/database.types`. Run `supabase gen types` into package; keep re-export.
 

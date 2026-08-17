@@ -1,4 +1,4 @@
-import { Editor, Node, mergeAttributes } from '@tiptap/core';
+import { Editor, Node, mergeAttributes, type Content } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
@@ -54,7 +54,7 @@ const LinkPreviewTestNode = Node.create({
   },
 });
 
-function linkOnlyParagraphJson(text: string, href: string) {
+function linkOnlyParagraphJson(text: string, href: string): Content {
   return {
     type: 'doc',
     content: [
@@ -69,7 +69,7 @@ function linkOnlyParagraphJson(text: string, href: string) {
         ],
       },
     ],
-  } as const;
+  };
 }
 
 function collectTypes(node: unknown): string[] {
@@ -82,7 +82,7 @@ function collectTypes(node: unknown): string[] {
   return [...self, ...children];
 }
 
-function createEditor(content: unknown) {
+function createEditor(content: Content) {
   return new Editor({
     extensions: [
       StarterKit.configure({ codeBlock: false }),
