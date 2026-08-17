@@ -127,9 +127,6 @@
       "path": "../../packages/internal-note-link/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/isomorphic-helpers/tsconfig.lib.json"
-    },
-    {
       "path": "../../packages/i18n/tsconfig.lib.json"
     },
     {
