@@ -115,6 +115,10 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   );
   const [folderCreateOpen, setFolderCreateOpen] = useState(false);
   const { t } = useNotesChromeTranslator();
+  const openNoteHasBanner = Boolean(
+    routeNoteId &&
+      notes.find((note) => note.id === routeNoteId)?.banner_attachment_id,
+  );
 
   useSyncUserPreferences(
     userPreferences,
@@ -249,7 +253,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   return (
     <>
       <ElectronMenubarBridge />
-      <ElectronTrafficLightsController />
+      <ElectronTrafficLightsController hasBanner={openNoteHasBanner} />
       {sticky.visible && sticky.label ? (
         <div
           className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-center pt-[max(0.5rem,env(safe-area-inset-top))]"

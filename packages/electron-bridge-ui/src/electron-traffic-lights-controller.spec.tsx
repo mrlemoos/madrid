@@ -1,4 +1,4 @@
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ElectronTrafficLightsController } from './electron-traffic-lights-controller';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
@@ -50,5 +50,50 @@ describe('ElectronTrafficLightsController', () => {
 
     // Assert
     expect(setWindowButtonVisibility).toHaveBeenCalledWith(true);
+  });
+
+  it('draws traffic-light outlines when the sidebar is closed over a banner note', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: false });
+
+    // Act
+    render(<ElectronTrafficLightsController hasBanner />);
+
+    // Assert
+    const outlines = screen.getByTestId('electron-traffic-light-outlines');
+    expect(
+      outlines.querySelectorAll('[data-traffic-light-outline]'),
+    ).toHaveLength(3);
+    expect(outlines.getAttribute('data-hover-revealed')).toBe('false');
+  });
+
+  it('does not draw traffic-light outlines when the closed sidebar has no banner', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: false });
+
+    // Act
+    render(<ElectronTrafficLightsController />);
+
+    // Assert
+    expect(screen.queryByTestId('electron-traffic-light-outlines')).toBeNull();
+  });
+
+  it('keeps the hover reveal and hides outlines while native buttons are shown', () => {
+    // Arrange
+    useNotesSidebarStore.setState({ open: false });
+    render(<ElectronTrafficLightsController hasBanner />);
+    setWindowButtonVisibility.mockClear();
+    const hoverZone = screen.getByTestId('electron-traffic-lights-hover-zone');
+
+    // Act
+    fireEvent.mouseEnter(hoverZone);
+
+    // Assert
+    expect(setWindowButtonVisibility).toHaveBeenCalledWith(true);
+    expect(
+      screen
+        .getByTestId('electron-traffic-light-outlines')
+        .getAttribute('data-hover-revealed'),
+    ).toBe('true');
   });
 });

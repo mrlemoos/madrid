@@ -19,6 +19,41 @@
   -webkit-app-region: no-drag;
 }
 
+/*
+ * Ghost traffic-light rings (Electron hiddenInset default margin 12×11).
+ * Dual stroke so the rings read on light and dark banners. Fade uses existing
+ * chrome tokens: popover-in (~200ms) vs press-out (~160ms) — native buttons
+ * snap; rings get out of the way a touch faster than they arrive.
+ */
+.electron-traffic-light-outlines {
+  pointer-events: none;
+  display: flex;
+  gap: 8px;
+  padding: 11px 0 0 12px;
+  opacity: 1;
+  transition: opacity var(--nota-spring-popover-response) var(--ease-out);
+}
+
+.electron-traffic-light-outlines[data-hover-revealed='true'] {
+  opacity: 0;
+  transition-duration: var(--nota-press-out-ms);
+}
+
+.electron-traffic-light-outlines [data-traffic-light-outline] {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.62),
+    0 0 0 0.5px rgb(0 0 0 / 0.42);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .electron-traffic-light-outlines {
+    transition: none;
+  }
+}
+
 /* Main ShellPanel enter :  pointer intent only (≤180ms). Keyboard / history = instant. */
 @keyframes nota-panel-enter-fade {
   from {
