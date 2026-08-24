@@ -1,5 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <!-- Nota geometric N · rounded plate (Electron Dock PNG is unmasked) -->
-  <rect id="notaPlate" width="512" height="512" rx="114" fill="#2E2C29"/>
-    <path id="notaN" d="M170 372 L170 140 L206 140 L306 300 L306 140 L342 140 L342 372 L306 372 L206 212 L206 372 Z" fill="#F2EDE4"/>
+  <!-- Nota engraved Didot N · black warm-shaded plate (Electron Dock PNG is unmasked) -->
+  <defs>
+  <linearGradient id="notaPlateShade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#241C14"/>
+    <stop offset="0.38" stop-color="#000000"/>
+    <stop offset="1" stop-color="#000000"/>
+  </linearGradient>
+  <linearGradient id="notaPlateSheen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#E8D4B0" stop-opacity="0.14"/>
+    <stop offset="0.2" stop-color="#E8D4B0" stop-opacity="0"/>
+  </linearGradient>
+  <clipPath id="notaNClip">
+    <path d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z"/>
+  </clipPath>
+</defs>
+  <rect id="notaPlate" width="512" height="512" rx="114" fill="url(#notaPlateShade)"/>
+  <rect id="notaPlateSheen" width="512" height="512" rx="114" fill="url(#notaPlateSheen)"/>
+<g clip-path="url(#notaNClip)">
+    <path id="notaN" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#E8DCC8"/>
+    <path id="notaNShadow" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#000000" fill-opacity="0.38" transform="translate(-6 -7)"/>
+    <path id="notaNHighlight" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#F7EFE2" fill-opacity="0.28" transform="translate(6 8)"/>
+</g>
 </svg>

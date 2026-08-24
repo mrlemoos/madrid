@@ -1,62 +1,129 @@
-/** Geometric N mark: filled letterform, rounded plate. */
+/** Engraved Didot N: paper ink on a black, warm-shaded plate. */
 
 export const NOTA_N_VIEWBOX = 512;
 /** Electron `dock.setIcon` paints the PNG as-is — plate must carry the radius. */
 export const NOTA_N_PLATE_RADIUS = 114;
 
-export const NOTA_PLATE_LIGHT = '#D4CFC6';
-export const NOTA_INK_LIGHT = '#1F1D1A';
-export const NOTA_PLATE_DARK = '#2E2C29';
-export const NOTA_INK_DARK = '#F2EDE4';
+export const NOTA_PLATE_BLACK = '#000000';
+export const NOTA_PLATE_SHADE_TOP = '#241C14';
+export const NOTA_SHEEN = '#E8D4B0';
+export const NOTA_INK_PAPER = '#E8DCC8';
+export const NOTA_INK_HIGHLIGHT = '#F7EFE2';
 
-/**
- * Filled grotesque N (square terminals, uniform stem).
- * Left bar 170–206, right bar 306–342, y 140–372.
- */
-export const NOTA_N_PATH =
-  'M170 372 L170 140 L206 140 L306 300 L306 140 L342 140 L342 372 L306 372 L206 212 L206 372 Z';
+export const NOTA_N_STEM_WIDTH = 92;
+export const NOTA_N_SERIF_THICKNESS = 12;
+
+const PLATE = NOTA_N_VIEWBOX;
+const OUTER = 78;
+const SERIF_OVERHANG = 12;
+const DIAG_THICKNESS = 38;
+
+function buildDidotNPath() {
+  const W = NOTA_N_STEM_WIDTH;
+  const S = NOTA_N_SERIF_THICKNESS;
+  const L = OUTER;
+  const T = OUTER;
+  const R = PLATE - OUTER;
+  const B = PLATE - OUTER;
+  const leftOuter = L + SERIF_OVERHANG;
+  const leftInner = leftOuter + W;
+  const rightOuter = R - SERIF_OVERHANG;
+  const rightInner = rightOuter - W;
+  const serifRight = leftInner + 32;
+  const serifLeft = rightInner - 32;
+  const stemTop = T + S;
+  const stemBottom = B - S;
+  const diagOuterY = stemBottom - DIAG_THICKNESS;
+  const diagInnerY = stemTop + DIAG_THICKNESS;
+
+  return [
+    `M${L} ${B}`,
+    `L${L} ${stemBottom}`,
+    `L${leftOuter} ${stemBottom}`,
+    `L${leftOuter} ${stemTop}`,
+    `L${L} ${stemTop}`,
+    `L${L} ${T}`,
+    `L${serifRight} ${T}`,
+    `L${serifRight} ${stemTop}`,
+    `L${leftInner} ${stemTop}`,
+    `L${rightInner} ${diagOuterY}`,
+    `L${rightInner} ${stemTop}`,
+    `L${serifLeft} ${stemTop}`,
+    `L${serifLeft} ${T}`,
+    `L${R} ${T}`,
+    `L${R} ${stemTop}`,
+    `L${rightOuter} ${stemTop}`,
+    `L${rightOuter} ${stemBottom}`,
+    `L${R} ${stemBottom}`,
+    `L${R} ${B}`,
+    `L${serifLeft} ${B}`,
+    `L${serifLeft} ${stemBottom}`,
+    `L${rightInner} ${stemBottom}`,
+    `L${leftInner} ${diagInnerY}`,
+    `L${leftInner} ${stemBottom}`,
+    `L${serifRight} ${stemBottom}`,
+    `L${serifRight} ${B}`,
+    'Z',
+  ].join(' ');
+}
+
+export const NOTA_N_PATH = buildDidotNPath();
 
 /** Cropped to the N with a little optical padding. */
-export const NOTA_N_LOGO_VIEWBOX = '154 124 204 264';
+export const NOTA_N_LOGO_VIEWBOX = '62 62 388 388';
 
-function nPath(fillAttr) {
-  return `    <path id="notaN" d="${NOTA_N_PATH}" ${fillAttr}/>`;
+function nPath(id, extraAttr) {
+  return `    <path id="${id}" d="${NOTA_N_PATH}" ${extraAttr}/>`;
 }
 
-function plateRect(fillAttr) {
-  return `<rect id="notaPlate" width="${NOTA_N_VIEWBOX}" height="${NOTA_N_VIEWBOX}" rx="${NOTA_N_PLATE_RADIUS}" ${fillAttr}/>`;
+function plateRect(id, fillAttr) {
+  return `<rect id="${id}" width="${NOTA_N_VIEWBOX}" height="${NOTA_N_VIEWBOX}" rx="${NOTA_N_PLATE_RADIUS}" ${fillAttr}/>`;
 }
 
-function iconSvg(plate, ink) {
+function plateShadeDefs() {
+  return `<defs>
+  <linearGradient id="notaPlateShade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="${NOTA_PLATE_SHADE_TOP}"/>
+    <stop offset="0.38" stop-color="${NOTA_PLATE_BLACK}"/>
+    <stop offset="1" stop-color="${NOTA_PLATE_BLACK}"/>
+  </linearGradient>
+  <linearGradient id="notaPlateSheen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="${NOTA_SHEEN}" stop-opacity="0.14"/>
+    <stop offset="0.2" stop-color="${NOTA_SHEEN}" stop-opacity="0"/>
+  </linearGradient>
+  <clipPath id="notaNClip">
+    <path d="${NOTA_N_PATH}"/>
+  </clipPath>
+</defs>`;
+}
+
+function engravedN() {
+  return `<g clip-path="url(#notaNClip)">
+${nPath('notaN', `fill="${NOTA_INK_PAPER}"`)}
+${nPath('notaNShadow', 'fill="#000000" fill-opacity="0.38" transform="translate(-6 -7)"')}
+${nPath('notaNHighlight', `fill="${NOTA_INK_HIGHLIGHT}" fill-opacity="0.28" transform="translate(6 8)"`)}
+</g>`;
+}
+
+function iconSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${NOTA_N_VIEWBOX} ${NOTA_N_VIEWBOX}" fill="none">
-  <!-- Nota geometric N · rounded plate (Electron Dock PNG is unmasked) -->
-  ${plateRect(`fill="${plate}"`)}
-${nPath(`fill="${ink}"`)}
+  <!-- Nota engraved Didot N · black warm-shaded plate (Electron Dock PNG is unmasked) -->
+  ${plateShadeDefs()}
+  ${plateRect('notaPlate', 'fill="url(#notaPlateShade)"')}
+  ${plateRect('notaPlateSheen', 'fill="url(#notaPlateSheen)"')}
+${engravedN()}
 </svg>
 `;
 }
 
 export function renderIconLightSvg() {
-  return iconSvg(NOTA_PLATE_LIGHT, NOTA_INK_LIGHT);
+  return iconSvg();
 }
 
 export function renderIconDarkSvg() {
-  return iconSvg(NOTA_PLATE_DARK, NOTA_INK_DARK);
+  return iconSvg();
 }
 
 export function renderFaviconSvg() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${NOTA_N_VIEWBOX} ${NOTA_N_VIEWBOX}" fill="none">
-  <!-- Nota geometric N · favicon (light + dark) -->
-  <style>
-    .plate { fill: ${NOTA_PLATE_LIGHT}; }
-    .n { fill: ${NOTA_INK_LIGHT}; }
-    @media (prefers-color-scheme: dark) {
-      .plate { fill: ${NOTA_PLATE_DARK}; }
-      .n { fill: ${NOTA_INK_DARK}; }
-    }
-  </style>
-  ${plateRect('class="plate"')}
-    <path id="notaN" class="n" d="${NOTA_N_PATH}"/>
-</svg>
-`;
+  return iconSvg();
 }

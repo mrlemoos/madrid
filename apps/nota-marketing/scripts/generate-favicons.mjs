@@ -1,5 +1,5 @@
 /**
- * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the geometric N
+ * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the Didot N
  * light SVG (same source as Electron dock / app favicon).
  *
  * Prefer `pnpm run generate:nota-icons` from the monorepo root (covers Electron

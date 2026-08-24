@@ -1,10 +1,10 @@
-// Regenerates brand SVG sources + derived rasters from the geometric N mark.
+// Regenerates brand SVG sources + derived rasters from the Didot N mark.
 //
 // Usage (repo root): `pnpm run generate:nota-icons`
 //
 // Sources (written from `src/lib/nota-n-mark.mjs`):
-// - `../nota-electron/buildResources/icon-light.svg` (light dock / .icns / apple-touch)
-// - `../nota-electron/buildResources/icon-dark.svg` (dark dock raster)
+// - `../nota-electron/buildResources/icon-light.svg` (dock / .icns / apple-touch)
+// - `../nota-electron/buildResources/icon-dark.svg` (same mark; dock follows nativeTheme)
 // - `public/favicon.svg` (light+dark via prefers-color-scheme; synced to marketing)
 //
 // Outputs:

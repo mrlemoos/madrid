@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { NotaLogo } from './nota-logo';
 
 describe('NotaLogo', () => {
-  it('draws a currentColor geometric N, not a note stack', () => {
+  it('draws a currentColor engraved Didot N, not a note stack', () => {
     // Arrange
     const ui = <NotaLogo />;
 

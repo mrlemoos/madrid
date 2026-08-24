@@ -5,7 +5,7 @@ interface NotaLogoProps {
   className?: string;
 }
 
-/** Geometric N. Plate icons: `public/favicon.svg`. */
+/** Engraved Didot N. Plate icons: `public/favicon.svg`. */
 export function NotaLogo({ className }: NotaLogoProps) {
   return (
     <svg
