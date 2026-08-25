@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { isShellPathnameAllowed } from './pathname-policy';
+import { isSpaPathnameAllowed } from './pathname-policy';
 
-describe('isShellPathnameAllowed', () => {
-  it('allows the SPA shell and static prefixes', () => {
+describe('isSpaPathnameAllowed', () => {
+  it('allows the SPA document and static prefixes', () => {
     // Arrange
     const allowedPaths = [
       '/',
@@ -15,7 +15,7 @@ describe('isShellPathnameAllowed', () => {
     ];
 
     // Act
-    const results = allowedPaths.map((p) => isShellPathnameAllowed(p));
+    const results = allowedPaths.map((p) => isSpaPathnameAllowed(p));
 
     // Assert
     expect(results.every(Boolean)).toBe(true);
@@ -26,7 +26,7 @@ describe('isShellPathnameAllowed', () => {
     const rejectedPaths = ['/typo', '/blog/post', '/api'];
 
     // Act
-    const results = rejectedPaths.map((p) => isShellPathnameAllowed(p));
+    const results = rejectedPaths.map((p) => isSpaPathnameAllowed(p));
 
     // Assert
     expect(results.every((allowed) => !allowed)).toBe(true);

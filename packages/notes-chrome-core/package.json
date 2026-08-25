@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./shell-chrome": {
+    "./notes-chrome": {
       "@nota/source": {
-        "types": "./src/notes-shell-chrome.ts",
-        "import": "./src/notes-shell-chrome.ts",
-        "default": "./src/notes-shell-chrome.ts"
+        "types": "./src/notes-chrome.ts",
+        "import": "./src/notes-chrome.ts",
+        "default": "./src/notes-chrome.ts"
       },
-      "types": "./src/notes-shell-chrome.ts",
-      "import": "./src/notes-shell-chrome.ts",
-      "default": "./src/notes-shell-chrome.ts"
+      "types": "./src/notes-chrome.ts",
+      "import": "./src/notes-chrome.ts",
+      "default": "./src/notes-chrome.ts"
     },
     "./chrome-type": {
       "@nota/source": {

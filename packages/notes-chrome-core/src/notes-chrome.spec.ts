@@ -9,7 +9,7 @@ import {
   notesMainChrome,
   notesSidebarChrome,
   notesStickyTitleChrome,
-} from './notes-shell-chrome';
+} from './notes-chrome';
 
 const stylesCss = readFileSync(
   resolve(
@@ -53,7 +53,7 @@ function opacityFraction(classString: string, prefix: string): number {
   return Number(match[1]);
 }
 
-describe('notes shell chrome', () => {
+describe('notes chrome', () => {
   it('exposes stable marker classes for reduced-transparency CSS', () => {
     // Arrange
     const expectedSidebar = 'nota-notes-sidebar-chrome';
@@ -118,7 +118,7 @@ describe('notes shell chrome', () => {
   });
 });
 
-describe('notes shell chrome CSS contracts', () => {
+describe('notes chrome CSS contracts', () => {
   it('honours prefers-reduced-transparency with frostier solids', () => {
     // Arrange
     const reduceBlock = stylesCss.match(

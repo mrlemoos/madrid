@@ -1,10 +1,10 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { NotesShell } from './notes-shell';
+import { NotesChrome } from './notes-chrome';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
 
-const notesShellTestCtx = vi.hoisted(() => {
+const notesChromeTestCtx = vi.hoisted(() => {
   const longTitle = 'Study note: 15 April 2026: '.padEnd(120, 'x');
   const listNote = {
     id: 'note-1',
@@ -29,11 +29,11 @@ const notesShellTestCtx = vi.hoisted(() => {
 
 const PANEL_CHILD_TEST_ID = 'nota-panel-child';
 
-function renderNotesShell(): ReturnType<typeof render> {
+function renderNotesChrome(): ReturnType<typeof render> {
   return render(
-    <NotesShell>
+    <NotesChrome>
       <div data-testid={PANEL_CHILD_TEST_ID} />
-    </NotesShell>,
+    </NotesChrome>,
   );
 }
 
@@ -164,18 +164,18 @@ vi.mock('@nota/note-capture-ui/use-audio-note-pending-drain', () => ({
   useAudioNotePendingDrain: (): void => {},
 }));
 
-describe('NotesShell', () => {
+describe('NotesChrome', () => {
   beforeEach(() => {
     sidebarStoreState.open = true;
     gsapTo.mockClear();
     gsapSet.mockClear();
     vi.mocked(useNotesData).mockImplementation(() => ({
-      notes: [notesShellTestCtx.listNote],
+      notes: [notesChromeTestCtx.listNote],
       folders: [],
       loadError: undefined,
       userPreferences: null,
       notaProEntitled: true,
-      loading: notesShellTestCtx.vaultLoading,
+      loading: notesChromeTestCtx.vaultLoading,
       refreshNotesList: vi.fn(),
       insertNoteAtFront: vi.fn(),
       insertFolderSorted: vi.fn(),
@@ -188,7 +188,7 @@ describe('NotesShell', () => {
   });
 
   afterEach(() => {
-    notesShellTestCtx.vaultLoading = false;
+    notesChromeTestCtx.vaultLoading = false;
   });
 
   it('fixes the notes sidebar width on first paint so long titles do not expand the column', () => {
@@ -197,28 +197,28 @@ describe('NotesShell', () => {
     window.history.replaceState(null, '', navigationHash);
 
     // Act
-    const { container } = renderNotesShell();
+    const { container } = renderNotesChrome();
 
     // Assert
     const aside = container.querySelector('aside');
     expect(aside).not.toBeNull();
     expect(aside?.style.width).toBe('288px');
-    expect(screen.getByText(notesShellTestCtx.longTitle)).toBeTruthy();
+    expect(screen.getByText(notesChromeTestCtx.longTitle)).toBeTruthy();
   });
 
   it('applies the stored sidebar width when vault loading finishes and the aside mounts', () => {
     // Arrange
-    notesShellTestCtx.vaultLoading = true;
+    notesChromeTestCtx.vaultLoading = true;
     window.history.replaceState(null, '', '#/notes');
-    const { container, rerender } = renderNotesShell();
+    const { container, rerender } = renderNotesChrome();
     expect(container.querySelector('aside')).toBeNull();
 
     // Act
-    notesShellTestCtx.vaultLoading = false;
+    notesChromeTestCtx.vaultLoading = false;
     rerender(
-      <NotesShell>
+      <NotesChrome>
         <div data-testid={PANEL_CHILD_TEST_ID} />
-      </NotesShell>,
+      </NotesChrome>,
     );
 
     // Assert
@@ -232,7 +232,7 @@ describe('NotesShell', () => {
     window.history.replaceState(null, '', '#/notes');
 
     // Act
-    const { container } = renderNotesShell();
+    const { container } = renderNotesChrome();
 
     // Assert
     expect(
@@ -244,7 +244,7 @@ describe('NotesShell', () => {
 
   it('opens the new folder dialog from the menubar request event', async () => {
     // Arrange
-    renderNotesShell();
+    renderNotesChrome();
 
     // Act
     act(() => {
@@ -257,16 +257,16 @@ describe('NotesShell', () => {
 
   it('shows a loading status and hides vault chrome while the initial vault fetch runs', () => {
     // Arrange
-    notesShellTestCtx.vaultLoading = true;
+    notesChromeTestCtx.vaultLoading = true;
     window.history.replaceState(null, '', '#/notes');
 
     // Act
-    const { container } = renderNotesShell();
+    const { container } = renderNotesChrome();
 
     // Assert
     expect(screen.getByText(/loading notes/i)).toBeTruthy();
     expect(screen.getByRole('status')).toBeTruthy();
-    expect(screen.queryByText(notesShellTestCtx.longTitle)).toBeNull();
+    expect(screen.queryByText(notesChromeTestCtx.longTitle)).toBeNull();
     expect(container.querySelector('aside')).toBeNull();
   });
 
@@ -275,7 +275,7 @@ describe('NotesShell', () => {
     window.history.replaceState(null, '', '#/notes');
 
     // Act
-    renderNotesShell();
+    renderNotesChrome();
 
     // Assert
     expect(screen.queryByLabelText('Create new note')).toBeNull();
@@ -286,7 +286,7 @@ describe('NotesShell', () => {
     window.history.replaceState(null, '', '#/notes');
 
     // Act
-    renderNotesShell();
+    renderNotesChrome();
 
     // Assert
     expect(screen.queryByRole('heading', { name: 'Notes' })).toBeNull();
@@ -297,7 +297,7 @@ describe('NotesShell', () => {
     window.history.replaceState(null, '', '/notes');
 
     // Act
-    renderNotesShell();
+    renderNotesChrome();
 
     // Assert
     expect(screen.getByTestId(PANEL_CHILD_TEST_ID)).toBeTruthy();

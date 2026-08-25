@@ -9,7 +9,7 @@ import {
   NOTA_PRESS_SCALE,
   NOTA_PRESSABLE_CLASS,
   NOTA_SAVE_PULSE_CLASS,
-  NOTA_SHELL_NAV_ITEM_CLASS,
+  NOTA_CHROME_NAV_ITEM_CLASS,
   NOTA_SIDEBAR_ROW_CLASS,
 } from '@nota/nota-motion-ui/interaction';
 
@@ -45,9 +45,9 @@ const commandPalette = readFileSync(
 // Arrange: exported class tokens and styles.css hooks
 // Act + Assert: micro-interactions stay discoverable and respect reduced motion
 describe('nota-interaction', () => {
-  it('exports stable class names for shell micro-interactions', () => {
+  it('exports stable class names for chrome micro-interactions', () => {
     expect(NOTA_PRESSABLE_CLASS).toBe('nota-pressable');
-    expect(NOTA_SHELL_NAV_ITEM_CLASS).toBe('nota-shell-nav-item');
+    expect(NOTA_CHROME_NAV_ITEM_CLASS).toBe('nota-chrome-nav-item');
     expect(NOTA_SIDEBAR_ROW_CLASS).toBe('nota-sidebar-row');
     expect(NOTA_SAVE_PULSE_CLASS).toBe('nota-save-pulse');
     expect(NOTA_CMDK_ITEM_CLASS).toBe('nota-cmdk-item');
@@ -64,7 +64,7 @@ describe('nota-interaction', () => {
   it('defines asymmetric press-only feedback and reduced-motion guards in styles.css', () => {
     for (const className of [
       NOTA_PRESSABLE_CLASS,
-      NOTA_SHELL_NAV_ITEM_CLASS,
+      NOTA_CHROME_NAV_ITEM_CLASS,
       NOTA_SIDEBAR_ROW_CLASS,
       NOTA_SAVE_PULSE_CLASS,
       NOTA_CMDK_ITEM_CLASS,

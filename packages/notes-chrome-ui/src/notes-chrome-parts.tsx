@@ -13,14 +13,14 @@ import {
 } from '@nota/nota-motion-ui/panel-motion';
 import {
   NOTA_PRESSABLE_CLASS,
-  NOTA_SHELL_NAV_ITEM_CLASS,
+  NOTA_CHROME_NAV_ITEM_CLASS,
 } from '@nota/nota-motion-ui/interaction';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
 import {
   NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX,
   NOTA_SIDEBAR_RAIL_WIDTH_PX,
 } from '@nota/nota-motion-ui/motion';
-import { notesSidebarChrome } from '@nota/notes-chrome-core/shell-chrome';
+import { notesSidebarChrome } from '@nota/notes-chrome-core/notes-chrome';
 import {
   NOTA_CHROME_CONTROL_COMPACT_CLASS,
   NOTA_SECTION_HEAD_CLASS,
@@ -93,7 +93,7 @@ export function SidebarToggle({
 }
 
 /** One footer nav destination, rendered as a full row or as an icon-rail button. */
-export type ShellNavItem = {
+export type ChromeNavItem = {
   key: string;
   href: string;
   label: string;
@@ -105,17 +105,17 @@ export type ShellNavItem = {
  * Footer nav links. `collapsed` renders the icon-only rail variant (tooltip
  * carries the label) so the expanded and collapsed sidebars stay one list.
  */
-export function ShellNavLinks({
+export function ChromeNavLinks({
   items,
   collapsed = false,
 }: {
-  items: ShellNavItem[];
+  items: ChromeNavItem[];
   collapsed?: boolean;
 }): JSX.Element {
   return (
     <div
       className={cn('flex flex-col gap-3', collapsed && 'items-center gap-1')}
-      data-slot="shell-nav"
+      data-slot="chrome-nav"
     >
       {items.map((item) => {
         const link = (
@@ -123,12 +123,12 @@ export function ShellNavLinks({
             href={item.href}
             aria-current={item.active ? 'page' : undefined}
             aria-label={collapsed ? item.label : undefined}
-            data-slot="shell-nav-item"
+            data-slot="chrome-nav-item"
             onClick={() => {
               markNavIntent('pointer');
             }}
             className={cn(
-              NOTA_SHELL_NAV_ITEM_CLASS,
+              NOTA_CHROME_NAV_ITEM_CLASS,
               NOTA_PRESSABLE_CLASS,
               'flex items-center rounded-md text-sm',
               collapsed ? 'size-9 justify-center' : 'gap-2 px-3 py-2',
@@ -173,7 +173,7 @@ export const NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS = 80;
 export function SidebarIconRail({
   items,
 }: {
-  items: ShellNavItem[];
+  items: ChromeNavItem[];
 }): JSX.Element {
   const isElectron = useIsElectron();
   const [pointerOver, setPointerOver] = useState(false);
@@ -257,14 +257,14 @@ export function SidebarIconRail({
       >
         <SidebarToggle />
         <div className="mt-auto pt-4">
-          <ShellNavLinks items={items} collapsed />
+          <ChromeNavLinks items={items} collapsed />
         </div>
       </div>
     </div>
   );
 }
 
-export function ShellPanel({
+export function ChromePanel({
   active,
   panelId,
   children,

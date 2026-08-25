@@ -54,7 +54,7 @@
   }
 }
 
-/* Main ShellPanel enter :  pointer intent only (≤180ms). Keyboard / history = instant. */
+/* Main ChromePanel enter: pointer intent only (≤180ms). Keyboard / history = instant. */
 @keyframes nota-panel-enter-fade {
   from {
     opacity: 0;
@@ -255,7 +255,7 @@
   }
 }
 
-.nota-shell-nav-item {
+.nota-chrome-nav-item {
   transition:
     background-color 200ms var(--ease-out),
     color 200ms var(--ease-out);
@@ -1283,7 +1283,7 @@ html.nota-electron .nota-notes-root {
 }
 
 /*
- * Notes shell: users who disable transparency (macOS / Windows) should get solid surfaces
+ * Notes chrome: users who disable transparency (macOS / Windows) should get solid surfaces
  * instead of backdrop blur. Unlayered so these override Tailwind backdrop utilities.
  */
 @media (prefers-reduced-transparency: reduce) {

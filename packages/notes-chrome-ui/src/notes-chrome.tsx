@@ -12,7 +12,7 @@ import {
   notesMainChrome,
   notesSidebarChrome,
   notesStickyTitleChrome,
-} from '@nota/notes-chrome-core/shell-chrome';
+} from '@nota/notes-chrome-core/notes-chrome';
 import { cn } from '@nota/design/utils';
 import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
 import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
@@ -28,7 +28,7 @@ import {
   useSyncClerkDisplayName,
 } from '@nota/note-runtime/use-sync-user-preferences';
 import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { useNotesSidebarShellMotion } from '@nota/nota-motion-ui/use-notes-sidebar-shell-motion';
+import { useNotesSidebarMotion } from '@nota/nota-motion-ui/use-notes-sidebar-motion';
 import { useNotesSidebarResize } from '@nota/nota-motion-ui/use-notes-sidebar-resize';
 import { hasJournalNotes } from '@nota/note-journal-core/notes';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
@@ -38,7 +38,7 @@ import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigati
 import {
   pathForScreen,
   replaceScreen,
-  type NotesShellPanel,
+  type NotesPanel,
 } from '@nota/app-navigation-core/navigation';
 import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
 import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
@@ -50,11 +50,11 @@ import { StudyRecordingUploadWarningBanner } from '@nota/note-capture-ui/study-r
 import { useAudioNotePendingDrain } from '@nota/note-capture-ui/use-audio-note-pending-drain';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
-  ShellNavLinks,
+  ChromeNavLinks,
   SidebarIconRail,
   SidebarToggle,
-  type ShellNavItem,
-} from './notes-shell-parts';
+  type ChromeNavItem,
+} from './notes-chrome-parts';
 import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-resize-handle';
 
 /**
@@ -63,14 +63,13 @@ import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-res
  * `(protected)/notes/layout.tsx`; the active panel is the route `children`, so the
  * sidebar never remounts while the main content is a real page route.
  */
-type NotesShellProps = {
+type NotesChromeProps = {
   children: ReactNode;
 };
 
-export function NotesShell({ children }: NotesShellProps): JSX.Element {
+export function NotesChrome({ children }: NotesChromeProps): JSX.Element {
   const screen = useAppNavigationScreen();
-  const panel: NotesShellPanel =
-    screen.kind === 'notes' ? screen.panel : 'list';
+  const panel: NotesPanel = screen.kind === 'notes' ? screen.panel : 'list';
   const routeNoteId =
     screen.kind === 'notes' && screen.panel === 'note' ? screen.noteId : null;
 
@@ -92,11 +91,11 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   } = useNotesData();
   const { open, widthPx, setSidebarWidthPx } = useNotesSidebarStore();
   const { user } = useRootLoaderData();
-  const shellReady = !loading;
-  const paywalled = Boolean(user && shellReady && !notaProEntitled);
+  const chromeReady = !loading;
+  const paywalled = Boolean(user && chromeReady && !notaProEntitled);
   const showVaultLoading = Boolean(user?.id && loading);
   const sidebarChromeMounted = !paywalled && !showVaultLoading;
-  const { asideRef, railRef } = useNotesSidebarShellMotion({
+  const { asideRef, railRef } = useNotesSidebarMotion({
     open,
     widthPx,
     mounted: sidebarChromeMounted,
@@ -134,19 +133,19 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
     notaProEntitled,
   );
 
-  useNotesHistoryShortcut(user?.id, shellReady);
-  useNotesSidebarShortcut(user?.id, shellReady);
-  useSettingsShortcut(user?.id, shellReady);
-  useNotaZoomShortcut(user?.id, shellReady);
+  useNotesHistoryShortcut(user?.id, chromeReady);
+  useNotesSidebarShortcut(user?.id, chromeReady);
+  useSettingsShortcut(user?.id, chromeReady);
+  useNotaZoomShortcut(user?.id, chromeReady);
   useTodaysNoteShortcut(
     notes,
     user?.id,
-    openTodaysNoteShortcut && shellReady,
+    openTodaysNoteShortcut && chromeReady,
     notaProEntitled,
   );
   useCreateFolderShortcut(
     user?.id,
-    Boolean(user?.id && shellReady && notaProEntitled),
+    Boolean(user?.id && chromeReady && notaProEntitled),
     () => {
       setFolderCreateOpen(true);
     },
@@ -154,7 +153,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
 
   useEffect(() => {
     function onNewFolderRequest(): void {
-      if (!user?.id || !notaProEntitled || !shellReady) {
+      if (!user?.id || !notaProEntitled || !chromeReady) {
         return;
       }
       setFolderCreateOpen(true);
@@ -170,11 +169,11 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
         onNewFolderRequest,
       );
     };
-  }, [notaProEntitled, shellReady, user?.id]);
+  }, [notaProEntitled, chromeReady, user?.id]);
 
-  useNotesOfflineSync(user?.id, notaProEntitled && shellReady);
+  useNotesOfflineSync(user?.id, notaProEntitled && chromeReady);
 
-  useAudioNotePendingDrain(Boolean(user?.id && notaProEntitled && shellReady));
+  useAudioNotePendingDrain(Boolean(user?.id && notaProEntitled && chromeReady));
 
   useLayoutEffect(() => {
     if (!paywalled) {
@@ -215,7 +214,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
   });
   const showJournalNav = hasJournalNotes(notes);
 
-  const navItems: ShellNavItem[] = [
+  const navItems: ChromeNavItem[] = [
     {
       key: 'graph',
       href: graphHref,
@@ -245,7 +244,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
             label: t('Journal'),
             icon: 'clock',
             active: panel === 'journal',
-          } satisfies ShellNavItem,
+          } satisfies ChromeNavItem,
         ]
       : []),
   ];
@@ -350,7 +349,7 @@ export function NotesShell({ children }: NotesShellProps): JSX.Element {
 
                     {user ? (
                       <footer className="mt-auto shrink-0 border-t border-border/40 p-3">
-                        <ShellNavLinks items={navItems} />
+                        <ChromeNavLinks items={navItems} />
                       </footer>
                     ) : null}
                   </TooltipProvider>

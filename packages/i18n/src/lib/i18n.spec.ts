@@ -92,7 +92,7 @@ describe('i18n', () => {
     expect(newFolder).toBe('New folder');
   });
 
-  it('translates settings and shell chrome for Spanish', () => {
+  it('translates settings and notes chrome for Spanish', () => {
     // Arrange
     const translator = createTranslator('es-ES');
 

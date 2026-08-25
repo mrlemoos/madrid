@@ -13,7 +13,7 @@ export {
 } from '@nota/design/motion-tokens';
 
 export const NOTA_PRESSABLE_CLASS = 'nota-pressable';
-export const NOTA_SHELL_NAV_ITEM_CLASS = 'nota-shell-nav-item';
+export const NOTA_CHROME_NAV_ITEM_CLASS = 'nota-chrome-nav-item';
 export const NOTA_SIDEBAR_ROW_CLASS = 'nota-sidebar-row';
 export const NOTA_SAVE_PULSE_CLASS = 'nota-save-pulse';
 export const NOTA_CMDK_ITEM_CLASS = 'nota-cmdk-item';

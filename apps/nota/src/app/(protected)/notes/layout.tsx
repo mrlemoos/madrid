@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, type JSX, type ReactNode } from 'react';
-import { NotesShell } from '@nota/notes-chrome-ui/notes-shell';
+import { NotesChrome } from '@nota/notes-chrome-ui/notes-chrome';
 import {
   NotesDataProvider,
   type NotesDataProviderPorts,
@@ -34,7 +34,7 @@ const notesDataPorts: NotesDataProviderPorts = {
 
 /**
  * Shared layout for the whole notes workspace. Hosts the data provider, command
- * palette, and the persistent `NotesShell` chrome (sidebar + footer); the active
+ * palette, and the persistent `NotesChrome` chrome (sidebar + footer); the active
  * panel is the child route (`page.tsx`), which is the only thing that swaps on nav.
  */
 export default function NotesLayout({
@@ -64,7 +64,7 @@ export default function NotesLayout({
       <ElectronWindowDragBand />
       <NotesDataProvider ports={notesDataPorts}>
         <SignedInCommandPalette />
-        <NotesShell>{children}</NotesShell>
+        <NotesChrome>{children}</NotesChrome>
       </NotesDataProvider>
     </div>
   );

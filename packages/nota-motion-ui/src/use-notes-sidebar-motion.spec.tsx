@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MockInstance } from 'vitest';
 import type { JSX } from 'react';
 import { gsap, NOTA_SIDEBAR_RAIL_WIDTH_PX } from './nota-motion';
-import { useNotesSidebarShellMotion } from './use-notes-sidebar-shell-motion';
+import { useNotesSidebarMotion } from './use-notes-sidebar-motion';
 
 type FrameCallback = FrameRequestCallback;
 
@@ -46,7 +46,7 @@ function Harness(props: {
   widthPx: number;
   mounted: boolean;
 }): JSX.Element {
-  const { asideRef, railRef } = useNotesSidebarShellMotion(props);
+  const { asideRef, railRef } = useNotesSidebarMotion(props);
   return (
     <aside ref={asideRef}>
       <div ref={railRef} />
@@ -62,7 +62,7 @@ function findRail(container: HTMLElement): HTMLElement {
   return rail;
 }
 
-describe('useNotesSidebarShellMotion', () => {
+describe('useNotesSidebarMotion', () => {
   let setSpy: MockInstance<typeof gsap.set>;
 
   beforeEach(() => {

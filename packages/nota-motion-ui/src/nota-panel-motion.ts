@@ -26,7 +26,7 @@ export const NOTA_PANEL_FADE_MS = resolveNotaMotion({
 /** Optional enter blur for pointer fades (≤2px). */
 export const NOTA_PANEL_FADE_BLUR_PX = 2;
 
-/** CSS class applied by ShellPanel on pointer enter. */
+/** CSS class applied by ChromePanel on pointer enter. */
 export const NOTA_PANEL_FADE_CLASS = 'nota-panel-enter-fade';
 
 const NAV_INTENT_ATTR = 'data-nav-intent';
@@ -124,7 +124,7 @@ export function createNavIntentRegister(
   };
 }
 
-/** Shared app-wide register instance (producers stamp, ShellPanel consumes). */
+/** Shared app-wide register instance (producers stamp, ChromePanel consumes). */
 export const navIntentRegister = createNavIntentRegister();
 
 /**

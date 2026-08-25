@@ -4,7 +4,7 @@ import { cn } from '@nota/design/utils';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
 import {
   NOTA_PRESSABLE_CLASS,
-  NOTA_SHELL_NAV_ITEM_CLASS,
+  NOTA_CHROME_NAV_ITEM_CLASS,
 } from '@nota/nota-motion-ui/interaction';
 import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
 import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
@@ -63,7 +63,7 @@ export function NoteBacklinksPanel({
                     markNavIntent('pointer');
                   }}
                   className={cn(
-                    NOTA_SHELL_NAV_ITEM_CLASS,
+                    NOTA_CHROME_NAV_ITEM_CLASS,
                     NOTA_PRESSABLE_CLASS,
                     'block rounded-md px-2 py-1.5 text-sm',
                     isActive

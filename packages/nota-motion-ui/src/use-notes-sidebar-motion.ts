@@ -25,7 +25,7 @@ type NotaSidebarRailMotionTargets = {
 };
 
 /**
- * Layout width for the notes shell sidebar clip (instant snap, not tweened).
+ * Layout width for the notes chrome sidebar clip (instant snap, not tweened).
  * Collapsed clip is zero — the icon rail overlays the note on hover.
  */
 function clipLayout(open: boolean, widthPx: number): NotaSidebarClipLayout {
@@ -47,31 +47,31 @@ function railTargets(
 }
 
 /**
- * Critically damped shell spring for sidebar open/close.
+ * Critically damped sidebar spring (`NOTA_SPRING_PRESETS.shell`) for open/close.
  * Animate compositor `x`/`opacity` only — never layout width under load.
  */
-function shellSpringConfig(): CriticallyDampedSpringConfig {
-  const shell = NOTA_SPRING_PRESETS.shell;
-  return createCriticallyDampedSpringConfig(shell.response, shell.damping);
+function sidebarSpringConfig(): CriticallyDampedSpringConfig {
+  const preset = NOTA_SPRING_PRESETS.shell;
+  return createCriticallyDampedSpringConfig(preset.response, preset.damping);
 }
 
-export type NotesSidebarShellMotion = {
+export type NotesSidebarMotion = {
   asideRef: React.RefObject<HTMLElement | null>;
   railRef: React.RefObject<HTMLDivElement | null>;
 };
 
 /**
- * Owns the notes shell sidebar open/close motion end to end: the clip-width
+ * Owns the notes chrome sidebar open/close motion end to end: the clip-width
  * snap, the inner rail spring (interruptible, carrying live position and
  * velocity across a mid-flight toggle), the reduced-motion instant path, and
  * teardown when the sidebar chrome unmounts. Callers attach the returned refs
  * to the `<aside>` clip and its inner rail.
  */
-export function useNotesSidebarShellMotion(params: {
+export function useNotesSidebarMotion(params: {
   open: boolean;
   widthPx: number;
   mounted: boolean;
-}): NotesSidebarShellMotion {
+}): NotesSidebarMotion {
   const { open, widthPx, mounted } = params;
 
   const asideRef = useRef<HTMLElement>(null);
@@ -149,7 +149,7 @@ export function useNotesSidebarShellMotion(params: {
           x: targets.x,
           opacity: targets.opacity,
         },
-        config: shellSpringConfig(),
+        config: sidebarSpringConfig(),
         onUpdate: (values) => {
           gsap.set(rail, { x: values.x, opacity: values.opacity });
           springVelocityRef.current = {

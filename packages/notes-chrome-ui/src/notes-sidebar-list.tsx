@@ -46,7 +46,7 @@ import {
   notesSidebarTreeRowVariants,
 } from '@nota/notes-chrome-core/sidebar-tree-styles';
 import type { Folder, Note, UserPreferences } from '@nota/database-types';
-import type { NotesShellPanel } from '@nota/app-navigation-core/navigation';
+import type { NotesPanel } from '@nota/app-navigation-core/navigation';
 import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
 import { noteHashHref } from '@nota/note-editor-core/note-hash-href';
 import Link from 'next/link';
@@ -78,7 +78,7 @@ import { FolderDeleteDialog } from '@nota/note-folders-ui/folder-delete-dialog';
 type NotesSidebarListProps = {
   notes: Note[];
   folders: Folder[];
-  panel: NotesShellPanel;
+  panel: NotesPanel;
   routeNoteId: string | null;
   userId: string | undefined;
   notaProEntitled: boolean;

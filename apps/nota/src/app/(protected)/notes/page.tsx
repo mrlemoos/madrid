@@ -1,7 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import { NotesIndexPanel } from '@nota/notes-chrome-ui/notes-shell-parts';
+import { NotesIndexPanel } from '@nota/notes-chrome-ui/notes-chrome-parts';
 import { useNotesData } from '@nota/note-runtime/notes-data-context';
 import { useRootLoaderData } from '@nota/note-runtime/session-context';
 import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';

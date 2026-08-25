@@ -44,15 +44,15 @@
       "import": "./src/nota-panel-motion.ts",
       "default": "./src/nota-panel-motion.ts"
     },
-    "./use-notes-sidebar-shell-motion": {
+    "./use-notes-sidebar-motion": {
       "@nota/source": {
-        "types": "./src/use-notes-sidebar-shell-motion.ts",
-        "import": "./src/use-notes-sidebar-shell-motion.ts",
-        "default": "./src/use-notes-sidebar-shell-motion.ts"
+        "types": "./src/use-notes-sidebar-motion.ts",
+        "import": "./src/use-notes-sidebar-motion.ts",
+        "default": "./src/use-notes-sidebar-motion.ts"
       },
-      "types": "./src/use-notes-sidebar-shell-motion.ts",
-      "import": "./src/use-notes-sidebar-shell-motion.ts",
-      "default": "./src/use-notes-sidebar-shell-motion.ts"
+      "types": "./src/use-notes-sidebar-motion.ts",
+      "import": "./src/use-notes-sidebar-motion.ts",
+      "default": "./src/use-notes-sidebar-motion.ts"
     },
     "./use-notes-sidebar-resize": {
       "@nota/source": {

@@ -1,5 +1,5 @@
 /**
- * Frosted note surface when a banner image is shown behind the notes shell.
+ * Frosted note surface when a banner image is shown behind the notes chrome.
  * Main panel chrome stays transparent; this card carries readability.
  */
 export const noteBannerNoteSurfaceClass =

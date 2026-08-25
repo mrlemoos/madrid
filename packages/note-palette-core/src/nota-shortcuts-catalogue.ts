@@ -19,8 +19,8 @@ export type ShortcutCatalogSection = {
 
 export const NOTA_SHORTCUT_SECTIONS: ShortcutCatalogSection[] = [
   {
-    id: 'shell',
-    title: 'Notes shell',
+    id: 'chrome',
+    title: 'Workspace',
     rows: [
       {
         description: 'Open or close command palette',

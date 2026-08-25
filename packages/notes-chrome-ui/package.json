@@ -4,25 +4,25 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./notes-shell": {
+    "./notes-chrome": {
       "@nota/source": {
-        "types": "./src/notes-shell.tsx",
-        "import": "./src/notes-shell.tsx",
-        "default": "./src/notes-shell.tsx"
+        "types": "./src/notes-chrome.tsx",
+        "import": "./src/notes-chrome.tsx",
+        "default": "./src/notes-chrome.tsx"
       },
-      "types": "./src/notes-shell.tsx",
-      "import": "./src/notes-shell.tsx",
-      "default": "./src/notes-shell.tsx"
+      "types": "./src/notes-chrome.tsx",
+      "import": "./src/notes-chrome.tsx",
+      "default": "./src/notes-chrome.tsx"
     },
-    "./notes-shell-parts": {
+    "./notes-chrome-parts": {
       "@nota/source": {
-        "types": "./src/notes-shell-parts.tsx",
-        "import": "./src/notes-shell-parts.tsx",
-        "default": "./src/notes-shell-parts.tsx"
+        "types": "./src/notes-chrome-parts.tsx",
+        "import": "./src/notes-chrome-parts.tsx",
+        "default": "./src/notes-chrome-parts.tsx"
       },
-      "types": "./src/notes-shell-parts.tsx",
-      "import": "./src/notes-shell-parts.tsx",
-      "default": "./src/notes-shell-parts.tsx"
+      "types": "./src/notes-chrome-parts.tsx",
+      "import": "./src/notes-chrome-parts.tsx",
+      "default": "./src/notes-chrome-parts.tsx"
     },
     "./notes-sidebar-list": {
       "@nota/source": {

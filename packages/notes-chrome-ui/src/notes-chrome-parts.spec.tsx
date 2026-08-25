@@ -1,12 +1,12 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
-  ShellPanel,
+  ChromePanel,
   SidebarIconRail,
   SidebarToggle,
   NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS,
-  type ShellNavItem,
-} from './notes-shell-parts';
+  type ChromeNavItem,
+} from './notes-chrome-parts';
 import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
 import {
   markNavIntent,
@@ -100,7 +100,7 @@ describe('SidebarToggle', () => {
   });
 });
 
-describe('ShellPanel panel motion', () => {
+describe('ChromePanel panel motion', () => {
   beforeEach(() => {
     resetNavIntent();
     document.documentElement.removeAttribute('data-nav-intent');
@@ -115,17 +115,17 @@ describe('ShellPanel panel motion', () => {
     // Arrange
     markNavIntent('pointer');
     const { rerender, container } = render(
-      <ShellPanel active={false} panelId="nota-panel-graph">
+      <ChromePanel active={false} panelId="nota-panel-graph">
         <span>Graph</span>
-      </ShellPanel>,
+      </ChromePanel>,
     );
 
     // Act
     act(() => {
       rerender(
-        <ShellPanel active={true} panelId="nota-panel-graph">
+        <ChromePanel active={true} panelId="nota-panel-graph">
           <span>Graph</span>
-        </ShellPanel>,
+        </ChromePanel>,
       );
     });
 
@@ -140,17 +140,17 @@ describe('ShellPanel panel motion', () => {
     // Arrange
     markNavIntent('keyboard');
     const { rerender, container } = render(
-      <ShellPanel active={false} panelId="nota-panel-settings">
+      <ChromePanel active={false} panelId="nota-panel-settings">
         <span>Settings</span>
-      </ShellPanel>,
+      </ChromePanel>,
     );
 
     // Act
     act(() => {
       rerender(
-        <ShellPanel active={true} panelId="nota-panel-settings">
+        <ChromePanel active={true} panelId="nota-panel-settings">
           <span>Settings</span>
-        </ShellPanel>,
+        </ChromePanel>,
       );
     });
 
@@ -162,7 +162,7 @@ describe('ShellPanel panel motion', () => {
 });
 
 describe('SidebarIconRail', () => {
-  const items: ShellNavItem[] = [
+  const items: ChromeNavItem[] = [
     {
       key: 'graph',
       href: '/notes/graph',

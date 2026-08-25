@@ -27,7 +27,7 @@ export type AppNavOptions = {
   intent?: NavIntent;
 };
 
-export type NotesShellPanel =
+export type NotesPanel =
   | 'list'
   | 'note'
   | 'graph'
@@ -42,7 +42,7 @@ export type AppNavScreen =
   | { kind: 'signup' }
   | {
       kind: 'notes';
-      panel: NotesShellPanel;
+      panel: NotesPanel;
       /** Set when panel is `note` */
       noteId: string | null;
     };
