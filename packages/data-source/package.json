@@ -257,6 +257,7 @@
   },
   "dependencies": {
     "@nota/database-types": "workspace:*",
+    "@nota/env-nextjs": "workspace:*",
     "@nota/notes-offline": "workspace:*",
     "@nota/notes-offline-core": "workspace:*",
     "@supabase/supabase-js": "catalog:"

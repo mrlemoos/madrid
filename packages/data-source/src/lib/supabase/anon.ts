@@ -1,9 +1,9 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-import { viteEnvString } from '../vite-env';
+import { env } from '@nota/env-nextjs';
 
-const supabaseUrl = viteEnvString('NEXT_PUBLIC_SUPABASE_URL');
-const supabaseAnonKey = viteEnvString('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+const supabaseUrl = env('NEXT_PUBLIC_SUPABASE_URL');
+const supabaseAnonKey = env('NEXT_PUBLIC_SUPABASE_ANON_KEY');
 
 let anonClient: SupabaseClient | null = null;
 

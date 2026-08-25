@@ -1,8 +1,8 @@
 import { useEffect, useState, type ComponentType, type ReactNode } from 'react';
-import { viteEnvString } from '@/lib/vite-env';
+import { env } from '@nota/env-nextjs';
 
 const POSTHOG_OPTIONS = {
-  api_host: viteEnvString('NEXT_PUBLIC_POSTHOG_HOST'),
+  api_host: env('NEXT_PUBLIC_POSTHOG_HOST'),
   defaults: '2026-01-30',
 } as const;
 

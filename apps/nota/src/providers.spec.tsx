@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ReactNode } from 'react';
 import { AppProviders } from './providers';
 
-const viteEnvStringMock = vi.hoisted(() =>
+const envMock = vi.hoisted(() =>
   vi.fn((key: string): string | undefined => {
     if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
       return 'pk_test_placeholder';
@@ -15,25 +15,14 @@ const viteEnvStringMock = vi.hoisted(() =>
   }),
 );
 
-const clerkProviderProps = vi.hoisted(() => ({
-  current: null as Record<string, unknown> | null,
+vi.mock('@nota/env-nextjs', () => ({
+  env: (key: string) => envMock(key),
 }));
 
-vi.mock('./lib/vite-env', () => ({
-  viteEnvString: (key: string) => viteEnvStringMock(key),
-}));
-
-vi.mock('@clerk/react', () => ({
-  ClerkProvider: (props: Record<string, unknown>) => {
-    clerkProviderProps.current = props;
-    return (
-      <div data-testid="clerk-provider">{props.children as ReactNode}</div>
-    );
-  },
-}));
-
-vi.mock('@clerk/ui', () => ({
-  ui: 'mock-clerk-ui',
+vi.mock('./auth', () => ({
+  AuthProvider: ({ children }: { children: ReactNode }) => (
+    <div data-testid="auth-provider">{children}</div>
+  ),
 }));
 
 vi.mock('./components/deferred-posthog-root', () => ({
@@ -102,8 +91,7 @@ vi.mock('@nota/error-boundary/error-boundary', () => ({
 
 describe('AppProviders', () => {
   beforeEach(() => {
-    clerkProviderProps.current = null;
-    viteEnvStringMock.mockImplementation((key: string) => {
+    envMock.mockImplementation((key: string) => {
       if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
         return 'pk_test_placeholder';
       }
@@ -120,7 +108,7 @@ describe('AppProviders', () => {
 
   it('renders children inside the provider stack', () => {
     // Arrange
-    // (default env mock supplies Clerk key)
+    // (AuthProvider stub + default env mock)
 
     // Act
     render(
@@ -131,7 +119,7 @@ describe('AppProviders', () => {
 
     // Assert
     expect(screen.getByText('Nota child')).toBeTruthy();
-    expect(screen.getByTestId('clerk-provider')).toBeTruthy();
+    expect(screen.getByTestId('auth-provider')).toBeTruthy();
     expect(screen.getByTestId('posthog-root')).toBeTruthy();
     expect(screen.getByTestId('theme-provider')).toBeTruthy();
     expect(screen.getByTestId('app-session-provider')).toBeTruthy();
@@ -140,37 +128,7 @@ describe('AppProviders', () => {
     expect(screen.getByTestId('error-boundary')).toBeTruthy();
   });
 
-  it('throws when NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is missing', async () => {
-    // Arrange
-    viteEnvStringMock.mockImplementation((key: string) => {
-      if (key === 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY') {
-        return undefined;
-      }
-      if (key === 'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN') {
-        return 'ph_test_token';
-      }
-      return undefined;
-    });
-    vi.resetModules();
-    const { AppProviders: AppProvidersWithoutKey } = await import(
-      './providers'
-    );
-
-    // Act
-    const renderWithoutKey = () =>
-      render(
-        <AppProvidersWithoutKey>
-          <span>child</span>
-        </AppProvidersWithoutKey>,
-      );
-
-    // Assert
-    expect(renderWithoutKey).toThrow(
-      'Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY',
-    );
-  });
-
-  it('configures ClerkProvider for path-routed auth and Mac deep links', () => {
+  it('passes PostHog token and theme defaults through the stack', () => {
     // Act
     render(
       <AppProviders>
@@ -179,17 +137,6 @@ describe('AppProviders', () => {
     );
 
     // Assert
-    expect(clerkProviderProps.current).toMatchObject({
-      ui: 'mock-clerk-ui',
-      publishableKey: 'pk_test_placeholder',
-      signInUrl: '/signin',
-      signUpUrl: '/signup',
-      signInForceRedirectUrl: '/notes',
-      signUpForceRedirectUrl: '/notes',
-      allowedRedirectProtocols: ['nota:'],
-    });
-    expect(clerkProviderProps.current?.routerPush).toBeTypeOf('function');
-    expect(clerkProviderProps.current?.routerReplace).toBeTypeOf('function');
     expect(
       screen.getByTestId('posthog-root').getAttribute('data-api-key'),
     ).toBe('ph_test_token');

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { viteEnvString } from './vite-env';
+import { env } from '@nota/env-nextjs';
 import { getSupabaseAnonClient } from './supabase/anon';
 
 /** Path prefix for the public shared-note page (matched in `main.tsx`). */
@@ -12,7 +12,7 @@ export const SHARED_NOTE_PATH_PREFIX = '/s/';
  * current origin in the browser (dev + web).
  */
 function shareOrigin(): string {
-  const configured = viteEnvString('NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN');
+  const configured = env('NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN');
   if (configured) {
     return configured.replace(/\/$/, '');
   }

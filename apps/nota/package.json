@@ -28,6 +28,7 @@
     "@nota/editor": "workspace:*",
     "@nota/electron-bridge-core": "workspace:*",
     "@nota/electron-bridge-ui": "workspace:*",
+    "@nota/env-nextjs": "workspace:*",
     "@nota/error-boundary": "workspace:*",
     "@nota/helper-hooks": "workspace:*",
     "@nota/i18n": "workspace:*",

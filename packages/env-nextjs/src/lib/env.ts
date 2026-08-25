@@ -1,7 +1,3 @@
-// TODO(modularize): de-dupe with apps/nota/src/lib/vite-env.ts. Each web package currently
-// reads `import.meta.env` locally (see packages/data-source/src/lib/vite-env.ts); fold these
-// into one shared web env helper when a home for it exists.
-
 /**
  * Typed read of a public client env var. Reads Next.js `NEXT_PUBLIC_*` literals
  * first (statically inlined at build), then falls back to Vite `import.meta.env`
@@ -19,7 +15,7 @@ const NEXT_PUBLIC_ENV: Record<string, string | undefined> = {
     process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
 };
 
-export function viteEnvString(key: string): string | undefined {
+export function env(key: string): string | undefined {
   const fromNext = NEXT_PUBLIC_ENV[key];
   if (typeof fromNext === 'string' && fromNext.length > 0) {
     return fromNext;

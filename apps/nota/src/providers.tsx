@@ -1,9 +1,7 @@
 'use client';
 
-import { ClerkProvider } from '@clerk/react';
-import { ui } from '@clerk/ui';
+import { useEffect, StrictMode, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { StrictMode, useEffect, type ReactNode } from 'react';
 import { setAppRouterNav } from '@nota/app-navigation-core/navigation';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
 import { ErrorBoundary } from '@nota/error-boundary/error-boundary';
@@ -12,13 +10,10 @@ import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
 import { NoteEditorCommandsProvider } from '@nota/editor';
 import { StickyDocTitleProvider } from '@nota/note-runtime/sticky-doc-title';
 import { AppSessionProvider } from '@nota/note-runtime/session-context';
-import { viteEnvString } from './lib/vite-env';
+import { AuthProvider } from './auth';
+import { env } from '@nota/env-nextjs';
 
-const POSTHOG_PROJECT_TOKEN = viteEnvString(
-  'NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN',
-);
-const clerkPublishableKey =
-  viteEnvString('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY')?.trim() ?? '';
+const POSTHOG_PROJECT_TOKEN = env('NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN');
 
 interface AppProvidersProps {
   children: ReactNode;
@@ -44,28 +39,8 @@ export function AppProviders({ children }: AppProvidersProps) {
     };
   }, [router]);
 
-  if (!clerkPublishableKey) {
-    throw new Error('Missing NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY');
-  }
-
   return (
-    <ClerkProvider
-      ui={ui}
-      publishableKey={clerkPublishableKey}
-      signInUrl="/signin"
-      signUpUrl="/signup"
-      // Path routing: post-auth lands on the real `/notes` route (auth-gated by
-      // the (protected) layout). Relative so it renders on the server too.
-      signInForceRedirectUrl="/notes"
-      signUpForceRedirectUrl="/notes"
-      routerPush={(to) => {
-        router.push(to);
-      }}
-      routerReplace={(to) => {
-        router.replace(to);
-      }}
-      allowedRedirectProtocols={['nota:']}
-    >
+    <AuthProvider>
       <StrictMode>
         <DeferredPostHogRoot apiKey={POSTHOG_PROJECT_TOKEN}>
           <ClerkSupabaseBridge>
@@ -81,6 +56,6 @@ export function AppProviders({ children }: AppProvidersProps) {
           </ClerkSupabaseBridge>
         </DeferredPostHogRoot>
       </StrictMode>
-    </ClerkProvider>
+    </AuthProvider>
   );
 }
