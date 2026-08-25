@@ -22,6 +22,33 @@ describe('Tooltip (named exports)', () => {
   });
 });
 
+describe('TooltipPositioner (default layering)', () => {
+  it('applies the shared popover z-index to the positioner', () => {
+    // Arrange
+    const { baseElement } = render(
+      <TooltipProvider delay={0}>
+        <Tooltip defaultOpen>
+          <TooltipTrigger render={<span>Anchor</span>} />
+          <TooltipPortal>
+            <TooltipPositioner side="top" sideOffset={6}>
+              <TooltipPopup>Test label</TooltipPopup>
+            </TooltipPositioner>
+          </TooltipPortal>
+        </Tooltip>
+      </TooltipProvider>,
+    );
+
+    // Act
+    const popup = within(baseElement).getByText('Test label', { exact: true });
+    const positioner = popup.parentElement;
+
+    // Assert — z on positioner (portal root), not only popup, so chrome stacks above sidebar
+    expect(positioner?.className.split(/\s+/).filter(Boolean)).toContain(
+      'z-50',
+    );
+  });
+});
+
 describe('TooltipPopup (default popover styles)', () => {
   it('applies the shared nota popover class tokens on TooltipPopup', () => {
     // Arrange|Act: defaultOpen avoids flaky hover simulation in JSDOM
@@ -43,7 +70,6 @@ describe('TooltipPopup (default popover styles)', () => {
     const surface = popup.closest('div') ?? popup;
     const classes = surface.className.split(/\s+/).filter(Boolean);
     for (const token of [
-      'z-100',
       'max-w-xs',
       'rounded-md',
       'border',

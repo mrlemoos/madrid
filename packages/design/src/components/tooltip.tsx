@@ -38,7 +38,7 @@ export type TooltipPositionerProps = ComponentProps<
 export type TooltipPopupProps = ComponentProps<typeof BaseTooltip.Popup>;
 
 const DEFAULT_NOTA_TOOLTIP_POPUP_CLASS = cn(
-  'z-100 max-w-xs rounded-md border border-border bg-popover px-2 py-1',
+  'max-w-xs rounded-md border border-border bg-popover px-2 py-1',
   'text-popover-foreground text-xs shadow-md',
   NOTA_TOOLTIP_MOTION_CLASS,
 );
@@ -67,9 +67,26 @@ export const TooltipPortal = BaseTooltip.Portal;
 /**
  * Positions the popup relative to the trigger (Base UI `Tooltip.Positioner`).
  *
+ * @remarks
+ * Applies `z-50` on the positioner (same layer as dialogs / context menus) so
+ * portaled tips stack above shell chrome that creates its own stacking context
+ * (e.g. notes sidebar `backdrop-filter` / Electron `z-[35]`).
+ *
  * @see {@link https://base-ui.com/react/components/tooltip | Base UI Tooltip}
  */
-export const TooltipPositioner = BaseTooltip.Positioner;
+export function TooltipPositioner({
+  className,
+  ref,
+  ...props
+}: TooltipPositionerProps) {
+  return (
+    <BaseTooltip.Positioner
+      ref={ref}
+      className={cn('z-50', className)}
+      {...props}
+    />
+  );
+}
 
 /**
  * Scoped delay provider for nested tooltips.

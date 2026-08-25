@@ -83,7 +83,7 @@ export function SidebarToggle({
           }
         />
         <TooltipPortal>
-          <TooltipPositioner side="bottom" sideOffset={6}>
+          <TooltipPositioner side="right" sideOffset={6}>
             <TooltipPopup>{label}</TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>

@@ -71,6 +71,21 @@ describe('SidebarToggle', () => {
     expect(await screen.findByText('Close sidebar')).toBeTruthy();
   });
 
+  it('anchors the Close sidebar tooltip to the right of the toggle', async () => {
+    // Arrange — tip must clear the sidebar rail (not paint under glass on side=bottom)
+    useNotesSidebarStore.setState({ open: true });
+    render(<SidebarToggle />);
+    const button = screen.getByRole('button', { name: 'Close sidebar' });
+
+    // Act
+    fireEvent.focus(button);
+    const label = await screen.findByText('Close sidebar');
+    const positioner = label.parentElement;
+
+    // Assert
+    expect(positioner?.getAttribute('data-side')).toBe('right');
+  });
+
   it('shows an Open sidebar tooltip when the sidebar is closed', async () => {
     // Arrange
     useNotesSidebarStore.setState({ open: false });
