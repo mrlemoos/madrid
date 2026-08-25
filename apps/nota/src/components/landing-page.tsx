@@ -1,79 +1,47 @@
 'use client';
 
 import type { JSX } from 'react';
-import { Icon } from '@nota/design/icon';
 import { cn } from '@/lib/utils';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from '@nota/design/card';
+import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
 import { AuthScreenHashLink } from '@/components/auth-screen-hash-link';
-import { CartoonLandscape } from '@/components/cartoon-landscape';
-import { NotaLogo } from '@/components/nota-logo';
+import { SignedOutStage } from '@/components/signed-out-stage';
+import { captureAuthCardOrigin } from '@/lib/auth-card-origin';
 
 export function LandingPage(): JSX.Element {
-  return (
-    <main
-      id="main-content"
-      className={cn(
-        'relative isolate flex min-h-0 flex-1 h-dvh overflow-y-auto items-center justify-center px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))]',
-      )}
-    >
-      <div className="absolute inset-0 z-0">
-        <CartoonLandscape className="size-full" />
-      </div>
+  const { noDrag } = electronWindowDragClasses();
 
-      <div className="relative z-10 w-full max-w-md">
-        <Card
-          className={cn(
-            'border-border/50 bg-background/70 shadow-lg backdrop-blur-xl ring-1 ring-border/40',
-          )}
+  return (
+    <SignedOutStage contentClassName="contents">
+      <div
+        data-nota-landing-cta
+        className={cn(
+          noDrag,
+          'absolute z-10 flex w-max max-w-[min(100%,20rem)] flex-col items-end gap-2.5',
+          'right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1.5rem,env(safe-area-inset-bottom))]',
+          'sm:right-8 sm:bottom-8',
+        )}
+      >
+        <p className="text-right text-sm/relaxed text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
+          New here?{' '}
+          <AuthScreenHashLink
+            target="signup"
+            className="h-auto p-0 text-sm text-white underline underline-offset-4 hover:text-white"
+          >
+            Create an account
+          </AuthScreenHashLink>
+        </p>
+        <AuthScreenHashLink
+          target="login"
+          variant="default"
+          size="lg"
+          className="h-10 touch-manipulation justify-center px-4 text-center text-base"
+          onClick={(event) => {
+            captureAuthCardOrigin(event.currentTarget);
+          }}
         >
-          <CardHeader className="text-center">
-            <div className="mb-3 flex justify-center">
-              <NotaLogo className="size-14" />
-            </div>
-            <h1
-              className="text-balance text-2xl font-normal leading-tight sm:text-3xl"
-              style={{ fontFamily: '"Instrument Serif", serif' }}
-            >
-              Think clearly. Write slowly.
-            </h1>
-            <CardDescription className="text-pretty">
-              A quiet space for your thoughts, away from the noise.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            <AuthScreenHashLink
-              target="login"
-              variant="default"
-              size="lg"
-              className={cn(
-                'h-10 w-full touch-manipulation justify-center text-center',
-              )}
-            >
-              Continue with email
-              <span data-icon="inline-end" aria-hidden className="inline-flex">
-                <Icon name="arrow-narrow-right" size={16} />
-              </span>
-            </AuthScreenHashLink>
-          </CardContent>
-          <CardFooter className="justify-center border-t border-border/40 pt-4">
-            <p className="text-center text-muted-foreground text-xs/relaxed">
-              New here?{' '}
-              <AuthScreenHashLink
-                target="signup"
-                className="text-xs underline-offset-4"
-              >
-                Create an account
-              </AuthScreenHashLink>
-            </p>
-          </CardFooter>
-        </Card>
+          Continue with email
+        </AuthScreenHashLink>
       </div>
-    </main>
+    </SignedOutStage>
   );
 }

@@ -71,6 +71,15 @@ describe('NotaClerk auth', () => {
       'unsafe_disableDevelopmentModeWarnings: true',
     );
     const flattensClerkCard = source.includes('colorBackground:');
+    const hidesSymbolArrow = source.includes("formButtonPrimary: 'Continue'");
+    const hidesClerkButtonIcon = source.includes('formButtonPrimaryIcon:');
+    const skipsContinueIconClass = !source.includes(
+      'nota-auth-primary-with-icon',
+    );
+    const largerPrimaryType = source.includes(
+      'nota-pressable nota-auth-continue h-10 w-full touch-manipulation text-base',
+    );
+    const usesThemeRadius = source.includes("borderRadius: 'var(--radius-md)'");
 
     // Assert
     expect(usesShadcnTheme).toBe(true);
@@ -79,5 +88,50 @@ describe('NotaClerk auth', () => {
     expect(hidesClerkLogo).toBe(true);
     expect(disablesDevBadge).toBe(true);
     expect(flattensClerkCard).toBe(true);
+    expect(hidesSymbolArrow).toBe(true);
+    expect(hidesClerkButtonIcon).toBe(true);
+    expect(skipsContinueIconClass).toBe(true);
+    expect(largerPrimaryType).toBe(true);
+    expect(usesThemeRadius).toBe(true);
+  });
+
+  it('hides Clerk Continue icons and does not draw a replacement arrow', () => {
+    // Arrange
+    const thisDir = dirname(fileURLToPath(import.meta.url));
+    const css = readFileSync(resolve(thisDir, 'nota-clerk-auth.css'), 'utf8');
+
+    // Act
+    const hidesTriangle = css.includes('.cl-buttonArrowIcon');
+    const drawsStrokeArrow = css.includes('nota-auth-primary-with-icon::after');
+    const drawsMaskArrow = css.includes("stroke-linecap='round'");
+
+    // Assert
+    expect(hidesTriangle).toBe(true);
+    expect(drawsStrokeArrow).toBe(false);
+    expect(drawsMaskArrow).toBe(false);
+  });
+
+  it('draws a liquid-metal Continue border on hover and focus', () => {
+    // Arrange
+    const thisDir = dirname(fileURLToPath(import.meta.url));
+    const css = readFileSync(resolve(thisDir, 'nota-clerk-auth.css'), 'utf8');
+
+    // Act
+    const declaresMetalAngle = css.includes('--nota-metal-angle');
+    const spinsMetal = css.includes('@keyframes nota-liquid-metal');
+    const hoverShowsMetal = css.includes('.nota-auth-continue:hover::before');
+    const focusShowsMetal = css.includes(
+      '.nota-auth-continue:focus-visible::before',
+    );
+    const respectsReducedMotion = css.includes(
+      'prefers-reduced-motion: reduce',
+    );
+
+    // Assert
+    expect(declaresMetalAngle).toBe(true);
+    expect(spinsMetal).toBe(true);
+    expect(hoverShowsMetal).toBe(true);
+    expect(focusShowsMetal).toBe(true);
+    expect(respectsReducedMotion).toBe(true);
   });
 });

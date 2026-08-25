@@ -16,4 +16,18 @@ describe('CartoonLandscape', () => {
     expect(img?.getAttribute('src')).toBe('/nota-landscape.png');
     expect(img?.className.split(/\s+/)).not.toContain('grayscale');
   });
+
+  it('leaves the painting unwashed — no full-bleed theme overlay', () => {
+    // Arrange
+    const ui = <CartoonLandscape />;
+
+    // Act
+    const { container } = render(ui);
+    const overlay = [...container.querySelectorAll('*')].some((el) =>
+      String(el.getAttribute('class') ?? '').includes('bg-background/40'),
+    );
+
+    // Assert
+    expect(overlay).toBe(false);
+  });
 });

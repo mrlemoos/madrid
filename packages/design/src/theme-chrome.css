@@ -8,9 +8,9 @@ html.light {
   /* Motion eases + press — keep in sync with motion-tokens.ts */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --nota-press-in-ms: 100ms;
+  --nota-press-in-ms: 80ms;
   --nota-press-out-ms: 160ms;
-  --nota-press-scale: 0.97;
+  --nota-press-scale: 0.96;
   /* Spring response (seconds as time) — damping lives in motion-tokens.ts */
   --nota-spring-shell-response: 0.3s;
   --nota-spring-popover-response: 0.2s;
@@ -21,6 +21,18 @@ html.light {
   --panel-translate-y: 100px;
   --panel-blur: 2px;
   --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Modal open / close + card resize (transitions.dev) */
+  --modal-open-dur: 250ms;
+  --modal-close-dur: 150ms;
+  --modal-scale: 0.96;
+  --modal-scale-close: 0.96;
+  --modal-ease: var(--ease-out);
+  --resize-dur: 300ms;
+  --resize-ease: var(--ease-out);
+  /* Auth card morph from landing email CTA (transitions.dev plus→menu timing) */
+  --morph-open-dur: 350ms;
+  --morph-fade-dur: 200ms;
+  --morph-blur: 2px;
   /* Beam border — work-in-progress surfaces (see [data-busy='true']) */
   --nota-beam-width: 1.5px;
   --nota-beam-duration: 1.6s;
@@ -120,5 +132,116 @@ html:not(.nota-electron) body {
 @media (prefers-reduced-motion: reduce) {
   .t-panel-slide {
     transition: none !important;
+  }
+}
+
+.t-resize {
+  interpolate-size: allow-keywords;
+  transition:
+    width var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+  will-change: width, height;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-resize {
+    transition: none !important;
+  }
+}
+
+.t-modal {
+  transform-origin: center;
+  transform: scale(var(--modal-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--modal-open-dur) var(--modal-ease),
+    opacity var(--modal-open-dur) var(--modal-ease);
+  will-change: transform, opacity;
+}
+.t-modal.is-open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+.t-modal.is-closing {
+  transform: scale(var(--modal-scale-close));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform var(--modal-close-dur) var(--modal-ease),
+    opacity var(--modal-close-dur) var(--modal-ease);
+}
+
+@starting-style {
+  .t-modal.is-open {
+    transform: scale(var(--modal-scale));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-modal {
+    transition: none !important;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @starting-style {
+    .t-modal.is-open {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+
+.t-modal.t-resize {
+  transition:
+    transform var(--modal-open-dur) var(--modal-ease),
+    opacity var(--modal-open-dur) var(--modal-ease),
+    width var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+  will-change: transform, opacity, width, height;
+}
+
+.t-modal[data-from-origin='true'] {
+  transform-origin: top left;
+  opacity: 1;
+  overflow: hidden;
+  transition:
+    transform var(--morph-open-dur) var(--ease-out),
+    border-radius var(--morph-open-dur) var(--ease-out);
+  will-change: transform, border-radius;
+}
+
+@starting-style {
+  .t-modal.is-open[data-from-origin='true'] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.t-modal[data-from-origin='true'] [data-slot='card'] > * {
+  opacity: 0;
+  filter: blur(var(--morph-blur));
+}
+
+.t-modal[data-from-origin='true'][data-origin-play='true']
+  [data-slot='card']
+  > * {
+  opacity: 1;
+  filter: none;
+  transition:
+    opacity var(--morph-fade-dur) var(--ease-out),
+    filter var(--morph-fade-dur) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-modal[data-from-origin='true'],
+  .t-modal[data-from-origin='true'] [data-slot='card'] > * {
+    transition: none !important;
+    filter: none;
+    opacity: 1;
   }
 }

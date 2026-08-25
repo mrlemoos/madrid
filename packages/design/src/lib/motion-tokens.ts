@@ -4,13 +4,13 @@ export const NOTA_EASE_IN_OUT = 'cubic-bezier(0.77, 0, 0.175, 1)';
 
 /**
  * Asymmetric press feedback (ms).
- * Press-in is deliberate and short; release eases out a touch longer.
+ * Press-in is a snap; release eases out a touch longer.
  * Keep in sync with theme-chrome.css `--nota-press-in-ms` / `--nota-press-out-ms`.
  */
-export const NOTA_PRESS_IN_MS = 100;
+export const NOTA_PRESS_IN_MS = 80;
 export const NOTA_PRESS_OUT_MS = 160;
 /** Active scale for pressable chrome — keep in sync with `--nota-press-scale`. */
-export const NOTA_PRESS_SCALE = 0.97;
+export const NOTA_PRESS_SCALE = 0.96;
 
 /**
  * Apple-style spring presets: damping ratio + response (seconds).

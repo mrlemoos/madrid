@@ -1,5 +1,5 @@
 import type { VariantProps } from 'class-variance-authority';
-import type { JSX, ReactNode } from 'react';
+import type { JSX, MouseEvent, ReactNode } from 'react';
 import Link from 'next/link';
 import { buttonVariants } from '@nota/design/button';
 import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
@@ -21,18 +21,21 @@ export function AuthScreenHashLink({
   target,
   className,
   children,
+  onClick,
   variant = 'link',
   size = 'sm',
 }: {
   target: AuthHashTarget;
   className?: string;
   children: ReactNode;
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
 } & AuthScreenHashLinkButtonProps): JSX.Element {
   const href = authPathnameForScreenKind(target);
 
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={cn(
         buttonVariants({ variant, size }),
         variant === 'link' ? 'h-auto p-0 text-sm' : undefined,

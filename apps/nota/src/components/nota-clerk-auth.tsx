@@ -6,6 +6,8 @@ import { buttonVariants } from '@nota/design/button';
 import { LoadingStatus } from '@nota/design/spinner';
 import { cn } from '@/lib/utils';
 
+import './nota-clerk-auth.css';
+
 const authFallback = (
   <div className="py-6">
     <LoadingStatus label="Loading…" spinnerSize="sm" />
@@ -28,8 +30,14 @@ const clerkFieldInput = cn(
 
 const clerkPrimaryButton = cn(
   buttonVariants({ variant: 'default', size: 'lg' }),
-  'nota-pressable h-10 w-full touch-manipulation text-sm',
+  'nota-pressable nota-auth-continue h-10 w-full touch-manipulation text-base',
+  'focus-visible:ring-0',
 );
+
+/** Strip Clerk's "Continue →" glyph; keep the label as plain "Continue". */
+const clerkAuthLocalization = {
+  formButtonPrimary: 'Continue',
+} as const;
 
 /** Nota glass-card auth: shadcn tokens, no nested Clerk card chrome. */
 // Not exported: its inferred type reaches into @clerk/ui internals that can't be
@@ -44,7 +52,7 @@ const notaClerkAuthAppearance = {
     fontFamily: 'var(--font-sans)',
     fontFamilyButtons: 'var(--font-sans)',
     colorBackground: 'transparent',
-    borderRadius: '0.375rem',
+    borderRadius: 'var(--radius-md)',
     spacing: '0.75rem',
   },
   elements: {
@@ -82,6 +90,7 @@ const notaClerkAuthAppearance = {
     formFieldErrorText: 'text-left text-xs text-destructive',
     formFieldHintText: 'text-left text-xs text-muted-foreground',
     formButtonPrimary: clerkPrimaryButton,
+    formButtonPrimaryIcon: 'hidden',
     formButtonReset: cn(
       buttonVariants({ variant: 'ghost', size: 'sm' }),
       'text-muted-foreground',
@@ -121,6 +130,7 @@ export function NotaClerkSignIn(): JSX.Element {
       path="/signin"
       signUpUrl="/signup"
       appearance={notaClerkAuthAppearance}
+      localization={clerkAuthLocalization}
       fallback={authFallback}
     />
   );
@@ -133,6 +143,7 @@ export function NotaClerkSignUp(): JSX.Element {
       path="/signup"
       signInUrl="/signin"
       appearance={notaClerkAuthAppearance}
+      localization={clerkAuthLocalization}
       fallback={authFallback}
     />
   );

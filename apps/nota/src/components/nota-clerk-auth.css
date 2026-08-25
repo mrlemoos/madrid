@@ -1,0 +1,89 @@
+@property --nota-metal-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes nota-liquid-metal {
+  to {
+    --nota-metal-angle: 360deg;
+  }
+}
+
+/* Clerk injects a triangle / arrow icon and a spinner slot on ::after. */
+.nota-auth-clerk .cl-formButtonPrimaryIcon,
+.nota-auth-clerk .cl-buttonArrowIcon {
+  display: none !important;
+}
+
+.nota-auth-clerk .cl-formButtonPrimary::after {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.nota-auth-clerk .cl-formButtonPrimary.nota-auth-continue {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.nota-auth-clerk .cl-formButtonPrimary.nota-auth-continue > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nota-auth-clerk .cl-formButtonPrimary.nota-auth-continue::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  opacity: 0;
+  background: conic-gradient(
+    from var(--nota-metal-angle),
+    #3f3f46 0deg,
+    #d4d4d8 48deg,
+    #fafafa 78deg,
+    #737373 120deg,
+    #e4e4e7 168deg,
+    #a1a1aa 216deg,
+    #f4f4f5 258deg,
+    #52525b 312deg,
+    #3f3f46 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: opacity var(--nota-press-out-ms) var(--ease-out);
+}
+
+.nota-auth-clerk
+  .cl-formButtonPrimary.nota-auth-continue:focus-visible::before {
+  opacity: 1;
+  animation: nota-liquid-metal 1.8s linear infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nota-auth-clerk .cl-formButtonPrimary.nota-auth-continue:hover::before {
+    opacity: 1;
+    animation: nota-liquid-metal 1.8s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nota-auth-clerk
+    .cl-formButtonPrimary.nota-auth-continue:focus-visible::before,
+  .nota-auth-clerk .cl-formButtonPrimary.nota-auth-continue:hover::before {
+    animation: none;
+    --nota-metal-angle: 42deg;
+  }
+}

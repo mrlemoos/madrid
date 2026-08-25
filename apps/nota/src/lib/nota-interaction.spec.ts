@@ -55,9 +55,9 @@ describe('nota-interaction', () => {
 
   it('exports asymmetric press timing constants (press-in faster than release)', () => {
     // Arrange|Act|Assert
-    expect(NOTA_PRESS_IN_MS).toBe(100);
+    expect(NOTA_PRESS_IN_MS).toBe(80);
     expect(NOTA_PRESS_OUT_MS).toBe(160);
-    expect(NOTA_PRESS_SCALE).toBe(0.97);
+    expect(NOTA_PRESS_SCALE).toBe(0.96);
     expect(NOTA_PRESS_IN_MS).toBeLessThan(NOTA_PRESS_OUT_MS);
   });
 

@@ -5,6 +5,7 @@ import { AppProviders } from '@/providers';
 // Fonts via the JS graph (Next bundles the woff2 assets), matching the former
 // Vite `main.tsx` imports. Order preserved.
 import '@fontsource-variable/inter/index.css';
+import '@fontsource-variable/bricolage-grotesque/index.css';
 import '@fontsource/instrument-serif/400.css';
 import '@fontsource-variable/source-serif-4/index.css';
 import '@fontsource/geist-sans/latin.css';

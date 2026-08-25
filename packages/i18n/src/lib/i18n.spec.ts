@@ -124,6 +124,29 @@ describe('i18n', () => {
     expect(cancel).toBe('Annuler');
   });
 
+  it('translates auth card titles', () => {
+    // Arrange
+    const spanish = createTranslator('es-ES');
+    const portuguese = createTranslator('pt-BR');
+    const french = createTranslator('fr-CA');
+
+    // Act
+    const spanishSignIn = spanish.t('Sign in');
+    const portugueseSignUp = portuguese.t('Sign up');
+    const frenchSignIn = french.t('Sign in');
+
+    // Assert
+    expect(spanishSignIn).toBe('Iniciar sesión');
+    expect(portugueseSignUp).toBe('Criar conta');
+    expect(frenchSignIn).toBe('Connexion');
+    expect(spanish.t('Enter your email to sign in.')).toBe(
+      'Introduce tu correo para iniciar sesión.',
+    );
+    expect(portuguese.t('Enter your email to create an account.')).toBe(
+      'Digite seu e-mail para criar uma conta.',
+    );
+  });
+
   it('resolves Canadian locales from system', () => {
     // Arrange
     const systemLocale = ['fr-CA'];

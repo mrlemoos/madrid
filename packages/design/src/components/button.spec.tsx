@@ -22,23 +22,55 @@ describe('Button (smoke)', () => {
   });
 });
 
-describe('Button press asymmetry', () => {
-  it('presses in faster and shallower than the release ease-out', () => {
+describe('Button press feedback', () => {
+  it('presses in on the strong ease-out token, with scale and brightness', () => {
     // Arrange
     const classes = buttonVariants();
 
-    // Act — parse duration tokens from the base CVA string
-    const releaseMs = Number(
-      classes.match(/(?:^|\s)duration-\[(\d+)ms\]/)?.[1] ?? NaN,
+    // Act — press reads CSS tokens so chrome and Button stay in lockstep
+    const usesTokenEase = classes.includes('ease-[var(--ease-out)]');
+    const usesTokenPressOut = classes.includes(
+      'duration-[var(--nota-press-out-ms)]',
     );
-    const pressInMs = Number(
-      classes.match(/active:duration-\[(\d+)ms\]/)?.[1] ?? NaN,
+    const usesTokenPressIn = classes.includes(
+      'motion-safe:active:duration-[var(--nota-press-in-ms)]',
     );
+    const usesTokenScale = classes.includes(
+      'motion-safe:active:scale-[var(--nota-press-scale)]',
+    );
+    const darkensOnPress = classes.includes('active:brightness-[0.92]');
+    const skipsWeakTailwindEase = !/(?:^|\s)ease-out(?:\s|$)/.test(classes);
 
     // Assert
-    expect(classes).toContain('motion-safe:active:scale-[0.97]');
-    expect(releaseMs).toBe(160);
-    expect(pressInMs).toBe(100);
-    expect(pressInMs).toBeLessThan(releaseMs);
+    expect(usesTokenEase).toBe(true);
+    expect(usesTokenPressOut).toBe(true);
+    expect(usesTokenPressIn).toBe(true);
+    expect(usesTokenScale).toBe(true);
+    expect(darkensOnPress).toBe(true);
+    expect(skipsWeakTailwindEase).toBe(true);
+  });
+
+  it('keeps the default fill solid on hover', () => {
+    // Arrange
+    const classes = buttonVariants({ variant: 'default' });
+
+    // Act
+    const fadesFillOnHover = classes.includes('hover:bg-primary/80');
+
+    // Assert
+    expect(fadesFillOnHover).toBe(false);
+  });
+
+  it('does not scale or dim link-styled buttons', () => {
+    // Arrange
+    const classes = buttonVariants({ variant: 'link' });
+
+    // Act
+    const resetsScale = classes.includes('motion-safe:active:scale-100');
+    const resetsBrightness = classes.includes('active:brightness-100');
+
+    // Assert
+    expect(resetsScale).toBe(true);
+    expect(resetsBrightness).toBe(true);
   });
 });

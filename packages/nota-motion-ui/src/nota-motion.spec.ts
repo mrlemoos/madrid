@@ -44,7 +44,7 @@ describe('nota-motion', () => {
 
   it('re-exports press asymmetry and spring presets from design tokens', () => {
     // Arrange / Act / Assert — app consumers import from nota-motion
-    expect(NOTA_PRESS_IN_MS).toBe(100);
+    expect(NOTA_PRESS_IN_MS).toBe(80);
     expect(NOTA_PRESS_OUT_MS).toBe(160);
     expect(NOTA_SPRING_PRESETS.shell).toEqual(NOTA_SPRING_SHELL);
   });
