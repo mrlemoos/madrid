@@ -116,6 +116,36 @@ const chromeScheme = chromeSchemeForThemeColor(themeColor);
         Clarity.init(projectId);
       }
     </script>
+    <script is:inline>
+      /**
+       * Reveal-on-scroll for `[data-reveal]`. Adds the ready class first so
+       * content stays visible when JS never runs or motion is reduced.
+       */
+      (function () {
+        if (
+          !('IntersectionObserver' in window) ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          return;
+        }
+        document.documentElement.classList.add('mkt-reveal-ready');
+        document.addEventListener('DOMContentLoaded', function () {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.setAttribute('data-reveal', 'in');
+                observer.unobserve(entry.target);
+              });
+            },
+            { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+          );
+          document.querySelectorAll('[data-reveal]').forEach(function (node) {
+            observer.observe(node);
+          });
+        });
+      })();
+    </script>
     <slot name="head-extras" />
     <title>{title}</title>
   </head>
