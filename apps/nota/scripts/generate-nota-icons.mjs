@@ -1,15 +1,16 @@
-// Regenerates brand SVG sources + derived rasters from the Didot N mark.
+// Regenerates brand SVG sources + derived rasters from the Madrid M mark.
 //
 // Usage (repo root): `pnpm run generate:nota-icons`
 //
-// Sources (written from `src/lib/nota-n-mark.mjs`):
+// Sources (written from `src/lib/madrid-mark.mjs`):
 // - `../nota-electron/buildResources/icon-light.svg` (dock / .icns / apple-touch)
 // - `../nota-electron/buildResources/icon-dark.svg` (same mark; dock follows nativeTheme)
 // - `public/favicon.svg` (light+dark via prefers-color-scheme; synced to marketing)
+// - `public/madrid-logo.svg` (full-width lockup; synced to marketing)
 //
 // Outputs:
 // - `../nota-electron/buildResources/icon.png` (light dock / .icns source)
-// - `../nota-electron/buildResources/icon.icns` (macOS only, via iconutil)
+// - `../nota-electron/buildResources/icon.icns` (macOS bundle icon)
 // - `../nota-electron/buildResources/icon-dark.png` (1024; Electron dock via nativeTheme)
 // - `public/apple-touch-icon.png` (180×180 from light SVG)
 // - `../nota-marketing/public/favicon.svg` (copy of app favicon)
@@ -18,7 +19,6 @@
 
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -30,7 +30,8 @@ import {
   renderFaviconSvg,
   renderIconDarkSvg,
   renderIconLightSvg,
-} from '../src/lib/nota-n-mark.mjs';
+} from '../src/lib/madrid-mark.mjs';
+import { renderWordmarkSvg } from '../src/lib/madrid-wordmark.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const NOTA_APP_ROOT = path.resolve(__dirname, '..');
@@ -51,21 +52,22 @@ const ICON_DARK_SVG_PATH = path.join(ELECTRON_BUILD_RESOURCES, 'icon-dark.svg');
 const ICON_DARK_PNG_PATH = path.join(ELECTRON_BUILD_RESOURCES, 'icon-dark.png');
 const APPLE_TOUCH_ICON_PATH = path.join(PUBLIC_DIR, 'apple-touch-icon.png');
 const FAVICON_SVG_PATH = path.join(PUBLIC_DIR, 'favicon.svg');
+const WORDMARK_SVG_PATH = path.join(PUBLIC_DIR, 'madrid-logo.svg');
 const ELECTRON_ICON_SIZE_PX = 1024;
 /** macOS 26 Tahoe: ~12% transparent margin per side so opaque pixels avoid squircle jail. */
 export const ELECTRON_ICON_VISIBLE_SCALE = DOCK_ICON_MAX_CONTENT_FILL_RATIO;
 
-const ICONSET_SIZES = [
-  ['icon_16x16.png', 16],
-  ['icon_16x16@2x.png', 32],
-  ['icon_32x32.png', 32],
-  ['icon_32x32@2x.png', 64],
-  ['icon_128x128.png', 128],
-  ['icon_128x128@2x.png', 256],
-  ['icon_256x256.png', 256],
-  ['icon_256x256@2x.png', 512],
-  ['icon_512x512.png', 512],
-  ['icon_512x512@2x.png', 1024],
+const ICNS_PNG_CHUNKS = [
+  ['ic04', 16],
+  ['ic11', 32],
+  ['ic05', 32],
+  ['ic12', 64],
+  ['ic07', 128],
+  ['ic13', 256],
+  ['ic08', 256],
+  ['ic14', 512],
+  ['ic09', 512],
+  ['ic10', 1024],
 ];
 
 async function renderPaddedIconPng(inputPath, outputPath, label) {
@@ -102,9 +104,11 @@ function writeSvgSources() {
   fs.writeFileSync(ICON_LIGHT_SVG_PATH, renderIconLightSvg());
   fs.writeFileSync(ICON_DARK_SVG_PATH, renderIconDarkSvg());
   fs.writeFileSync(FAVICON_SVG_PATH, renderFaviconSvg());
+  fs.writeFileSync(WORDMARK_SVG_PATH, renderWordmarkSvg());
   console.log('Wrote', ICON_LIGHT_SVG_PATH);
   console.log('Wrote', ICON_DARK_SVG_PATH);
   console.log('Wrote', FAVICON_SVG_PATH);
+  console.log('Wrote', WORDMARK_SVG_PATH);
 }
 
 async function writeIconPng() {
@@ -135,33 +139,26 @@ async function writeIconDarkPng() {
 }
 
 async function writeIcns() {
-  if (process.platform !== 'darwin') {
-    console.warn(
-      'Skipping icon.icns (iconutil requires macOS). Run this script on a Mac to refresh Electron icons.',
-    );
-    return;
-  }
-
-  const iconsetDir = path.join(
-    os.tmpdir(),
-    `nota-brand-${Date.now()}-${process.pid}.iconset`,
+  const chunks = await Promise.all(
+    ICNS_PNG_CHUNKS.map(async ([type, size]) => {
+      const png = await sharp(ICON_PNG_PATH)
+        .resize(size, size)
+        .png()
+        .toBuffer();
+      const chunk = Buffer.alloc(8 + png.length);
+      chunk.write(type, 0, 4, 'ascii');
+      chunk.writeUInt32BE(chunk.length, 4);
+      png.copy(chunk, 8);
+      return chunk;
+    }),
   );
-  fs.mkdirSync(iconsetDir, { recursive: true });
-
-  try {
-    for (const [filename, size] of ICONSET_SIZES) {
-      const outPath = path.join(iconsetDir, filename);
-      await sharp(ICON_PNG_PATH).resize(size, size).png().toFile(outPath);
-    }
-
-    const icnsOut = path.join(ELECTRON_BUILD_RESOURCES, 'icon.icns');
-    execFileSync('iconutil', ['-c', 'icns', iconsetDir, '-o', icnsOut], {
-      stdio: 'inherit',
-    });
-    console.log('Wrote', icnsOut);
-  } finally {
-    fs.rmSync(iconsetDir, { recursive: true, force: true });
-  }
+  const length = 8 + chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+  const header = Buffer.alloc(8);
+  header.write('icns', 0, 4, 'ascii');
+  header.writeUInt32BE(length, 4);
+  const icnsOut = path.join(ELECTRON_BUILD_RESOURCES, 'icon.icns');
+  fs.writeFileSync(icnsOut, Buffer.concat([header, ...chunks]));
+  console.log('Wrote', icnsOut);
 }
 
 async function writeAppleTouchIcon() {
@@ -192,6 +189,6 @@ await writeIconPng();
 await writeIconDarkPng();
 await assertDockIconSafeZone(ICON_PNG_PATH, 'icon.png');
 await assertDockIconSafeZone(ICON_DARK_PNG_PATH, 'icon-dark.png');
-await writeIcns();
 await writeAppleTouchIcon();
 await syncMarketingAssets();
+await writeIcns();

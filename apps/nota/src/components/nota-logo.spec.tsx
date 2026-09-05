@@ -3,13 +3,14 @@ import { describe, expect, it } from 'vitest';
 import { NotaLogo } from './nota-logo';
 
 describe('NotaLogo', () => {
-  it('draws a currentColor engraved Didot N, not a note stack', () => {
+  it('draws the Madrid M beneath its shallow wrought-iron arch', () => {
     // Arrange
     const ui = <NotaLogo />;
 
     // Act
     const { container } = render(ui);
-    const path = container.querySelector('path');
+    const paths = container.querySelectorAll('path');
+    const path = paths[0];
     const sheets = container.querySelectorAll('rect');
 
     // Assert
@@ -17,6 +18,7 @@ describe('NotaLogo', () => {
     expect(path?.getAttribute('fill')).toBe('currentColor');
     expect(path?.getAttribute('stroke')).toBeNull();
     expect(path?.getAttribute('stroke-linecap')).toBeNull();
+    expect(paths).toHaveLength(3);
     expect(sheets).toHaveLength(0);
   });
 });

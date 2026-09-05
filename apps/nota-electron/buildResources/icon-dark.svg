@@ -1,24 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <!-- Nota engraved Didot N · black warm-shaded plate (Electron Dock PNG is unmasked) -->
+  <!-- Madrid: quiet wrought-iron M, not a civic crest. -->
   <defs>
-  <linearGradient id="notaPlateShade" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#241C14"/>
-    <stop offset="0.38" stop-color="#000000"/>
-    <stop offset="1" stop-color="#000000"/>
+  <linearGradient id="madridPlateShade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#F7EFE2"/>
+    <stop offset="0.38" stop-color="#E8DCC8"/>
+    <stop offset="1" stop-color="#E8DCC8"/>
   </linearGradient>
-  <linearGradient id="notaPlateSheen" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#E8D4B0" stop-opacity="0.14"/>
-    <stop offset="0.2" stop-color="#E8D4B0" stop-opacity="0"/>
+  <linearGradient id="madridPlateShadeSheen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/>
+    <stop offset="0.2" stop-color="#FFFFFF" stop-opacity="0"/>
   </linearGradient>
-  <clipPath id="notaNClip">
-    <path d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z"/>
+  <clipPath id="madridMarkClip">
+    <path id="madridM" d="M130 410 L130 402 L142 402 L142 152 L130 152 L130 144 L232 144 L232 152 L200 152 L256 252 L312 152 L280 152 L280 144 L382 144 L382 152 L370 152 L370 402 L382 402 L382 410 L280 410 L280 402 L312 197 L272 284 L240 284 L200 197 L200 402 L232 402 L232 410 Z"/>
+    <path id="madridArch" d="M88 318 L88 224 C88 124 158 72 256 72 C354 72 424 124 424 224 L424 318 L400 318 L400 226 C400 144 340 100 256 100 C172 100 112 144 112 226 L112 318 Z"/>
+    <path id="madridArchFlourish" d="M256 58 C246 68 246 80 256 90 C266 80 266 68 256 58 Z"/>
   </clipPath>
-</defs>
-  <rect id="notaPlate" width="512" height="512" rx="114" fill="url(#notaPlateShade)"/>
-  <rect id="notaPlateSheen" width="512" height="512" rx="114" fill="url(#notaPlateSheen)"/>
-<g clip-path="url(#notaNClip)">
-    <path id="notaN" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#E8DCC8"/>
-    <path id="notaNShadow" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#000000" fill-opacity="0.38" transform="translate(-6 -7)"/>
-    <path id="notaNHighlight" d="M78 434 L78 422 L90 422 L90 90 L78 90 L78 78 L214 78 L214 90 L182 90 L330 384 L330 90 L298 90 L298 78 L434 78 L434 90 L422 90 L422 422 L434 422 L434 434 L298 434 L298 422 L330 422 L182 128 L182 422 L214 422 L214 434 Z" fill="#F7EFE2" fill-opacity="0.28" transform="translate(6 8)"/>
-</g>
+  </defs>
+  <rect id="madridPlate" width="512" height="512" rx="114" fill="url(#madridPlateShade)"/>
+  <rect id="madridPlateSheen" width="512" height="512" rx="114" fill="url(#madridPlateShadeSheen)"/>
+  <g id="madridMark" fill="#17120D" clip-path="url(#madridMarkClip)">
+    <rect width="512" height="512"/>
+  </g>
+  <g id="madridMarkShadow" fill="#6E6256" fill-opacity="0.38" clip-path="url(#madridMarkClip)" transform="translate(-6 -7)">
+    <rect width="512" height="512"/>
+  </g>
+  <g id="madridMarkHighlight" fill="#FFFFFF" fill-opacity="0.28" clip-path="url(#madridMarkClip)" transform="translate(6 8)">
+    <rect width="512" height="512"/>
+  </g>
 </svg>

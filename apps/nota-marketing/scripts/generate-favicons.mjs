@@ -1,5 +1,5 @@
 /**
- * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the Didot N
+ * Writes marketing `favicon.ico` + `apple-touch-icon.png` from the Didot M
  * light SVG (same source as Electron dock / app favicon).
  *
  * Prefer `pnpm run generate:nota-icons` from the monorepo root (covers Electron
@@ -21,6 +21,10 @@ const iconLightSvg = path.resolve(
   '../../nota-electron/buildResources/icon-light.svg',
 );
 const appFaviconSvg = path.resolve(__dirname, '../../nota/public/favicon.svg');
+const appWordmarkSvg = path.resolve(
+  __dirname,
+  '../../nota/public/madrid-logo.svg',
+);
 
 async function main() {
   await fs.promises.mkdir(publicRoot, { recursive: true });
@@ -28,6 +32,10 @@ async function main() {
   await fs.promises.copyFile(
     appFaviconSvg,
     path.join(publicRoot, 'favicon.svg'),
+  );
+  await fs.promises.copyFile(
+    appWordmarkSvg,
+    path.join(publicRoot, 'madrid-logo.svg'),
   );
 
   const png16 = await sharp(iconLightSvg, { density: 288 })

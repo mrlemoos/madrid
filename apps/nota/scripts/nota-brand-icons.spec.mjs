@@ -1,16 +1,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 import { describe, expect, it } from 'vitest';
 import {
-  NOTA_N_PATH,
-  NOTA_N_SERIF_THICKNESS,
-  NOTA_N_STEM_WIDTH,
-  NOTA_N_VIEWBOX,
+  MADRID_ARCH_FLOURISH_PATH,
+  MADRID_ARCH_PATH,
+  MADRID_M_PATH,
+  MADRID_M_SERIF_THICKNESS,
+  MADRID_M_STEM_WIDTH,
+  MADRID_MARK_VIEWBOX,
   renderFaviconSvg,
   renderIconDarkSvg,
   renderIconLightSvg,
-} from '../src/lib/nota-n-mark.mjs';
+} from '../src/lib/madrid-mark.mjs';
+import { renderWordmarkSvg } from '../src/lib/madrid-wordmark.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const NOTA_PUBLIC = path.resolve(__dirname, '..', 'public');
@@ -35,10 +39,9 @@ const PLATE_RADIUS = 114;
 const PLATE_BLACK = '#000000';
 const PLATE_SHADE_TOP = '#241C14';
 const INK_PAPER = '#E8DCC8';
-const BONE_IVORY = '#F2EDE4';
-const COLD_SHADE = '#1A1A1A';
-/** Fat Didot N must occupy the plate, not a skinny mid-glyph. */
-const MIN_N_FILL_RATIO = 0.62;
+const DARK_INK = '#17120D';
+/** Fat Didot M must occupy the plate, not a skinny mid-glyph. */
+const MIN_M_FILL_RATIO = 0.48;
 /** Hairline serifs: thickness must stay well below stem width. */
 const MAX_SERIF_TO_STEM = 0.16;
 
@@ -60,49 +63,61 @@ function pathAabb(d) {
   };
 }
 
-function nMarkup(svg) {
-  return svg.match(/<path id="notaN"[^>]*>/)?.[0] ?? '';
+function markMarkup(svg) {
+  return svg.match(/<g id="madridMark"[^>]*>/)?.[0] ?? '';
 }
 
-function assertEngravedBlackPlate(svg) {
-  expect(svg).toContain('id="notaPlate"');
-  expect(svg).toContain('id="notaN"');
-  expect(svg.match(/id="notaPlate"[^>]*\brx="([\d.]+)"/)?.[1]).toBe(
+function assertWroughtIronMadridMark(svg, { plate, ink }) {
+  expect(svg).toContain('id="madridPlate"');
+  expect(svg).toContain('id="madridM"');
+  expect(svg).toContain('id="madridArch"');
+  expect(svg).toContain('id="madridArchFlourish"');
+  expect(svg.match(/id="madridPlate"[^>]*\brx="([\d.]+)"/)?.[1]).toBe(
     String(PLATE_RADIUS),
   );
   expect(svg).toContain('linearGradient');
-  expect(svg).toContain(PLATE_BLACK);
-  expect(svg).toContain(PLATE_SHADE_TOP);
-  expect(svg).toContain(INK_PAPER);
-  expect(svg).not.toContain(BONE_IVORY);
-  expect(svg).not.toContain(COLD_SHADE);
-  expect(svg).toContain('id="notaNClip"');
-  expect(svg).toContain('id="notaNShadow"');
-  expect(svg).toContain('id="notaNHighlight"');
+  expect(svg).toContain(plate);
+  expect(svg).toContain(ink);
+  expect(svg).toContain('id="madridMarkClip"');
+  expect(svg).toContain('id="madridMarkShadow"');
+  expect(svg).toContain('id="madridMarkHighlight"');
   for (const grey of RETIRED_PLATE_GREYS) {
     expect(svg).not.toContain(grey);
   }
   expect(RETIRED_GLASS_IDS.filter((id) => svg.includes(`id="${id}"`))).toEqual(
     [],
   );
-  expect(nMarkup(svg)).toMatch(/\bfill="/);
-  expect(nMarkup(svg)).not.toMatch(/stroke-linecap="round"/);
+  expect(markMarkup(svg)).toMatch(/\bfill="/);
+  expect(markMarkup(svg)).not.toMatch(/stroke-linecap="round"/);
 }
 
-describe('Nota Didot N brand icons', () => {
-  it('Didot N fills the plate instead of floating as a thin glyph', () => {
+describe('Madrid Didot M brand icons', () => {
+  it('Didot M fills the plate instead of floating as a thin glyph', () => {
     // Arrange
-    const viewBox = NOTA_N_VIEWBOX;
+    const viewBox = MADRID_MARK_VIEWBOX;
 
     // Act
-    const { width, height } = pathAabb(NOTA_N_PATH);
+    const { width, height } = pathAabb(MADRID_M_PATH);
 
     // Assert
-    expect(width / viewBox).toBeGreaterThanOrEqual(MIN_N_FILL_RATIO);
-    expect(height / viewBox).toBeGreaterThanOrEqual(MIN_N_FILL_RATIO);
+    expect(width / viewBox).toBeGreaterThanOrEqual(MIN_M_FILL_RATIO);
+    expect(height / viewBox).toBeGreaterThanOrEqual(MIN_M_FILL_RATIO);
   });
 
-  it('light and dark dock marks are the same black Apple-shaded plate', () => {
+  it('places the M inside a shallow wrought-iron arch with one flourish', () => {
+    // Arrange
+    const light = renderIconLightSvg();
+
+    // Act
+    const hasArch = light.includes(MADRID_ARCH_PATH);
+    const hasFlourish = light.includes(MADRID_ARCH_FLOURISH_PATH);
+
+    // Assert
+    expect(hasArch).toBe(true);
+    expect(hasFlourish).toBe(true);
+  });
+
+  it('adapts the rounded plate for light and dark macOS appearance', () => {
     // Arrange
     const light = renderIconLightSvg();
 
@@ -110,11 +125,18 @@ describe('Nota Didot N brand icons', () => {
     const dark = renderIconDarkSvg();
 
     // Assert
-    expect(dark).toBe(light);
-    assertEngravedBlackPlate(light);
+    expect(dark).not.toBe(light);
+    assertWroughtIronMadridMark(light, {
+      plate: PLATE_BLACK,
+      ink: INK_PAPER,
+    });
+    assertWroughtIronMadridMark(dark, {
+      plate: INK_PAPER,
+      ink: DARK_INK,
+    });
   });
 
-  it('favicon stays on the black plate in every colour scheme', () => {
+  it('favicon follows system appearance without changing its geometry', () => {
     // Arrange
     const svg = renderFaviconSvg();
 
@@ -123,47 +145,62 @@ describe('Nota Didot N brand icons', () => {
       /@media\s*\(prefers-color-scheme:\s*dark\)/.test(svg);
 
     // Assert
-    expect(switchesPlateInDark).toBe(false);
-    assertEngravedBlackPlate(svg);
-    expect(svg).not.toMatch(/pen nib/i);
+    expect(switchesPlateInDark).toBe(true);
+    expect(svg).toContain(MADRID_ARCH_PATH);
+    expect(svg).toContain(MADRID_ARCH_FLOURISH_PATH);
+  });
+
+  it('writes the full icon-and-wordmark lockup as lower-case madrid', () => {
+    // Arrange
+    const wordmark = renderWordmarkSvg();
+
+    // Act
+    const label = wordmark.match(/aria-label="([^"]+)"/)?.[1];
+
+    // Assert
+    expect(label).toBe('madrid');
+    expect(wordmark).toContain('id="madridWordmarkM"');
+    expect(wordmark).toContain('href="#madridWordmarkM"');
+    expect(wordmark).not.toContain('<text');
+    expect(wordmark).toContain(MADRID_ARCH_PATH);
   });
 
   it('Didot serifs stay hairline against fat stems', () => {
     // Arrange
-    const stem = NOTA_N_STEM_WIDTH;
-    const serif = NOTA_N_SERIF_THICKNESS;
+    const stem = MADRID_M_STEM_WIDTH;
+    const serif = MADRID_M_SERIF_THICKNESS;
 
     // Act
     const ratio = serif / stem;
 
     // Assert
-    expect(stem).toBeGreaterThanOrEqual(88);
+    expect(stem).toBeGreaterThanOrEqual(48);
     expect(serif).toBeLessThanOrEqual(14);
     expect(ratio).toBeLessThanOrEqual(MAX_SERIF_TO_STEM);
   });
 
-  it('icon-light.svg is a black Apple-shaded plate with an engraved paper N', () => {
+  it('icon-light.svg matches the light renderer', () => {
     // Arrange
     const svg = read(path.join(ELECTRON_BUILD_RESOURCES, 'icon-light.svg'));
 
     // Act
-    const hasPlate = svg.includes('id="notaPlate"');
+    const rendered = renderIconLightSvg();
 
     // Assert
-    expect(hasPlate).toBe(true);
-    assertEngravedBlackPlate(svg);
+    expect(svg).toBe(rendered);
   });
 
-  it('icon-dark.svg matches icon-light.svg', () => {
+  it('icon-dark.svg matches the dark renderer', () => {
     // Arrange
     const light = read(path.join(ELECTRON_BUILD_RESOURCES, 'icon-light.svg'));
     const dark = read(path.join(ELECTRON_BUILD_RESOURCES, 'icon-dark.svg'));
 
     // Act
-    const same = dark === light;
+    const rendered = renderIconDarkSvg();
 
     // Assert
-    expect(same).toBe(true);
+    expect(dark).toBe(rendered);
+    expect(dark).not.toBe(light);
   });
 
   it('marketing favicon.svg matches the app mark', () => {
@@ -197,5 +234,55 @@ describe('Nota Didot N brand icons', () => {
     expect(light).toBe(renderedLight);
     expect(dark).toBe(renderedDark);
     expect(favicon).toBe(renderedFavicon);
+  });
+
+  it('commits the full wordmark for app and marketing use', () => {
+    // Arrange
+    const appPath = path.join(NOTA_PUBLIC, 'madrid-logo.svg');
+    const marketingPath = path.join(MARKETING_PUBLIC, 'madrid-logo.svg');
+
+    // Act
+    const app = read(appPath);
+    const marketing = read(marketingPath);
+
+    // Assert
+    expect(app).toBe(renderWordmarkSvg());
+    expect(marketing).toBe(app);
+  });
+
+  it('commits the Madrid ICNS bundle icon at every macOS size', async () => {
+    // Arrange
+    const icns = fs.readFileSync(
+      path.join(ELECTRON_BUILD_RESOURCES, 'icon.icns'),
+    );
+    const chunks = [];
+    for (let offset = 8; offset < icns.length; ) {
+      const length = icns.readUInt32BE(offset + 4);
+      chunks.push({
+        type: icns.toString('ascii', offset, offset + 4),
+        png: icns.subarray(offset + 8, offset + length),
+      });
+      offset += length;
+    }
+
+    // Act
+    const largest = chunks.find(({ type }) => type === 'ic10');
+    const metadata = await sharp(largest?.png).metadata();
+
+    // Assert
+    expect(icns.toString('ascii', 0, 4)).toBe('icns');
+    expect(chunks.map(({ type }) => type)).toEqual([
+      'ic04',
+      'ic11',
+      'ic05',
+      'ic12',
+      'ic07',
+      'ic13',
+      'ic08',
+      'ic14',
+      'ic09',
+      'ic10',
+    ]);
+    expect(metadata).toMatchObject({ width: 1024, height: 1024 });
   });
 });

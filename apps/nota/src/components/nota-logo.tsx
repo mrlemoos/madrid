@@ -1,21 +1,28 @@
 import { cn } from '@/lib/utils';
-import { NOTA_N_LOGO_VIEWBOX, NOTA_N_PATH } from '@/lib/nota-n-mark.mjs';
+import {
+  MADRID_ARCH_FLOURISH_PATH,
+  MADRID_ARCH_PATH,
+  MADRID_MARK_LOGO_VIEWBOX,
+  MADRID_M_PATH,
+} from '@/lib/madrid-mark.mjs';
 
 interface NotaLogoProps {
   className?: string;
 }
 
-/** Engraved Didot N. Plate icons: `public/favicon.svg`. */
+/** Wrought-iron Madrid M. Plate icons: `public/favicon.svg`. */
 export function NotaLogo({ className }: NotaLogoProps) {
   return (
     <svg
-      viewBox={NOTA_N_LOGO_VIEWBOX}
+      viewBox={MADRID_MARK_LOGO_VIEWBOX}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(className)}
       aria-hidden="true"
     >
-      <path d={NOTA_N_PATH} fill="currentColor" />
+      <path d={MADRID_ARCH_PATH} fill="currentColor" />
+      <path d={MADRID_ARCH_FLOURISH_PATH} fill="currentColor" />
+      <path d={MADRID_M_PATH} fill="currentColor" />
     </svg>
   );
 }

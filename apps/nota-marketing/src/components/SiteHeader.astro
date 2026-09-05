@@ -31,7 +31,9 @@ const navLinks = borderless
   ]}
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-6">
-    <a href="/" class="mkt-focus font-serif text-xl tracking-tight text-foreground"> Nota </a>
+    <a href="/" class="mkt-focus inline-flex items-center" aria-label="Madrid home">
+      <img src="/madrid-logo.svg" alt="Madrid" class="h-7 w-auto" />
+    </a>
     <nav class="flex flex-wrap items-center justify-end gap-x-6 gap-y-2 text-sm font-medium">
       {
         navLinks.map(({ href, label }) => (
@@ -45,7 +47,7 @@ const navLinks = borderless
         class="mkt-focus inline-flex size-9 items-center justify-center rounded-[var(--radius-sm)] text-muted-foreground transition hover:bg-muted hover:text-foreground"
         rel="noopener noreferrer"
         target="_blank"
-        aria-label="Nota on GitHub"
+        aria-label="Madrid on GitHub"
       >
         <GitHubIcon client:load />
       </a>
