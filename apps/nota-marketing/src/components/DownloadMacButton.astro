@@ -1,6 +1,6 @@
 ---
-import SlideArrowDownloadButton from '@/components/SlideArrowDownloadButton';
-import { NOTA_GITHUB_LATEST } from '@/lib/site';
+import AppleIcon from '@/components/AppleIcon.astro';
+import { NOTA_DOWNLOAD_PATH } from '@/lib/site';
 
 interface Props {
   class?: string;
@@ -10,9 +10,120 @@ interface Props {
 const { class: className, variant = 'page' } = Astro.props;
 ---
 
-<SlideArrowDownloadButton
-  client:load
-  href={NOTA_GITHUB_LATEST}
-  className={className}
-  variant={variant}
-/>
+{/* Apple mark slides out and an arrow slides in on hover; CSS only, no island. */}
+<a
+  href={NOTA_DOWNLOAD_PATH}
+  data-nota-download-mac
+  class:list={['mkt-download', `mkt-download--${variant}`, 'mkt-focus', className]}
+>
+  <span class="mkt-download__glyph mkt-download__glyph--rest" aria-hidden="true">
+    <AppleIcon class="size-4" />
+  </span>
+  <span class="mkt-download__label">Download for Mac</span>
+  <span class="mkt-download__glyph mkt-download__glyph--hover" aria-hidden="true">
+    <svg
+      class="size-4"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M5 12h14M13 6l6 6-6 6"></path>
+    </svg>
+  </span>
+</a>
+
+<style>
+  .mkt-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding-inline: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition:
+      background-color var(--btn-dur) var(--btn-ease),
+      border-color var(--btn-dur) var(--btn-ease),
+      transform var(--nota-press-out-ms) var(--btn-ease);
+  }
+
+  .mkt-download--page {
+    color: var(--primary-foreground);
+    background-color: var(--primary);
+    border-color: transparent;
+  }
+
+  .mkt-download--hero {
+    color: var(--foreground);
+    background-color: color-mix(in oklch, var(--foreground) 6%, transparent);
+  }
+
+  .mkt-download--hero:hover {
+    background-color: color-mix(in oklch, var(--foreground) 10%, transparent);
+  }
+
+  .mkt-download:active {
+    transform: scale(var(--nota-press-scale));
+    transition-duration: var(--nota-press-in-ms);
+  }
+
+  .mkt-download__glyph {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    transition:
+      opacity var(--btn-dur) var(--btn-ease),
+      transform var(--btn-dur) var(--btn-ease),
+      margin var(--btn-dur) var(--btn-ease);
+  }
+
+  .mkt-download__glyph--rest {
+    margin-right: 0.625rem;
+  }
+
+  .mkt-download__glyph--hover {
+    margin-left: 0;
+    width: 0;
+    opacity: 0;
+    transform: translateX(-0.5rem);
+  }
+
+  .mkt-download:hover .mkt-download__glyph--rest,
+  .mkt-download:focus-visible .mkt-download__glyph--rest {
+    margin-right: 0;
+    width: 0;
+    opacity: 0;
+    transform: translateX(0.5rem);
+  }
+
+  .mkt-download:hover .mkt-download__glyph--hover,
+  .mkt-download:focus-visible .mkt-download__glyph--hover {
+    margin-left: 0.625rem;
+    width: 1rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mkt-download__glyph--rest {
+    width: 1rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mkt-download,
+    .mkt-download__glyph {
+      transition-property: background-color, border-color, opacity;
+    }
+
+    .mkt-download:active {
+      transform: none;
+    }
+  }
+</style>

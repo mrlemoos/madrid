@@ -381,9 +381,6 @@ importers:
       '@fontsource/instrument-serif':
         specifier: 'catalog:'
         version: 5.2.8
-      '@gsap/react':
-        specifier: 'catalog:'
-        version: 2.1.2(gsap@3.15.0)(react@19.2.3)
       '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../../packages/app-navigation-core
@@ -507,6 +504,9 @@ importers:
       '@getmadrid/writing-activity-ui':
         specifier: workspace:*
         version: link:../../packages/writing-activity-ui
+      '@gsap/react':
+        specifier: 'catalog:'
+        version: 2.1.2(gsap@3.15.0)(react@19.2.3)
       '@posthog/react':
         specifier: ^1.8.2
         version: 1.9.0(@types/react@19.2.14)(posthog-js@1.372.1)(react@19.2.3)
@@ -632,9 +632,6 @@ importers:
 
   apps/nota-marketing:
     dependencies:
-      '@astrojs/react':
-        specifier: ^4.4.2
-        version: 4.4.2(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
       '@astrojs/sitemap':
         specifier: ^3.7.2
         version: 3.7.2
@@ -644,15 +641,15 @@ importers:
       '@fontsource/instrument-serif':
         specifier: 'catalog:'
         version: 5.2.8
-      '@microsoft/clarity':
-        specifier: ^1.0.2
-        version: 1.0.2
       '@getmadrid/design':
         specifier: workspace:*
         version: link:../../packages/design
       '@getmadrid/note-doc-plain-text':
         specifier: workspace:*
         version: link:../../packages/note-doc-plain-text
+      '@microsoft/clarity':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@nx/eslint':
         specifier: 'catalog:'
         version: 23.1.1(74629489ef4b0e4c811949b7503ab296)
@@ -661,41 +658,23 @@ importers:
         version: 23.1.1(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/cli@0.8.1(@swc/core@1.15.30(@swc/helpers@0.5.21))(chokidar@5.0.0))(@swc/core@1.15.30(@swc/helpers@0.5.21))(@typescript-eslint/parser@8.59.0(@typescript/typescript6@6.0.2)(eslint@9.39.4(jiti@2.6.1)))(@typescript/typescript6@6.0.2)(eslint-config-prettier@10.1.8(eslint@9.39.4(jiti@2.6.1)))(eslint@9.39.4(jiti@2.6.1))(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))
       '@nx/react':
         specifier: 'catalog:'
-        version: 23.1.1(9e65cb7f60e07c274cc5c42fedccc167)
+        version: 23.1.1(b584923d092eb7909a889d46ce790eeb)
       '@nx/web':
         specifier: 'catalog:'
         version: 23.1.1(8686e2cbbd22003a132d357c1cc6223e)
       '@vercel/analytics':
         specifier: ^1.5.0
-        version: 1.6.1(next@16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.102.0))(react@19.2.3)
+        version: 1.6.1(next@16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(sass@1.102.0))(react@19.2.3)
       astro:
         specifier: '>=6.1.10'
         version: 6.3.2(@types/node@25.6.0)(idb-keyval@6.2.1)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(rollup@4.60.2)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
-      electron:
-        specifier: 'catalog:'
-        version: 41.10.5
-      framer-motion:
-        specifier: ^12.23.12
-        version: 12.42.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       jsdom:
         specifier: 'catalog:'
         version: 29.0.2(@noble/hashes@2.3.0)
-      react:
-        specifier: 19.2.3
-        version: 19.2.3
-      react-dom:
-        specifier: 19.2.3
-        version: 19.2.3(react@19.2.3)
     devDependencies:
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.2.4(vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))
-      '@types/react':
-        specifier: 'catalog:'
-        version: 19.2.14
-      '@types/react-dom':
-        specifier: 'catalog:'
-        version: 19.2.3(@types/react@19.2.14)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.2.4
@@ -1213,15 +1192,15 @@ importers:
 
   packages/nota-motion-ui:
     dependencies:
-      '@gsap/react':
-        specifier: 'catalog:'
-        version: 2.1.2(gsap@3.15.0)(react@19.2.3)
       '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
       '@getmadrid/nota-motion-core':
         specifier: workspace:*
         version: link:../nota-motion-core
+      '@gsap/react':
+        specifier: 'catalog:'
+        version: 2.1.2(gsap@3.15.0)(react@19.2.3)
       gsap:
         specifier: 'catalog:'
         version: 3.15.0
@@ -2095,18 +2074,6 @@ packages:
       }
     engines: { node: '>=22.12.0' }
 
-  '@astrojs/react@4.4.2':
-    resolution:
-      {
-        integrity: sha512-1tl95bpGfuaDMDn8O3x/5Dxii1HPvzjvpL2YTuqOOrQehs60I2DKiDgh1jrKc7G8lv+LQT5H15V6QONQ+9waeQ==,
-      }
-    engines: { node: 18.20.8 || ^20.3.0 || >=22.0.0 }
-    peerDependencies:
-      '@types/react': ^17.0.50 || ^18.0.21 || ^19.0.0
-      '@types/react-dom': ^17.0.17 || ^18.0.6 || ^19.0.0
-      react: 19.2.3
-      react-dom: 19.2.3
-
   '@astrojs/sitemap@3.7.2':
     resolution:
       {
@@ -2912,24 +2879,6 @@ packages:
     resolution:
       {
         integrity: sha512-ykDdF5yI4f1WrAolLqeF3hmYU12j9ntLQl/AOG1HAS21jxyg1Q0/J/tpREuYLfatGdGmXp/3yS0ZA76kOlVq9Q==,
-      }
-    engines: { node: '>=6.9.0' }
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-transform-react-jsx-self@7.27.1':
-    resolution:
-      {
-        integrity: sha512-6UzkCs+ejGdZ5mFFC/OCUrv028ab2fp1znZmCZjAOBKiBK2jXD1O+BPSfX8X2qjJ75fZBMSnQn3Rq2mrBJK2mw==,
-      }
-    engines: { node: '>=6.9.0' }
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-transform-react-jsx-source@7.27.1':
-    resolution:
-      {
-        integrity: sha512-zbwoTsBruTeKB9hSq73ha66iFeJHuaFkUbwvqElnygoNbj/jHRsSeokowZFN3CZ64IvEqcmmkVe89OPXc7ldAw==,
       }
     engines: { node: '>=6.9.0' }
     peerDependencies:
@@ -7234,12 +7183,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rolldown/pluginutils@1.0.0-beta.27':
-    resolution:
-      {
-        integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==,
-      }
-
   '@rolldown/pluginutils@1.0.0-rc.7':
     resolution:
       {
@@ -10319,15 +10262,6 @@ packages:
     engines: { node: ^20.19.0 || >=22.12.0 }
     peerDependencies:
       vite: ^4 || ^5 || ^6 || ^7 || ^8
-
-  '@vitejs/plugin-react@4.7.0':
-    resolution:
-      {
-        integrity: sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==,
-      }
-    engines: { node: ^14.18.0 || >=16.0.0 }
-    peerDependencies:
-      vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
   '@vitejs/plugin-react@6.0.5':
     resolution:
@@ -20146,13 +20080,6 @@ packages:
       }
     engines: { node: '>=0.10.0' }
 
-  react-refresh@0.17.0:
-    resolution:
-      {
-        integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==,
-      }
-    engines: { node: '>=0.10.0' }
-
   react-remove-scroll-bar@2.3.8:
     resolution:
       {
@@ -23018,49 +22945,6 @@ packages:
       vite:
         optional: true
 
-  vite@6.4.3:
-    resolution:
-      {
-        integrity: sha512-NTKlcQjlAK7MlQoyb6LgaqHc8sso/pVyUJYWMws3jg21uTJw/LddqIFPcPqP6PzpgbIcZyKI85sFE4HBrQDA8A==,
-      }
-    engines: { node: ^18.0.0 || ^20.0.0 || >=22.0.0 }
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
-      jiti: '>=1.21.0'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      sass-embedded: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: '>=2.8.3'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-
   vite@7.3.2:
     resolution:
       {
@@ -24026,29 +23910,6 @@ snapshots:
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@4.4.2(@types/node@25.6.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)':
-    dependencies:
-      '@types/react': 19.2.14
-      '@types/react-dom': 19.2.3(@types/react@19.2.14)
-      '@vitejs/plugin-react': 4.7.0(vite@6.4.3(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
-      ultrahtml: 1.6.0
-      vite: 6.4.3(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
-    transitivePeerDependencies:
-      - '@types/node'
-      - jiti
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-      - tsx
-      - yaml
-
   '@astrojs/sitemap@3.7.2':
     dependencies:
       sitemap: 9.0.1
@@ -24668,16 +24529,6 @@ snapshots:
       '@babel/plugin-transform-react-jsx': 7.28.6(@babel/core@7.29.0)
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/plugin-transform-react-jsx-self@7.27.1(@babel/core@7.29.0)':
-    dependencies:
-      '@babel/core': 7.29.0
-      '@babel/helper-plugin-utils': 7.28.6
-
-  '@babel/plugin-transform-react-jsx-source@7.27.1(@babel/core@7.29.0)':
-    dependencies:
-      '@babel/core': 7.29.0
-      '@babel/helper-plugin-utils': 7.28.6
 
   '@babel/plugin-transform-react-jsx@7.28.6(@babel/core@7.29.0)':
     dependencies:
@@ -26368,6 +26219,17 @@ snapshots:
       - node-fetch
     optional: true
 
+  '@module-federation/data-prefetch@2.3.3(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.5(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@module-federation/runtime': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))
+      '@module-federation/sdk': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))
+    optionalDependencies:
+      react: 19.2.3
+      react-dom: 19.2.5(react@19.2.3)
+    transitivePeerDependencies:
+      - node-fetch
+    optional: true
+
   '@module-federation/data-prefetch@2.3.3(node-fetch@3.3.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@module-federation/runtime': 2.3.3(node-fetch@3.3.2)
@@ -26475,11 +26337,11 @@ snapshots:
       - utf-8-validate
     optional: true
 
-  '@module-federation/enhanced@2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))':
+  '@module-federation/enhanced@2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/cli': 2.3.3(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(utf-8-validate@6.0.6)
-      '@module-federation/data-prefetch': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@module-federation/data-prefetch': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.5(react@19.2.3))(react@19.2.3)
       '@module-federation/dts-plugin': 2.3.3(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(utf-8-validate@6.0.6)
       '@module-federation/error-codes': 2.3.3
       '@module-federation/inject-external-runtime-core-plugin': 2.3.3(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))
@@ -26584,9 +26446,9 @@ snapshots:
       - vue-tsc
     optional: true
 
-  '@module-federation/node@2.7.41(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))':
+  '@module-federation/node@2.7.41(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))':
     dependencies:
-      '@module-federation/enhanced': 2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
+      '@module-federation/enhanced': 2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
       '@module-federation/runtime': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))
       '@module-federation/sdk': 2.3.3(node-fetch@2.7.0(encoding@0.1.13))
       encoding: 0.1.13
@@ -27284,7 +27146,7 @@ snapshots:
       - verdaccio
       - webpack-cli
 
-  '@nx/module-federation@23.1.1(f6cc2d0c78136959065b74c7bdb40496)':
+  '@nx/module-federation@23.1.1(94762649186a18ef92da652ea0cd0757)':
     dependencies:
       '@nx/devkit': 23.1.1(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))
       '@nx/js': 23.1.1(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/cli@0.8.1(@swc/core@1.15.30(@swc/helpers@0.5.21))(chokidar@5.0.0))(@swc/core@1.15.30(@swc/helpers@0.5.21))(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))
@@ -27296,8 +27158,8 @@ snapshots:
       tslib: 2.8.1
       webpack: 5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7)
     optionalDependencies:
-      '@module-federation/enhanced': 2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
-      '@module-federation/node': 2.7.41(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
+      '@module-federation/enhanced': 2.3.3(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(node-fetch@2.7.0(encoding@0.1.13))(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
+      '@module-federation/node': 2.7.41(@rspack/core@2.1.8(@module-federation/runtime-tools@2.3.3(node-fetch@2.7.0(encoding@0.1.13)))(@swc/helpers@0.5.21))(@typescript/typescript6@6.0.2)(bufferutil@4.1.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(utf-8-validate@6.0.6)(webpack@5.105.2(@swc/core@1.15.30(@swc/helpers@0.5.21))(esbuild@0.27.7))
     transitivePeerDependencies:
       - '@babel/traverse'
       - '@module-federation/runtime-tools'
@@ -27457,12 +27319,12 @@ snapshots:
       - vitest
       - webpack-cli
 
-  '@nx/react@23.1.1(9e65cb7f60e07c274cc5c42fedccc167)':
+  '@nx/react@23.1.1(b584923d092eb7909a889d46ce790eeb)':
     dependencies:
       '@nx/devkit': 23.1.1(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))
       '@nx/eslint': 23.1.1(74629489ef4b0e4c811949b7503ab296)
       '@nx/js': 23.1.1(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/cli@0.8.1(@swc/core@1.15.30(@swc/helpers@0.5.21))(chokidar@5.0.0))(@swc/core@1.15.30(@swc/helpers@0.5.21))(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))
-      '@nx/module-federation': 23.1.1(f6cc2d0c78136959065b74c7bdb40496)
+      '@nx/module-federation': 23.1.1(94762649186a18ef92da652ea0cd0757)
       '@nx/rollup': 23.1.1(@babel/core@7.29.0)(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/cli@0.8.1(@swc/core@1.15.30(@swc/helpers@0.5.21))(chokidar@5.0.0))(@swc/core@1.15.30(@swc/helpers@0.5.21))(@types/babel__core@7.20.5)(@typescript/typescript6@6.0.2)(nx@23.1.1(@swc-node/register@1.11.1(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@swc/core@1.15.30(@swc/helpers@0.5.21))(@swc/types@0.1.26)(@typescript/typescript6@6.0.2))(@swc/core@1.15.30(@swc/helpers@0.5.21)))(rollup@4.60.2)
       '@nx/web': 23.1.1(8686e2cbbd22003a132d357c1cc6223e)
       '@phenomnomnominal/tsquery': 6.2.0(@typescript/typescript6@6.0.2)
@@ -27471,7 +27333,7 @@ snapshots:
       http-proxy-middleware: 3.0.5
       minimatch: 10.2.5
       react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
+      react-dom: 19.2.5(react@19.2.3)
       semver: 7.8.4
       tslib: 2.8.1
     optionalDependencies:
@@ -28634,8 +28496,6 @@ snapshots:
 
   '@rolldown/binding-win32-x64-msvc@1.2.2':
     optional: true
-
-  '@rolldown/pluginutils@1.0.0-beta.27': {}
 
   '@rolldown/pluginutils@1.0.0-rc.7': {}
 
@@ -30754,9 +30614,9 @@ snapshots:
       d3-selection: 3.0.0
       d3-transition: 3.0.1(d3-selection@3.0.0)
 
-  '@vercel/analytics@1.6.1(next@16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.102.0))(react@19.2.3)':
+  '@vercel/analytics@1.6.1(next@16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(sass@1.102.0))(react@19.2.3)':
     optionalDependencies:
-      next: 16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.102.0)
+      next: 16.2.12(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)(sass@1.102.0)
       react: 19.2.3
 
   '@vitejs/plugin-react-swc@4.3.0(@swc/helpers@0.5.21)(vite@8.2.0(@types/node@20.19.9)(esbuild@0.25.12)(jiti@2.4.2)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))':
@@ -30774,18 +30634,6 @@ snapshots:
       vite: 8.2.0(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
     transitivePeerDependencies:
       - '@swc/helpers'
-
-  '@vitejs/plugin-react@4.7.0(vite@6.4.3(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))':
-    dependencies:
-      '@babel/core': 7.29.0
-      '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
-      '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.29.0)
-      '@rolldown/pluginutils': 1.0.0-beta.27
-      '@types/babel__core': 7.20.5
-      react-refresh: 0.17.0
-      vite: 6.4.3(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0)
-    transitivePeerDependencies:
-      - supports-color
 
   '@vitejs/plugin-react@6.0.5(babel-plugin-react-compiler@1.0.0)(vite@8.2.0(@types/node@20.19.9)(esbuild@0.25.12)(jiti@2.4.2)(less@4.5.1)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0))':
     dependencies:
@@ -38328,8 +38176,6 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-refresh@0.17.0: {}
-
   react-remove-scroll-bar@2.3.8(@types/react@19.2.14)(react@19.2.3):
     dependencies:
       react: 19.2.3
@@ -40470,25 +40316,6 @@ snapshots:
       - '@types/node'
       - rollup
       - supports-color
-
-  vite@6.4.3(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0):
-    dependencies:
-      esbuild: 0.25.12
-      fdir: 6.5.0(picomatch@4.0.5)
-      picomatch: 4.0.5
-      postcss: 8.5.10
-      rollup: 4.60.2
-      tinyglobby: 0.2.17
-    optionalDependencies:
-      '@types/node': 25.6.0
-      fsevents: 2.3.3
-      jiti: 2.6.1
-      less: 4.5.1
-      lightningcss: 1.33.0
-      sass: 1.102.0
-      sass-embedded: 1.100.0
-      terser: 5.46.2
-      yaml: 2.9.0
 
   vite@7.3.2(@types/node@25.6.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.33.0)(sass-embedded@1.100.0)(sass@1.102.0)(terser@5.46.2)(yaml@2.9.0):
     dependencies:

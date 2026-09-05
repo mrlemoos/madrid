@@ -22,5 +22,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/download",
+      "destination": "https://github.com/mrlemoos/madrid/releases/latest",
+      "permanent": false
+    }
   ]
 }

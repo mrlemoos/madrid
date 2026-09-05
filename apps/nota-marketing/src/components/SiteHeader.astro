@@ -1,6 +1,6 @@
 ---
-import { GitHubIcon } from '@/components/GitHubIcon';
-import { NOTA_GITHUB_LATEST, NOTA_GITHUB_REPO } from '@/lib/site';
+import GitHubIcon from '@/components/GitHubIcon.astro';
+import { NOTA_APP_URL, NOTA_DOWNLOAD_PATH, NOTA_GITHUB_REPO } from '@/lib/site';
 
 interface Props {
   borderless?: boolean;
@@ -12,12 +12,12 @@ const { borderless = false } = Astro.props;
 const navLinks = borderless
   ? [
       { href: '/blog', label: 'Blog' },
-      { href: NOTA_GITHUB_LATEST, label: 'Download' },
+      { href: NOTA_DOWNLOAD_PATH, label: 'Download' },
       { href: '/pricing', label: 'Pricing' },
       { href: '/#faq', label: 'FAQ' },
     ]
   : [
-      { href: NOTA_GITHUB_LATEST, label: 'Download' },
+      { href: NOTA_DOWNLOAD_PATH, label: 'Download' },
       { href: '/blog', label: 'Blog' },
       { href: '/pricing', label: 'Pricing' },
       { href: '/#faq', label: 'FAQ' },
@@ -43,13 +43,20 @@ const navLinks = borderless
         ))
       }
       <a
+        href={NOTA_APP_URL}
+        class="mkt-focus hidden text-muted-foreground transition hover:text-foreground sm:inline"
+        rel="noopener noreferrer"
+      >
+        Open in browser
+      </a>
+      <a
         href={NOTA_GITHUB_REPO}
         class="mkt-focus inline-flex size-9 items-center justify-center rounded-[var(--radius-sm)] text-muted-foreground transition hover:bg-muted hover:text-foreground"
         rel="noopener noreferrer"
         target="_blank"
         aria-label="Madrid on GitHub"
       >
-        <GitHubIcon client:load />
+        <GitHubIcon />
       </a>
     </nav>
   </div>
