@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets';
+import PillarLayout from '@/layouts/PillarLayout.astro';
+import noteGraphImage from '@/assets/marketing/note-graph.png';
+import welcomeImage from '@/assets/marketing/hero-welcome-code.png';
+
+const title = 'The Madrid note graph: connections you can see';
+const description =
+  'Link notes by typing @, follow them like any other link, and see what your notes have grown into. Any note can stay out of the graph.';
+---
+
+<PillarLayout
+  title={title}
+  description={description}
+  eyebrow="Links"
+  heading="Connections you can see"
+  lede="Notes are worth more joined together than filed away. Madrid makes the joining a single keystroke and then shows you the shape of what you have written."
+  breadcrumb="Note graph"
+>
+  <section class="mkt-container mkt-section" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">One key, no syntax</h2>
+        <p>
+          Type <code class="rounded-sm bg-muted px-1.5 py-0.5 text-sm">@</code> and start typing a title. Pick the note
+          and the link is in your sentence, reading as the note's name rather than a path.
+        </p>
+        <p>
+          Follow it and you are in the other note. There are no brackets to remember, no toolbar button to find, and
+          nothing to configure first.
+        </p>
+      </div>
+      <figure class="mkt-shot">
+        <Image
+          src={welcomeImage}
+          alt="Typing an @ mention in a Madrid note, with matching note titles listed below the caret"
+          class="h-auto w-full"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <figure class="mkt-shot md:order-last">
+        <Image
+          src={noteGraphImage}
+          alt="The Madrid note graph: labelled nodes joined by thin lines, with one note and its neighbours highlighted"
+          class="h-auto w-full"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">A map, not a dashboard</h2>
+        <p>
+          The graph draws every note and the links between them. Hover a note to light up what it touches, and open one
+          to carry on writing.
+        </p>
+        <p>
+          It is a way to find the thread you dropped last month, not a score. Notes that do not belong in the picture can
+          be left out of it, one switch per note.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <h2 class="mkt-heading max-w-xl">Getting back to a note</h2>
+    <dl class="mt-12 grid gap-10 md:grid-cols-3 md:gap-12">
+      <div>
+        <dt class="font-medium text-foreground">Search from anywhere</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Mod+K opens the palette. Type a few letters of a title and you are in the note.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Back and forward</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Mod+[ and Mod+] walk the notes you have been reading, the way a browser walks pages.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Folders when you want them</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          The sidebar keeps folders with their own colours, for the notes you would rather file than link.
+        </dd>
+      </div>
+    </dl>
+  </section>
+</PillarLayout>

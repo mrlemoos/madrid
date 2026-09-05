@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import PillarLayout from '@/layouts/PillarLayout.astro';
+import editorOverviewImage from '@/assets/marketing/editor-overview.png';
+import editorCodeImage from '@/assets/marketing/editor-code.png';
+
+const title = 'Writing in Madrid: an editor that steps back';
+const description =
+  'Rich text without a toolbar in the way. Headings, lists, tables, code, images, and PDFs in the document, with the caret kept where you left it.';
+---
+
+<PillarLayout
+  title={title}
+  description={description}
+  eyebrow="Writing"
+  heading="An editor that steps back"
+  lede="Most editors ask for attention before you have written anything. Madrid puts the page first and keeps its controls close to the text you are working on."
+  breadcrumb="Writing"
+>
+  <section class="mkt-container mkt-section" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">The page, then the tools</h2>
+        <p>
+          There is no toolbar along the top of the window. Formatting lives where you are typing, so a note looks like a
+          document rather than a control panel.
+        </p>
+        <p>
+          Headings, lists, task lists, quotes, tables, and code blocks are all here. Code blocks highlight the language
+          you are writing, and a Mermaid block renders a diagram in place.
+        </p>
+      </div>
+      <figure class="mkt-shot">
+        <Image
+          src={editorOverviewImage}
+          alt="A note in Madrid with a serif title, plain paragraphs, and no toolbar above the text"
+          class="h-auto w-full"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <figure class="mkt-shot md:order-last">
+        <Image
+          src={editorCodeImage}
+          alt="A highlighted code block inside a Madrid note"
+          class="h-auto w-full"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">Things you drop in stay put</h2>
+        <p>
+          Drag a PDF into a note and it lands at the caret, previewable without leaving the page. Images work the same
+          way, and a link on its own line becomes a small preview card instead of a bare URL.
+        </p>
+        <p>
+          Attachments sit in private storage tied to your account, served through short-lived links rather than public
+          URLs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <h2 class="mkt-heading max-w-xl">Details you notice on the second day</h2>
+    <dl class="mt-12 grid gap-10 md:grid-cols-3 md:gap-12">
+      <div>
+        <dt class="font-medium text-foreground">The view stays where you put it</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Scroll away from the caret and the page stays there. Background work never yanks you back mid-thought.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Today, without a streak</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Mod+D opens today's note, titled with today's date. Nothing counts how many days in a row you managed it.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Capture, not ghostwriting</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Record a thought and Madrid turns it into text in the note. It transcribes what you said; it does not write in
+          your voice.
+        </dd>
+      </div>
+    </dl>
+  </section>
+</PillarLayout>

@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import PillarLayout from '@/layouts/PillarLayout.astro';
+import desktopImage from '@/assets/marketing/desktop-app-screenshot.png';
+import signInImage from '@/assets/marketing/sign-in.png';
+
+const title = 'Offline and sync in Madrid: your notes stay yours';
+const description =
+  'Madrid writes to your Mac first and syncs when the connection returns. Notes are stored in your own secured space, with attachments served through short-lived links.';
+---
+
+<PillarLayout
+  title={title}
+  description={description}
+  eyebrow="Offline and sync"
+  heading="Your notes stay yours"
+  lede="An app that stops working when the wifi drops is not a place to keep your thinking. Madrid writes locally first and treats the network as something that catches up."
+  breadcrumb="Offline and sync"
+>
+  <section class="mkt-container mkt-section" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">Local first, always</h2>
+        <p>
+          Every keystroke lands in local storage on your Mac. On a plane, on a train, or with the connection off, the
+          app behaves exactly as it does at your desk.
+        </p>
+        <p>
+          When you are back online, changes are sent in the order you made them and merged with what is already there,
+          so a slow connection does not cost you a paragraph.
+        </p>
+      </div>
+      <figure class="mkt-shot">
+        <Image
+          src={desktopImage}
+          alt="Madrid running on macOS with a note open and the sidebar showing recent notes"
+          class="h-auto w-full"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+      <figure class="mkt-shot md:order-last">
+        <Image
+          src={signInImage}
+          alt="The Madrid sign-in screen on macOS"
+          class="h-auto w-full"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <div class="mkt-lede max-w-md space-y-4">
+        <h2 class="mkt-heading text-foreground">Backed up without ceremony</h2>
+        <p>
+          Signed in, your notes are kept in your own row-secured space in the cloud. Nobody else's account can read
+          them, and attachments live in private storage reached through links that expire.
+        </p>
+        <p>Sign in on another Mac and your vault is there, including folders, links, and the graph.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mkt-container mkt-section border-t border-border" data-reveal>
+    <h2 class="mkt-heading max-w-xl">What the app does with your writing</h2>
+    <dl class="mt-12 grid gap-10 md:grid-cols-3 md:gap-12">
+      <div>
+        <dt class="font-medium text-foreground">Delete means delete</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          Removing a note clears its attachments from storage as well as the note itself.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Updates in place</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          The Mac app checks for updates and installs them when you say so, from Settings.
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-foreground">Open source</dt>
+        <dd class="mkt-lede mt-3 text-sm md:text-base">
+          The code is on GitHub, so you can read how any of this works before you trust it.
+        </dd>
+      </div>
+    </dl>
+  </section>
+</PillarLayout>

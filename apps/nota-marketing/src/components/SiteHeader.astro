@@ -8,19 +8,20 @@ interface Props {
 
 const { borderless = false } = Astro.props;
 
-/** Homepage hero: surface Blog beside Download in the sticky bar first. Other pages keep Download first (GitHub releases). */
+/** Homepage hero surfaces the product pages first; other pages lead with Download. */
+const productLinks = [
+  { href: '/writing', label: 'Writing' },
+  { href: '/graph', label: 'Graph' },
+  { href: '/sync', label: 'Sync' },
+];
+
 const navLinks = borderless
-  ? [
-      { href: '/blog', label: 'Blog' },
-      { href: NOTA_DOWNLOAD_PATH, label: 'Download' },
-      { href: '/pricing', label: 'Pricing' },
-      { href: '/#faq', label: 'FAQ' },
-    ]
+  ? [...productLinks, { href: '/pricing', label: 'Pricing' }, { href: '/blog', label: 'Blog' }]
   : [
       { href: NOTA_DOWNLOAD_PATH, label: 'Download' },
-      { href: '/blog', label: 'Blog' },
+      ...productLinks,
       { href: '/pricing', label: 'Pricing' },
-      { href: '/#faq', label: 'FAQ' },
+      { href: '/blog', label: 'Blog' },
     ];
 ---
 
