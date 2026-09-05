@@ -246,12 +246,12 @@ Lightbox styles live in the app bundle’s existing `apps/nota/styles.css` impor
 ## Verification
 
 - **Mechanical (TDD order)**:
-  1. Add Step 3 failing tests → confirm red: `pnpm exec nx test @nota/nota --testPathPattern=note-image-lightbox`
+  1. Add Step 3 failing tests → confirm red: `pnpm exec nx test @getmadrid/nota --testPathPattern=note-image-lightbox`
   2. Implement Steps 1–2 → confirm green (all lightbox specs + no regressions).
-  3. `pnpm exec nx lint @nota/nota`
-  4. `pnpm exec nx test @nota/nota` (full app unit suite)
+  3. `pnpm exec nx lint @getmadrid/nota`
+  4. `pnpm exec nx test @getmadrid/nota` (full app unit suite)
 
-- **Feel check**: `pnpm exec nx dev @nota/nota`, open a note with an image, click the image:
+- **Feel check**: `pnpm exec nx dev @getmadrid/nota`, open a note with an image, click the image:
   - Backdrop and image **ease in** over ~200ms; image grows from slightly smaller (97%) with fade, centred.
   - Close via Escape or backdrop — **ease out** over ~200ms; no one-frame flash.
   - Rapid click image → Escape → image again: second open does not stick at partial opacity (transitions retarget).

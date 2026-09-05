@@ -8,7 +8,7 @@ ADR 0003 — [`docs/adr/0003-nextjs-share-cards-and-path-routing.md`](../../../d
 
 ## What to build
 
-Replace hash notes navigation with path routing under App Router. Canonical note URL = `/notes/[id]` (aligned with `@nota/internal-note-link`). Signed-in `/notes/**` is a client-rendered Notes Client Shell — vault, editor, chrome inside App Router layouts. Do NOT SSR note bodies or the vault.
+Replace hash notes navigation with path routing under App Router. Canonical note URL = `/notes/[id]` (aligned with `@getmadrid/internal-note-link`). Signed-in `/notes/**` is a client-rendered Notes Client Shell — vault, editor, chrome inside App Router layouts. Do NOT SSR note bodies or the vault.
 
 - `/notes/[id]` renders the client shell; note body/vault stay client-rendered.
 - Legacy `#/notes/…` and `#/notes/note/:id` redirect to paths at boot/middleware.

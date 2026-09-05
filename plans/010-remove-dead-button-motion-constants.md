@@ -80,14 +80,14 @@ After edit, `nota-motion.ts` ends at `NOTA_SIDEBAR_SLIDE_PX` and jumps straight 
 ## Repo conventions to follow
 
 - **GSAP tokens** live in `apps/nota/src/lib/nota-motion.ts`; only constants consumed by GSAP callers belong there. Exemplar: `NOTA_PALETTE_ENTER_S` imported by `apps/nota/src/components/command-palette.tsx:77`.
-- **Button press** belongs in `@nota/design/button` and `apps/nota/styles.css` (`.nota-pressable`), not in GSAP seconds. Exemplar: `packages/design/src/components/button.tsx:34`.
+- **Button press** belongs in `@getmadrid/design/button` and `apps/nota/styles.css` (`.nota-pressable`), not in GSAP seconds. Exemplar: `packages/design/src/components/button.tsx:34`.
 - **Tests** for `nota-motion` assert product intent for _used_ exports only; colocated `*.spec.ts` with AAA sections (`// Arrange|Act|Assert`).
 
 ## Red / green TDD strategy
 
-1. **Red (before edit):** `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — passes today because the fourth `it` block asserts the dead constants. Grep `NOTA_BUTTON_PRESS_S` — expect 4 hits (2 definition + 2 spec import/assert lines).
+1. **Red (before edit):** `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` — passes today because the fourth `it` block asserts the dead constants. Grep `NOTA_BUTTON_PRESS_S` — expect 4 hits (2 definition + 2 spec import/assert lines).
 2. **Green (after edit):** same test command — still passes with three `it` blocks. Grep `NOTA_BUTTON_PRESS_S|NOTA_BUTTON_RELEASE_S` — expect 0 hits under `apps/`, `packages/`.
-3. **Regression guard:** no new tests required; removal is the fix. Optional sanity: `pnpm exec nx test @nota/design --testPathPattern=button` still passes (unchanged).
+3. **Regression guard:** no new tests required; removal is the fix. Optional sanity: `pnpm exec nx test @getmadrid/design --testPathPattern=button` still passes (unchanged).
 
 ## Steps
 
@@ -110,9 +110,9 @@ After edit, `nota-motion.ts` ends at `NOTA_SIDEBAR_SLIDE_PX` and jumps straight 
 
 - **Mechanical:**
   - `rg 'NOTA_BUTTON_PRESS_S|NOTA_BUTTON_RELEASE_S' apps packages` → no matches.
-  - `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` → all tests pass (3 cases).
-  - `pnpm exec nx lint @nota/nota --files=apps/nota/src/lib/nota-motion.ts,apps/nota/src/lib/nota-motion.spec.ts` → clean.
-- **Feel check:** run `pnpm exec nx dev @nota/nota`, open Settings or any screen with `Button`, press and hold a button:
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` → all tests pass (3 cases).
+  - `pnpm exec nx lint @getmadrid/nota --files=apps/nota/src/lib/nota-motion.ts,apps/nota/src/lib/nota-motion.spec.ts` → clean.
+- **Feel check:** run `pnpm exec nx dev @getmadrid/nota`, open Settings or any screen with `Button`, press and hold a button:
   - Subtle scale to ~0.98 on `:active`; release snaps back — unchanged from before this plan.
   - In DevTools → Rendering → emulate `prefers-reduced-motion: reduce` — `Button` skips scale (`motion-safe:` prefix); `.nota-pressable` skips `:active` transform — unchanged.
   - Toggle Animations panel to 10% speed — confirm 200ms transform transition, not 250ms/350ms asymmetric GSAP (there should be no GSAP involvement on buttons).

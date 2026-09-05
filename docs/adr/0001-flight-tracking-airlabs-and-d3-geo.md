@@ -13,7 +13,7 @@ call the same endpoint — unlike the Bearer-gated `og-preview` route. Rendering
 uses **d3-geo with a bundled world TopoJSON** (flat map in the hover card,
 orthographic globe in the dialog) rather than MapLibre/Leaflet, because a
 tile-less vector avoids a tile-provider key, extra CSP origins, and per-view tile
-quota, works offline and on `/s/`, and matches Nota's clean visual style.
+quota, works offline and on `/s/`, and matches Madrid's clean visual style.
 
 ## Consequences
 

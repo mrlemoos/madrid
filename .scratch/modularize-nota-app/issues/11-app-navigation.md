@@ -6,7 +6,7 @@ clerk-hash navigation, pathname policy, and navigation-auth logic, plus a
 screen, settings/history/sidebar/today shortcuts, today's-note open, vault-list sync).
 Hash routing, screen resolution, and keyboard shortcuts behave exactly as before.
 
-**Blocked by:** 02 — `@nota/note-runtime`.
+**Blocked by:** 02 — `@getmadrid/note-runtime`.
 
 **Status:** done
 
@@ -19,5 +19,5 @@ Hash routing, screen resolution, and keyboard shortcuts behave exactly as before
 ## Comments
 
 - Characterization spec added for `app-navigation-auth` before the move.
-- `todays-note.localDateKey` re-exports `@nota/note-journal-core/local-date-key`.
+- `todays-note.localDateKey` re-exports `@getmadrid/note-journal-core/local-date-key`.
 - Unblocks `notes-chrome-ui` shell/sidebar move (ticket 10) once electron-bridge + note-editor land.

@@ -1,6 +1,6 @@
-# Feature Ideas for Nota
+# Feature Ideas for Madrid
 
-> **Nota’s job is to give you a steady place to write and arrange ideas, then step back.**
+> **Madrid’s job is to give you a steady place to write and arrange ideas, then step back.**
 >
 > This document collects brainstormed feature directions. Every idea must be filtered through the product’s core philosophy before being considered for implementation.
 

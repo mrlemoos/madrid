@@ -8,7 +8,7 @@ ADR 0003 — [`docs/adr/0003-nextjs-share-cards-and-path-routing.md`](../../../d
 
 ## What to build
 
-Migrate `@nota/nota` from the Vite static SPA to Next.js App Router as the platform for path routing and Share Card SSR. Skeleton only: framework, build/deploy model, base layout, Clerk App Router integration — no feature migration yet.
+Migrate `@getmadrid/nota` from the Vite static SPA to Next.js App Router as the platform for path routing and Share Card SSR. Skeleton only: framework, build/deploy model, base layout, Clerk App Router integration — no feature migration yet.
 
 HITL: framework swap + deploy-model change (Vercel Next instead of static `index.html` SPA rewrites), CSP and env moves. Requires human architectural sign-off. Gated on the modularize wave (ADR 0002) landing first.
 

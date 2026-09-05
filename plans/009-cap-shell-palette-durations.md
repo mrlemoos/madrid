@@ -112,7 +112,7 @@ If both 001 (snap) and 004 (transform refactor) land, this plan may reduce to **
 
 ## TDD strategy
 
-1. **Red** — Update `nota-motion.spec.ts` first: replace the `0.3–0.55s` slow-band test with the two target tests above. Run `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — expect failures on current constants (`0.4`, `0.35`, `0.45`).
+1. **Red** — Update `nota-motion.spec.ts` first: replace the `0.3–0.55s` slow-band test with the two target tests above. Run `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` — expect failures on current constants (`0.4`, `0.35`, `0.45`).
 2. **Green** — Change `NOTA_PALETTE_ENTER_S`, `NOTA_PALETTE_EXIT_S`, and `NOTA_SIDEBAR_S` in `nota-motion.ts` to target values; update the module comment.
 3. **Refactor** — None required; consumers already import constants.
 
@@ -122,7 +122,7 @@ If both 001 (snap) and 004 (transform refactor) land, this plan may reduce to **
 2. **Red — spec.** In `apps/nota/src/lib/nota-motion.spec.ts`, remove the test `'keeps shell/palette timings in a slow, intentional band (0.3–0.55s)'`. Add the two target tests from the **Target** section. Run tests; confirm red.
 3. **Green — palette constants.** In `apps/nota/src/lib/nota-motion.ts`, set `NOTA_PALETTE_ENTER_S = 0.25` and `NOTA_PALETTE_EXIT_S = 0.25`. Replace the `Calm motion band ~300–500ms` comment with the crisp-band comment from **Target**.
 4. **Green — sidebar constant.** Set `NOTA_SIDEBAR_S = 0.3` in the same file.
-5. **Green — verify tests.** Run `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — all `nota-motion` tests pass. Run `pnpm exec nx test @nota/nota --testPathPattern=nota-sidebar-shell-motion` — sidebar target helpers unchanged (they do not assert duration).
+5. **Green — verify tests.** Run `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` — all `nota-motion` tests pass. Run `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-sidebar-shell-motion` — sidebar target helpers unchanged (they do not assert duration).
 
 ## Boundaries
 
@@ -136,11 +136,11 @@ If both 001 (snap) and 004 (transform refactor) land, this plan may reduce to **
 ## Verification
 
 - **Mechanical**
-  - `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — pass.
-  - `pnpm exec nx test @nota/nota --testPathPattern=nota-sidebar-shell-motion` — pass.
-  - `pnpm exec nx run @nota/nota:lint` — pass on touched files.
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` — pass.
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-sidebar-shell-motion` — pass.
+  - `pnpm exec nx run @getmadrid/nota:lint` — pass on touched files.
 - **Feel check** (only if palette motion still exists after plan 001):
-  - `pnpm exec nx dev @nota/nota` → Cmd/Ctrl+K: palette should feel snappier; enter/exit visibly shorter than before but not instantaneous.
+  - `pnpm exec nx dev @getmadrid/nota` → Cmd/Ctrl+K: palette should feel snappier; enter/exit visibly shorter than before but not instantaneous.
   - Toggle sidebar (tens/day): collapse/expand completes within one perceptual beat (~300ms), not a lingering half-second.
   - DevTools → Animations panel, playback **10%**: palette backdrop and panel tweens ≈250ms; sidebar aside tween ≈300ms.
   - Rendering → **prefers-reduced-motion: reduce**: palette and sidebar still snap (existing paths unchanged).

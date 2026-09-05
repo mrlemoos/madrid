@@ -4,7 +4,7 @@ Status: in-review
 
 ## Comments
 
-- Implemented: migration `0023_user_preferences_display_name.sql` (column + `get_shared_note` LEFT JOIN → `author_display_name`); both DB type defs; `getUserPreferences`/`upsertUserPreferences` + vault-load default; `fetchSharedNote`/`SharedNote.authorDisplayName`; `resolveClerkDisplayName` + `useSyncClerkDisplayName` wired in `notes-shell`. Unit test on name precedence passes; `@nota/notes-chrome-ui` build green. Migration applied to remote prod (`kvnrhcsfkahfpjyfqjee`) via `supabase db push --linked`; verified against live schema with `gen types` (matched hand-edited defs; added `get_shared_note` Function type). Build green.
+- Implemented: migration `0023_user_preferences_display_name.sql` (column + `get_shared_note` LEFT JOIN → `author_display_name`); both DB type defs; `getUserPreferences`/`upsertUserPreferences` + vault-load default; `fetchSharedNote`/`SharedNote.authorDisplayName`; `resolveClerkDisplayName` + `useSyncClerkDisplayName` wired in `notes-shell`. Unit test on name precedence passes; `@getmadrid/notes-chrome-ui` build green. Migration applied to remote prod (`kvnrhcsfkahfpjyfqjee`) via `supabase db push --linked`; verified against live schema with `gen types` (matched hand-edited defs; added `get_shared_note` Function type). Build green.
 
 ## Parent
 

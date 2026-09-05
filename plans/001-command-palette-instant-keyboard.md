@@ -208,12 +208,12 @@ const handleDialogOpenChange = useCallback((next: boolean): void => {
 ## Verification
 
 - **Mechanical:**
-  - `pnpm exec nx test @nota/nota --testPathPattern=nota-motion` — all tests pass; slow-band test no longer references palette constants.
-  - `pnpm exec nx test @nota/nota --testPathPattern=command-palette` — existing palette behaviour tests pass.
-  - `pnpm exec nx lint @nota/nota` — no unused import / ref errors.
-  - `pnpm exec nx build @nota/nota` — succeeds.
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion` — all tests pass; slow-band test no longer references palette constants.
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=command-palette` — existing palette behaviour tests pass.
+  - `pnpm exec nx lint @getmadrid/nota` — no unused import / ref errors.
+  - `pnpm exec nx build @getmadrid/nota` — succeeds.
 
-- **Feel check:** run `pnpm exec nx dev @nota/nota`, sign in, open notes:
+- **Feel check:** run `pnpm exec nx dev @getmadrid/nota`, sign in, open notes:
   - Press Cmd/Ctrl+K: palette and backdrop appear with **no** fade, scale, or vertical slide — input is focusable on the same frame as key release.
   - Press Cmd/Ctrl+K again (or Escape): palette vanishes immediately; no 350 ms tail.
   - Spam Cmd/Ctrl+K rapidly 10+ times: each toggle is synchronous; no animation queue, no ghost backdrop, no stuck portal.

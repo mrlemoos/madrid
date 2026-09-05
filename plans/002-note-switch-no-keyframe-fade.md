@@ -114,8 +114,8 @@ This change is mostly deletions; guard against regression with a cheap static ch
 | **Red**   | Before edits, `rg 'nota-note-open-fade' apps/nota`                                                                                              | 2 files: `styles.css`, `note-detail-panel.tsx` |
 | **Red**   | (Optional) add a one-line Vitest in `note-detail-panel` spec if one is created later: assert rendered wrapper lacks `nota-note-open-fade` class | Fails today                                    |
 | **Green** | Apply steps 1–2                                                                                                                                 | `rg` returns no matches; optional spec passes  |
-| **Green** | `pnpm exec nx test @nota/nota --testPathPattern=note-detail` (if spec exists) or full `@nota/nota` test target                                  | All pass                                       |
-| **Green** | `pnpm exec nx build @nota/nota`                                                                                                                 | Succeeds                                       |
+| **Green** | `pnpm exec nx test @getmadrid/nota --testPathPattern=note-detail` (if spec exists) or full `@getmadrid/nota` test target                        | All pass                                       |
+| **Green** | `pnpm exec nx build @getmadrid/nota`                                                                                                            | Succeeds                                       |
 
 No new dependencies. Do not add animation assertions to jsdom tests — motion correctness is manual feel-check only.
 
@@ -133,11 +133,11 @@ No new dependencies. Do not add animation assertions to jsdom tests — motion c
 
 - **Mechanical:**
   - `rg 'nota-note-open-fade' apps/nota` — no matches.
-  - `pnpm exec nx lint @nota/nota` — no unused class / import errors.
-  - `pnpm exec nx test @nota/nota` — all existing tests pass (no dedicated `note-detail-panel` spec at `08ed1fa`; full app test target is sufficient).
-  - `pnpm exec nx build @nota/nota` — succeeds.
+  - `pnpm exec nx lint @getmadrid/nota` — no unused class / import errors.
+  - `pnpm exec nx test @getmadrid/nota` — all existing tests pass (no dedicated `note-detail-panel` spec at `08ed1fa`; full app test target is sufficient).
+  - `pnpm exec nx build @getmadrid/nota` — succeeds.
 
-- **Feel check:** run `pnpm exec nx dev @nota/nota`, sign in with notes entitled, open any note:
+- **Feel check:** run `pnpm exec nx dev @getmadrid/nota`, sign in with notes entitled, open any note:
   - **Rapid sidebar hopping:** click five different notes in the sidebar as fast as possible. Each switch shows the new title and body **immediately** — no 400 ms fade-in, no momentary blank/ghost content, no "trailing" fade from the previous note.
   - **History keyboard:** type in note A, open note B, press Mod+[ — note A appears instantly; Mod+] back to B — instant again. Repeat 5× rapidly: no animation queue.
   - **Command palette:** Cmd/Ctrl+K → pick another note via search — instant content swap when the palette closes.

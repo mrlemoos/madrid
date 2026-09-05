@@ -124,7 +124,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 
 ## Repo conventions to follow
 
-- **Shared cross-app CSS** lives in `@nota/design/theme-chrome.css` (already imported before app styles). Mirror the `--background-hex` ↔ `theme-color.ts` sync pattern: add `packages/design/src/lib/motion-tokens.ts` as the TypeScript source of truth for testability; keep `theme-chrome.css` values identical.
+- **Shared cross-app CSS** lives in `@getmadrid/design/theme-chrome.css` (already imported before app styles). Mirror the `--background-hex` ↔ `theme-color.ts` sync pattern: add `packages/design/src/lib/motion-tokens.ts` as the TypeScript source of truth for testability; keep `theme-chrome.css` values identical.
 - **Tailwind v4 `@theme inline`** in `apps/nota/styles.css:1020` bridges design tokens to utilities — add `--ease-out` and `--ease-in-out` there so `ease-out` / `ease-in-out` classes resolve to the strong curves (same pattern as `--font-sans`, `--color-background`).
 - **Micro-interaction class names** are exported from `apps/nota/src/lib/nota-interaction.ts` — do not rename; only change CSS definitions in `styles.css`.
 - **Exemplar for GSAP isolation**: `apps/nota/src/lib/nota-motion.spec.ts:17-33` — shell timings and sine eases are contractual; any new CSS token work must not alter these expectations.
@@ -134,7 +134,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 1. **Red** — Add `packages/design/src/lib/motion-tokens.spec.ts`:
    - Assert `NOTA_EASE_OUT === 'cubic-bezier(0.23, 1, 0.32, 1)'`
    - Assert `NOTA_EASE_IN_OUT === 'cubic-bezier(0.77, 0, 0.175, 1)'`
-   - Run `pnpm exec nx test @nota/design` — fails (module/constants missing).
+   - Run `pnpm exec nx test @getmadrid/design` — fails (module/constants missing).
 
 2. **Green** — Add `packages/design/src/lib/motion-tokens.ts` with those exports; copy values into `theme-chrome.css`; tests pass.
 
@@ -147,7 +147,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
    });
    ```
 
-   Import `NOTA_EASE_OUT` from `@nota/design/motion-tokens` — fails until export path exists.
+   Import `NOTA_EASE_OUT` from `@getmadrid/design/motion-tokens` — fails until export path exists.
 
 4. **Green** — Add `./motion-tokens` package export in `packages/design/package.json`; re-export in `nota-motion.ts` comment block only (GSAP constants unchanged); test passes.
 
@@ -167,7 +167,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 
    ```json
    "./motion-tokens": {
-     "@nota/source": "./src/lib/motion-tokens.ts",
+     "@getmadrid/source": "./src/lib/motion-tokens.ts",
      "types": "./dist/lib/motion-tokens.d.ts",
      "import": "./dist/motion-tokens.js",
      "default": "./dist/motion-tokens.js"
@@ -217,7 +217,7 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
    --btn-ease: var(--ease-out);
    ```
 
-9. **Document GSAP/CSS split in nota-motion.ts** — add a file-level comment above the `NOTA_MOTION_EASE_*` exports explaining that these are GSAP-only shell eases (sine band, tested in spec) and that CSS micro-interactions use `@nota/design` `--ease-out` / `--ease-in-out`. **Do not change the constant values.**
+9. **Document GSAP/CSS split in nota-motion.ts** — add a file-level comment above the `NOTA_MOTION_EASE_*` exports explaining that these are GSAP-only shell eases (sine band, tested in spec) and that CSS micro-interactions use `@getmadrid/design` `--ease-out` / `--ease-in-out`. **Do not change the constant values.**
 
 10. **Extend nota-motion.spec.ts** — add the "keeps GSAP shell eases separate from CSS tokens" test (step 3 above). Existing sine and timing-band tests must remain untouched.
 
@@ -238,9 +238,9 @@ export const NOTA_MOTION_EASE_OUT = 'sine.out';
 - **Mechanical**:
 
   ```bash
-  pnpm exec nx test @nota/design --outputStyle=static
-  pnpm exec nx test @nota/nota --testPathPattern=nota-motion --outputStyle=static
-  pnpm exec nx run-many -t lint --projects=@nota/design,@nota/nota --outputStyle=static
+  pnpm exec nx test @getmadrid/design --outputStyle=static
+  pnpm exec nx test @getmadrid/nota --testPathPattern=nota-motion --outputStyle=static
+  pnpm exec nx run-many -t lint --projects=@getmadrid/design,@getmadrid/nota --outputStyle=static
   ```
 
   All pass; existing `nota-motion.spec.ts` sine/timing tests unchanged and green.

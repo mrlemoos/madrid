@@ -35,12 +35,12 @@ By the time this ticket was picked up, tickets 01–13 had already moved almost 
 - **Settings/theme composition (intentionally not extracted per brief):**
   `theme-menu.tsx`, `nota-pro-settings-section.tsx`, `nota-pro-gate.tsx`.
 - **Command palette UI (intentionally not extracted — see ticket 06 Comments; no
-  `@nota/note-palette-ui` exists):** `command-palette.tsx` (+ spec),
+  `@getmadrid/note-palette-ui` exists):** `command-palette.tsx` (+ spec),
   `command-palette-semantic-sync.tsx`.
 - **Welcome-note seed (one-off, app bootstrap only):** `welcome-note-doc.ts` (+ spec),
   `welcome-note-seed.ts` (+ spec).
 - **App-level bindings:** `lib/nota-server-client.ts` (+ binding spec) — wraps
-  `@nota/nota-server-client` with the app's Clerk token, deliberately kept out of the
+  `@getmadrid/nota-server-client` with the app's Clerk token, deliberately kept out of the
   package per its own header comment; `lib/use-nota-translator.ts` (thin i18n passthrough,
   per PRD's excluded-from-new-tests list); `lib/utils.ts` (+ spec, `cn` re-export);
   `lib/navigator-apple-platform.ts`; `lib/vite-env.ts`; `types/database.types.ts`
@@ -55,16 +55,16 @@ package by the ticket's own bar (orphan import of a deleted path, or a duplicate
 code). Two borderline files were reviewed and deliberately **left in the app**:
 
 - `lib/og-image-url.spec.ts` and `components/flight-code.spec.ts` test
-  `safeOgImageSrcForPreview`/`findFlightCodes` — both live only in `@nota/editor` now, with
-  zero app-specific coupling. They _could_ move into `packages/editor`, but `@nota/editor`
+  `safeOgImageSrcForPreview`/`findFlightCodes` — both live only in `@getmadrid/editor` now, with
+  zero app-specific coupling. They _could_ move into `packages/editor`, but `@getmadrid/editor`
   currently has no `vitest`/`test` target at all (build-only lib, confirmed via its
   `package.json` `nx.targets`); moving the specs would mean standing up a new test harness
   for the package, which is an unrelated refactor outside this ticket's brief. Left as-is;
-  a future ticket can promote them alongside adding `@nota/editor`'s test target.
-- `components/link-preview-scan.spec.ts` similarly tests `@nota/editor`'s
+  a future ticket can promote them alongside adding `@getmadrid/editor`'s test target.
+- `components/link-preview-scan.spec.ts` similarly tests `@getmadrid/editor`'s
   `convertLinkOnlyParagraphs` with no app coupling — same reasoning, left in place.
 - `apps/nota/src/hooks/` was an empty directory (all its files had already moved to
-  `@nota/app-navigation-ui`/`@nota/note-capture-ui`/etc. in earlier tickets); removed as
+  `@getmadrid/app-navigation-ui`/`@getmadrid/note-capture-ui`/etc. in earlier tickets); removed as
   dead cruft since it's untracked and empty.
 
 Command-palette UI (`command-palette.tsx`, `command-palette-semantic-sync.tsx`) and the
@@ -73,7 +73,7 @@ brief — see ticket 06 Comments for the palette-specific note.
 
 ### 2. `CONTEXT-MAP.md`
 
-- Dropped the two ghost rows: `@nota/shared` and `@nota/study-capture-core` (neither exists
+- Dropped the two ghost rows: `@getmadrid/shared` and `@getmadrid/study-capture-core` (neither exists
   under `packages/`).
 - Added rows for all 23 packages created by the modularization wave that were missing from
   the map: `app-navigation-core`, `app-navigation-ui`, `data-source`, `electron-bridge-core`,
@@ -92,18 +92,18 @@ brief — see ticket 06 Comments for the palette-specific note.
 
 Re-audited against what's actually on disk (packages present + app copies gone):
 
-- **01 (`@nota/data-source`), 02 (`@nota/note-runtime`), 03 (`@nota/note-doc-plain-text`),
+- **01 (`@getmadrid/data-source`), 02 (`@getmadrid/note-runtime`), 03 (`@getmadrid/note-doc-plain-text`),
   04 (`note-journal`), 05 (`note-capture`):** all fully done — package(s) exist, populated,
   specs travelled, and the corresponding `apps/nota/src` originals are gone. Marked
   `Status: done`, ticked their checklists, and added a short Comments note each pointing at
   the verified evidence.
 - **06 (`note-palette`):** only half done — `note-palette-core` exists and is fully
   populated (command catalogue, palette mode, shortcuts catalogue, kbd styles, move-pick
-  helpers, all with specs), but no `@nota/note-palette-ui` package was ever created; the
+  helpers, all with specs), but no `@getmadrid/note-palette-ui` package was ever created; the
   palette UI still lives in the app. Marked `Status: done (core only)`, left the `ui`
   checklist item unticked, and added a Comments note explaining the split and pointing at
   this ticket's decision to leave it (per the brief's explicit "leave it if no
-  `@nota/note-palette-ui`" instruction) rather than force-extracting a UI package as an
+  `@getmadrid/note-palette-ui`" instruction) rather than force-extracting a UI package as an
   unrelated refactor.
 - **07–13** were already accurately marked `done` with their own Comments from prior
   tickets; spot-checked 07 and 13 against disk and left untouched.
@@ -113,16 +113,16 @@ Re-audited against what's actually on disk (packages present + app copies gone):
 `pnpm exec nx run-many -t build,lint,test --outputStyle=static` across all 44 projects:
 exit code 1, with **exactly** the two known/accepted failures and nothing else:
 
-- `@nota/web-design:lint` — 96 pre-existing `@typescript-eslint/no-floating-promises` /
+- `@getmadrid/web-design:lint` — 96 pre-existing `@typescript-eslint/no-floating-promises` /
   `no-misused-promises` / `require-await` errors in `src/icons/*` (itsHover-generated icon
   set). Not touched, per brief.
-- `@nota/nota-mobile:build` — `eas: command not found` (missing local `eas-cli`
+- `@getmadrid/nota-mobile:build` — `eas: command not found` (missing local `eas-cli`
   global install, not a workspace/code problem). Not touched, per brief.
 
-Everything else (all 42 remaining projects, including `@nota/nota` build/lint/test,
-`@nota/data-source`, `@nota/note-runtime`, every `-core`/`-ui` pair, `@nota/editor`,
-`@nota/note-graph`, `@nota/notes-offline*`, marketing, server, Electron) is green. Also ran
-`pnpm exec nx run @nota/nota:lint` on its own (goal 5) — green, only a pre-existing harmless
+Everything else (all 42 remaining projects, including `@getmadrid/nota` build/lint/test,
+`@getmadrid/data-source`, `@getmadrid/note-runtime`, every `-core`/`-ui` pair, `@getmadrid/editor`,
+`@getmadrid/note-graph`, `@getmadrid/notes-offline*`, marketing, server, Electron) is green. Also ran
+`pnpm exec nx run @getmadrid/nota:lint` on its own (goal 5) — green, only a pre-existing harmless
 `react/jsx-no-useless-fragment` warning in `providers.spec.tsx`; `@nx/enforce-module-boundaries`
 reports no violations for the app's full dependency layering.
 

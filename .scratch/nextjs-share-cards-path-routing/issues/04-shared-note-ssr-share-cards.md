@@ -12,7 +12,7 @@ Server-render `/s/[token]` so crawlers get real HTML + Open Graph unfurls, while
 
 - Document `<title>`: `{title}–Nota` (en-dash). Empty title → Untitled Note label.
 - `og:title`: `{author} shared {title}`; no author display name → `{title}` only (author from issue 01).
-- Body: plain-text excerpt via `@nota/note-doc-plain-text`; TipTap read-only hydrates client-side.
+- Body: plain-text excerpt via `@getmadrid/note-doc-plain-text`; TipTap read-only hydrates client-side.
 - Live broadcast subscription on `share:{token}` unchanged (refetch on broadcast).
 - `og:image`: static Nota brand asset (per-note dynamic `next/og` deferred to issue 06).
 

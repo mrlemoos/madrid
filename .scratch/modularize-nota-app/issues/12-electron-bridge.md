@@ -6,7 +6,7 @@ bridge, traffic-lights controller, update settings section, window drag band, cl
 glue, menubar events, update status, and release-notes dialog. Desktop menubar, traffic
 lights, window drag, and updater behave exactly as before.
 
-**Blocked by:** 02 — `@nota/note-runtime`.
+**Blocked by:** 02 — `@getmadrid/note-runtime`.
 
 **Status:** done
 
@@ -17,12 +17,12 @@ lights, window drag, and updater behave exactly as before.
 
 ## Comments
 
-- Created `@nota/electron-bridge-core` (`platform:web`, `emitDeclarationOnly`, `exports` → `src`,
-  `@nota/source` condition) with subpaths `./menubar-payload`, `./window-chrome`,
+- Created `@getmadrid/electron-bridge-core` (`platform:web`, `emitDeclarationOnly`, `exports` → `src`,
+  `@getmadrid/source` condition) with subpaths `./menubar-payload`, `./window-chrome`,
   `./menubar-events`, `./update-status`, `./clipboard-plain-text`. Moved
   `electron-menubar-payload.ts`, `electron-window-chrome.ts`, `electron-menubar-events.ts`,
   `nota-update-status.ts`, `clipboard-plain-text-to-tiptap-doc.ts` + specs from `apps/nota/src/lib`.
-- Created `@nota/electron-bridge-ui` (`platform:web`) with subpaths `./use-is-electron`,
+- Created `@getmadrid/electron-bridge-ui` (`platform:web`) with subpaths `./use-is-electron`,
   `./window-drag-band`, `./traffic-lights-controller`, `./update-settings-section`,
   `./release-notes-dialog`, `./clipboard-note`, `./menubar-bridge`. Moved
   `use-is-electron.ts`, `electron-window-drag-band.tsx`, `electron-traffic-lights-controller.tsx`,
@@ -32,20 +32,20 @@ lights, window drag, and updater behave exactly as before.
 - Added `use-electron-bridge-translator.ts` (local translator hook, matches
   `writing-activity-ui`/`note-folders-ui` pattern) and `vite-env.ts` (typed
   `VITE_NOTA_SERVER_API_URL` reader) inside `electron-bridge-ui`.
-- `ReleaseNotesDialog` now calls `fetchReleases` from `@nota/nota-server-client` directly, with
-  the Clerk token from `@nota/data-source/clerk-token-ref` (`getClerkAccessToken`) and the base
+- `ReleaseNotesDialog` now calls `fetchReleases` from `@getmadrid/nota-server-client` directly, with
+  the Clerk token from `@getmadrid/data-source/clerk-token-ref` (`getClerkAccessToken`) and the base
   URL from the package's own `vite-env.ts` — no more local `nota-server-client` re-wrap, and no
   extra `@clerk/react` dependency needed.
 - Collateral moves so the new packages never import from `apps/nota`:
   - `pdf-attachment-client.ts` + spec → `packages/notes-chrome-ui/src/` (export
-    `./pdf-attachment-client`; added `@nota/data-source`, `@nota/database-types` deps).
+    `./pdf-attachment-client`; added `@getmadrid/data-source`, `@getmadrid/database-types` deps).
   - `audio-to-note-start.ts` → `packages/note-capture-ui/src/` (export
-    `./audio-to-note-start`; added `@nota/app-navigation-core` dep, alongside existing
+    `./audio-to-note-start`; added `@getmadrid/app-navigation-core` dep, alongside existing
     `data-source`/`notes-offline`/`note-runtime`/`note-capture-core`/`database-types`).
   - `create-note-client.ts` + spec → `packages/note-folders-ui/src/` (export
-    `./create-note-client`; added `@nota/app-navigation-core`, `@nota/writing-activity-ui` deps).
-- Fixed `Json`/`Note`/`NoteAttachment` type imports across moved files to `@nota/database-types`
-  and `cn` imports to `@nota/web-design/utils`.
+    `./create-note-client`; added `@getmadrid/app-navigation-core`, `@getmadrid/writing-activity-ui` deps).
+- Fixed `Json`/`Note`/`NoteAttachment` type imports across moved files to `@getmadrid/database-types`
+  and `cn` imports to `@getmadrid/web-design/utils`.
 - Relative imports inside `electron-bridge-ui` (`nodenext` module resolution) needed explicit
   `.js` extensions (e.g. `./use-is-electron.js`) — without them `tsc` failed with TS2835 and the
   broken resolution cascaded into a wall of `no-unsafe-*` ESLint errors.
@@ -62,8 +62,8 @@ lights, window drag, and updater behave exactly as before.
   `apps/nota/src/types/nota-electron-globals.d.ts`, unused by any remaining app file).
 - `electron-window-chrome.spec.ts` doesn't read `styles.css` from disk, so no path fix was
   needed there (unlike `notes-chrome-core`'s spec).
-- Verified: `pnpm exec nx run-many -t build,lint,test -p @nota/electron-bridge-core,
-@nota/electron-bridge-ui,@nota/notes-chrome-ui,@nota/note-capture-ui,@nota/note-folders-ui,
-@nota/nota --outputStyle=static` — all green (`@nota/nota` alone: 31 test files, 113 tests
+- Verified: `pnpm exec nx run-many -t build,lint,test -p @getmadrid/electron-bridge-core,
+@getmadrid/electron-bridge-ui,@getmadrid/notes-chrome-ui,@getmadrid/note-capture-ui,@getmadrid/note-folders-ui,
+@getmadrid/nota --outputStyle=static` — all green (`@getmadrid/nota` alone: 31 test files, 113 tests
   passing; only pre-existing warning is an unrelated `react/jsx-no-useless-fragment` in
   `providers.spec.tsx`).

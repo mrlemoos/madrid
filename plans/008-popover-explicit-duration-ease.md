@@ -1,6 +1,6 @@
 # 008 — Add explicit duration and ease-out to popup surfaces
 
-- **Status**: DONE (subsumed by plan 015; `NOTA_POPUP_MOTION_CLASS` in `@nota/design/popup-motion`)
+- **Status**: DONE (subsumed by plan 015; `NOTA_POPUP_MOTION_CLASS` in `@getmadrid/design/popup-motion`)
 - **Commit**: 08ed1fa
 - **Severity**: MEDIUM
 - **Category**: Easing & duration
@@ -46,13 +46,13 @@ All instances of the shared popup motion pattern (`origin-[var(--transform-origi
 | `packages/editor/src/components/tiptap/note-pdf-extension.tsx`                           | `duration-300 ease-out` on PDF card hover overlays — not a popup; different element budget.                                            |
 | Dialog popups (`command-palette.tsx`, `folder-*-dialog.tsx`, `release-notes-dialog.tsx`) | Modals/dialogs — covered by plan 001 or separate modal budget (200–500ms). No `starting-style`/`ending-style` scale pattern.           |
 | `packages/editor/src/components/tiptap/note-link-mention-menu.tsx`                       | Fixed-position mention list with no Base UI popup motion classes.                                                                      |
-| GSAP motion in `apps/nota/src/lib/nota-motion.ts`                                        | App-level imperative motion; CSS popup tokens belong in `@nota/design`.                                                                |
+| GSAP motion in `apps/nota/src/lib/nota-motion.ts`                                        | App-level imperative motion; CSS popup tokens belong in `@getmadrid/design`.                                                           |
 
 ## Target
 
 Every Base UI popup using the scale+opacity `@starting-style` / `@ending-style` pattern gets **`duration-200 ease-out`** — 200ms sits in the dropdown budget (150–250ms) and matches `Button`.
 
-**Shared constant** (single source of truth in `@nota/design`):
+**Shared constant** (single source of truth in `@getmadrid/design`):
 
 ```ts
 // packages/design/src/lib/popup-motion.ts
@@ -94,8 +94,8 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
 
 ## Repo conventions to follow
 
-- **Subpath imports only** for `@nota/design` — add `./popup-motion` export to `packages/design/package.json` (mirror `./utils` pattern).
-- **Tailwind class composition** via `cn()` from `@nota/design/utils`.
+- **Subpath imports only** for `@getmadrid/design` — add `./popup-motion` export to `packages/design/package.json` (mirror `./utils` pattern).
+- **Tailwind class composition** via `cn()` from `@getmadrid/design/utils`.
 - **Exemplar:** `packages/design/src/components/button.tsx:34` — `duration-200 ease-out` on `transition-[…]`.
 - **Tests:** colocated `*.spec.tsx` under `packages/design/src/components/`; AAA sections (`// Arrange`, `// Act`, `// Assert`).
 - **British spelling** in any new comments or user-facing strings (e.g. "Centre" in note-image menu is already correct — do not change).
@@ -105,7 +105,7 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
 1. **Red** — Extend `packages/design/src/components/context-menu.spec.tsx` and `packages/design/src/components/hover-card.spec.tsx`:
    - Render popup with `defaultOpen`.
    - Assert rendered popup `className` tokens include `duration-200` and `ease-out`.
-   - Run: `pnpm exec nx test @nota/design --testPathPattern="(context-menu|hover-card)"` → expect failures before implementation.
+   - Run: `pnpm exec nx test @getmadrid/design --testPathPattern="(context-menu|hover-card)"` → expect failures before implementation.
 
 2. **Green** — Create `popup-motion.ts`, wire into `context-menu.tsx` and `hover-card.tsx`, add package export, update `theme-menu.tsx` and `note-image-extension.tsx` → tests pass.
 
@@ -119,14 +119,14 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
 
    ```json
    "./popup-motion": {
-     "@nota/source": "./src/lib/popup-motion.ts",
+     "@getmadrid/source": "./src/lib/popup-motion.ts",
      "types": "./dist/lib/popup-motion.d.ts",
      "import": "./dist/popup-motion.js",
      "default": "./dist/popup-motion.js"
    }
    ```
 
-   Ensure `tsconfig.lib.json` includes the new file (it should via `src/**` glob). Rebuild if the executor runs build: `pnpm exec nx build @nota/design`.
+   Ensure `tsconfig.lib.json` includes the new file (it should via `src/**` glob). Rebuild if the executor runs build: `pnpm exec nx build @getmadrid/design`.
 
 3. **Update** `packages/design/src/components/context-menu.tsx`:
    - `import { notaPopupMotionClass } from '../lib/popup-motion.js';`
@@ -137,13 +137,13 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
    - Replace the three motion lines in `DEFAULT_HOVER_CARD_POPUP_CLASS` with `notaPopupMotionClass` (keep `outline-none` on the surface line).
 
 5. **Update** `apps/nota/src/components/theme-menu.tsx`:
-   - `import { notaPopupMotionClass } from '@nota/design/popup-motion';`
+   - `import { notaPopupMotionClass } from '@getmadrid/design/popup-motion';`
    - Replace the three inline motion class strings on `Menu.Popup` with `notaPopupMotionClass`.
 
 6. **Update** `packages/editor/src/components/tiptap/note-image-extension.tsx`:
-   - `import { notaPopupMotionClass } from '@nota/design/popup-motion';`
+   - `import { notaPopupMotionClass } from '@getmadrid/design/popup-motion';`
    - Replace the three inline motion class strings on `Menu.Popup` with `notaPopupMotionClass`.
-   - Add `@nota/design` as a dependency in `packages/editor/package.json` if not already present (`workspace:*`).
+   - Add `@getmadrid/design` as a dependency in `packages/editor/package.json` if not already present (`workspace:*`).
 
 7. **Add tests** (red first, then green):
    - `context-menu.spec.tsx`: new `describe('ContextMenuPopup (motion)')` asserting `duration-200` and `ease-out` on the popup element.
@@ -164,10 +164,10 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
 - **Mechanical**:
 
   ```bash
-  pnpm exec nx test @nota/design --testPathPattern="(context-menu|hover-card)"
-  pnpm exec nx lint @nota/design
-  pnpm exec nx lint @nota/nota
-  pnpm exec nx lint @nota/editor
+  pnpm exec nx test @getmadrid/design --testPathPattern="(context-menu|hover-card)"
+  pnpm exec nx lint @getmadrid/design
+  pnpm exec nx lint @getmadrid/nota
+  pnpm exec nx lint @getmadrid/editor
   ```
 
   All pass.
@@ -180,7 +180,7 @@ Do **not** change `scale-95`, `transform-origin`, or the property list — motio
 
   Expect exactly **one** hit: `packages/design/src/lib/popup-motion.ts`.
 
-- **Feel check** — run `pnpm exec nx dev @nota/nota`, then:
+- **Feel check** — run `pnpm exec nx dev @getmadrid/nota`, then:
   1. **Context menu**: right-click a note in the sidebar → menu scales from cursor anchor over ~200ms, starts fast (ease-out), not sluggish ease-in.
   2. **Theme menu**: Settings → theme dropdown → same feel as context menu.
   3. **Image align menu**: open a note with an image → align dropdown on the image chrome → same timing.

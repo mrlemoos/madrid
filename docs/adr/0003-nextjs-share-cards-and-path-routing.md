@@ -1,4 +1,4 @@
-# 3. Migrate `@nota/nota` to Next.js for Share Cards and path routing
+# 3. Migrate `@getmadrid/nota` to Next.js for Share Cards and path routing
 
 Date: 2026-08-01
 
@@ -21,12 +21,12 @@ app share one platform.
 
 ## Decision
 
-1. **Migrate `@nota/nota` from Vite SPA to Next.js App Router** after the modularize wave
+1. **Migrate `@getmadrid/nota` from Vite SPA to Next.js App Router** after the modularize wave
    (ADR 0002) lands. Order: **modularize → Next**. Author Display Name DB/RPC work may
    land during modularize; Share Card HTML waits for the Next cutover.
 
 2. **Path routing** replaces hash notes navigation. Canonical note URL = `/notes/[id]`
-   (aligned with `@nota/internal-note-link`). Legacy `#/notes/…` and `#/notes/note/:id`
+   (aligned with `@getmadrid/internal-note-link`). Legacy `#/notes/…` and `#/notes/note/:id`
    redirect to paths at boot/middleware. Auth stays on pathnames.
 
 3. **Signed-in `/notes/**` is a Notes Client Shell** — client-rendered vault, editor, and
@@ -35,11 +35,11 @@ app share one platform.
    not unbounded all-id prefetch).
 
 4. **Shared Note route `/s/[token]` is server-rendered for Share Cards**:
-   - Document `<title>`: `{title}–Nota` (en-dash). Empty title → Untitled Note label.
+   - Document `<title>`: `{title}–Madrid` (en-dash). Empty title → Untitled Note label.
    - `og:title`: `{author} shared {title}`; if no Author Display Name → `{title}` only.
-   - Body: plain-text excerpt from note content (`@nota/note-doc-plain-text`); TipTap
+   - Body: plain-text excerpt from note content (`@getmadrid/note-doc-plain-text`); TipTap
      read-only hydrates client-side; live broadcast subscription unchanged.
-   - `og:image`: static Nota brand asset first; per-note dynamic `next/og` later.
+   - `og:image`: static Madrid brand asset first; per-note dynamic `next/og` later.
 
 5. **Author Display Name** is a snapshot on `user_preferences.display_name`, joined in
    `get_shared_note`. Sync from Clerk on signed-in session/prefs (`fullName` →
@@ -60,7 +60,7 @@ app share one platform.
 ## Consequences
 
 - Vercel project for `apps/nota` becomes a Next deploy (no static `index.html` SPA
-  rewrite as the primary model). CSP and env (`CLERK_*`, Supabase anon, Nota API URL)
+  rewrite as the primary model). CSP and env (`CLERK_*`, Supabase anon, Madrid API URL)
   move with the app; Prefer keeping `CLERK_SECRET_KEY` off the app until absorb needs it.
 - `app-navigation-*` and Clerk hash wiring are rewritten for path App Router.
 - Glossary terms for sharing live in [`apps/nota/CONTEXT.md`](../../apps/nota/CONTEXT.md).

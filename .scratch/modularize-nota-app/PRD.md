@@ -1,4 +1,4 @@
-# Modularize the `@nota/nota` SPA into buildable libs
+# Modularize the `@getmadrid/nota` SPA into buildable libs
 
 Status: ready-for-agent
 
@@ -16,15 +16,15 @@ modules — with the guarantee that behaviour is preserved through the move.
 
 ## Solution
 
-Break the SPA into Nx **buildable libs**, one `@nota/*` package per feature cluster, in a
+Break the SPA into Nx **buildable libs**, one `@getmadrid/*` package per feature cluster, in a
 strict dependency layering (see ADR 0002):
 
 ```
 existing shared pkgs
    ^
-@nota/data-source        (web)  — supabase client, models, vault-runtime, persistence, offline drain
+@getmadrid/data-source        (web)  — supabase client, models, vault-runtime, persistence, offline drain
    ^
-@nota/note-runtime       (web)  — app-wide contexts + zustand stores
+@getmadrid/note-runtime       (web)  — app-wide contexts + zustand stores
    ^
 feature -core  (shared where pure, else web)  →  feature -ui (web)
    ^
@@ -32,8 +32,8 @@ apps/nota                — composition only (main, app-root, providers, routes
 ```
 
 Each feature cluster becomes a uniform `-core` (logic) + `-ui` (React) pair. Packages
-expose subpath `exports` entrypoints (the `@nota/web-design` / `note-link-graph` pattern,
-`@nota/source` condition → `src`), with **no re-export barrels** in the app. Nx module
+expose subpath `exports` entrypoints (the `@getmadrid/web-design` / `note-link-graph` pattern,
+`@getmadrid/source` condition → `src`), with **no re-export barrels** in the app. Nx module
 boundaries (`@nx/enforce-module-boundaries`) enforce the layering by `platform:*` tag. The
 whole change lands as a **single commit on `main`** (the usual one-PR rule is waived).
 
@@ -43,23 +43,23 @@ characterization tests _before_ they move.
 
 ## User Stories
 
-1. As a Nota engineer, I want each feature cluster in its own `@nota/*` buildable lib, so
+1. As a Nota engineer, I want each feature cluster in its own `@getmadrid/*` buildable lib, so
    that feature boundaries are explicit rather than implied by filename prefix.
-2. As a Nota engineer, I want `@nota/data-source` to own the Supabase browser client,
+2. As a Nota engineer, I want `@getmadrid/data-source` to own the Supabase browser client,
    `clerk-token-ref`, `models/*`, and `notes-vault-runtime`, so that every feature depends
    on one clear data-access base instead of reaching into app internals.
 3. As a Nota engineer, I want persistence orchestration (`save-note-fields`,
    `note-detail-fetch`, `note-updated-content-merge`, `note-patch-result`) inside
-   `@nota/data-source`, so that the read/write path lives with the data layer it drives.
+   `@getmadrid/data-source`, so that the read/write path lives with the data layer it drives.
 4. As a Nota engineer, I want the offline drain glue (`notes-offline-sync`,
-   `sync-server-notes-to-idb`) folded into `@nota/data-source`, so that the Supabase drain
+   `sync-server-notes-to-idb`) folded into `@getmadrid/data-source`, so that the Supabase drain
    sits beside the vault mutator it uses.
-5. As a Nota engineer, I want `@nota/note-runtime` to own the app-wide contexts
+5. As a Nota engineer, I want `@getmadrid/note-runtime` to own the app-wide contexts
    (notes-data Actions/Vault/Meta, session, clerk-supabase-bridge, sticky-doc-title) and
    the zustand stores (preferences, sidebar, audio-session), so that the runtime spine is a
    single dependency for every feature UI.
 6. As a Nota engineer, I want `useNotesData*`, `useNotaPreferences`, and the other runtime
-   hooks importable from `@nota/note-runtime`, so that feature UIs consume shared state
+   hooks importable from `@getmadrid/note-runtime`, so that feature UIs consume shared state
    without an upward import into the app.
 7. As a Nota engineer, I want a `note-journal` core/ui pair, so that journal date math and
    calendar UI are isolated and the core is native-portable (`platform:shared`).
@@ -74,7 +74,7 @@ characterization tests _before_ they move.
     shared and the settings section UI is web.
 12. As a Nota engineer, I want a `note-folders` core/ui pair, so that tree/tint/group math
     plus the Supabase-touching folder clients and dialogs are grouped (core tagged
-    `platform:web` because the clients depend on `@nota/data-source`).
+    `platform:web` because the clients depend on `@getmadrid/data-source`).
 13. As a Nota engineer, I want a `notes-chrome` core/ui pair, so that shell/sidebar class
     builders, banner chrome, and the signed-url cache are grouped with the shell UI.
 14. As a Nota engineer, I want an `app-navigation` core/ui pair, so that hash-router glue,
@@ -85,7 +85,7 @@ characterization tests _before_ they move.
     (note-editor, note-detail-panel, note-backlinks-panel, note-layout-menu,
     note-image-lightbox), so that the heaviest screen has its own home and backlink/layout
     math is shared.
-17. As a Nota engineer, I want `@nota/note-doc-plain-text` as a standalone `platform:shared`
+17. As a Nota engineer, I want `@getmadrid/note-doc-plain-text` as a standalone `platform:shared`
     package, so that both `apps/nota` and `apps/nota-marketing` consume it directly and the
     current Astro alias hack is removed.
 18. As a Nota engineer, I want `apps/nota` reduced to composition (main, app-root,
@@ -96,7 +96,7 @@ characterization tests _before_ they move.
 20. As a Nota engineer, I want every new lib tagged with the correct `platform:*` tag, so
     that `@nx/enforce-module-boundaries` fails any illegal cross-layer import at lint time.
 21. As a Nota engineer, I want packages exposed via subpath `exports` with the
-    `@nota/source` condition and no app-side barrels, so that Vite reads TS source in dev
+    `@getmadrid/source` condition and no app-side barrels, so that Vite reads TS source in dev
     and built consumers read `dist`.
 22. As a Nota engineer, I want the whole migration in one commit on `main`, so that the tree
     is never left half-migrated.
@@ -115,28 +115,28 @@ characterization tests _before_ they move.
 
 ## Implementation Decisions
 
-- **Package set (~24 libs):** base `@nota/data-source` (web) and `@nota/note-runtime`
+- **Package set (~24 libs):** base `@getmadrid/data-source` (web) and `@getmadrid/note-runtime`
   (web); feature `-core`/`-ui` pairs for journal, capture, palette, motion,
   writing-activity, note-folders, notes-chrome, app-navigation, electron-bridge,
-  note-editor; and standalone `@nota/note-doc-plain-text` (shared). Exact package names may
-  be refined at implementation but must keep the `@nota/note-*` / `@nota/nota-*` house style.
-- **Dependency direction:** `apps/nota` → feature `-ui` → (`-core` + `@nota/note-runtime`) →
-  `@nota/data-source` → existing shared/offline packages. No upward imports.
+  note-editor; and standalone `@getmadrid/note-doc-plain-text` (shared). Exact package names may
+  be refined at implementation but must keep the `@getmadrid/note-*` / `@getmadrid/nota-*` house style.
+- **Dependency direction:** `apps/nota` → feature `-ui` → (`-core` + `@getmadrid/note-runtime`) →
+  `@getmadrid/data-source` → existing shared/offline packages. No upward imports.
 - **Tagging:** a `-core` is `platform:shared` only when it imports no web-only package;
-  any core touching `@nota/data-source` or `@nota/note-runtime` is `platform:web`. All
+  any core touching `@getmadrid/data-source` or `@getmadrid/note-runtime` is `platform:web`. All
   `-ui` packages are `platform:web`. Boundaries enforced by the existing
   `@nx/enforce-module-boundaries` rule set in `eslint.config.mjs`.
 - **Packaging pattern:** buildable libs mirroring `packages/note-link-graph`
   (`tsconfig.lib.json`, `vite.config.mts`, `"build": "tsc -p tsconfig.lib.json"`,
-  `nx.targets.build`); subpath `exports` with the `@nota/source` condition; internal deps
+  `nx.targets.build`); subpath `exports` with the `@getmadrid/source` condition; internal deps
   `workspace:*`, external via `catalog:`.
-- **No barrels:** the app imports the new `@nota/*` subpaths directly; the vacated
+- **No barrels:** the app imports the new `@getmadrid/*` subpaths directly; the vacated
   `apps/nota/src` files are deleted in the same commit, not left as re-exports.
 - **Runtime spine:** `NotesDataProvider` keeps its Actions/Vault/Meta context slices; the
-  provider (which calls `@nota/data-source`) and its stores move wholesale into
-  `@nota/note-runtime`; `apps/nota` composes the providers at the root.
+  provider (which calls `@getmadrid/data-source`) and its stores move wholesale into
+  `@getmadrid/note-runtime`; `apps/nota` composes the providers at the root.
 - **Marketing:** `apps/nota-marketing` switches its `note-doc-plain-text` alias to the new
-  `@nota/note-doc-plain-text` package.
+  `@getmadrid/note-doc-plain-text` package.
 - **Delivery:** one commit on `main`; the one-PR/branch convention is explicitly waived for
   this change.
 
@@ -172,13 +172,13 @@ characterization tests _before_ they move.
 - Creating `apps/nota-mobile` or wiring any package into a mobile app (the shared tags
   merely make it possible later).
 - Splitting `-ui` packages further into sub-features, or extracting TipTap internals
-  already living in `@nota/editor`.
+  already living in `@getmadrid/editor`.
 - Writing tests for React components or trivial passthrough modules.
 - Performance work, dependency upgrades, or new features of any kind.
 
 ## Further Notes
 
-- `CONTEXT-MAP.md` currently lists `@nota/study-capture-core` and `@nota/shared` which do
+- `CONTEXT-MAP.md` currently lists `@getmadrid/study-capture-core` and `@getmadrid/shared` which do
   not exist on disk; the capture core supersedes the study-capture role. Correct the map as
   part of this change and add per-package `CONTEXT.md` lazily.
 - `note-editor-settings` is already an extracted `platform:shared` package; the stale

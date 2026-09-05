@@ -80,7 +80,7 @@ feels instant. Collaboration is designed-for but deferred (see Out of Scope).
 
 - **Split by data nature.** Yjs (`y-indexeddb`) owns note-body offline
   persistence + update queueing. The existing outbox
-  (`@nota/notes-offline-core` / `@nota/notes-offline`) continues to own scalar
+  (`@getmadrid/notes-offline-core` / `@getmadrid/notes-offline`) continues to own scalar
   row fields: title, folder, `editor_settings`, create, delete, list merge.
 - The two systems do not overlap; body updates never route through the outbox.
 
@@ -107,7 +107,7 @@ feels instant. Collaboration is designed-for but deferred (see Out of Scope).
 
 ### New module
 
-- `@nota/notes-yjs-core` (`platform:shared`, pure, no IndexedDB/Supabase/editor).
+- `@getmadrid/notes-yjs-core` (`platform:shared`, pure, no IndexedDB/Supabase/editor).
   Interface (names indicative):
   - `seedYDocFromContent(content) -> Uint8Array` (initial update from ProseMirror JSON)
   - `foldUpdatesToDoc(updates) -> YDoc` (log rows -> doc)
@@ -128,9 +128,9 @@ feels instant. Collaboration is designed-for but deferred (see Out of Scope).
 -> yDocToContent` equals the original `content` (structural ProseMirror
   equality, not `JSON.stringify`). Concurrent-update merge determinism is
   golden-tested.
-- **Primary seam:** `@nota/notes-yjs-core`. Pure functions, no I/O. Tested with
+- **Primary seam:** `@getmadrid/notes-yjs-core`. Pure functions, no I/O. Tested with
   Vitest, AAA markers, golden fixtures — mirroring
-  `@nota/notes-offline-core` (`merge-note-with-local.spec.ts`,
+  `@getmadrid/notes-offline-core` (`merge-note-with-local.spec.ts`,
   `drain-outbox.spec.ts`, `merge-note-lists-golden.spec.ts`).
 - **Compaction:** `shouldCompact` and fold-to-snapshot tested purely (threshold
   crossing, snapshot equals full fold).
@@ -158,7 +158,7 @@ feels instant. Collaboration is designed-for but deferred (see Out of Scope).
   StarterKit `history` disabled; typewriter-scroll-guard and
   `convertLinkOnlyParagraphs` still firing on `docChanged`; CSP already allows
   Supabase Realtime WS.
-- Phasing (dependency order, not parallel): (1) `@nota/notes-yjs-core` pure
+- Phasing (dependency order, not parallel): (1) `@getmadrid/notes-yjs-core` pure
   package + tests; (2) schema migration + RLS for `note_yjs_updates`; (3)
   `y-indexeddb` persistence + Supabase Yjs provider adapter; (4) editor binding
   swap (Collaboration ext, remove `setContent`/`contentRevision` path, disable

@@ -57,9 +57,9 @@ Prefer the `motion-safe:` prefix over a new `@media (prefers-reduced-motion: red
    - `notesSidebarTreeChevronClass` contains `motion-safe:transition-transform`
    - `notesSidebarTreeChevronClass` contains `motion-safe:duration-200`
    - `notesSidebarTreeChevronClass` does **not** contain bare `transition-transform` (ungated)
-   - Run `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` — expect failure.
+   - Run `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles` — expect failure.
 2. **Green** — Apply the target change in `notes-sidebar-tree-styles.ts` (step 3 below); re-run tests — expect pass.
-3. **Regression** — Run `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-list` — existing chevron rotation test (`rotates the folder chevron when the folder is expanded`) must still pass; it checks `rotate-90` on the SVG class, not transition utilities.
+3. **Regression** — Run `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-list` — existing chevron rotation test (`rotates the folder chevron when the folder is expanded`) must still pass; it checks `rotate-90` on the SVG class, not transition utilities.
 
 ### Implementation
 
@@ -87,10 +87,10 @@ Prefer the `motion-safe:` prefix over a new `@media (prefers-reduced-motion: red
 ## Verification
 
 - **Mechanical**:
-  - `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` — all pass, including new motion-safe assertions.
-  - `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-list` — all pass.
-  - `pnpm exec nx run @nota/nota:lint` — no new issues on touched files.
-- **Feel check**: run `pnpm exec nx dev @nota/nota`, open Notes sidebar with at least one folder:
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles` — all pass, including new motion-safe assertions.
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-list` — all pass.
+  - `pnpm exec nx run @getmadrid/nota:lint` — no new issues on touched files.
+- **Feel check**: run `pnpm exec nx dev @getmadrid/nota`, open Notes sidebar with at least one folder:
   - With default motion: click folder chevron — icon rotates over ~200ms.
   - Chrome DevTools → Rendering → enable **Emulate CSS media feature `prefers-reduced-motion: reduce`** (or macOS System Settings → Accessibility → Display → Reduce motion): click folder chevron — icon snaps between horizontal and vertical with no visible tween.
   - Expanded/collapsed state and `aria-expanded` on the button remain correct in both modes.

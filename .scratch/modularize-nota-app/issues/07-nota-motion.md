@@ -6,7 +6,7 @@ resize-settle, typewriter-scroll-guard, sidebar width — plus a `nota-motion-ui
 (`platform:web`) lib with the GSAP/DOM bindings (nota-motion, panel motion) and the sidebar
 motion/resize hooks and resize handle. All micro-interactions behave exactly as before.
 
-**Blocked by:** 02 — `@nota/note-runtime`.
+**Blocked by:** 02 — `@getmadrid/note-runtime`.
 
 **Status:** done
 

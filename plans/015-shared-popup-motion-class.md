@@ -8,7 +8,7 @@
 
 ## Problem
 
-Four Base UI popup surfaces duplicate the same three-line Tailwind motion block. The strings are copy-pasted verbatim (or nearly so) across `@nota/design` primitives and two app/editor call sites. Any timing, easing, or scale tweak must be edited in four places, which invites drift.
+Four Base UI popup surfaces duplicate the same three-line Tailwind motion block. The strings are copy-pasted verbatim (or nearly so) across `@getmadrid/design` primitives and two app/editor call sites. Any timing, easing, or scale tweak must be edited in four places, which invites drift.
 
 **Duplicate inventory (commit `08ed1fa`):**
 
@@ -55,7 +55,7 @@ Popups lack explicit `duration-*` and `ease-out`. `Button` already uses `duratio
 
 ## Target
 
-One exported constant in `@nota/design`, consumed by all four call sites:
+One exported constant in `@getmadrid/design`, consumed by all four call sites:
 
 ```ts
 // packages/design/src/lib/nota-popup-motion.ts — target
@@ -68,7 +68,7 @@ export const NOTA_POPUP_MOTION_CLASS = cn('origin-[var(--transform-origin)] tran
 Import path (new subpath export, matching package convention):
 
 ```ts
-import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
+import { NOTA_POPUP_MOTION_CLASS } from '@getmadrid/design/popup-motion';
 ```
 
 **Call-site target pattern:**
@@ -99,7 +99,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 - **`cn` for class constants** — same pattern as `DEFAULT_CONTEXT_MENU_POPUP_CLASS` in `context-menu.tsx:56–61`; motion constant uses `cn()` even when it is a fixed string today so future token splits stay merge-safe.
 - **Exemplar for duration + ease-out:** `packages/design/src/components/button.tsx:34` — `duration-200 ease-out`.
 - **Exemplar for popup tests:** `packages/design/src/components/hover-card.spec.tsx` — assert surface tokens on rendered popup; extend similarly for motion tokens.
-- **`@nota/editor` may depend on `@nota/design`** — already declared in `packages/editor/package.json`; importing `@nota/design/popup-motion` is allowed (`platform:web` → `platform:web`).
+- **`@getmadrid/editor` may depend on `@getmadrid/design`** — already declared in `packages/editor/package.json`; importing `@getmadrid/design/popup-motion` is allowed (`platform:web` → `platform:web`).
 
 ## TDD strategy
 
@@ -129,7 +129,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
    - Add to `packages/design/package.json` `exports`:
      ```json
      "./popup-motion": {
-       "@nota/source": "./src/lib/nota-popup-motion.ts",
+       "@getmadrid/source": "./src/lib/nota-popup-motion.ts",
        "types": "./dist/lib/nota-popup-motion.d.ts",
        "import": "./dist/popup-motion.js",
        "default": "./dist/popup-motion.js"
@@ -139,12 +139,12 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 
 2. **Write failing spec** (`nota-popup-motion.spec.ts`) per TDD strategy **Red** section.
 
-3. **Wire `@nota/design` primitives**
+3. **Wire `@getmadrid/design` primitives**
    - `hover-card.tsx`: import `NOTA_POPUP_MOTION_CLASS`; replace lines 31–33 with `NOTA_POPUP_MOTION_CLASS`; keep `outline-none` on the surface line (29–30).
    - `context-menu.tsx`: import constant; replace lines 58–60 in `DEFAULT_CONTEXT_MENU_POPUP_CLASS` with `NOTA_POPUP_MOTION_CLASS`.
 
 4. **Wire app + editor call sites**
-   - `apps/nota/src/components/theme-menu.tsx`: `import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion'`; replace lines 55–57 with the constant inside the existing `cn()` on `Menu.Popup` (line 53).
+   - `apps/nota/src/components/theme-menu.tsx`: `import { NOTA_POPUP_MOTION_CLASS } from '@getmadrid/design/popup-motion'`; replace lines 55–57 with the constant inside the existing `cn()` on `Menu.Popup` (line 53).
    - `packages/editor/src/components/tiptap/note-image-extension.tsx`: same import; replace lines 277–279 inside `Menu.Popup` `cn()` (line 275).
 
 5. **Extend component spec** — update `hover-card.spec.tsx` (or add context-menu motion test) to assert motion tokens on popup after step 3.
@@ -173,10 +173,10 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 - **Mechanical:**
 
   ```bash
-  pnpm exec nx run @nota/design:test --outputStyle=static
-  pnpm exec nx run @nota/design:build --outputStyle=static
-  pnpm exec nx run @nota/editor:test --outputStyle=static
-  pnpm exec nx lint @nota/nota --outputStyle=static
+  pnpm exec nx run @getmadrid/design:test --outputStyle=static
+  pnpm exec nx run @getmadrid/design:build --outputStyle=static
+  pnpm exec nx run @getmadrid/editor:test --outputStyle=static
+  pnpm exec nx lint @getmadrid/nota --outputStyle=static
   ```
 
   All commands exit 0.
@@ -189,7 +189,7 @@ className={cn('z-50 min-w-… surface tokens', NOTA_POPUP_MOTION_CLASS)}
 
   Expect matches only in `nota-popup-motion.ts` (definition) — not in `hover-card.tsx`, `context-menu.tsx`, `theme-menu.tsx`, or `note-image-extension.tsx`.
 
-- **Feel check:** Run `pnpm exec nx dev @nota/nota`, then:
+- **Feel check:** Run `pnpm exec nx dev @getmadrid/nota`, then:
   1. **Theme menu** (Settings footer) — open/close; popup scales from trigger corner, ~200 ms, not sluggish tail.
   2. **Sidebar context menu** — right-click a note; same motion character as theme menu.
   3. **Hover card** — open a link preview hover card in a note; same scale-from-anchor behaviour.

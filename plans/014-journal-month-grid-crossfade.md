@@ -121,7 +121,7 @@ Add `useJournalMonthGridCrossfade(year, month, cells, prefersReducedMotion)` in 
 2. **Add failing tests** — `apps/nota/src/lib/journal-month-grid-transition.spec.ts` per TDD strategy above. Run:
 
 ```bash
-pnpm exec nx test @nota/nota --testPathPattern=journal-month-grid-transition
+pnpm exec nx test @getmadrid/nota --testPathPattern=journal-month-grid-transition
 ```
 
 Confirm red.
@@ -195,14 +195,14 @@ Use `journal-month-grid-layer` instead of Tailwind `duration-150 ease-out` on th
 - **Mechanical**:
 
 ```bash
-pnpm exec nx test @nota/nota --testPathPattern=journal-month-grid-transition
-pnpm exec nx lint @nota/nota
-pnpm exec nx run @nota/nota:typecheck
+pnpm exec nx test @getmadrid/nota --testPathPattern=journal-month-grid-transition
+pnpm exec nx lint @getmadrid/nota
+pnpm exec nx run @getmadrid/nota:typecheck
 ```
 
 All pass with no new lint errors.
 
-- **Feel check**: run `pnpm exec nx dev @nota/nota`, open `#/notes/journal` (entitled account), then:
+- **Feel check**: run `pnpm exec nx dev @getmadrid/nota`, open `#/notes/journal` (entitled account), then:
   - Click **Next month** once: day grid crossfades (~150ms); month `h2` updates instantly without fade.
   - Click **Previous month** rapidly 4–5 times: motion retargets smoothly, no flash to blank, no stuck half-opacity grid.
   - DevTools → **Animations** → 10% speed: outgoing and incoming grids overlap briefly; opacity is the only property changing.

@@ -85,7 +85,7 @@ it('scopes folder row transitions to colour only, not transition-all', () => {
 });
 ```
 
-Run `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` — expect **fail** on `transition-all` assertion.
+Run `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles` — expect **fail** on `transition-all` assertion.
 
 ### 2. Green — fix the base class
 
@@ -93,7 +93,7 @@ In `apps/nota/src/lib/notes-sidebar-tree-styles.ts`, on line 10 of `treeFolderRo
 
 ### 3. Green — confirm tests pass
 
-Run `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` — all tests pass.
+Run `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles` — all tests pass.
 
 ## Boundaries
 
@@ -106,9 +106,9 @@ Run `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` �
 ## Verification
 
 - **Mechanical**
-  - `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles` — all green.
-  - `pnpm exec nx lint @nota/nota` — no new errors.
-- **Feel check** — run `pnpm exec nx dev @nota/nota`, open `#/notes` with folders:
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles` — all green.
+  - `pnpm exec nx lint @getmadrid/nota` — no new errors.
+- **Feel check** — run `pnpm exec nx dev @getmadrid/nota`, open `#/notes` with folders:
   - Hover a folder row: the `::before` accent highlight should still fade in smoothly (opacity on pseudo unchanged).
   - Drag a note over a folder: text colour should still transition to primary foreground; no visible regression.
   - In DevTools → Elements, select a folder row `<div>`: computed `transition-property` on the main element should list colour-related properties only, **not** `all`.

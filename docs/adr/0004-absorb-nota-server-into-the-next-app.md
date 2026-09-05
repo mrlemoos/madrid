@@ -50,10 +50,10 @@ What remained was a duplicate that no longer ran, and the drift it caused:
    adapters in `http-utils`, and `clerk-billing.server` — replaced by a differently
    shaped `nota-pro-entitlement`) are dropped rather than retargeted.
 
-5. **`validate:billing` moves to `nx run @nota/nota:validate-billing`**, reading
+5. **`validate:billing` moves to `nx run @getmadrid/nota:validate-billing`**, reading
    `apps/nota/.env`. It still runs under `bun`; it is a manual dev tool, not a CI task.
 
-6. **`@nota/nota-server-client` stays** for `apps/nota-mobile`, which is not same-origin
+6. **`@getmadrid/nota-server-client` stays** for `apps/nota-mobile`, which is not same-origin
    and needs an absolute base URL plus a Bearer token. Its name now describes the web
    app origin it points at, not a separate service.
 

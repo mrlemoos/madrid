@@ -127,7 +127,7 @@ describe('nota-note-open-fade', () => {
 Run red:
 
 ```bash
-pnpm exec nx test @nota/nota --testPathPattern=nota-interaction
+pnpm exec nx test @getmadrid/nota --testPathPattern=nota-interaction
 ```
 
 Expect failures: tests fail against current keyframe CSS.
@@ -178,7 +178,7 @@ None required beyond deleting the obsolete `@keyframes nota-note-open-fade` bloc
 - **Mechanical (red → green):**
 
   ```bash
-  pnpm exec nx test @nota/nota --testPathPattern=nota-interaction
+  pnpm exec nx test @getmadrid/nota --testPathPattern=nota-interaction
   ```
 
   Expected: all tests pass, including the three new `nota-note-open-fade` assertions.
@@ -186,12 +186,12 @@ None required beyond deleting the obsolete `@keyframes nota-note-open-fade` bloc
 - **Mechanical (lint):**
 
   ```bash
-  pnpm exec nx lint @nota/nota
+  pnpm exec nx lint @getmadrid/nota
   ```
 
   Expected: no new errors.
 
-- **Feel check** — run `pnpm exec nx dev @nota/nota`, open `#/notes`, select a note with content:
+- **Feel check** — run `pnpm exec nx dev @getmadrid/nota`, open `#/notes`, select a note with content:
   1. **Rapid note hopping:** Click 5–6 different notes in the sidebar as fast as possible (or hold ↓ through the list). Confirm fades feel **snappier** (200ms) and **do not “stack” sluggish 400ms ease-in-out pulses**. The last-selected note should reach full opacity quickly without waiting for prior animations to finish.
   2. **DevTools slow motion:** Animations panel → set playback to **10%**. Switch notes once. Confirm a single **opacity ramp** (not a named keyframe track restarting). Duration ≈ 200ms at normal speed.
   3. **Command palette:** Cmd/Ctrl+K → pick another note. Same behaviour as sidebar.

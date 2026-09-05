@@ -154,12 +154,12 @@ export const notesSidebarTreeChevronClass = 'mr-0.5 size-3.5 shrink-0 text-muted
 ## Verification
 
 - **Mechanical:**
-  - `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-tree-styles`
-  - `pnpm exec nx test @nota/nota --testPathPattern=notes-sidebar-list`
-  - `pnpm exec nx lint @nota/nota`
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-tree-styles`
+  - `pnpm exec nx test @getmadrid/nota --testPathPattern=notes-sidebar-list`
+  - `pnpm exec nx lint @getmadrid/nota`
   - All pass with no new warnings.
 
-- **Feel check:** Run `pnpm exec nx dev @nota/nota`, open Notes sidebar with nested folders:
+- **Feel check:** Run `pnpm exec nx dev @getmadrid/nota`, open Notes sidebar with nested folders:
   - Click a folder chevron: children **fade and slide open** while chevron rotates; total motion **≤ 200ms**.
   - Click collapse mid-expand (spam chevron): motion **reverses smoothly** from current position — does not snap to start.
   - Open a note in a collapsed nested folder via command palette: ancestors expand; motion stays subtle (no multi-second cascade).

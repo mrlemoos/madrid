@@ -166,13 +166,13 @@ export const NOTA_MOTION_EASE_OUT_STRONG = CustomEase.create('notaEaseOut', 'M0,
 - **Mechanical**:
 
   ```bash
-  pnpm exec nx run @nota/nota:test --testPathPattern=nota-motion
-  pnpm exec nx run @nota/nota:lint
+  pnpm exec nx run @getmadrid/nota:test --testPathPattern=nota-motion
+  pnpm exec nx run @getmadrid/nota:lint
   ```
 
   Expected: all tests pass; no lint errors; `NOTA_MOTION_EASE_IN` absent from `command-palette.tsx`.
 
-- **Feel check** — `pnpm exec nx dev @nota/nota`, signed in, notes shell:
+- **Feel check** — `pnpm exec nx dev @getmadrid/nota`, signed in, notes shell:
   - Open palette (Cmd/Ctrl+K). Close with Cmd/Ctrl+K again.
   - **Pass**: dismiss starts moving immediately (fast initial velocity), then settles — not a slow “ramp up” at the start.
   - **Fail**: first ~100ms of close barely moves (ease-in signature).

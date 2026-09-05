@@ -151,7 +151,7 @@ Constants unchanged: `duration: NOTA_SIDEBAR_S` (0.45), `ease: NOTA_MOTION_EASE_
 - **Pure target helpers:** `apps/nota/src/lib/nota-sidebar-shell-motion.ts` — keep toggle math testable without React (same pattern as today).
 - **Exemplar for reduced-motion branching:** `notes-shell.tsx:239-242` — instant `gsap.set` when `prefersReducedMotion || !sidebarMotionReadyRef.current`.
 - **Unit tests:** AAA sections with `// Arrange|Act|Assert` per `.cursor/rules/aaa-testing-pattern.mdc`.
-- **Run tests via Nx:** `pnpm exec nx run @nota/nota:test --testPathPattern=…`.
+- **Run tests via Nx:** `pnpm exec nx run @getmadrid/nota:test --testPathPattern=…`.
 
 ## Steps
 
@@ -223,11 +223,11 @@ gsap.to(rail, {
 ## Verification
 
 - **Mechanical:**
-  - `pnpm exec nx run @nota/nota:test --testPathPattern="nota-sidebar-shell-motion|notes-shell"`
-  - `pnpm exec nx run @nota/nota:lint`
+  - `pnpm exec nx run @getmadrid/nota:test --testPathPattern="nota-sidebar-shell-motion|notes-shell"`
+  - `pnpm exec nx run @getmadrid/nota:lint`
   - All tests pass; no new lint errors.
 
-- **Feel check:** run `pnpm exec nx dev @nota/nota`, open `#/notes`:
+- **Feel check:** run `pnpm exec nx dev @getmadrid/nota`, open `#/notes`:
   - Toggle sidebar closed (button and ⌘\ shortcut if bound): rail content slides left ~20px and fades; main panel does not stutter mid-animation; after motion completes, clip collapses.
   - Toggle open: clip width appears immediately; rail slides/fades in.
   - Spam toggle during animation: motion retargets smoothly, no width tween on aside in DevTools Performance panel (no repeated Layout events from aside width).
