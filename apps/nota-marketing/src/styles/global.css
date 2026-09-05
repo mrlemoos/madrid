@@ -128,7 +128,7 @@ html.dark {
   }
 
   .mkt-section {
-    @apply py-20 md:py-28;
+    @apply py-16 md:py-24;
   }
 
   .mkt-section--tight {
