@@ -1,39 +1,79 @@
 <div align="center">
-  <h1>Madrid</h1>
+  <img src="assets/madrid-logo.png" alt="Madrid" width="96" height="96" />
+  <h1>madrid</h1>
+  <p>Quiet Mac notes. Think without the feed.</p>
+  <p>
+    <a href="https://getmadrid.app">getmadrid.app</a>
+    ·
+    <a href="https://app.getmadrid.app">app.getmadrid.app</a>
+    ·
+    <a href="https://github.com/mrlemoos/madrid/releases/latest">Mac download</a>
+  </p>
 </div>
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/mrlemoos/madrid?utm_source=oss&utm_medium=github&utm_campaign=mrlemoos%2Fmadrid&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-## Philosophy
+## Why it exists
 
-You know the feeling: you open something to think, and the software starts performing (offering, suggesting, nudging) until the room for your own pace shrinks. Useful automation has its place elsewhere; in a notes app, that itch to always _do something next_ can mistake motion for thinking.
+You open a notes app to think, and the product starts performing: offering, suggesting, nudging, until there is less room for your own pace. Useful automation belongs elsewhere. In a notes app, that itch to always do something next mistakes motion for thinking.
 
-[Madrid](https://getmadrid.app) treats your attention as something to **protect**, not to harvest. It gives you a steady place to write and arrange ideas, and it steps back when you pause so your mind can do the unglamorous part: wandering, revising, waiting for the right phrase without the product trying to entertain the lull.
+[Madrid](https://getmadrid.app) treats attention as something to protect, not harvest. It gives you a steady place to write and link ideas, then steps back when you pause. Your mind can wander, revise, wait for the right phrase. The software does not entertain the lull.
 
-We leave silence alone on purpose. Boredom at the cursor is the sound of a thought catching up.
+Silence is left alone on purpose. Boredom at the cursor is a thought catching up.
+
+## Screenshots
+
+<p align="center">
+  <img src="assets/madrid-welcome.jpg" alt="Madrid welcome screen over a painting of the Royal Palace" width="720" />
+</p>
+
+<p align="center">
+  <img src="assets/madrid-note-banner.jpg" alt="A Madrid note with a city banner and shared prose" width="720" />
+</p>
+
+<p align="center">
+  <img src="assets/madrid-note-book-list.jpg" alt="A Madrid note with glass chrome over a cathedral banner" width="720" />
+</p>
 
 ## What it is
 
-![A macOS screenshot of the welcome screen of Madrid with a button to start.](assets/welcome-screen.png 'Welcome screen')
+Madrid is a Mac-first personal notes app. Install from [GitHub Releases](https://github.com/mrlemoos/madrid/releases/latest), sign in, subscribe in Settings. There is no free tier and no trial. Guide prices are $2.49/month or $19.49/year (USD); checkout shows the local charge. The hosted vault at [app.getmadrid.app](https://app.getmadrid.app) is the same product when you are not on a Mac.
 
-Madrid is a personal notes app built as an [Nx](https://nx.dev) monorepo.
+Features exist to keep that surface quiet:
 
-The main client ([apps/nota](apps/nota)) is a **Next.js** App Router app with **React 19**. It also serves the API routes under `src/app/api/*` (entitlement, link previews, semantic search, assistive capture).
+- **Editor.** TipTap rich text: headings, lists, tasks, tables, code, Mermaid, emoji via the palette (⌘K), not a toolbar parade.
+- **Links.** Type `@` for internal note links, backlinks, and an optional note graph.
+- **Folders.** Coloured sidebar folders.
+- **Journal / today’s note.** Dated entries; optional ⌘D with a local long-date title and no streaks.
+- **Offline-first.** Local vault (Yjs + IndexedDB); sync and backup when you are subscribed and online.
+- **Attachments.** Inline PDFs and images; note banners.
+- **Link previews.** A URL on its own line can become an OG card.
+- **Assistive capture.** Record, transcribe into blocks you edit. Not ghostwriting.
+- **Share.** Public share cards at `/s/[token]`.
+- **Desktop.** Electron macOS shell with auto-update. Packaged builds load the hosted app.
 
-Notes use **Supabase** (Postgres, Storage, and row-level security) with **Clerk** for sign-in (third-party JWTs). The editor is **TipTap** (ProseMirror).
+## Monorepo
 
-Subscriptions use **Clerk Billing** (in-app checkout; server-side entitlement checks in the Next route handlers).
+This repository is an [Nx](https://nx.dev) workspace.
 
-An **Electron** desktop shell wraps the same build—see [apps/nota-electron/README.md](apps/nota-electron/README.md). The public marketing site lives in [apps/nota-marketing](apps/nota-marketing) (Astro).
+| Path                                         | Purpose                                                              |
+| -------------------------------------------- | -------------------------------------------------------------------- |
+| [`apps/nota`](apps/nota)                     | Next.js App Router client + same-origin API routes (`src/app/api/*`) |
+| [`apps/nota-electron`](apps/nota-electron)   | Electron macOS shell                                                 |
+| [`apps/nota-marketing`](apps/nota-marketing) | Astro marketing site                                                 |
+| [`packages/`](packages)                      | Feature libs (`notes-chrome`, editor, offline/Yjs, design, i18n, …)  |
+| [`supabase/migrations`](supabase/migrations) | Postgres schema, RLS, Clerk third-party auth                         |
+
+Stack: React 19, TipTap / ProseMirror, Yjs local-first, Supabase (Postgres + Storage + RLS), Clerk (sign-in + Billing), Vitest, pnpm.
+
+Packaged Electron does not embed a local web build. It loads `https://app.getmadrid.app`. Local Electron expects the Next dev server at `http://localhost:3000`.
 
 ## Requirements
 
-- **Node.js** 22 or newer (see root `package.json` `engines`)
-- **pnpm** 10.x (see root **`packageManager`** in [`package.json`](package.json); [`pnpm-workspace.yaml`](pnpm-workspace.yaml) lists workspace packages)
+- Node.js 22+ (see root `package.json` `engines`)
+- pnpm 10.x (see `packageManager` in [`package.json`](package.json))
 
 ## Install
-
-From the repository root:
 
 ```sh
 corepack enable pnpm
@@ -42,60 +82,50 @@ pnpm install
 
 ## Environment
 
-Copy [apps/nota/.env.example](apps/nota/.env.example) to `apps/nota/.env` and set at least:
+Copy [`apps/nota/.env.example`](apps/nota/.env.example) to `apps/nota/.env`.
 
-- `NEXT_PUBLIC_SUPABASE_URL` — your Supabase project URL
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — your Supabase publishable key (`sb_publishable_…`)
+Minimum to run the app:
 
-For Clerk sign-in and subscription flows, follow the same file for `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and the **server-only** secrets (`CLERK_SECRET_KEY`, `SUPABASE_SECRET_KEY`, etc.—never commit real values, never prefix them `NEXT_PUBLIC_`). Schema, RLS policies, and migrations are applied in Supabase from the SQL in this repo—environment variables alone do not create the database.
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY` (server-only)
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SECRET_KEY` (server-only)
+
+Never prefix secrets with `NEXT_PUBLIC_`. Never commit real values. The example file also lists optional keys for semantic search, assistive capture (xAI), flight lookup, PostHog, and Stripe. Env vars alone do not create the database; apply SQL from this repo in Supabase (including [`0008_clerk_third_party_auth.sql`](supabase/migrations/0008_clerk_third_party_auth.sql) for Clerk third-party auth).
 
 ## Database
 
-SQL migrations live under [supabase/migrations/](supabase/migrations/) at the repository root. If you use the [Supabase CLI](https://supabase.com/docs/guides/cli), link your project and apply migrations with your usual workflow (for example `supabase db push` against a linked project, or local `supabase start` for development).
+Migrations live under [`supabase/migrations/`](supabase/migrations/). With the [Supabase CLI](https://supabase.com/docs/guides/cli), link the project and push, or run `supabase start` locally.
 
-## Run the web app
+## Run
 
 ```sh
+# notes + marketing + Electron (where applicable)
+pnpm run dev
+
+# notes only: http://localhost:3000
 pnpm exec nx dev @getmadrid/nota
-```
 
-(`pnpm exec nx dev nota` resolves to the same project.)
-
-The Next dev server listens on **[http://localhost:3000](http://localhost:3000)**.
-
-## Marketing site (local)
-
-```sh
+# marketing
 pnpm exec nx run @getmadrid/nota-marketing:dev
+
+# Electron only (start notes on :3000 in another terminal, or use pnpm run dev)
+pnpm run electron:dev
 ```
+
+More Electron detail: [`apps/nota-electron/README.md`](apps/nota-electron/README.md).
 
 ## Build and test
 
 ```sh
 pnpm exec nx build @getmadrid/nota
 pnpm exec nx test @getmadrid/nota
+pnpm test    # nx run-many -t test
+pnpm run lint
+pnpm run format
 ```
-
-Tests use **Vitest** via the Nx Vitest plugin.
-
-## Electron
-
-The desktop app expects the web dev server at `http://localhost:3000` (`DEV_PORT` in [apps/nota-electron/src/app-load-url.ts](apps/nota-electron/src/app-load-url.ts)). From the repository root you can run:
-
-- `pnpm run electron:dev` — Electron only (start the web app in another terminal with `pnpm exec nx dev @getmadrid/nota`, or run `pnpm exec nx run-many -t dev` to start the web app and Electron together)
-
-More detail: [apps/nota-electron/README.md](apps/nota-electron/README.md).
-
-## Repository layout
-
-| Path                   | Purpose                                            |
-| ---------------------- | -------------------------------------------------- |
-| `apps/nota/`           | Main Next.js app (notes, auth, TipTap, API routes) |
-| `apps/nota-electron/`  | Electron shell                                     |
-| `apps/nota-marketing/` | Astro marketing site                               |
-| `supabase/`            | Supabase config and SQL migrations                 |
-| `assets/`              | Shared assets (e.g. screenshots for docs)          |
 
 ## Licence
 
-Apache License 2.0 — see [LICENSE](LICENSE) and [package.json](package.json).
+Apache License 2.0. See [`LICENSE`](LICENSE).
