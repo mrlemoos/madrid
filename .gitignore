@@ -85,3 +85,5 @@ storybook-static/
 
 .nx/self-healing
 .nx/migrate-runs
+.vercel
+.env*
