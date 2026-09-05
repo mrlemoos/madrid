@@ -1,5 +1,6 @@
 ---
 import BlogPostCard from '@/components/BlogPostCard.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { isBlogPostPublished, sortBlogPostsByDate } from '@/lib/blog';
@@ -72,4 +73,5 @@ const structuredData = {
       </p>
     </div>
   </main>
+  <SiteFooter />
 </BaseLayout>

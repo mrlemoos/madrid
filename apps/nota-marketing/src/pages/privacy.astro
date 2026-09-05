@@ -1,0 +1,87 @@
+---
+import LegalLayout from '@/layouts/LegalLayout.astro';
+import { NOTA_GITHUB_REPO } from '@/lib/site';
+
+const title = 'Privacy policy | Madrid';
+const description =
+  'What Madrid stores, who processes it, and what leaves your Mac. Written in plain language for the macOS app and this website.';
+---
+
+<LegalLayout
+  title={title}
+  description={description}
+  heading="Privacy policy"
+  lede="This describes what Madrid stores, what leaves your Mac, and who processes it on our behalf. It covers the macOS app, the hosted app, and this website."
+  breadcrumb="Privacy policy"
+  updated="2026-09-05"
+>
+  <h2>What we hold</h2>
+  <p>
+    <strong>Your account.</strong> Your email address, and any name or avatar you provide, held by our authentication provider
+    so you can sign in and we can tell your vault apart from anyone else's.
+  </p>
+  <p>
+    <strong>Your notes.</strong> Note titles, bodies, folders, links, preferences, and any files you attach. While you are
+    signed in, these are stored in a database row secured to your account, and attachments are kept in private storage reached
+    through short-lived links. A copy also lives locally on your Mac so the app works offline.
+  </p>
+  <p>
+    <strong>Your subscription.</strong> Whether you have an active subscription and which plan it is. Card details are handled
+    by our payment processor and never reach us.
+  </p>
+
+  <h2>What leaves your Mac</h2>
+  <p>
+    Notes sync to your account when you are signed in and online. Beyond that, content leaves only when a feature you
+    used requires it:
+  </p>
+  <ul>
+    <li>Audio you record for assistive capture is sent to a speech-to-text provider and returned as text.</li>
+    <li>Note text is sent to an embeddings provider when semantic search builds its index.</li>
+    <li>A link you paste is fetched by our server so the preview card can show its title and image.</li>
+    <li>A flight code you use is looked up with a public flight data service.</li>
+  </ul>
+  <p>If you do not use those features, that data is not sent.</p>
+
+  <h2>Who processes data for us</h2>
+  <ul>
+    <li>Clerk, for accounts, sign-in, and subscription entitlement.</li>
+    <li>Supabase, for the notes database and attachment storage.</li>
+    <li>Stripe, through Clerk Billing, for payments.</li>
+    <li>xAI, for speech-to-text in assistive capture.</li>
+    <li>An embeddings provider, for semantic search indexing.</li>
+    <li>Vercel, for hosting this site and the app's server routes.</li>
+    <li>GitHub, which serves the Mac app downloads and sees the usual request data when you download.</li>
+  </ul>
+  <p>
+    Each of these processes data on our instructions in order to run the product. We do not sell your data, and your
+    notes are not used to train models.
+  </p>
+
+  <h2>Analytics</h2>
+  <p>
+    This website uses Vercel Analytics, and Microsoft Clarity when it is configured, to understand which pages people
+    read. The app uses PostHog for product analytics when it is configured. These record usage, not the contents of your
+    notes.
+  </p>
+
+  <h2>How long we keep things</h2>
+  <p>
+    Notes stay until you delete them. Deleting a note removes its attachments from storage as well as the note itself.
+    Deleting your account removes your notes and account record; backups and provider logs age out on their own
+    schedules.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>
+    You can ask for a copy of your data, ask us to correct it, or ask us to delete it. Contact us from Settings in the
+    Madrid app, or by replying to a purchase receipt. If you are in the UK or the EU, you also have the right to
+    complain to your data protection authority.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    When this policy changes, the date at the top changes with it. The site is open source, so the history of this page
+    is public in the <a href={NOTA_GITHUB_REPO} rel="noopener noreferrer" target="_blank">repository</a>.
+  </p>
+</LegalLayout>

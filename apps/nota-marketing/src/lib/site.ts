@@ -11,5 +11,12 @@ export const NOTA_DOWNLOAD_PATH = '/download';
 /** Hosted vault; the quiet alternative for people who are not on a Mac yet. */
 export const NOTA_APP_URL = 'https://app.getmadrid.app';
 
+/**
+ * Guide prices in USD. Checkout in the app shows the final charge in local
+ * currency; keep these in sync with Clerk Billing.
+ */
+export const NOTA_PRICE_MONTHLY_USD = '2.49';
+export const NOTA_PRICE_ANNUAL_USD = '19.49';
+
 export const NOTA_AUTHOR_NAME = 'Leonardo Lemos';
 export const NOTA_AUTHOR_URL = 'https://mrlemoos.dev';

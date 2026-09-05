@@ -8,7 +8,13 @@ import editorOverviewImage from '@/assets/marketing/editor-overview.png';
 import noteGraphImage from '@/assets/marketing/note-graph.png';
 import heroScreenshotImage from '@/assets/marketing/desktop-app-screenshot.png';
 import { MKT_THEME_COLOR_HERO } from '@/lib/marketing-theme';
-import { NOTA_GITHUB_LATEST, NOTA_GITHUB_RELEASES, NOTA_GITHUB_REPO } from '@/lib/site';
+import {
+  NOTA_GITHUB_LATEST,
+  NOTA_GITHUB_RELEASES,
+  NOTA_GITHUB_REPO,
+  NOTA_PRICE_ANNUAL_USD,
+  NOTA_PRICE_MONTHLY_USD,
+} from '@/lib/site';
 
 const site = Astro.site;
 if (!site) {
@@ -18,9 +24,8 @@ const siteRoot = new URL('/', site).href;
 const downloadUrl = NOTA_GITHUB_LATEST;
 const heroScreenshotUrl = new URL(heroScreenshotImage.src, site).href;
 
-/** Guide amounts; keep in sync with `pricing.astro` and Clerk Billing (USD). */
-const priceMonthlyUsd = '2.49';
-const priceAnnualUsd = '19.49';
+const priceMonthlyUsd = NOTA_PRICE_MONTHLY_USD;
+const priceAnnualUsd = NOTA_PRICE_ANNUAL_USD;
 
 const homeTitle = 'Madrid: Quiet Mac Notes';
 const homeDescription =

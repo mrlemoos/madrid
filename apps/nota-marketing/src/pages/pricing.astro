@@ -2,7 +2,9 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DownloadMacButton from '@/components/DownloadMacButton.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
 import { MKT_THEME_COLOR_PAGE } from '@/lib/marketing-theme';
+import { NOTA_PRICE_ANNUAL_USD, NOTA_PRICE_MONTHLY_USD } from '@/lib/site';
 
 const site = Astro.site;
 if (!site) {
@@ -11,9 +13,8 @@ if (!site) {
 const siteRoot = new URL('/', site).href;
 const pricingUrl = new URL('/pricing', site).href;
 
-/** Guide amounts; keep in sync with Clerk Billing / Stripe (USD). */
-const priceMonthlyUsd = '2.49';
-const priceAnnualUsd = '19.49';
+const priceMonthlyUsd = NOTA_PRICE_MONTHLY_USD;
+const priceAnnualUsd = NOTA_PRICE_ANNUAL_USD;
 const priceAnnualMonthlyUsd = (Number.parseFloat(priceAnnualUsd) / 12).toFixed(2);
 
 const pricingTitle = 'Madrid pricing: from $2.49/month';
@@ -82,64 +83,69 @@ const structuredData = {
   <script type="application/ld+json" slot="head-extras" is:inline set:html={JSON.stringify(structuredData)} />
   <main id="main-content">
     <SiteHeader />
-    <div class="mx-auto max-w-5xl px-6 py-16 md:px-10 md:py-24">
-      <h1 class="mb-4 font-serif text-4xl font-normal text-foreground md:text-5xl">Pricing</h1>
-      <p class="mb-14 max-w-2xl text-sm text-muted-foreground">
-        Figures below are in <span class="text-foreground/90">US Dollars</span>; taxes may apply by region.
+    <div class="mkt-container mkt-section">
+      <p class="mkt-eyebrow">Pricing</p>
+      <h1 class="mkt-display">One subscription, the whole app</h1>
+      <p class="mkt-lede mt-6 max-w-2xl">
+        Figures below are guide prices in US Dollars. Checkout inside the app shows the final charge in your currency,
+        and tax may apply where you live.
       </p>
 
-      <div class="grid gap-14 md:grid-cols-3 md:gap-x-12 md:gap-y-0 lg:gap-x-16">
-        <article class="flex flex-col">
+      <div class="mt-16 grid gap-14 md:grid-cols-3 md:gap-x-12 md:gap-y-0 lg:gap-x-16">
+        <article class="flex flex-col" data-reveal>
           <h2 class="font-serif text-2xl font-normal text-foreground">Annual</h2>
           <p class="mt-3 text-3xl font-semibold tracking-tight text-foreground">
             {'$' + priceAnnualMonthlyUsd}
             <span class="text-xl font-normal text-muted-foreground"> / month</span>
           </p>
-          <p class="mt-1 text-sm text-muted-foreground">Billed annually</p>
-          <p class="mt-4 text-sm font-medium text-foreground">Save about 35% vs monthly</p>
+          <p class="mt-1 text-sm text-muted-foreground">Billed annually at ${priceAnnualUsd}</p>
+          <p class="mt-4 text-sm font-medium text-foreground">Save about 35% against monthly</p>
           <ul class="mt-6 space-y-2 text-sm leading-relaxed text-muted-foreground">
-            <li>Full app access</li>
-            <li>Cloud sync and secure backup</li>
-            <li>Use on the devices where you sign in</li>
+            <li>The full app, including the note graph and attachments</li>
+            <li>Cloud sync and backup</li>
+            <li>Use it on every Mac you sign in on</li>
           </ul>
         </article>
 
-        <article class="flex flex-col">
+        <article class="flex flex-col" data-reveal>
           <h2 class="font-serif text-2xl font-normal text-foreground">Monthly</h2>
           <p class="mt-3 text-3xl font-semibold tracking-tight text-foreground">
             {'$' + priceMonthlyUsd}
             <span class="text-xl font-normal text-muted-foreground"> / month</span>
           </p>
-          <ul class="mt-8 space-y-2 text-sm leading-relaxed text-muted-foreground">
-            <li>Same features as annual</li>
-            <li>Cancel through your billing provider</li>
+          <p class="mt-1 text-sm text-muted-foreground">Billed monthly</p>
+          <ul class="mt-10 space-y-2 text-sm leading-relaxed text-muted-foreground">
+            <li>Everything in annual</li>
+            <li>Cancel from your billing settings</li>
           </ul>
         </article>
 
-        <article class="flex flex-col">
+        <article class="flex flex-col" data-reveal>
           <h2 class="font-serif text-2xl font-normal text-foreground">Lifetime</h2>
           <p class="mt-3 text-3xl font-semibold tracking-tight text-foreground">In-app</p>
-          <p class="mt-6 text-sm leading-relaxed text-muted-foreground">
-            When offered in your build of Madrid, lifetime is a one-time purchase alongside monthly and yearly.
+          <p class="mt-1 text-sm text-muted-foreground">One-time purchase</p>
+          <p class="mt-10 text-sm leading-relaxed text-muted-foreground">
+            When your build of Madrid offers it, lifetime sits beside monthly and annual at checkout.
           </p>
         </article>
       </div>
 
-      <div class="mt-16 border-t border-border pt-10 text-center">
-        <DownloadMacButton />
-        <p class="mt-4 text-sm text-muted-foreground">
-          <a
-            href="/refunds"
-            class="mkt-focus font-medium text-foreground underline decoration-border underline-offset-4 hover:text-foreground"
-            >Refund policy</a
-          >
-          for web-billed subscriptions.
-        </p>
+      <div class="mt-20 border-t border-border pt-12">
+        <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <div class="max-w-md">
+            <h2 class="mkt-heading">How buying works</h2>
+            <p class="mkt-lede mt-4">
+              Download the Mac app, sign in, and subscribe from Settings. There is no free tier, so nothing expires and
+              nothing nags you.
+            </p>
+            <p class="mt-4 text-sm text-muted-foreground">
+              Our <a href="/refunds" class="mkt-link mkt-focus">refund policy</a> covers web-billed subscriptions.
+            </p>
+          </div>
+          <DownloadMacButton />
+        </div>
       </div>
-
-      <p class="mt-14 text-center text-sm text-muted-foreground">
-        <a href="/" class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground">← Back home</a>
-      </p>
     </div>
   </main>
+  <SiteFooter />
 </BaseLayout>
