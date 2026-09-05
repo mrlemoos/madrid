@@ -15,8 +15,8 @@ import '../../styles.css';
 export const metadata: Metadata = {
   // Absolute base for OG/Twitter image URLs; relative ones would resolve against
   // localhost. Mirrors the prod origin `shareOrigin()` falls back to.
-  metadataBase: new URL('https://app.nota.mrlemoos.dev'),
-  title: 'Nota',
+  metadataBase: new URL('https://app.getmadrid.app'),
+  title: 'Madrid',
   description: 'Offline-first notes.',
   icons: { icon: '/favicon.svg' },
 };

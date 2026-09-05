@@ -13,7 +13,7 @@ const themeChromeCss = readFileSync(
   'utf8',
 );
 
-vi.mock('@nota/electron-bridge-ui/use-is-electron', () => ({
+vi.mock('@getmadrid/electron-bridge-ui/use-is-electron', () => ({
   useIsElectron: () => true,
 }));
 

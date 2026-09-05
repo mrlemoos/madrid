@@ -3,11 +3,11 @@ import { ImageResponse } from 'next/og';
 import {
   buildSharedNoteMeta,
   SHARED_NOTE_UNAVAILABLE_META,
-} from '@nota/note-share-og/meta';
+} from '@getmadrid/note-share-og/meta';
 
 import { requireServiceSupabase } from '@/server/supabase-service.server';
 
-export const alt = 'Shared note on Nota';
+export const alt = 'Shared note on Madrid';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 export const revalidate = 300;
@@ -147,10 +147,10 @@ export default async function Image({
           }}
         >
           {/* Eyebrow is the brand mark; skip it when the fallback card already
-              uses "Nota" as its title. */}
+              uses "Madrid" as its title. */}
           {card.title === SHARED_NOTE_UNAVAILABLE_META.title ? null : (
             <div style={{ fontSize: 28, opacity: 0.7, marginBottom: 20 }}>
-              Nota
+              Madrid
             </div>
           )}
           <div style={{ fontSize: 68, fontWeight: 600, lineHeight: 1.1 }}>

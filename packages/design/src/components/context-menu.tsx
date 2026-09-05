@@ -3,8 +3,8 @@
  * popup, item, separator, and submenu helpers.
  *
  * @remarks
- * Import from the package subpath only: `import { ContextMenu, … } from '@nota/design/context-menu'`.
- * `ContextMenuPopup` and the item wrappers apply Nota surface styling; the other exports are thin re-exports of Base UI parts.
+ * Import from the package subpath only: `import { ContextMenu, … } from '@getmadrid/design/context-menu'`.
+ * `ContextMenuPopup` and the item wrappers apply Madrid surface styling; the other exports are thin re-exports of Base UI parts.
  *
  * @packageDocumentation
  */

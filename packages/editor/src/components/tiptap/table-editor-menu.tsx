@@ -1,9 +1,9 @@
 import type { Editor } from '@tiptap/core';
 import { BubbleMenu } from '@tiptap/react';
-import { Icon } from '@nota/design/icon';
+import { Icon } from '@getmadrid/design/icon';
 import { type JSX, type MouseEvent as ReactMouseEvent } from 'react';
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
 
 const menuClass =
   'flex flex-wrap items-center gap-0.5 rounded-md border border-border bg-popover p-1 shadow-md';

@@ -6,7 +6,7 @@ import {
   type RemoteNoteSync,
   type VaultConnectivity,
   type VaultMutator,
-} from '@nota/notes-offline-core';
+} from '@getmadrid/notes-offline-core';
 import {
   createNote as createNoteOnServer,
   deleteNote as deleteNoteOnServer,
@@ -23,7 +23,7 @@ import {
   removeOutboxEntry,
   removeStoredNote,
   saveLocalNoteDraft,
-} from '@nota/notes-offline';
+} from '@getmadrid/notes-offline';
 
 export function isLikelyOnline(): boolean {
   return typeof navigator === 'undefined' || navigator.onLine;

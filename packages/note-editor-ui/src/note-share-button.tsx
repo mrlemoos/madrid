@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { Button } from '@nota/design/button';
-import { Icon } from '@nota/design/icon';
-import { cn } from '@nota/design/utils';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
+import { Button } from '@getmadrid/design/button';
+import { Icon } from '@getmadrid/design/icon';
+import { cn } from '@getmadrid/design/utils';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
-import { buildShareUrl, shareNote } from '@nota/data-source/note-share-client';
+import {
+  buildShareUrl,
+  shareNote,
+} from '@getmadrid/data-source/note-share-client';
 
 interface NoteShareButtonProps {
   noteId: string;

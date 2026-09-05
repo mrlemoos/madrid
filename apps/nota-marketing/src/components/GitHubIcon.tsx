@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { Icon } from '@nota/design/icon';
+import { Icon } from '@getmadrid/design/icon';
 
 type GitHubIconProps = {
   className?: string;

@@ -7,17 +7,17 @@ import {
   animateSprings,
   createCriticallyDampedSpringConfig,
   type SpringAnimationHandle,
-} from '@nota/nota-motion-core/critically-damped-spring';
+} from '@getmadrid/nota-motion-core/critically-damped-spring';
 import { NOTA_SPRING_PRESETS } from './nota-motion';
 import {
   computeSidebarResizeLiveWidth,
   resolveSidebarResizeSettle,
-} from '@nota/nota-motion-core/sidebar-resize-settle';
+} from '@getmadrid/nota-motion-core/sidebar-resize-settle';
 import {
   clampNotaSidebarWidthPx,
   NOTA_SIDEBAR_MAX_WIDTH_PX,
   NOTA_SIDEBAR_MIN_WIDTH_PX,
-} from '@nota/nota-motion-core/sidebar-width';
+} from '@getmadrid/nota-motion-core/sidebar-width';
 
 function setSidebarWidths(
   asideEl: HTMLElement,

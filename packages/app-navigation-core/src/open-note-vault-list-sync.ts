@@ -1,4 +1,4 @@
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 
 /**
  * Whether the vault list row for the open note is newer than the detail panel’s

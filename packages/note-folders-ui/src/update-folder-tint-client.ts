@@ -1,8 +1,8 @@
-import type { Folder } from '@nota/database-types';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { updateFolder } from '@nota/data-source/models/folders';
-import { folderTintOptionForPersisted } from '@nota/note-folders-core/folder-tint-presets';
+import type { Folder } from '@getmadrid/database-types';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { updateFolder } from '@getmadrid/data-source/models/folders';
+import { folderTintOptionForPersisted } from '@getmadrid/note-folders-core/folder-tint-presets';
 
 export async function clientUpdateFolderTint(options: {
   folderId: string;

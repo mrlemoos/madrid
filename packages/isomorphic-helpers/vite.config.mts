@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/isomorphic-helpers',
   test: {
-    name: '@nota/isomorphic-helpers',
+    name: '@getmadrid/isomorphic-helpers',
     watch: false,
     globals: true,
     environment: 'node',

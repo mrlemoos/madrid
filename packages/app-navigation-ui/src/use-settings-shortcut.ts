@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
 
 export function useSettingsShortcut(
   userId: string | undefined,

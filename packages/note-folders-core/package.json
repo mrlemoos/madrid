@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-folders-core",
+  "name": "@getmadrid/note-folders-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./folder-tree": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/folder-tree.ts",
         "import": "./src/folder-tree.ts",
         "default": "./src/folder-tree.ts"
@@ -15,7 +15,7 @@
       "default": "./src/folder-tree.ts"
     },
     "./folder-tint-presets": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/folder-tint-presets.ts",
         "import": "./src/folder-tint-presets.ts",
         "default": "./src/folder-tint-presets.ts"
@@ -25,7 +25,7 @@
       "default": "./src/folder-tint-presets.ts"
     },
     "./note-sidebar-groups": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-sidebar-groups.ts",
         "import": "./src/note-sidebar-groups.ts",
         "default": "./src/note-sidebar-groups.ts"
@@ -38,7 +38,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -56,8 +56,8 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*",
-    "@nota/i18n": "workspace:*"
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/i18n": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

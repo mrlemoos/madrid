@@ -7,7 +7,7 @@
  *
  * @remarks
  * Not a public entry point — consumers import `FlightGlobe` from
- * `@nota/design/flight-globe`, which lazy-loads this module (d3-geo + world
+ * `@getmadrid/design/flight-globe`, which lazy-loads this module (d3-geo + world
  * atlas) into its own chunk.
  *
  * @packageDocumentation

@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-share-og",
+  "name": "@getmadrid/note-share-og",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./meta": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/meta.ts",
         "import": "./src/meta.ts",
         "default": "./src/meta.ts"
@@ -18,7 +18,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -36,7 +36,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/note-doc-plain-text": "workspace:*"
+    "@getmadrid/note-doc-plain-text": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

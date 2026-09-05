@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-capture-core",
+  "name": "@getmadrid/note-capture-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./audio-note-blocks-to-doc": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-note-blocks-to-doc.ts",
         "import": "./src/audio-note-blocks-to-doc.ts",
         "default": "./src/audio-note-blocks-to-doc.ts"
@@ -15,7 +15,7 @@
       "default": "./src/audio-note-blocks-to-doc.ts"
     },
     "./format-recording-duration": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/format-recording-duration.ts",
         "import": "./src/format-recording-duration.ts",
         "default": "./src/format-recording-duration.ts"
@@ -25,7 +25,7 @@
       "default": "./src/format-recording-duration.ts"
     },
     "./study-note-title": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/study-note-title.ts",
         "import": "./src/study-note-title.ts",
         "default": "./src/study-note-title.ts"
@@ -38,7 +38,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -56,7 +56,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*"
+    "@getmadrid/database-types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

@@ -11,8 +11,8 @@ const srcDir = path.join(fileURLToPath(new URL('.', import.meta.url)), 'src');
 export default defineConfig({
   root: import.meta.dirname,
   resolve: {
-    // Compile workspace `@nota/*` libraries from their TS source, like the app.
-    conditions: ['@nota/source', 'import', 'module', 'browser', 'default'],
+    // Compile workspace `@getmadrid/*` libraries from their TS source, like the app.
+    conditions: ['@getmadrid/source', 'import', 'module', 'browser', 'default'],
     dedupe: ['@clerk/shared', 'react', 'react-dom'],
     alias: [
       { find: '~', replacement: srcDir },
@@ -23,7 +23,7 @@ export default defineConfig({
   oxc: { jsx: { runtime: 'automatic' } },
   ssr: { noExternal: ['gsap', '@gsap/react', 'motion'] },
   test: {
-    name: '@nota/nota',
+    name: '@getmadrid/nota',
     watch: false,
     globals: true,
     environment: 'jsdom',

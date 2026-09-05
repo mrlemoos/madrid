@@ -1,4 +1,4 @@
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import { sortOutboxForProcessing } from './sort-outbox-for-processing';
 import type { StoredNote } from './types';
 import type {

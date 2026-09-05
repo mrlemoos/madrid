@@ -4,11 +4,15 @@ import { ClerkProvider } from '@clerk/react';
 import { ui } from '@clerk/ui';
 import { useRouter } from 'next/navigation';
 import type { JSX, ReactNode } from 'react';
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 
 type AuthProviderProps = {
   children: ReactNode;
 };
+
+const clerkAuthLocalization = {
+  formButtonPrimary: 'Continue',
+} as const;
 
 /**
  * App-wide Clerk provider: path-routed sign-in/up, post-auth `/notes`, and
@@ -32,6 +36,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       // the (protected) layout). Relative so it renders on the server too.
       signInForceRedirectUrl="/notes"
       signUpForceRedirectUrl="/notes"
+      localization={clerkAuthLocalization}
       routerPush={(to) => {
         router.push(to);
       }}

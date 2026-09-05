@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@nota/data-source/clerk-token-ref', () => ({
+vi.mock('@getmadrid/data-source/clerk-token-ref', () => ({
   getClerkAccessToken: vi.fn(),
 }));
 

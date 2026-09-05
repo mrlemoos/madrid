@@ -11,7 +11,7 @@ import {
   convertLinkOnlyParagraphs,
   NotaCodeBlock,
   NotaLink,
-} from '@nota/editor';
+} from '@getmadrid/editor';
 
 /** Minimal `linkPreview` node :  avoids React node views from the real extension. */
 const LinkPreviewTestNode = Node.create({

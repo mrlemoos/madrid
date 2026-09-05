@@ -46,7 +46,7 @@ export async function GET(request: Request): Promise<Response> {
 
   const url = new URL(request.url);
   const limit = readLimit(url);
-  const repo = process.env.NOTA_GITHUB_REPO?.trim() || 'mrlemoos/nota';
+  const repo = process.env.NOTA_GITHUB_REPO?.trim() || 'mrlemoos/madrid';
   const ghUrl = `https://api.github.com/repos/${repo}/releases?per_page=${limit}`;
 
   const ghRes = await fetch(ghUrl, { headers: githubHeaders() });

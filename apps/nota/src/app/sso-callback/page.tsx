@@ -2,7 +2,7 @@
 
 import type { JSX } from 'react';
 import { AuthenticateWithRedirectCallback } from '@clerk/react';
-import { LoadingStatus } from '@nota/design/spinner';
+import { LoadingStatus } from '@getmadrid/design/spinner';
 
 /**
  * OAuth landing route (`/sso-callback`): mounts the captcha target and Clerk's

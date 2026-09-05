@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useState, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
+import { cn } from '@getmadrid/design/utils';
 import {
   buildJournalEntriesFromNotes,
   filterJournalEntriesByDateKey,
   journalDateKeysFromEntries,
-} from '@nota/note-journal-core/notes';
-import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
-import { parseDateKey } from '@nota/note-journal-core/calendar';
-import { localDateKey } from '@nota/note-journal-core/local-date-key';
+} from '@getmadrid/note-journal-core/notes';
+import { useNotesDataVault } from '@getmadrid/note-runtime/notes-data-context';
+import { parseDateKey } from '@getmadrid/note-journal-core/calendar';
+import { localDateKey } from '@getmadrid/note-journal-core/local-date-key';
 import { useJournalTranslator } from './use-journal-translator';
 import { JournalCalendar } from './journal-calendar';
 import { JournalNotesList } from './journal-notes-list';

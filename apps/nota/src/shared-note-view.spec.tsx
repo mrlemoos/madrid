@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 
-import type { SharedNote } from '@nota/data-source/note-share-client';
+import type { SharedNote } from '@getmadrid/data-source/note-share-client';
 
 const shareMocks = vi.hoisted(() => ({
   fetchSharedNote: vi.fn(async (_token: string) => null as SharedNote | null),
@@ -10,7 +10,7 @@ const shareMocks = vi.hoisted(() => ({
   ),
 }));
 
-vi.mock('@nota/data-source/note-share-client', () => ({
+vi.mock('@getmadrid/data-source/note-share-client', () => ({
   fetchSharedNote: (token: string) => shareMocks.fetchSharedNote(token),
   subscribeSharedNote: (token: string, onUpdate: () => void) =>
     shareMocks.subscribeSharedNote(token, onUpdate),

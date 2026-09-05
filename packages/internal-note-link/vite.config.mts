@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/internal-note-link',
   test: {
-    name: '@nota/internal-note-link',
+    name: '@getmadrid/internal-note-link',
     watch: false,
     globals: true,
     environment: 'node',

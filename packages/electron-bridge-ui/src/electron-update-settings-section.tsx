@@ -1,9 +1,9 @@
-import { Button } from '@nota/design/button';
+import { Button } from '@getmadrid/design/button';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import {
   parseNotaUpdateStatusPayload,
   type NotaUpdateStatusPayload,
-} from '@nota/electron-bridge-core/update-status';
+} from '@getmadrid/electron-bridge-core/update-status';
 import { useElectronBridgeTranslator } from './use-electron-bridge-translator';
 
 function statusMessage(
@@ -24,7 +24,7 @@ function statusMessage(
         percent: status.percent,
       });
     case 'downloaded':
-      return t('Update ready. Restart Nota to finish installing.');
+      return t('Update ready. Restart Madrid to finish installing.');
     case 'error':
       return t('Update check failed: {message}', { message: status.message });
     case 'unavailable':
@@ -85,7 +85,7 @@ export function ElectronUpdateSettingsSection(): JSX.Element | null {
       </h2>
       <div className="space-y-3 rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
         <p className="text-sm text-muted-foreground">
-          {t('Nota checks GitHub Releases for the latest signed Mac build.')}
+          {t('Madrid checks GitHub Releases for the latest signed Mac build.')}
         </p>
         {message ? (
           <p className="text-sm text-foreground" role="status">

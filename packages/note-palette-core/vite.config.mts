@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-palette-core',
   test: {
-    name: '@nota/note-palette-core',
+    name: '@getmadrid/note-palette-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

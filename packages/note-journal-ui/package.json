@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-journal-ui",
+  "name": "@getmadrid/note-journal-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./journal-screen": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/journal-screen.tsx",
         "import": "./src/journal-screen.tsx",
         "default": "./src/journal-screen.tsx"
@@ -18,7 +18,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -36,11 +36,11 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/i18n": "workspace:*",
-    "@nota/nota-motion-ui": "workspace:*",
-    "@nota/note-journal-core": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/design": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "@getmadrid/nota-motion-ui": "workspace:*",
+    "@getmadrid/note-journal-core": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/design": "workspace:*",
     "@tanstack/react-virtual": "^3.13.24",
     "react": "catalog:"
   },

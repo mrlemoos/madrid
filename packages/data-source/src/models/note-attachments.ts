@@ -2,7 +2,7 @@ import type { TypedSupabaseClient } from './notes';
 import type {
   NoteAttachment,
   NoteAttachmentInsert,
-} from '@nota/database-types';
+} from '@getmadrid/database-types';
 
 export const NOTE_PDFS_BUCKET = 'note-pdfs';
 

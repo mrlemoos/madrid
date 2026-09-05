@@ -1,7 +1,7 @@
 // Flight lookup by IATA code via AirLabs, for the note flight-code feature.
 //
 // Access: this route is PUBLIC (no Bearer) because the shared `/s/` note page
-// is viewed by people without a Nota account. The AirLabs key stays here on the
+// is viewed by people without a Madrid account. The AirLabs key stays here on the
 // server; the client only ever sees the normalized shape below. Abuse is capped
 // by a per-IP rate limit at the route and a short in-memory cache here.
 

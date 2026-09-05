@@ -2,7 +2,7 @@ import { Editor } from '@tiptap/core';
 import Emoji from '@tiptap/extension-emoji';
 import StarterKit from '@tiptap/starter-kit';
 import { describe, expect, it } from 'vitest';
-import { NotaCodeBlock } from '@nota/editor';
+import { NotaCodeBlock } from '@getmadrid/editor';
 
 function collectTypes(node: unknown): string[] {
   if (!node || typeof node !== 'object') {

@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NotesChrome } from './notes-chrome';
-import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
-import { useNotesData } from '@nota/note-runtime/notes-data-context';
+import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@getmadrid/electron-bridge-core/menubar-events';
+import { useNotesData } from '@getmadrid/note-runtime/notes-data-context';
 
 const notesChromeTestCtx = vi.hoisted(() => {
   const longTitle = 'Study note: 15 April 2026: '.padEnd(120, 'x');
@@ -37,19 +37,22 @@ function renderNotesChrome(): ReturnType<typeof render> {
   );
 }
 
-vi.mock('@nota/electron-bridge-ui/menubar-bridge', () => ({
+vi.mock('@getmadrid/electron-bridge-ui/menubar-bridge', () => ({
   ElectronMenubarBridge: (): null => null,
 }));
 
-vi.mock('@nota/note-capture-ui/audio-to-note-dock', () => ({
+vi.mock('@getmadrid/note-capture-ui/audio-to-note-dock', () => ({
   AudioToNoteDock: (): null => null,
 }));
 
-vi.mock('@nota/note-capture-ui/study-recording-upload-warning-banner', () => ({
-  StudyRecordingUploadWarningBanner: (): null => null,
-}));
+vi.mock(
+  '@getmadrid/note-capture-ui/study-recording-upload-warning-banner',
+  () => ({
+    StudyRecordingUploadWarningBanner: (): null => null,
+  }),
+);
 
-vi.mock('@nota/app-navigation-ui/use-app-navigation-screen', () => ({
+vi.mock('@getmadrid/app-navigation-ui/use-app-navigation-screen', () => ({
   useAppNavigationScreen: () => ({
     kind: 'notes',
     panel: 'list',
@@ -57,7 +60,7 @@ vi.mock('@nota/app-navigation-ui/use-app-navigation-screen', () => ({
   }),
 }));
 
-vi.mock('@nota/note-runtime/notes-data-context', () => ({
+vi.mock('@getmadrid/note-runtime/notes-data-context', () => ({
   useNotesData: vi.fn(),
 }));
 
@@ -77,9 +80,9 @@ const sidebarStoreState = vi.hoisted(() => ({
 const gsapTo = vi.hoisted(() => vi.fn());
 const gsapSet = vi.hoisted(() => vi.fn());
 
-vi.mock('@nota/nota-motion-ui/motion', async (importOriginal) => {
+vi.mock('@getmadrid/nota-motion-ui/motion', async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import('@nota/nota-motion-ui/motion')>();
+    await importOriginal<typeof import('@getmadrid/nota-motion-ui/motion')>();
   return {
     ...actual,
     gsap: {
@@ -93,14 +96,14 @@ vi.mock('@nota/nota-motion-ui/motion', async (importOriginal) => {
   };
 });
 
-vi.mock('@nota/note-runtime/stores/sidebar', () => ({
+vi.mock('@getmadrid/note-runtime/stores/sidebar', () => ({
   useNotesSidebarStore: <T,>(selector?: (s: typeof sidebarStoreState) => T) =>
     selector
       ? selector(sidebarStoreState)
       : (sidebarStoreState as unknown as T),
 }));
 
-vi.mock('@nota/note-runtime/sticky-doc-title', () => ({
+vi.mock('@getmadrid/note-runtime/sticky-doc-title', () => ({
   useStickyDocTitle: () => ({
     registerScrollRoot: vi.fn(),
     resetSticky: vi.fn(),
@@ -108,17 +111,17 @@ vi.mock('@nota/note-runtime/sticky-doc-title', () => ({
   }),
 }));
 
-vi.mock('@nota/electron-bridge-ui/use-is-electron', () => ({
+vi.mock('@getmadrid/electron-bridge-ui/use-is-electron', () => ({
   useIsElectron: () => false,
 }));
 
-vi.mock('@nota/note-runtime/session-context', () => ({
+vi.mock('@getmadrid/note-runtime/session-context', () => ({
   useRootLoaderData: () => ({
     user: { id: 'user-1', email: 'test@example.com' },
   }),
 }));
 
-vi.mock('@nota/note-runtime/stores/preferences', () => ({
+vi.mock('@getmadrid/note-runtime/stores/preferences', () => ({
   useNotaPreferencesStore: <T,>(
     selector: (s: {
       openTodaysNoteShortcut: boolean;
@@ -135,32 +138,32 @@ vi.mock('@nota/note-runtime/stores/preferences', () => ({
     }),
 }));
 
-vi.mock('@nota/note-runtime/use-sync-user-preferences', () => ({
+vi.mock('@getmadrid/note-runtime/use-sync-user-preferences', () => ({
   useSyncUserPreferences: (): void => {},
   useSyncClerkDisplayName: (): void => {},
 }));
 
-vi.mock('@nota/app-navigation-ui/use-notes-history-shortcut', () => ({
+vi.mock('@getmadrid/app-navigation-ui/use-notes-history-shortcut', () => ({
   useNotesHistoryShortcut: (): void => {},
 }));
 
-vi.mock('@nota/app-navigation-ui/use-notes-sidebar-shortcut', () => ({
+vi.mock('@getmadrid/app-navigation-ui/use-notes-sidebar-shortcut', () => ({
   useNotesSidebarShortcut: (): void => {},
 }));
 
-vi.mock('@nota/app-navigation-ui/use-settings-shortcut', () => ({
+vi.mock('@getmadrid/app-navigation-ui/use-settings-shortcut', () => ({
   useSettingsShortcut: (): void => {},
 }));
 
-vi.mock('@nota/app-navigation-ui/use-todays-note-shortcut', () => ({
+vi.mock('@getmadrid/app-navigation-ui/use-todays-note-shortcut', () => ({
   useTodaysNoteShortcut: (): void => {},
 }));
 
-vi.mock('@nota/note-runtime/use-notes-offline-sync', () => ({
+vi.mock('@getmadrid/note-runtime/use-notes-offline-sync', () => ({
   useNotesOfflineSync: (): void => {},
 }));
 
-vi.mock('@nota/note-capture-ui/use-audio-note-pending-drain', () => ({
+vi.mock('@getmadrid/note-capture-ui/use-audio-note-pending-drain', () => ({
   useAudioNotePendingDrain: (): void => {},
 }));
 

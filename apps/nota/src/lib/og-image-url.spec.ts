@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { safeOgImageSrcForPreview } from '@nota/editor';
+import { safeOgImageSrcForPreview } from '@getmadrid/editor';
 
 describe('safeOgImageSrcForPreview', () => {
   it('accepts http and https URLs', () => {

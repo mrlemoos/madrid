@@ -8,25 +8,31 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { Folder, Note, UserPreferences } from '@nota/database-types';
+import type { Folder, Note, UserPreferences } from '@getmadrid/database-types';
 import {
   getBrowserClient,
   isSupabaseClerkGetTokenRegistered,
-} from '@nota/data-source/supabase/browser';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { listStoredNotes, putServerNoteIfNotDirty } from '@nota/notes-offline';
-import { syncServerNotesToIdbInChunks } from '@nota/data-source/sync-server-notes-to-idb';
-import { loadVault, type VaultLoadPorts } from '@nota/data-source/vault-load';
-import { listFolders } from '@nota/data-source/models/folders';
-import { listNotes } from '@nota/data-source/models/notes';
-import { getUserPreferences } from '@nota/data-source/models/user-preferences';
-import { isClerkAccessTokenGetterRegistered } from '@nota/data-source/clerk-token-ref';
+} from '@getmadrid/data-source/supabase/browser';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import {
+  listStoredNotes,
+  putServerNoteIfNotDirty,
+} from '@getmadrid/notes-offline';
+import { syncServerNotesToIdbInChunks } from '@getmadrid/data-source/sync-server-notes-to-idb';
+import {
+  loadVault,
+  type VaultLoadPorts,
+} from '@getmadrid/data-source/vault-load';
+import { listFolders } from '@getmadrid/data-source/models/folders';
+import { listNotes } from '@getmadrid/data-source/models/notes';
+import { getUserPreferences } from '@getmadrid/data-source/models/user-preferences';
+import { isClerkAccessTokenGetterRegistered } from '@getmadrid/data-source/clerk-token-ref';
 import {
   readNotaServerEntitledSession,
   syncNotaServerEntitledSession,
-} from '@nota/data-source/nota-pro-entitled-session';
+} from '@getmadrid/data-source/nota-pro-entitled-session';
 import { useAppSession } from './session-context';
-import { debounce } from '@nota/isomorphic-helpers';
+import { debounce } from '@getmadrid/isomorphic-helpers';
 
 /**
  * App-owned collaborators injected at composition time. These live in feature
@@ -35,7 +41,7 @@ import { debounce } from '@nota/isomorphic-helpers';
  * attachment signed-URL cache), so the app passes them in.
  */
 export type NotesDataProviderPorts = {
-  /** Fetch the Nota Pro entitlement response from nota-server (Bearer). */
+  /** Fetch the Madrid Pro entitlement response from nota-server (Bearer). */
   fetchNotaProEntitled: () => Promise<Response>;
   /** Seed the welcome note when the vault is empty; returns the new note id or null. */
   runWelcomeNoteSeedIfNeeded: (args: {
@@ -58,7 +64,7 @@ export type RefreshNotesListOptions = {
 };
 
 export type NotesDataContextValue = {
-  /** Server-confirmed active subscription (Nota Pro entitlement): vault, cloud, sync. */
+  /** Server-confirmed active subscription (Madrid Pro entitlement): vault, cloud, sync. */
   notaProEntitled: boolean;
   notes: Note[];
   folders: Folder[];

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import { mergeNoteLists } from './merge-note-with-local';
 import type { StoredNote } from './types';
 import golden from './fixtures/merge-note-lists-golden.json' with { type: 'json' };

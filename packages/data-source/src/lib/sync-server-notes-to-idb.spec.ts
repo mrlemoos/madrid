@@ -3,7 +3,7 @@ import {
   syncServerNotesToIdbInChunks,
   NOTES_IDB_PUT_CHUNK_SIZE,
 } from './sync-server-notes-to-idb';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 
 function mockNote(id: string): Note {
   return {

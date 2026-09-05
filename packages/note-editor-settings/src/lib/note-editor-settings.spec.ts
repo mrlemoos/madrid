@@ -1,4 +1,4 @@
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 import { describe, expect, it } from 'vitest';
 
 import {

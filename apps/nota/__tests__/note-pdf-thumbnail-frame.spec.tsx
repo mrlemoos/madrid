@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { describe, expect, it } from 'vitest';
 
-import { NotePdfThumbnailFrame } from '@nota/editor';
+import { NotePdfThumbnailFrame } from '@getmadrid/editor';
 
 describe('NotePdfThumbnailFrame', () => {
   it('covers the thumbnail area with a centred PDF placeholder when preview extraction fails', () => {

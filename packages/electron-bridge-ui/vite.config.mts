@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/electron-bridge-ui',
   test: {
-    name: '@nota/electron-bridge-ui',
+    name: '@getmadrid/electron-bridge-ui',
     watch: false,
     globals: true,
     environment: 'jsdom',

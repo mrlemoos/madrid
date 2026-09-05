@@ -14,7 +14,7 @@ import {
 import {
   markNavIntent,
   type NavIntent,
-} from '@nota/nota-motion-ui/panel-motion';
+} from '@getmadrid/nota-motion-ui/panel-motion';
 
 /** Dispatched after patched `history.pushState` / `replaceState` (drives clerk-hash repair). */
 export const NOTA_HASH_HISTORY_EVENT = 'nota:hash-history' as const;

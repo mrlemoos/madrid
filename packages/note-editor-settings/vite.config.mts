@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-editor-settings',
   test: {
-    name: '@nota/note-editor-settings',
+    name: '@getmadrid/note-editor-settings',
     watch: false,
     globals: true,
     environment: 'node',

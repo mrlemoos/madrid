@@ -1,5 +1,5 @@
 import type { JSX, PointerEvent as ReactPointerEvent } from 'react';
-import { cn } from '@nota/design/utils';
+import { cn } from '@getmadrid/design/utils';
 
 /** CSS class from Electron chrome — keep drag-region off the resize grip. */
 const ELECTRON_WINDOW_NO_DRAG_CLASS = 'electron-window-no-drag';

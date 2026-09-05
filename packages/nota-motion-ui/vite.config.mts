@@ -7,7 +7,7 @@ export default defineConfig(() => ({
     noExternal: ['gsap', '@gsap/react'],
   },
   test: {
-    name: '@nota/nota-motion-ui',
+    name: '@getmadrid/nota-motion-ui',
     watch: false,
     globals: true,
     environment: 'jsdom',

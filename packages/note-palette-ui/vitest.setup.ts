@@ -1,7 +1,7 @@
 // Runs before Vitest tests.
 import { vi } from 'vitest';
-import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
-import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
+import { setClerkAccessTokenGetter } from '@getmadrid/data-source/clerk-token-ref';
+import { setSupabaseClerkGetToken } from '@getmadrid/data-source/supabase/browser';
 
 // Next App Router hooks need a router context that jsdom lacks; the palette reads
 // the active screen via `usePathname` and navigates via `useRouter`.

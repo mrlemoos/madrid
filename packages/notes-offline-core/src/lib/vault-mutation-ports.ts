@@ -1,4 +1,4 @@
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 import type { OutboxDrainer } from './drain-outbox';
 import type {
   LocalNoteOutboxStore,
@@ -49,7 +49,7 @@ export type PatchNoteMutationInput = {
    * When omitted, try remote first and fall back to a local draft (e.g. folder move).
    */
   draftContext?: NoteDraftContext;
-  /** When false, skip the eager remote write (e.g. not Nota Pro entitled). */
+  /** When false, skip the eager remote write (e.g. not Madrid Pro entitled). */
   allowRemote?: boolean;
 };
 

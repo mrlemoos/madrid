@@ -1,7 +1,7 @@
 import {
   NOTA_PRESS_IN_MS,
   type SpringPresetName,
-} from '@nota/design/motion-tokens';
+} from '@getmadrid/design/motion-tokens';
 
 /**
  * Input path that triggered the UI change.

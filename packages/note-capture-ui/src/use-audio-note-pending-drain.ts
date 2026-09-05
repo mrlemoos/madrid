@@ -1,20 +1,20 @@
 import { useEffect, useEffectEvent } from 'react';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '@nota/note-runtime/notes-data-context';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
 import {
   listPendingAudioNoteJobs,
   removePendingAudioNoteJob,
 } from './audio-note-pending-idb';
 import { postAudioToNoteStream } from './audio-to-note-client';
 import { applyAudioNoteStudyResult } from './audio-to-note-apply';
-import { uploadStudyRecordingAttachment } from '@nota/data-source/pdf-attachment-client';
+import { uploadStudyRecordingAttachment } from '@getmadrid/data-source/pdf-attachment-client';
 import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning';
-import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
-import { subscribeOnline } from '@nota/data-source/browser-connectivity';
+import { useAudioToNoteSession } from '@getmadrid/note-runtime/stores/audio-session';
+import { subscribeOnline } from '@getmadrid/data-source/browser-connectivity';
 
 /**
  * When the device is back online, processes queued audio-to-note jobs from IndexedDB.

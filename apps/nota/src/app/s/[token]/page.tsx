@@ -6,8 +6,8 @@ import {
   fetchSharedNoteAttachments,
   type SharedNote,
   type SharedNoteAttachment,
-} from '@nota/data-source/note-share-client';
-import { buildSharedNoteMeta } from '@nota/note-share-og/meta';
+} from '@getmadrid/data-source/note-share-client';
+import { buildSharedNoteMeta } from '@getmadrid/note-share-og/meta';
 
 import { SharedNoteView } from '@/shared-note-view';
 
@@ -58,7 +58,7 @@ export async function generateMetadata({
     robots: { index: false, follow: false },
     openGraph: {
       type: 'article',
-      siteName: 'Nota',
+      siteName: 'Madrid',
       title,
       ...(description ? { description } : {}),
     },

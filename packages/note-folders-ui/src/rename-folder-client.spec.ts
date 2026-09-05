@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientRenameFolder } from './rename-folder-client';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { updateFolder } from '@nota/data-source/models/folders';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { updateFolder } from '@getmadrid/data-source/models/folders';
 
 const patchFolderInList = vi.fn();
 
-vi.mock('@nota/data-source/supabase/browser', () => ({
+vi.mock('@getmadrid/data-source/supabase/browser', () => ({
   getBrowserClient: () => ({}),
 }));
 
-vi.mock('@nota/data-source/notes-offline-sync', async (importOriginal) => {
+vi.mock('@getmadrid/data-source/notes-offline-sync', async (importOriginal) => {
   const actual =
     await importOriginal<
-      typeof import('@nota/data-source/notes-offline-sync')
+      typeof import('@getmadrid/data-source/notes-offline-sync')
     >();
   return {
     ...actual,
@@ -20,7 +20,7 @@ vi.mock('@nota/data-source/notes-offline-sync', async (importOriginal) => {
   };
 });
 
-vi.mock('@nota/data-source/models/folders', () => ({
+vi.mock('@getmadrid/data-source/models/folders', () => ({
   updateFolder: vi.fn(() =>
     Promise.resolve({
       id: 'folder-1',

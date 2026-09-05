@@ -1,21 +1,21 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
 import {
   countNotesInFolder,
   deleteFolderById,
   folderHasChildFolders,
-} from '@nota/data-source/models/folders';
-import type { UserPreferences } from '@nota/database-types';
+} from '@getmadrid/data-source/models/folders';
+import type { UserPreferences } from '@getmadrid/database-types';
 
-vi.mock('@nota/data-source/supabase/browser', () => ({
+vi.mock('@getmadrid/data-source/supabase/browser', () => ({
   getBrowserClient: () => ({}),
 }));
 
-vi.mock('@nota/data-source/notes-offline-sync', async (importOriginal) => {
+vi.mock('@getmadrid/data-source/notes-offline-sync', async (importOriginal) => {
   const actual =
     await importOriginal<
-      typeof import('@nota/data-source/notes-offline-sync')
+      typeof import('@getmadrid/data-source/notes-offline-sync')
     >();
   return {
     ...actual,
@@ -23,7 +23,7 @@ vi.mock('@nota/data-source/notes-offline-sync', async (importOriginal) => {
   };
 });
 
-vi.mock('@nota/data-source/models/folders', () => ({
+vi.mock('@getmadrid/data-source/models/folders', () => ({
   folderHasChildFolders: vi.fn(),
   countNotesInFolder: vi.fn(),
   deleteFolderById: vi.fn(),

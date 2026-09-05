@@ -1,7 +1,7 @@
 'use client';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Button } from '@nota/design/button';
-import { createTranslator, type LocalePreference } from '@nota/i18n';
+import { Button } from '@getmadrid/design/button';
+import { createTranslator, type LocalePreference } from '@getmadrid/i18n';
 
 type Props = {
   children: ReactNode;
@@ -24,7 +24,7 @@ function ErrorBoundaryFallback({
     <div className="flex h-dvh min-h-0 flex-col items-center justify-center gap-4 overflow-y-auto bg-background px-6 text-center text-sm text-foreground">
       <p className="max-w-sm text-muted-foreground">
         {t(
-          'Something went wrong loading Nota. You can try again or reload the app.',
+          'Something went wrong loading Madrid. You can try again or reload the app.',
         )}
       </p>
       <pre className="max-h-40 max-w-full overflow-auto rounded-md border border-border bg-muted/30 p-3 text-left font-mono text-xs text-foreground">

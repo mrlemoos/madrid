@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
-@import '@nota/design/theme-chrome.css';
-@import '@nota/design/theme-tokens.css';
+@import '@getmadrid/design/theme-chrome.css';
+@import '@getmadrid/design/theme-tokens.css';
 
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -83,7 +83,7 @@
   height: auto;
 }
 
-/* Clerk form woven into Nota auth card (overrides @clerk/ui inline card chrome) */
+/* Clerk form woven into Madrid auth card (overrides @clerk/ui inline card chrome) */
 .nota-auth-clerk,
 .nota-auth-clerk.cl-rootBox,
 .nota-auth-clerk .cl-rootBox,

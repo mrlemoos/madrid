@@ -109,7 +109,7 @@ jobs:
             "${DRAFT_FLAG[@]}"
 
       - name: Build Electron shell and publish release
-        # Packaged app loads https://app.nota.mrlemoos.dev (Vercel). No @nota/nota
+        # Packaged app loads https://app.getmadrid.app (Vercel). No @getmadrid/nota
         # / Next build in this job — shell only.
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
@@ -124,7 +124,7 @@ jobs:
             export CSC_LINK="$CSC_LINK_VALUE"
             export CSC_KEY_PASSWORD='${{ secrets.MAC_CSC_KEY_PASSWORD }}'
           fi
-          pnpm exec nx run @nota/nota-electron:electron:release
+          pnpm exec nx run @getmadrid/nota-electron:electron:release
 
       - name: Generate release notes from commits (between tags)
         env:

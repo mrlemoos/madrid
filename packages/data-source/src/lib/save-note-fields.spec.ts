@@ -2,12 +2,12 @@ import { describe, expect, it, vi } from 'vitest';
 import type {
   PatchNoteMutationInput,
   PatchNoteMutationResult,
-} from '@nota/notes-offline-core';
+} from '@getmadrid/notes-offline-core';
 import {
   createNoteFieldSaver,
   type NoteFieldSaverDeps,
 } from './save-note-fields';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 
 function makeNote(overrides: Partial<Note> = {}): Note {
   return {

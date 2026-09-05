@@ -1,5 +1,5 @@
 ---
-title: Bringing journal to Nota
+title: Bringing journal to Madrid
 description: 'A calm view for notes titled like dates: a calendar, timeline, and one tap back to today when you have wandered months away.'
 pubDate: 2026-05-22
 author: Leonardo Lemos
@@ -12,11 +12,11 @@ If you name notes the way you name days (e.g. "15 April 2026", "May 5 2003", "5t
 
 **Journal** is that second view. It gathers notes whose titles parse as real calendar dates, then lays them out in a month grid and a scrollable timeline so you can move through time without treating your vault like a spreadsheet.
 
-![Journal in Nota: May 2026 in the calendar; dots mark days with entries; the “All entries” timeline lists dated notes beside it.](/journal-screenshot.png)
+![Journal in Madrid: May 2026 in the calendar; dots mark days with entries; the “All entries” timeline lists dated notes beside it.](/journal-screenshot.png)
 
 ## What counts as a journal note
 
-Nota uses natural-language date parsing on the title. If the title resolves to a calendar day, the note appears in Journal. That covers common shapes people actually type (numeric dates, month names, ordinals), and the long British-style daily title Nota uses for **today’s note** (for example **4 March 2026**).
+Madrid uses natural-language date parsing on the title. If the title resolves to a calendar day, the note appears in Journal. That covers common shapes people actually type (numeric dates, month names, ordinals), and the long British-style daily title Madrid uses for **today’s note** (for example **4 March 2026**).
 
 Titles that are ordinary phrases stay in the sidebar only. **Untitled Note** never appears here on purpose.
 
@@ -41,4 +41,4 @@ If you have never used a date in a title, the entry points stay hidden. The feat
 
 ## Why a separate surface
 
-You can already open today’s note with a shortcut, search by title, and link days together. Journal does not replace any of that. It answers a narrower question: **what did I file under dates, and when?** For some people that is occasional; for others it is the backbone of the vault. Either way, it is a view that keeps the rest of Nota quiet: glass, typography, and your words, while the calendar does the navigation.
+You can already open today’s note with a shortcut, search by title, and link days together. Journal does not replace any of that. It answers a narrower question: **what did I file under dates, and when?** For some people that is occasional; for others it is the backbone of the vault. Either way, it is a view that keeps the rest of Madrid quiet: glass, typography, and your words, while the calendar does the navigation.

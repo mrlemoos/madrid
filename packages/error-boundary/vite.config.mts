@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/error-boundary',
   test: {
-    name: '@nota/error-boundary',
+    name: '@getmadrid/error-boundary',
     watch: false,
     globals: true,
     environment: 'jsdom',

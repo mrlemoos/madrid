@@ -3,15 +3,15 @@ import {
   clearWelcomeSeedCacheForTests,
   runWelcomeNoteSeedIfNeeded,
 } from './welcome-note-seed';
-import { createLocalOnlyNote } from '@nota/notes-offline';
+import { createLocalOnlyNote } from '@getmadrid/notes-offline';
 import { WELCOME_NOTE_CONTENT, WELCOME_NOTE_TITLE } from './welcome-note-doc';
-import * as userPreferences from '@nota/data-source/models/user-preferences';
+import * as userPreferences from '@getmadrid/data-source/models/user-preferences';
 
-vi.mock('@nota/data-source/supabase/browser', () => ({
+vi.mock('@getmadrid/data-source/supabase/browser', () => ({
   getBrowserClient: () => ({}),
 }));
 
-vi.mock('@nota/data-source/models/user-preferences', () => ({
+vi.mock('@getmadrid/data-source/models/user-preferences', () => ({
   getUserPreferences: vi.fn(() =>
     Promise.resolve({
       user_id: 'user-1',
@@ -26,8 +26,9 @@ vi.mock('@nota/data-source/models/user-preferences', () => ({
   upsertUserPreferences: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('@nota/notes-offline', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@nota/notes-offline')>();
+vi.mock('@getmadrid/notes-offline', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('@getmadrid/notes-offline')>();
   return {
     ...actual,
     createLocalOnlyNote: vi.fn(() => Promise.resolve('welcome-note-id')),

@@ -2,8 +2,8 @@
  * Tooltip primitives built on Base UI: provider, root, trigger, portal, positioner, and a styled popup wrapper.
  *
  * @remarks
- * Import from the package subpath only: `import { Tooltip, TooltipTrigger, … } from '@nota/design/tooltip'`.
- * Wrap subtrees that contain tooltips with {@link TooltipProvider} (or a single provider at app shell). {@link TooltipPopup} is the only export that applies Nota surface styles; {@link Tooltip}, {@link TooltipTrigger}, {@link TooltipPortal}, and {@link TooltipPositioner} are thin re-exports of Base UI parts.
+ * Import from the package subpath only: `import { Tooltip, TooltipTrigger, … } from '@getmadrid/design/tooltip'`.
+ * Wrap subtrees that contain tooltips with {@link TooltipProvider} (or a single provider at app shell). {@link TooltipPopup} is the only export that applies Madrid surface styles; {@link Tooltip}, {@link TooltipTrigger}, {@link TooltipPortal}, and {@link TooltipPositioner} are thin re-exports of Base UI parts.
  *
  * @packageDocumentation
  */
@@ -100,7 +100,7 @@ export function TooltipPositioner({
  *   TooltipPortal,
  *   TooltipPositioner,
  *   TooltipPopup,
- * } from '@nota/design/tooltip';
+ * } from '@getmadrid/design/tooltip';
  *
  * export function HelpTip() {
  *   return (
@@ -128,7 +128,7 @@ export function TooltipProvider({
 }
 
 /**
- * Tooltip surface with Nota popover styling (`border-border`, `bg-popover`, typography).
+ * Tooltip surface with Madrid popover styling (`border-border`, `bg-popover`, typography).
  *
  * @remarks
  * Merges `className` after the package default surface. For unstyled popups, use Base UI `Tooltip.Popup` directly instead.

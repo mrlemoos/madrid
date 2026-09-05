@@ -1,40 +1,43 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { Note, NoteAttachment } from '@nota/database-types';
+import type { Note, NoteAttachment } from '@getmadrid/database-types';
 import { NoteEditor } from './note-editor';
 import { NoteBacklinksPanel } from './note-backlinks-panel';
-import { cn } from '@nota/design/utils';
-import { noteSurfaceClassNames, parseNoteEditorSettings } from '@nota/editor';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import { cn } from '@getmadrid/design/utils';
+import {
+  noteSurfaceClassNames,
+  parseNoteEditorSettings,
+} from '@getmadrid/editor';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
 import {
   getStoredNote,
   mergeNoteWithLocal,
   putServerNoteIfNotDirty,
   storedNoteToListRow,
-} from '@nota/notes-offline';
-import { fetchNoteRowAndAttachmentsParallel } from '@nota/data-source/note-detail-fetch';
-import { getNote } from '@nota/data-source/models/notes';
+} from '@getmadrid/notes-offline';
+import { fetchNoteRowAndAttachmentsParallel } from '@getmadrid/data-source/note-detail-fetch';
+import { getNote } from '@getmadrid/data-source/models/notes';
 import {
   listNoteAttachments,
   NOTE_PDFS_BUCKET,
-} from '@nota/data-source/models/note-attachments';
-import { replaceScreen } from '@nota/app-navigation-core/navigation';
-import { shouldRefetchOpenNoteFromVaultList } from '@nota/app-navigation-core/open-note-vault-list-sync';
+} from '@getmadrid/data-source/models/note-attachments';
+import { replaceScreen } from '@getmadrid/app-navigation-core/navigation';
+import { shouldRefetchOpenNoteFromVaultList } from '@getmadrid/app-navigation-core/open-note-vault-list-sync';
 import {
   useNotesDataActions,
   useNotesDataMeta,
   useNotesDataVault,
-} from '@nota/note-runtime/notes-data-context';
-import { useAppSession } from '@nota/note-runtime/session-context';
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from '@nota/data-source/attachment-signed-url-ttl';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { useAppSession } from '@getmadrid/note-runtime/session-context';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from '@getmadrid/data-source/attachment-signed-url-ttl';
 import {
   getCachedNoteAttachmentSignedUrl,
   getValidNoteAttachmentSignedUrlCacheEntry,
   setCachedNoteAttachmentSignedUrl,
-} from '@nota/data-source/attachment-signed-url-cache';
-import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { noteBannerNoteSurfaceClass } from '@nota/notes-chrome-core/banner-chrome';
+} from '@getmadrid/data-source/attachment-signed-url-cache';
+import { useStickyDocTitle } from '@getmadrid/note-runtime/sticky-doc-title';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { noteBannerNoteSurfaceClass } from '@getmadrid/notes-chrome-core/banner-chrome';
 
 /** `POST /api/search/index-note` — same-origin Next route, Clerk cookie auth. */
 function postSearchIndexNote(body: { noteId: string }): Promise<Response> {

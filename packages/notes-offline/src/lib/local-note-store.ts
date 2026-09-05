@@ -5,9 +5,9 @@ import {
   transactionComplete,
 } from './db';
 import { enqueueOutbox, removeOutboxEntry } from './outbox';
-import type { StoredNote } from '@nota/notes-offline-core';
-import { DEFAULT_NOTE_CONTENT } from '@nota/notes-offline-core';
-import type { Json, Note } from '@nota/database-types';
+import type { StoredNote } from '@getmadrid/notes-offline-core';
+import { DEFAULT_NOTE_CONTENT } from '@getmadrid/notes-offline-core';
+import type { Json, Note } from '@getmadrid/database-types';
 
 function toStoredFromServer(note: Note): StoredNote {
   return {

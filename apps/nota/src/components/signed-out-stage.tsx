@@ -1,9 +1,9 @@
 'use client';
 
 import type { JSX, ReactNode } from 'react';
-import { ElectronWindowDragBand } from '@nota/electron-bridge-ui/window-drag-band';
-import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
+import { ElectronWindowDragBand } from '@getmadrid/electron-bridge-ui/window-drag-band';
+import { electronWindowDragClasses } from '@getmadrid/electron-bridge-core/window-chrome';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
 import { AuthLandscapeEpigraph } from '@/components/auth-landscape-epigraph';
 import { CartoonLandscape } from '@/components/cartoon-landscape';
 import { cn } from '@/lib/utils';

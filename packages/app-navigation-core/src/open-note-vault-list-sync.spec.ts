@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import { shouldRefetchOpenNoteFromVaultList } from './open-note-vault-list-sync';
 
 function makeNote(

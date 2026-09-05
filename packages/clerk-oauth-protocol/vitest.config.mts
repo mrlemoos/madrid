@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/packages/clerk-oauth-protocol',
   test: {
-    name: '@nota/clerk-oauth-protocol',
+    name: '@getmadrid/clerk-oauth-protocol',
     watch: false,
     globals: true,
     environment: 'node',

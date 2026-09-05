@@ -3,8 +3,8 @@
  *
  * @remarks
  * Import from the package subpath only:
- * `import { HoverCard, HoverCardTrigger, … } from '@nota/design/hover-card'`.
- * The trigger enables hover opening by default; popup is a styled Nota surface.
+ * `import { HoverCard, HoverCardTrigger, … } from '@getmadrid/design/hover-card'`.
+ * The trigger enables hover opening by default; popup is a styled Madrid surface.
  *
  * @packageDocumentation
  */

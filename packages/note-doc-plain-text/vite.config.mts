@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-doc-plain-text',
   test: {
-    name: '@nota/note-doc-plain-text',
+    name: '@getmadrid/note-doc-plain-text',
     watch: false,
     globals: true,
     environment: 'jsdom',

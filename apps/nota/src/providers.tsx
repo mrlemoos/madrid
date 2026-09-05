@@ -2,16 +2,16 @@
 
 import { useEffect, StrictMode, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { setAppRouterNav } from '@nota/app-navigation-core/navigation';
+import { setAppRouterNav } from '@getmadrid/app-navigation-core/navigation';
 import { DeferredPostHogRoot } from './components/deferred-posthog-root';
-import { ErrorBoundary } from '@nota/error-boundary/error-boundary';
-import { ThemeProvider } from '@nota/design/theme';
-import { ClerkSupabaseBridge } from '@nota/note-runtime/clerk-supabase-bridge';
-import { NoteEditorCommandsProvider } from '@nota/editor';
-import { StickyDocTitleProvider } from '@nota/note-runtime/sticky-doc-title';
-import { AppSessionProvider } from '@nota/note-runtime/session-context';
+import { ErrorBoundary } from '@getmadrid/error-boundary/error-boundary';
+import { ThemeProvider } from '@getmadrid/design/theme';
+import { ClerkSupabaseBridge } from '@getmadrid/note-runtime/clerk-supabase-bridge';
+import { NoteEditorCommandsProvider } from '@getmadrid/editor';
+import { StickyDocTitleProvider } from '@getmadrid/note-runtime/sticky-doc-title';
+import { AppSessionProvider } from '@getmadrid/note-runtime/session-context';
 import { AuthProvider } from './auth';
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 
 const POSTHOG_PROJECT_TOKEN = env('NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN');
 

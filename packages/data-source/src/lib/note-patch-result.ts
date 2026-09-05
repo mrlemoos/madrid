@@ -1,6 +1,6 @@
-import type { PatchNoteMutationResult } from '@nota/notes-offline-core';
+import type { PatchNoteMutationResult } from '@getmadrid/notes-offline-core';
 import { mergeUpdatedNoteLocalContent } from './note-updated-content-merge';
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 /** Map a vault patch result to the list row the editor should show. */
 export function noteAfterPatchMutation(

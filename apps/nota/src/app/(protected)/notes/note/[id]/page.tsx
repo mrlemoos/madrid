@@ -2,7 +2,7 @@
 
 import type { JSX } from 'react';
 import { useParams } from 'next/navigation';
-import { NoteDetailPanel } from '@nota/note-editor-ui/note-detail-panel';
+import { NoteDetailPanel } from '@getmadrid/note-editor-ui/note-detail-panel';
 
 /** `/notes/note/[id]` — the open-note editor. */
 export default function NotePage(): JSX.Element | null {

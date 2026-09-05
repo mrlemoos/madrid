@@ -7,7 +7,7 @@ const { isElectronMock } = vi.hoisted(() => ({
   isElectronMock: vi.fn(() => false),
 }));
 
-vi.mock('@nota/electron-bridge-ui/use-is-electron', () => ({
+vi.mock('@getmadrid/electron-bridge-ui/use-is-electron', () => ({
   useIsElectron: () => isElectronMock(),
 }));
 

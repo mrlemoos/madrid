@@ -1,17 +1,17 @@
 import { useEffect, useRef } from 'react';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
-import { useNotesData } from '@nota/note-runtime/notes-data-context';
-import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
-import { startStudyNotesFromRecording } from '@nota/note-capture-ui/audio-to-note-start';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
+import { useNotesData } from '@getmadrid/note-runtime/notes-data-context';
+import { clientCreateNote } from '@getmadrid/note-folders-ui/create-note-client';
+import { startStudyNotesFromRecording } from '@getmadrid/note-capture-ui/audio-to-note-start';
 import {
   dispatchMenubarMoveNoteRequest,
   dispatchMenubarNewFolderRequest,
-} from '@nota/electron-bridge-core/menubar-events';
+} from '@getmadrid/electron-bridge-core/menubar-events';
 import {
   isNotaMenubarActionPayload,
   type NotaMenubarActionPayload,
-} from '@nota/electron-bridge-core/menubar-payload';
-import { useNotaZoomStore } from '@nota/note-runtime/stores/zoom';
+} from '@getmadrid/electron-bridge-core/menubar-payload';
+import { useNotaZoomStore } from '@getmadrid/note-runtime/stores/zoom';
 import { createNoteFromMenubarClipboard } from './electron-clipboard-note';
 
 /**

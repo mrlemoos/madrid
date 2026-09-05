@@ -28,7 +28,7 @@ const blogUrl = new URL('/blog', site).href;
 const postUrl = new URL(blogPostUrl(post.id), site).href;
 
 const displayDate = post.data.updatedDate ?? post.data.pubDate;
-const pageTitle = `${post.data.title} | Nota`;
+const pageTitle = `${post.data.title} | Madrid`;
 const pageDescription = post.data.description;
 
 const { Content } = await render(post);
@@ -59,7 +59,7 @@ const structuredData = {
         post.data.author === NOTA_AUTHOR_NAME
           ? { '@type': 'Person', name: post.data.author, url: NOTA_AUTHOR_URL }
           : { '@type': 'Organization', name: post.data.author },
-      publisher: { '@type': 'Organization', name: 'Nota', url: siteRoot },
+      publisher: { '@type': 'Organization', name: 'Madrid', url: siteRoot },
       mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
       url: postUrl,
     },

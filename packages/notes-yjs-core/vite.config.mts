@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/notes-yjs-core',
   test: {
-    name: '@nota/notes-yjs-core',
+    name: '@getmadrid/notes-yjs-core',
     watch: false,
     globals: true,
     environment: 'node',

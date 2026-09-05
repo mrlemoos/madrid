@@ -11,8 +11,8 @@ import {
   createCriticallyDampedSpringConfig,
   type CriticallyDampedSpringConfig,
   type SpringAnimationHandle,
-} from '@nota/nota-motion-core/critically-damped-spring';
-import { NOTA_SIDEBAR_COLLAPSED_CLIP_WIDTH_PX } from '@nota/nota-motion-core/sidebar-width';
+} from '@getmadrid/nota-motion-core/critically-damped-spring';
+import { NOTA_SIDEBAR_COLLAPSED_CLIP_WIDTH_PX } from '@getmadrid/nota-motion-core/sidebar-width';
 
 type NotaSidebarClipLayout = {
   width: number;

@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
-import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
+import { useAudioToNoteSession } from '@getmadrid/note-runtime/stores/audio-session';
 
 /**
  * Dismissible notice when study-note generation succeeded but the original recording

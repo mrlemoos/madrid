@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { mergeNoteLists, mergeNoteWithLocal } from './merge-note-with-local';
 import type { StoredNote } from './types';
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 function makeNote(overrides: Partial<Note> = {}): Note {
   return {

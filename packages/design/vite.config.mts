@@ -55,16 +55,16 @@ export default defineConfig(() => ({
         id === 'clsx' ||
         id === 'tailwind-merge' ||
         id === 'class-variance-authority' ||
-        id === '@nota/helper-hooks' ||
+        id === '@getmadrid/helper-hooks' ||
         id.startsWith('react/') ||
         id.startsWith('@base-ui/') ||
-        id.startsWith('@nota/helper-hooks/') ||
+        id.startsWith('@getmadrid/helper-hooks/') ||
         id === 'motion/react' ||
         id.startsWith('motion/'),
     },
   },
   test: {
-    name: '@nota/design',
+    name: '@getmadrid/design',
     watch: false,
     globals: true,
     environment: 'jsdom',

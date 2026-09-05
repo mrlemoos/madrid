@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/nota-motion-core',
   test: {
-    name: '@nota/nota-motion-core',
+    name: '@getmadrid/nota-motion-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

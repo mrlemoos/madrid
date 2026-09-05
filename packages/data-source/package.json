@@ -1,11 +1,11 @@
 {
-  "name": "@nota/data-source",
+  "name": "@getmadrid/data-source",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./supabase/anon": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/supabase/anon.ts",
         "import": "./src/lib/supabase/anon.ts",
         "default": "./src/lib/supabase/anon.ts"
@@ -15,7 +15,7 @@
       "default": "./src/lib/supabase/anon.ts"
     },
     "./supabase/browser": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/supabase/browser.ts",
         "import": "./src/lib/supabase/browser.ts",
         "default": "./src/lib/supabase/browser.ts"
@@ -25,7 +25,7 @@
       "default": "./src/lib/supabase/browser.ts"
     },
     "./clerk-token-ref": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/clerk-token-ref.ts",
         "import": "./src/lib/clerk-token-ref.ts",
         "default": "./src/lib/clerk-token-ref.ts"
@@ -35,7 +35,7 @@
       "default": "./src/lib/clerk-token-ref.ts"
     },
     "./models/notes": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/models/notes.ts",
         "import": "./src/models/notes.ts",
         "default": "./src/models/notes.ts"
@@ -45,7 +45,7 @@
       "default": "./src/models/notes.ts"
     },
     "./models/folders": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/models/folders.ts",
         "import": "./src/models/folders.ts",
         "default": "./src/models/folders.ts"
@@ -55,7 +55,7 @@
       "default": "./src/models/folders.ts"
     },
     "./models/note-attachments": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/models/note-attachments.ts",
         "import": "./src/models/note-attachments.ts",
         "default": "./src/models/note-attachments.ts"
@@ -65,7 +65,7 @@
       "default": "./src/models/note-attachments.ts"
     },
     "./models/user-preferences": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/models/user-preferences.ts",
         "import": "./src/models/user-preferences.ts",
         "default": "./src/models/user-preferences.ts"
@@ -75,7 +75,7 @@
       "default": "./src/models/user-preferences.ts"
     },
     "./vault-runtime": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/notes-vault-runtime.ts",
         "import": "./src/lib/notes-vault-runtime.ts",
         "default": "./src/lib/notes-vault-runtime.ts"
@@ -85,7 +85,7 @@
       "default": "./src/lib/notes-vault-runtime.ts"
     },
     "./vault-load": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/notes-vault-load.ts",
         "import": "./src/lib/notes-vault-load.ts",
         "default": "./src/lib/notes-vault-load.ts"
@@ -95,7 +95,7 @@
       "default": "./src/lib/notes-vault-load.ts"
     },
     "./save-note-fields": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/save-note-fields.ts",
         "import": "./src/lib/save-note-fields.ts",
         "default": "./src/lib/save-note-fields.ts"
@@ -105,7 +105,7 @@
       "default": "./src/lib/save-note-fields.ts"
     },
     "./note-detail-fetch": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-detail-fetch.ts",
         "import": "./src/lib/note-detail-fetch.ts",
         "default": "./src/lib/note-detail-fetch.ts"
@@ -115,7 +115,7 @@
       "default": "./src/lib/note-detail-fetch.ts"
     },
     "./note-updated-content-merge": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-updated-content-merge.ts",
         "import": "./src/lib/note-updated-content-merge.ts",
         "default": "./src/lib/note-updated-content-merge.ts"
@@ -125,7 +125,7 @@
       "default": "./src/lib/note-updated-content-merge.ts"
     },
     "./note-patch-result": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-patch-result.ts",
         "import": "./src/lib/note-patch-result.ts",
         "default": "./src/lib/note-patch-result.ts"
@@ -135,7 +135,7 @@
       "default": "./src/lib/note-patch-result.ts"
     },
     "./notes-offline-sync": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/notes-offline-sync.ts",
         "import": "./src/lib/notes-offline-sync.ts",
         "default": "./src/lib/notes-offline-sync.ts"
@@ -145,7 +145,7 @@
       "default": "./src/lib/notes-offline-sync.ts"
     },
     "./sync-server-notes-to-idb": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/sync-server-notes-to-idb.ts",
         "import": "./src/lib/sync-server-notes-to-idb.ts",
         "default": "./src/lib/sync-server-notes-to-idb.ts"
@@ -155,7 +155,7 @@
       "default": "./src/lib/sync-server-notes-to-idb.ts"
     },
     "./nota-pro-entitled-session": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/nota-pro-entitled-session.ts",
         "import": "./src/lib/nota-pro-entitled-session.ts",
         "default": "./src/lib/nota-pro-entitled-session.ts"
@@ -165,7 +165,7 @@
       "default": "./src/lib/nota-pro-entitled-session.ts"
     },
     "./note-share-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-share-client.ts",
         "import": "./src/lib/note-share-client.ts",
         "default": "./src/lib/note-share-client.ts"
@@ -175,7 +175,7 @@
       "default": "./src/lib/note-share-client.ts"
     },
     "./note-title": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-title.ts",
         "import": "./src/lib/note-title.ts",
         "default": "./src/lib/note-title.ts"
@@ -185,7 +185,7 @@
       "default": "./src/lib/note-title.ts"
     },
     "./note-editor-draft-context": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-editor-draft-context.ts",
         "import": "./src/lib/note-editor-draft-context.ts",
         "default": "./src/lib/note-editor-draft-context.ts"
@@ -195,7 +195,7 @@
       "default": "./src/lib/note-editor-draft-context.ts"
     },
     "./browser-connectivity": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/browser-connectivity.ts",
         "import": "./src/lib/browser-connectivity.ts",
         "default": "./src/lib/browser-connectivity.ts"
@@ -205,7 +205,7 @@
       "default": "./src/lib/browser-connectivity.ts"
     },
     "./pdf-attachment-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/pdf-attachment-client.ts",
         "import": "./src/lib/pdf-attachment-client.ts",
         "default": "./src/lib/pdf-attachment-client.ts"
@@ -215,7 +215,7 @@
       "default": "./src/lib/pdf-attachment-client.ts"
     },
     "./attachment-signed-url-cache": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/note-attachment-signed-url-cache.ts",
         "import": "./src/lib/note-attachment-signed-url-cache.ts",
         "default": "./src/lib/note-attachment-signed-url-cache.ts"
@@ -225,7 +225,7 @@
       "default": "./src/lib/note-attachment-signed-url-cache.ts"
     },
     "./attachment-signed-url-ttl": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/attachment-signed-url-ttl.ts",
         "import": "./src/lib/attachment-signed-url-ttl.ts",
         "default": "./src/lib/attachment-signed-url-ttl.ts"
@@ -238,7 +238,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -256,10 +256,10 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*",
-    "@nota/env-nextjs": "workspace:*",
-    "@nota/notes-offline": "workspace:*",
-    "@nota/notes-offline-core": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/env-nextjs": "workspace:*",
+    "@getmadrid/notes-offline": "workspace:*",
+    "@getmadrid/notes-offline-core": "workspace:*",
     "@supabase/supabase-js": "catalog:"
   },
   "devDependencies": {

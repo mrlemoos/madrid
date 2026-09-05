@@ -1,5 +1,5 @@
 appId: app.nota.desktop
-productName: Nota
+productName: Madrid
 electronVersion: 41.10.5
 # Workspaces: production install in appDir prunes the repo root node_modules.
 npmRebuild: false
@@ -10,15 +10,15 @@ npmRebuild: false
 publish:
   provider: github
   owner: mrlemoos
-  repo: nota
+  repo: madrid
   # Published (non-draft) releases; CI and local RC builds set EP_DRAFT=true to override.
   releaseType: release
 directories:
   output: release
   buildResources: buildResources
 protocols:
-  # Clerk OAuth completes in the system browser; `nota://oauth-callback` returns the user to Nota.
-  - name: Nota Clerk OAuth
+  # Clerk OAuth completes in the system browser; `nota://oauth-callback` returns the user to Madrid.
+  - name: Madrid Clerk OAuth
     schemes:
       - nota
 files:

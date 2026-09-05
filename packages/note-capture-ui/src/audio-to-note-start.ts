@@ -1,11 +1,11 @@
-import type { Note } from '@nota/database-types';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { createLocalOnlyNote } from '@nota/notes-offline';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { createNote } from '@nota/data-source/models/notes';
-import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
-import { studyNotePlaceholderRecordingTitle } from '@nota/note-capture-core/study-note-title';
+import type { Note } from '@getmadrid/database-types';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { createLocalOnlyNote } from '@getmadrid/notes-offline';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { createNote } from '@getmadrid/data-source/models/notes';
+import { useAudioToNoteSession } from '@getmadrid/note-runtime/stores/audio-session';
+import { studyNotePlaceholderRecordingTitle } from '@getmadrid/note-capture-core/study-note-title';
 
 /**
  * Creates a note and opens the assistive audio-to-note capture session (microphone + upload).

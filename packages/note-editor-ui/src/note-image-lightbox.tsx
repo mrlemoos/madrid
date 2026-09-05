@@ -1,7 +1,7 @@
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
-import { usePrefersReducedMotion } from '@nota/nota-motion-ui/motion';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
+import { usePrefersReducedMotion } from '@getmadrid/nota-motion-ui/motion';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
 import { useEffect, useRef, useState, type JSX } from 'react';
 import { createPortal } from 'react-dom';
 

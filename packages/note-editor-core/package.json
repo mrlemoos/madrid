@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-editor-core",
+  "name": "@getmadrid/note-editor-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./note-hash-href": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-hash-href.ts",
         "import": "./src/note-hash-href.ts",
         "default": "./src/note-hash-href.ts"
@@ -18,7 +18,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -36,7 +36,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/app-navigation-core": "workspace:*"
+    "@getmadrid/app-navigation-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

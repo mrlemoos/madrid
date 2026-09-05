@@ -1,4 +1,4 @@
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { NoteLinkMentionMenu } from './note-link-mention-menu';

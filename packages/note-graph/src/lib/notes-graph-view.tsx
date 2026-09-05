@@ -22,12 +22,15 @@ import {
   type Node,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import type { Note } from '@nota/database-types';
-import { filterNotesForNoteGraph, persistedDisplayTitle } from '@nota/editor';
-import type { PlaceholderValues } from '@nota/i18n';
-import { cn } from '@nota/design/utils';
+import type { Note } from '@getmadrid/database-types';
+import {
+  filterNotesForNoteGraph,
+  persistedDisplayTitle,
+} from '@getmadrid/editor';
+import type { PlaceholderValues } from '@getmadrid/i18n';
+import { cn } from '@getmadrid/design/utils';
 import { applyNoteGraphHoverToEdges } from './note-graph-hover-edges';
-import { buildNoteLinkGraph, notesToIdMap } from '@nota/note-link-graph';
+import { buildNoteLinkGraph, notesToIdMap } from '@getmadrid/note-link-graph';
 
 export type NotesGraphViewProps = {
   notes: readonly Note[];

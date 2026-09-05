@@ -1,4 +1,4 @@
-import type { Json } from '@nota/database-types';
+import type { Json } from '@getmadrid/database-types';
 
 /** Mirrors JSON from `POST /api/audio-to-note` event `notes_done` (nota-server xAI pipeline). */
 export type AudioNoteBlock =

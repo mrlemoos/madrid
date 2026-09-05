@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 const noteEditorSettingsSchema = z.object({
   font: z.enum(['sans', 'serif', 'mono', 'york', 'oviedo']).optional(),

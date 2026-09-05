@@ -2,11 +2,11 @@ import type {
   NotePatchFields,
   PatchNoteMutationInput,
   PatchNoteMutationResult,
-} from '@nota/notes-offline-core';
+} from '@getmadrid/notes-offline-core';
 import { editorDraftContext } from './note-editor-draft-context';
 import { noteAfterPatchMutation } from './note-patch-result';
 import { persistedDisplayTitle } from './note-title';
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 type DraftOverrides = Parameters<typeof editorDraftContext>[1];
 
@@ -47,7 +47,7 @@ export type SaveNoteFieldsResult =
 /**
  * Runs the shared save ceremony — status flip, vault patch, list-row merge, and
  * `onNoteUpdated` — for one changed field. Skips the remote write when the
- * signed-in user is not Nota Pro entitled. Returns `{ ok: false }` (already
+ * signed-in user is not Madrid Pro entitled. Returns `{ ok: false }` (already
  * logged, status set to `error`) instead of throwing, so callers can gate their
  * own bookkeeping (`lastSavedTitle`, `lastSavedContent`) on success.
  */

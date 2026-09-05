@@ -1,9 +1,9 @@
 import { render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
 import { useSettingsShortcut } from './use-settings-shortcut';
 
-vi.mock('@nota/app-navigation-core/navigation', () => ({
+vi.mock('@getmadrid/app-navigation-core/navigation', () => ({
   navigateToScreen: vi.fn(),
 }));
 

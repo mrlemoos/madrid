@@ -1,5 +1,5 @@
 {
-  "name": "@nota/note-link-graph",
+  "name": "@getmadrid/note-link-graph",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/index.ts",
         "import": "./src/index.ts",
         "default": "./src/index.ts"
@@ -20,7 +20,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -38,8 +38,8 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*",
-    "@nota/internal-note-link": "workspace:*"
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/internal-note-link": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

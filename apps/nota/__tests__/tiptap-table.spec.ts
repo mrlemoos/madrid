@@ -5,7 +5,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import TableRow from '@tiptap/extension-table-row';
 import { describe, expect, it } from 'vitest';
-import { NotaCodeBlock } from '@nota/editor';
+import { NotaCodeBlock } from '@getmadrid/editor';
 
 function collectTypes(node: unknown): string[] {
   if (!node || typeof node !== 'object') {

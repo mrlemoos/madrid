@@ -7,13 +7,13 @@ import {
   NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS,
   type ChromeNavItem,
 } from './notes-chrome-parts';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
 import {
   markNavIntent,
   NOTA_PANEL_FADE_CLASS,
   peekNavIntent,
   resetNavIntent,
-} from '@nota/nota-motion-ui/panel-motion';
+} from '@getmadrid/nota-motion-ui/panel-motion';
 
 vi.mock('./use-notes-chrome-translator', () => ({
   useNotesChromeTranslator: () => ({
@@ -21,7 +21,7 @@ vi.mock('./use-notes-chrome-translator', () => ({
   }),
 }));
 
-vi.mock('@nota/electron-bridge-ui/use-is-electron', () => ({
+vi.mock('@getmadrid/electron-bridge-ui/use-is-electron', () => ({
   useIsElectron: () => false,
 }));
 

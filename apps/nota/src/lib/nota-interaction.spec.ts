@@ -11,7 +11,7 @@ import {
   NOTA_SAVE_PULSE_CLASS,
   NOTA_CHROME_NAV_ITEM_CLASS,
   NOTA_SIDEBAR_ROW_CLASS,
-} from '@nota/nota-motion-ui/interaction';
+} from '@getmadrid/nota-motion-ui/interaction';
 
 const stylesCss = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),

@@ -1,18 +1,18 @@
 import { useEffect, useRef, useCallback, useState, type JSX } from 'react';
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
-import { useNotesDataActions } from '@nota/note-runtime/notes-data-context';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
+import { useNotesDataActions } from '@getmadrid/note-runtime/notes-data-context';
 import { postAudioToNoteStream } from './audio-to-note-client';
 import { applyAudioNoteStudyResult } from './audio-to-note-apply';
-import { uploadStudyRecordingAttachment } from '@nota/data-source/pdf-attachment-client';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { saveLocalNoteDraft } from '@nota/notes-offline';
+import { uploadStudyRecordingAttachment } from '@getmadrid/data-source/pdf-attachment-client';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { saveLocalNoteDraft } from '@getmadrid/notes-offline';
 import { enqueuePendingAudioNoteJob } from './audio-note-pending-idb';
-import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
+import { useAudioToNoteSession } from '@getmadrid/note-runtime/stores/audio-session';
 import { formatStudyRecordingUploadWarning } from './study-recording-upload-warning';
-import { formatRecordingDuration } from '@nota/note-capture-core/format-recording-duration';
-import { studyNotePlaceholderQueuedTitle } from '@nota/note-capture-core/study-note-title';
+import { formatRecordingDuration } from '@getmadrid/note-capture-core/format-recording-duration';
+import { studyNotePlaceholderQueuedTitle } from '@getmadrid/note-capture-core/study-note-title';
 
 function pickRecorderMime(): string | undefined {
   /** WebM/Opus first: Chromium MP4/M4A recordings are often rejected by xAI STT; we WAV-transcode for STT anyway. */

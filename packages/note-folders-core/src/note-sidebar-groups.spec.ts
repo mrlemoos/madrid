@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Folder, Note } from '@nota/database-types';
+import type { Folder, Note } from '@getmadrid/database-types';
 import {
   buildSidebarFolderSections,
   compareFolderNames,

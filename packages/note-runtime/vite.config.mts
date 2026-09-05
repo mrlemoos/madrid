@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-runtime',
   test: {
-    name: '@nota/note-runtime',
+    name: '@getmadrid/note-runtime',
     watch: false,
     globals: true,
     environment: 'jsdom',

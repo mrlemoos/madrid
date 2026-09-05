@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
-import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
+import { cn } from '@getmadrid/design/utils';
+import { electronWindowDragClasses } from '@getmadrid/electron-bridge-core/window-chrome';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
 import { useIsElectron } from './use-is-electron';
 
 const HIDE_GRACE_MS = 400;

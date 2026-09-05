@@ -1,4 +1,4 @@
-import type { Note, NoteAttachment } from '@nota/database-types';
+import type { Note, NoteAttachment } from '@getmadrid/database-types';
 import type { TypedSupabaseClient } from '../models/notes';
 
 export type NoteDetailFetchDeps = {

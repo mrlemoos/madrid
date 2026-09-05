@@ -1,15 +1,15 @@
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
 import {
   deleteNote,
   listNoteIdsInFolderSubtree,
   moveAllNotesInFolderSubtree,
-} from '@nota/data-source/models/notes';
+} from '@getmadrid/data-source/models/notes';
 import {
   deleteFolderById,
   listFolders,
-} from '@nota/data-source/models/folders';
-import { subtreeFolderIds } from '@nota/note-folders-core/folder-tree';
+} from '@getmadrid/data-source/models/folders';
+import { subtreeFolderIds } from '@getmadrid/note-folders-core/folder-tree';
 
 export async function clientMoveAllNotesThenDeleteFolder(options: {
   folderId: string;

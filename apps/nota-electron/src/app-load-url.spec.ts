@@ -18,7 +18,7 @@ describe('app-load-url', () => {
 
     // Assert
     expect(originEndsWithSlash).toBe(false);
-    expect(normalised).toBe('https://app.nota.mrlemoos.dev');
+    expect(normalised).toBe('https://app.getmadrid.app');
   });
 
   it('resolveMainWindowLoadUrl uses local Vite port in dev and hosted URL when packaged', () => {
@@ -32,7 +32,7 @@ describe('app-load-url', () => {
 
     // Assert
     expect(devUrl).toBe(`http://localhost:${String(DEV_PORT)}`);
-    expect(prodUrl).toBe('https://app.nota.mrlemoos.dev/');
+    expect(prodUrl).toBe('https://app.getmadrid.app/');
   });
 
   it('ssoCallbackBaseUrl matches load URL host without trailing slash for packaged', () => {
@@ -46,6 +46,6 @@ describe('app-load-url', () => {
 
     // Assert
     expect(devBase).toBe(`http://localhost:${String(DEV_PORT)}`);
-    expect(prodBase).toBe('https://app.nota.mrlemoos.dev');
+    expect(prodBase).toBe('https://app.getmadrid.app');
   });
 });

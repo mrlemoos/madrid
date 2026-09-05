@@ -1,5 +1,5 @@
 import type { Editor } from '@tiptap/core';
-import { parseNoteLinkPath } from '@nota/internal-note-link';
+import { parseNoteLinkPath } from '@getmadrid/internal-note-link';
 
 /**
  * Paragraph whose trimmed content is a single hyperlink (no other text),

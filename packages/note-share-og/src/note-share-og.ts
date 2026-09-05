@@ -1,8 +1,8 @@
-import { extractPlainTextFromDocJson } from '@nota/note-doc-plain-text';
+import { extractPlainTextFromDocJson } from '@getmadrid/note-doc-plain-text';
 
 /**
  * The subset of a shared note the link-preview surfaces need. Kept structural
- * (not `SharedNote`) so this package stays free of `@nota/data-source`, which is
+ * (not `SharedNote`) so this package stays free of `@getmadrid/data-source`, which is
  * `platform:web`.
  */
 export interface SharedNoteMetaSource {
@@ -18,7 +18,7 @@ export interface SharedNoteMeta {
 }
 
 /**
- * Matches `persistedDisplayTitle` in `@nota/data-source`, which this package
+ * Matches `persistedDisplayTitle` in `@getmadrid/data-source`, which this package
  * cannot import across the `platform:shared` boundary.
  */
 const UNTITLED_NOTE_TITLE = 'Untitled Note';
@@ -31,7 +31,7 @@ const MAX_DESCRIPTION_LENGTH = 160;
  * both cases: the unfurl must not reveal whether a token ever existed.
  */
 export const SHARED_NOTE_UNAVAILABLE_META: SharedNoteMeta = {
-  title: 'Nota',
+  title: 'Madrid',
   description: 'This shared note is not available.',
 };
 

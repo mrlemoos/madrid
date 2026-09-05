@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
+import { markNavIntent } from '@getmadrid/nota-motion-ui/panel-motion';
 
 export function useNotesHistoryShortcut(
   userId: string | undefined,

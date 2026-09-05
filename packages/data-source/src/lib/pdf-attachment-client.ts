@@ -9,7 +9,7 @@ import {
   createNoteAttachmentRecord,
   noteAttachmentStoragePath,
 } from '../models/note-attachments';
-import type { NoteAttachment } from '@nota/database-types';
+import type { NoteAttachment } from '@getmadrid/database-types';
 
 export type GetOrFetchNoteAttachmentSignedUrlResult =
   | { ok: true; signedUrl: string }

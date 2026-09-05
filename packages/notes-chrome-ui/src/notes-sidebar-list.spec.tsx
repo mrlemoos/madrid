@@ -1,24 +1,24 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NotesSidebarList } from './notes-sidebar-list';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
-import { clientRenameFolder } from '@nota/note-folders-ui/rename-folder-client';
-import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';
-import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
+import { clientMoveNoteToFolder } from '@getmadrid/note-folders-ui/move-note-folder-client';
+import { clientCreateNote } from '@getmadrid/note-folders-ui/create-note-client';
 
-vi.mock('@nota/note-folders-ui/rename-folder-client', () => ({
+vi.mock('@getmadrid/note-folders-ui/rename-folder-client', () => ({
   clientRenameFolder: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('@nota/note-folders-ui/move-note-folder-client', () => ({
+vi.mock('@getmadrid/note-folders-ui/move-note-folder-client', () => ({
   clientMoveNoteToFolder: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('@nota/note-folders-ui/update-folder-tint-client', () => ({
+vi.mock('@getmadrid/note-folders-ui/update-folder-tint-client', () => ({
   clientUpdateFolderTint: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock('@nota/note-folders-ui/create-note-client', () => ({
+vi.mock('@getmadrid/note-folders-ui/create-note-client', () => ({
   clientCreateNote: vi.fn(() => Promise.resolve()),
 }));
 

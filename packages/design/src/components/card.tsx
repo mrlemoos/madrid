@@ -2,7 +2,7 @@
  * Composable card layout: themed container and slots for header, title, description, actions, body, and footer.
  *
  * @remarks
- * Import from the package subpath only: `import { Card, CardHeader, … } from '@nota/design/card'`.
+ * Import from the package subpath only: `import { Card, CardHeader, … } from '@getmadrid/design/card'`.
  * Each part sets a stable `data-slot` (`card`, `card-header`, `card-title`, …) for styling and layout hooks. Parent `Card` exposes `data-size` (`default` | `sm`) read by descendants via `group-data-[size=sm]/card`.
  *
  * @packageDocumentation
@@ -44,7 +44,7 @@ export type CardFooterProps = React.ComponentProps<'div'>;
  *   CardTitle,
  *   CardDescription,
  *   CardContent,
- * } from '@nota/design/card';
+ * } from '@getmadrid/design/card';
  *
  * export function Example() {
  *   return (

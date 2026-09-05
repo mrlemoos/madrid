@@ -1,11 +1,11 @@
 {
-  "name": "@nota/nota-motion-core",
+  "name": "@getmadrid/nota-motion-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./critically-damped-spring": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-critically-damped-spring.ts",
         "import": "./src/nota-critically-damped-spring.ts",
         "default": "./src/nota-critically-damped-spring.ts"
@@ -15,7 +15,7 @@
       "default": "./src/nota-critically-damped-spring.ts"
     },
     "./rubberband": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-rubberband.ts",
         "import": "./src/nota-rubberband.ts",
         "default": "./src/nota-rubberband.ts"
@@ -25,7 +25,7 @@
       "default": "./src/nota-rubberband.ts"
     },
     "./sidebar-resize-settle": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-sidebar-resize-settle.ts",
         "import": "./src/nota-sidebar-resize-settle.ts",
         "default": "./src/nota-sidebar-resize-settle.ts"
@@ -35,7 +35,7 @@
       "default": "./src/nota-sidebar-resize-settle.ts"
     },
     "./typewriter-scroll-guard": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-typewriter-scroll-guard.ts",
         "import": "./src/nota-typewriter-scroll-guard.ts",
         "default": "./src/nota-typewriter-scroll-guard.ts"
@@ -45,7 +45,7 @@
       "default": "./src/nota-typewriter-scroll-guard.ts"
     },
     "./sidebar-width": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-sidebar-width.ts",
         "import": "./src/nota-sidebar-width.ts",
         "default": "./src/nota-sidebar-width.ts"
@@ -58,7 +58,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],

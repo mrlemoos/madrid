@@ -1,6 +1,6 @@
 import type { Json } from '~/types/database.types';
 
-export const WELCOME_NOTE_TITLE = 'Welcome to Nota';
+export const WELCOME_NOTE_TITLE = 'Welcome to Madrid';
 
 /**
  * TipTap JSON for the seeded welcome note. Uses only StarterKit-style nodes
@@ -23,7 +23,7 @@ export const WELCOME_NOTE_CONTENT: Json = {
       content: [
         {
           type: 'text',
-          text: 'Nota Pro ',
+          text: 'Madrid Pro ',
         },
         {
           type: 'text',
@@ -210,7 +210,7 @@ export const WELCOME_NOTE_CONTENT: Json = {
               content: [
                 {
                   type: 'text',
-                  text: 'With Nota Pro, drag in ',
+                  text: 'With Madrid Pro, drag in ',
                 },
                 {
                   type: 'text',

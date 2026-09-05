@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-capture-core',
   test: {
-    name: '@nota/note-capture-core',
+    name: '@getmadrid/note-capture-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

@@ -1,5 +1,5 @@
-import type { Note } from '@nota/database-types';
-import { localDateKey } from '@nota/note-journal-core/local-date-key';
+import type { Note } from '@getmadrid/database-types';
+import { localDateKey } from '@getmadrid/note-journal-core/local-date-key';
 
 export { localDateKey };
 

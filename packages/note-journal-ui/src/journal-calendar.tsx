@@ -1,13 +1,13 @@
 import { useMemo, type JSX } from 'react';
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
 import {
   buildJournalCalendarCells,
   type JournalCalendarCell,
-} from '@nota/note-journal-core/calendar';
-import { useJournalMonthGridCrossfade } from '@nota/note-journal-core/month-grid-transition';
-import { localDateKey } from '@nota/note-journal-core/local-date-key';
-import { usePrefersReducedMotion } from '@nota/nota-motion-ui/use-prefers-reduced-motion';
+} from '@getmadrid/note-journal-core/calendar';
+import { useJournalMonthGridCrossfade } from '@getmadrid/note-journal-core/month-grid-transition';
+import { localDateKey } from '@getmadrid/note-journal-core/local-date-key';
+import { usePrefersReducedMotion } from '@getmadrid/nota-motion-ui/use-prefers-reduced-motion';
 import { useJournalTranslator } from './use-journal-translator';
 
 const WEEKDAY_KEYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;

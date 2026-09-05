@@ -1,15 +1,15 @@
-import type { Json, Note } from '@nota/database-types';
-import { createNote, updateNote } from '@nota/data-source/models/notes';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { createLocalOnlyNote } from '@nota/notes-offline';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
-import { uploadNoteAttachmentFile } from '@nota/data-source/pdf-attachment-client';
+import type { Json, Note } from '@getmadrid/database-types';
+import { createNote, updateNote } from '@getmadrid/data-source/models/notes';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { createLocalOnlyNote } from '@getmadrid/notes-offline';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
+import { uploadNoteAttachmentFile } from '@getmadrid/data-source/pdf-attachment-client';
 import {
   clipboardPlainTextToTiptapDoc,
   titleFromClipboardPlainText,
-} from '@nota/electron-bridge-core/clipboard-plain-text';
-import type { NotaMenubarClipboardPayload } from '@nota/electron-bridge-core/menubar-payload';
+} from '@getmadrid/electron-bridge-core/clipboard-plain-text';
+import type { NotaMenubarClipboardPayload } from '@getmadrid/electron-bridge-core/menubar-payload';
 
 function noteImageDoc(attachmentId: string, filename: string): Json {
   return {

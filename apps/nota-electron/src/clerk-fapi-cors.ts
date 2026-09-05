@@ -15,7 +15,7 @@ export function isClerkFapiHostname(hostname: string): boolean {
     h.endsWith('.clerk.accounts.com') ||
     h === 'clerk.com' ||
     h.endsWith('.clerk.com') ||
-    h === 'clerk.nota.mrlemoos.dev'
+    h === 'clerk.getmadrid.app'
   );
 }
 
@@ -90,7 +90,7 @@ export function patchClerkFapiCorsResponseHeaders(
 
 const CLERK_FAPI_WEB_REQUEST_FILTER = {
   urls: [
-    'https://clerk.nota.mrlemoos.dev/*',
+    'https://clerk.getmadrid.app/*',
     'https://*.clerk.accounts.dev/*',
     'https://*.clerk.accounts.com/*',
     'https://*.clerk.com/*',

@@ -1,22 +1,22 @@
 'use client';
 
 import { useEffect, type JSX, type ReactNode } from 'react';
-import { NotesChrome } from '@nota/notes-chrome-ui/notes-chrome';
+import { NotesChrome } from '@getmadrid/notes-chrome-ui/notes-chrome';
 import {
   NotesDataProvider,
   type NotesDataProviderPorts,
-} from '@nota/note-runtime/notes-data-context';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { ElectronWindowDragBand } from '@nota/electron-bridge-ui/window-drag-band';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
+import { ElectronWindowDragBand } from '@getmadrid/electron-bridge-ui/window-drag-band';
 import {
   bootstrapAppNavigation,
   navigateToScreen,
-} from '@nota/app-navigation-core/navigation';
-import { repairClerkAuthLocationHash } from '@nota/app-navigation-core/clerk-hash';
+} from '@getmadrid/app-navigation-core/navigation';
+import { repairClerkAuthLocationHash } from '@getmadrid/app-navigation-core/clerk-hash';
 import { fetchNotaProEntitled } from '@/lib/nota-server-client';
 import { runWelcomeNoteSeedIfNeeded } from '@/lib/welcome-note-seed';
-import { clearNoteAttachmentSignedUrlCache } from '@nota/data-source/attachment-signed-url-cache';
-import { SignedInCommandPalette } from '@nota/note-palette-ui/signed-in-command-palette';
+import { clearNoteAttachmentSignedUrlCache } from '@getmadrid/data-source/attachment-signed-url-cache';
+import { SignedInCommandPalette } from '@getmadrid/note-palette-ui/signed-in-command-palette';
 import { cn } from '@/lib/utils';
 
 /**

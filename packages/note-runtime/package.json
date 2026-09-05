@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-runtime",
+  "name": "@getmadrid/note-runtime",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./notes-data-context": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/context/notes-data-context.tsx",
         "import": "./src/context/notes-data-context.tsx",
         "default": "./src/context/notes-data-context.tsx"
@@ -15,7 +15,7 @@
       "default": "./src/context/notes-data-context.tsx"
     },
     "./session-context": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/context/session-context.tsx",
         "import": "./src/context/session-context.tsx",
         "default": "./src/context/session-context.tsx"
@@ -25,7 +25,7 @@
       "default": "./src/context/session-context.tsx"
     },
     "./clerk-supabase-bridge": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/context/clerk-supabase-bridge.tsx",
         "import": "./src/context/clerk-supabase-bridge.tsx",
         "default": "./src/context/clerk-supabase-bridge.tsx"
@@ -35,7 +35,7 @@
       "default": "./src/context/clerk-supabase-bridge.tsx"
     },
     "./sticky-doc-title": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/context/sticky-doc-title.tsx",
         "import": "./src/context/sticky-doc-title.tsx",
         "default": "./src/context/sticky-doc-title.tsx"
@@ -45,7 +45,7 @@
       "default": "./src/context/sticky-doc-title.tsx"
     },
     "./stores/preferences": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/stores/nota-preferences.ts",
         "import": "./src/stores/nota-preferences.ts",
         "default": "./src/stores/nota-preferences.ts"
@@ -55,7 +55,7 @@
       "default": "./src/stores/nota-preferences.ts"
     },
     "./stores/sidebar": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/stores/notes-sidebar.ts",
         "import": "./src/stores/notes-sidebar.ts",
         "default": "./src/stores/notes-sidebar.ts"
@@ -65,7 +65,7 @@
       "default": "./src/stores/notes-sidebar.ts"
     },
     "./stores/zoom": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/stores/nota-zoom.ts",
         "import": "./src/stores/nota-zoom.ts",
         "default": "./src/stores/nota-zoom.ts"
@@ -75,7 +75,7 @@
       "default": "./src/stores/nota-zoom.ts"
     },
     "./stores/audio-session": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/stores/audio-to-note-session.ts",
         "import": "./src/stores/audio-to-note-session.ts",
         "default": "./src/stores/audio-to-note-session.ts"
@@ -85,7 +85,7 @@
       "default": "./src/stores/audio-to-note-session.ts"
     },
     "./use-sync-user-preferences": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/use-sync-user-preferences.ts",
         "import": "./src/lib/use-sync-user-preferences.ts",
         "default": "./src/lib/use-sync-user-preferences.ts"
@@ -95,7 +95,7 @@
       "default": "./src/lib/use-sync-user-preferences.ts"
     },
     "./use-notes-offline-sync": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/lib/use-notes-offline-sync.ts",
         "import": "./src/lib/use-notes-offline-sync.ts",
         "default": "./src/lib/use-notes-offline-sync.ts"
@@ -108,7 +108,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -127,11 +127,11 @@
   },
   "dependencies": {
     "@clerk/react": "^6.1.2",
-    "@nota/data-source": "workspace:*",
-    "@nota/database-types": "workspace:*",
-    "@nota/helper-hooks": "workspace:*",
-    "@nota/isomorphic-helpers": "workspace:*",
-    "@nota/notes-offline": "workspace:*",
+    "@getmadrid/data-source": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/helper-hooks": "workspace:*",
+    "@getmadrid/isomorphic-helpers": "workspace:*",
+    "@getmadrid/notes-offline": "workspace:*",
     "react": "catalog:",
     "zustand": "^5.0.0"
   },

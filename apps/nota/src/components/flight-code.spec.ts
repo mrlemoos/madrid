@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findFlightCodes } from '@nota/editor';
+import { findFlightCodes } from '@getmadrid/editor';
 
 describe('findFlightCodes', () => {
   it('detects a known-airline code with and without a space', () => {

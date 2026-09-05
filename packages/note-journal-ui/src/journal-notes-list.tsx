@@ -1,7 +1,7 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
-import type { JournalEntry } from '@nota/note-journal-core/notes';
+import { cn } from '@getmadrid/design/utils';
+import type { JournalEntry } from '@getmadrid/note-journal-core/notes';
 import { useJournalTranslator } from './use-journal-translator';
 
 /** Initial row height before `measureElement` runs (title-only vs title + preview). */

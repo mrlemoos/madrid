@@ -1,11 +1,11 @@
 {
-  "name": "@nota/notes-chrome-ui",
+  "name": "@getmadrid/notes-chrome-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./notes-chrome": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-chrome.tsx",
         "import": "./src/notes-chrome.tsx",
         "default": "./src/notes-chrome.tsx"
@@ -15,7 +15,7 @@
       "default": "./src/notes-chrome.tsx"
     },
     "./notes-chrome-parts": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-chrome-parts.tsx",
         "import": "./src/notes-chrome-parts.tsx",
         "default": "./src/notes-chrome-parts.tsx"
@@ -25,7 +25,7 @@
       "default": "./src/notes-chrome-parts.tsx"
     },
     "./notes-sidebar-list": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-sidebar-list.tsx",
         "import": "./src/notes-sidebar-list.tsx",
         "default": "./src/notes-sidebar-list.tsx"
@@ -38,7 +38,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -56,24 +56,24 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/app-navigation-core": "workspace:*",
-    "@nota/app-navigation-ui": "workspace:*",
-    "@nota/database-types": "workspace:*",
+    "@getmadrid/app-navigation-core": "workspace:*",
+    "@getmadrid/app-navigation-ui": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
     "next": "catalog:",
-    "@nota/electron-bridge-core": "workspace:*",
-    "@nota/electron-bridge-ui": "workspace:*",
-    "@nota/i18n": "workspace:*",
-    "@nota/note-capture-ui": "workspace:*",
-    "@nota/note-editor-core": "workspace:*",
-    "@nota/note-editor-ui": "workspace:*",
-    "@nota/note-folders-core": "workspace:*",
-    "@nota/note-folders-ui": "workspace:*",
-    "@nota/note-journal-core": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/nota-motion-ui": "workspace:*",
-    "@nota/notes-chrome-core": "workspace:*",
-    "@nota/design": "workspace:*",
-    "@nota/writing-activity-core": "workspace:*",
+    "@getmadrid/electron-bridge-core": "workspace:*",
+    "@getmadrid/electron-bridge-ui": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "@getmadrid/note-capture-ui": "workspace:*",
+    "@getmadrid/note-editor-core": "workspace:*",
+    "@getmadrid/note-editor-ui": "workspace:*",
+    "@getmadrid/note-folders-core": "workspace:*",
+    "@getmadrid/note-folders-ui": "workspace:*",
+    "@getmadrid/note-journal-core": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/nota-motion-ui": "workspace:*",
+    "@getmadrid/notes-chrome-core": "workspace:*",
+    "@getmadrid/design": "workspace:*",
+    "@getmadrid/writing-activity-core": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

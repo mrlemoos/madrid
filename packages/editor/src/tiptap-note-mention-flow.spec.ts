@@ -1,7 +1,7 @@
 import { Editor, type JSONContent } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import type { EditorView } from '@tiptap/pm/view';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NotaLink } from './components/tiptap/nota-link';
 import { findNoteMentionTrigger } from './lib/tiptap-note-mention';

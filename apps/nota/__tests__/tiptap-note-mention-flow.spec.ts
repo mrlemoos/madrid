@@ -10,10 +10,10 @@ import {
   insertNoteLinkAtMentionRangeView,
   tryConfirmNoteMention,
   type NoteMentionConfirmRefs,
-} from '@nota/editor';
+} from '@getmadrid/editor';
 
-vi.mock('@nota/editor', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@nota/editor')>();
+vi.mock('@getmadrid/editor', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@getmadrid/editor')>();
   return {
     ...actual,
     findNoteMentionTrigger: vi.fn(

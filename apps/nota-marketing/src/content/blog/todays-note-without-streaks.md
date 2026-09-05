@@ -8,6 +8,6 @@ tags:
 draft: true
 ---
 
-_Draft: part of the Nota feature series. To be published after [Introducing Nota](/blog/introducing-nota)._
+_Draft: part of the Madrid feature series. To be published after [Introducing Madrid](/blog/introducing-nota)._
 
-A daily note can be a simple dated page on your machine, not a streak you are failing. This post will explain the settings toggle, local date titles, and why Nota avoids gamification around journaling.
+A daily note can be a simple dated page on your machine, not a streak you are failing. This post will explain the settings toggle, local date titles, and why Madrid avoids gamification around journaling.

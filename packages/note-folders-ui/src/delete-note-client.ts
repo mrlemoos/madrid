@@ -1,7 +1,7 @@
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
 import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
-import type { UserPreferences } from '@nota/database-types';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
+import type { UserPreferences } from '@getmadrid/database-types';
 
 export async function clientDeleteNoteById(
   noteId: string,

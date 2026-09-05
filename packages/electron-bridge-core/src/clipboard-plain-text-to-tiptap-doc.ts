@@ -1,4 +1,4 @@
-import type { Json } from '@nota/database-types';
+import type { Json } from '@getmadrid/database-types';
 
 function textNode(text: string): Record<string, unknown> {
   return { type: 'text', text };

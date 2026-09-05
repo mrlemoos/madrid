@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 
 const supabaseUrl = env('NEXT_PUBLIC_SUPABASE_URL');
 const supabaseAnonKey = env('NEXT_PUBLIC_SUPABASE_ANON_KEY');
@@ -9,7 +9,7 @@ let anonClient: SupabaseClient | null = null;
 
 /**
  * Supabase client with the plain anon key and no Clerk session -- for the public
- * shared-note page, viewed by people without a Nota account. Untyped on purpose:
+ * shared-note page, viewed by people without a Madrid account. Untyped on purpose:
  * it only calls the `get_shared_note` RPC and subscribes to a broadcast channel,
  * neither of which needs the generated `Database` shape.
  */

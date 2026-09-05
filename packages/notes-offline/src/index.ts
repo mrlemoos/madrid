@@ -3,8 +3,8 @@ export type {
   OutboxEntry,
   OutboxKind,
   StoredNote,
-} from '@nota/notes-offline-core';
-export { DEFAULT_NOTE_CONTENT } from '@nota/notes-offline-core';
+} from '@getmadrid/notes-offline-core';
+export { DEFAULT_NOTE_CONTENT } from '@getmadrid/notes-offline-core';
 export {
   closeNotaNotesDb,
   deleteNotaNotesDb,
@@ -33,4 +33,4 @@ export {
   mergeNoteLists,
   mergeNoteWithLocal,
   storedNoteToListRow,
-} from '@nota/notes-offline-core';
+} from '@getmadrid/notes-offline-core';

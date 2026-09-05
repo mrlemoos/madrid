@@ -1,8 +1,8 @@
 /**
- * Nota button primitives: Base UI `Button` with CVA styling and theme tokens.
+ * Madrid button primitives: Base UI `Button` with CVA styling and theme tokens.
  *
  * @remarks
- * Import from the package subpath only: `import { Button, buttonVariants } from '@nota/design/button'`.
+ * Import from the package subpath only: `import { Button, buttonVariants } from '@getmadrid/design/button'`.
  * Styling uses semantic Tailwind tokens (`bg-primary`, `border-border`, `ring-ring`, …) so callers should set CSS variables / theme, not hard-coded neutrals.
  *
  * @packageDocumentation
@@ -15,7 +15,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils.js';
 
 /**
- * Class variance authority helper for Nota button appearance.
+ * Class variance authority helper for Madrid button appearance.
  *
  * @remarks
  * Use for non-`button` elements that should match `Button` (e.g. custom `as` patterns), or to merge variant classes with `cn`.
@@ -23,7 +23,7 @@ import { cn } from '../lib/utils.js';
  *
  * @example
  * ```tsx
- * import { buttonVariants } from '@nota/design/button';
+ * import { buttonVariants } from '@getmadrid/design/button';
  *
  * const className = buttonVariants({ variant: 'outline', size: 'sm' });
  * ```
@@ -79,14 +79,14 @@ export type ButtonProps = Omit<BaseButton.Props, 'ref'> &
   React.RefAttributes<HTMLElement>;
 
 /**
- * Primary action control: Base UI `Button` with Nota variants and `data-slot="button"`.
+ * Primary action control: Base UI `Button` with Madrid variants and `data-slot="button"`.
  *
  * @remarks
  * `className` is merged with {@link buttonVariants}; `variant` and `size` default to `'default'`.
  *
  * @example
  * ```tsx
- * import { Button } from '@nota/design/button';
+ * import { Button } from '@getmadrid/design/button';
  *
  * export function Save() {
  *   return <Button type="submit">Save</Button>;

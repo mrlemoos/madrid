@@ -1,5 +1,5 @@
 import { useAuth, useUser } from '@clerk/react';
-import { useOrThrow } from '@nota/helper-hooks';
+import { useOrThrow } from '@getmadrid/helper-hooks';
 import { createContext, useMemo, type ReactNode, type JSX } from 'react';
 
 /** Minimal session shape for components that previously used Supabase `User`. */

@@ -77,6 +77,6 @@ describe('buildSharedNoteMeta', () => {
 
     // Assert
     expect(meta).toEqual(SHARED_NOTE_UNAVAILABLE_META);
-    expect(meta.title).toBe('Nota');
+    expect(meta.title).toBe('Madrid');
   });
 });

@@ -1,7 +1,7 @@
 import { useAuth } from '@clerk/react';
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
-import { setClerkAccessTokenGetter } from '@nota/data-source/clerk-token-ref';
-import { setSupabaseClerkGetToken } from '@nota/data-source/supabase/browser';
+import { setClerkAccessTokenGetter } from '@getmadrid/data-source/clerk-token-ref';
+import { setSupabaseClerkGetToken } from '@getmadrid/data-source/supabase/browser';
 
 /**
  * Registers Clerk `getToken` with the Supabase client factory (must sit under `ClerkProvider`).

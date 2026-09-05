@@ -10,9 +10,9 @@ import {
 describe('clerk-fapi-cors', () => {
   it('recognises Clerk Frontend API hostnames', () => {
     // Arrange
-    const custom = 'clerk.nota.mrlemoos.dev';
+    const custom = 'clerk.getmadrid.app';
     const dev = 'notable-foo.clerk.accounts.dev';
-    const unrelated = 'app.nota.mrlemoos.dev';
+    const unrelated = 'app.getmadrid.app';
 
     // Act
     const customOk = isClerkFapiHostname(custom);
@@ -28,15 +28,15 @@ describe('clerk-fapi-cors', () => {
   it('shouldPatchClerkFapiCors only for Clerk FAPI URLs from allowed shell origins', () => {
     // Arrange
     const tokenUrl =
-      'https://clerk.nota.mrlemoos.dev/v1/client/sessions/sess_x/tokens';
-    const appOrigin = 'https://app.nota.mrlemoos.dev';
+      'https://clerk.getmadrid.app/v1/client/sessions/sess_x/tokens';
+    const appOrigin = 'https://app.getmadrid.app';
     const foreignOrigin = 'https://evil.example';
 
     // Act
     const allowed = shouldPatchClerkFapiCors(tokenUrl, appOrigin);
     const foreign = shouldPatchClerkFapiCors(tokenUrl, foreignOrigin);
     const nonClerk = shouldPatchClerkFapiCors(
-      'https://app.nota.mrlemoos.dev/notes',
+      'https://app.getmadrid.app/notes',
       appOrigin,
     );
 
@@ -49,7 +49,7 @@ describe('clerk-fapi-cors', () => {
 
   it('patchClerkFapiCorsResponseHeaders echoes the shell Origin and allows credentials', () => {
     // Arrange
-    const origin = 'https://app.nota.mrlemoos.dev';
+    const origin = 'https://app.getmadrid.app';
     const incoming = {
       'Content-Type': ['application/json'],
     };
@@ -83,13 +83,13 @@ describe('clerk-fapi-cors', () => {
     // Arrange
     const headers: Record<string, string | string[]> = {
       Origin: '',
-      origin: ['https://app.nota.mrlemoos.dev'],
+      origin: ['https://app.getmadrid.app'],
     };
 
     // Act
     const value = readRequestOriginHeader(headers);
 
     // Assert
-    expect(value).toBe('https://app.nota.mrlemoos.dev');
+    expect(value).toBe('https://app.getmadrid.app');
   });
 });

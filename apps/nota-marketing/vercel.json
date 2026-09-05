@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd ../.. && pnpm exec nx run @nota/nota-marketing:build",
+  "buildCommand": "cd ../.. && pnpm exec nx run @getmadrid/nota-marketing:build",
   "outputDirectory": "dist",
   "framework": null,
   "installCommand": "cd ../.. && corepack enable pnpm && pnpm install --frozen-lockfile",

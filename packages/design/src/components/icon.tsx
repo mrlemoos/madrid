@@ -1,9 +1,9 @@
 /**
- * Nota icon wrapper: drop-in replacement for HugeiconsIcon over itshover animated icons.
+ * Madrid icon wrapper: drop-in replacement for HugeiconsIcon over itshover animated icons.
  *
  * @remarks
- * Import from the package subpath only: `import { Icon } from '@nota/design/icon'`.
- * Pick an icon by its `name`; the underlying components live under `@nota/design/icons`
+ * Import from the package subpath only: `import { Icon } from '@getmadrid/design/icon'`.
+ * Pick an icon by its `name`; the underlying components live under `@getmadrid/design/icons`
  * and are registered in {@link NOTA_ICONS}.
  *
  * @packageDocumentation
@@ -132,7 +132,7 @@ export type IconProps = HTMLAttributes<HTMLSpanElement> & {
  *
  * @example
  * ```tsx
- * import { Icon } from '@nota/design/icon';
+ * import { Icon } from '@getmadrid/design/icon';
  *
  * <Icon name="arrow-narrow-right" size={16} className="text-muted-foreground" />
  * ```

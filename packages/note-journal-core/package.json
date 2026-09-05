@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-journal-core",
+  "name": "@getmadrid/note-journal-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./date-from-title": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/journal-date-from-title.ts",
         "import": "./src/journal-date-from-title.ts",
         "default": "./src/journal-date-from-title.ts"
@@ -15,7 +15,7 @@
       "default": "./src/journal-date-from-title.ts"
     },
     "./notes": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/journal-notes.ts",
         "import": "./src/journal-notes.ts",
         "default": "./src/journal-notes.ts"
@@ -25,7 +25,7 @@
       "default": "./src/journal-notes.ts"
     },
     "./calendar": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/journal-calendar.ts",
         "import": "./src/journal-calendar.ts",
         "default": "./src/journal-calendar.ts"
@@ -35,7 +35,7 @@
       "default": "./src/journal-calendar.ts"
     },
     "./month-grid-transition": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/journal-month-grid-transition.ts",
         "import": "./src/journal-month-grid-transition.ts",
         "default": "./src/journal-month-grid-transition.ts"
@@ -45,7 +45,7 @@
       "default": "./src/journal-month-grid-transition.ts"
     },
     "./local-date-key": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/local-date-key.ts",
         "import": "./src/local-date-key.ts",
         "default": "./src/local-date-key.ts"
@@ -58,7 +58,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -76,7 +76,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/note-doc-plain-text": "workspace:*",
+    "@getmadrid/note-doc-plain-text": "workspace:*",
     "chrono-node": "^2.9.1",
     "react": "catalog:"
   },

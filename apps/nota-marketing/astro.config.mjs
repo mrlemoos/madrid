@@ -9,13 +9,19 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  site: 'https://nota.mrlemoos.dev',
+  site: 'https://getmadrid.app',
   integrations: [react(), sitemap()],
   vite: {
     envPrefix: ['VITE_', 'PUBLIC_'],
     plugins: [tailwindcss()],
     resolve: {
-      conditions: ['@nota/source', 'import', 'module', 'browser', 'default'],
+      conditions: [
+        '@getmadrid/source',
+        'import',
+        'module',
+        'browser',
+        'default',
+      ],
       alias: {
         '@': path.resolve(__dirname, 'src'),
       },

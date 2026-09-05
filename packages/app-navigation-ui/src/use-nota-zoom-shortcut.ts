@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
-import { useNotaZoomStore } from '@nota/note-runtime/stores/zoom';
+import { useNotaZoomStore } from '@getmadrid/note-runtime/stores/zoom';
 
 /**
  * ⌘= / ⌘- / ⌘0 (Ctrl on other platforms) drive the app's own zoom instead of the

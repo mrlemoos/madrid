@@ -384,127 +384,127 @@ importers:
       '@gsap/react':
         specifier: 'catalog:'
         version: 2.1.2(gsap@3.15.0)(react@19.2.3)
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../../packages/app-navigation-core
-      '@nota/app-navigation-ui':
+      '@getmadrid/app-navigation-ui':
         specifier: workspace:*
         version: link:../../packages/app-navigation-ui
-      '@nota/clerk-oauth-protocol':
+      '@getmadrid/clerk-oauth-protocol':
         specifier: workspace:*
         version: link:../../packages/clerk-oauth-protocol
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../../packages/data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../../packages/database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../../packages/design
-      '@nota/editor':
+      '@getmadrid/editor':
         specifier: workspace:*
         version: link:../../packages/editor
-      '@nota/electron-bridge-core':
+      '@getmadrid/electron-bridge-core':
         specifier: workspace:*
         version: link:../../packages/electron-bridge-core
-      '@nota/electron-bridge-ui':
+      '@getmadrid/electron-bridge-ui':
         specifier: workspace:*
         version: link:../../packages/electron-bridge-ui
-      '@nota/env-nextjs':
+      '@getmadrid/env-nextjs':
         specifier: workspace:*
         version: link:../../packages/env-nextjs
-      '@nota/error-boundary':
+      '@getmadrid/error-boundary':
         specifier: workspace:*
         version: link:../../packages/error-boundary
-      '@nota/helper-hooks':
+      '@getmadrid/helper-hooks':
         specifier: workspace:*
         version: link:../../packages/helper-hooks
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@nota/internal-note-link':
+      '@getmadrid/internal-note-link':
         specifier: workspace:*
         version: link:../../packages/internal-note-link
-      '@nota/link-platform-preview':
+      '@getmadrid/link-platform-preview':
         specifier: workspace:*
         version: link:../../packages/link-platform-preview
-      '@nota/nota-motion-core':
+      '@getmadrid/nota-motion-core':
         specifier: workspace:*
         version: link:../../packages/nota-motion-core
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../../packages/nota-motion-ui
-      '@nota/note-capture-core':
+      '@getmadrid/note-capture-core':
         specifier: workspace:*
         version: link:../../packages/note-capture-core
-      '@nota/note-capture-ui':
+      '@getmadrid/note-capture-ui':
         specifier: workspace:*
         version: link:../../packages/note-capture-ui
-      '@nota/note-doc-plain-text':
+      '@getmadrid/note-doc-plain-text':
         specifier: workspace:*
         version: link:../../packages/note-doc-plain-text
-      '@nota/note-editor-core':
+      '@getmadrid/note-editor-core':
         specifier: workspace:*
         version: link:../../packages/note-editor-core
-      '@nota/note-editor-settings':
+      '@getmadrid/note-editor-settings':
         specifier: workspace:*
         version: link:../../packages/note-editor-settings
-      '@nota/note-editor-ui':
+      '@getmadrid/note-editor-ui':
         specifier: workspace:*
         version: link:../../packages/note-editor-ui
-      '@nota/note-folders-core':
+      '@getmadrid/note-folders-core':
         specifier: workspace:*
         version: link:../../packages/note-folders-core
-      '@nota/note-folders-ui':
+      '@getmadrid/note-folders-ui':
         specifier: workspace:*
         version: link:../../packages/note-folders-ui
-      '@nota/note-graph':
+      '@getmadrid/note-graph':
         specifier: workspace:*
         version: link:../../packages/note-graph
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../../packages/note-journal-core
-      '@nota/note-journal-ui':
+      '@getmadrid/note-journal-ui':
         specifier: workspace:*
         version: link:../../packages/note-journal-ui
-      '@nota/note-link-graph':
+      '@getmadrid/note-link-graph':
         specifier: workspace:*
         version: link:../../packages/note-link-graph
-      '@nota/note-palette-core':
+      '@getmadrid/note-palette-core':
         specifier: workspace:*
         version: link:../../packages/note-palette-core
-      '@nota/note-palette-ui':
+      '@getmadrid/note-palette-ui':
         specifier: workspace:*
         version: link:../../packages/note-palette-ui
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../../packages/note-runtime
-      '@nota/note-share-og':
+      '@getmadrid/note-share-og':
         specifier: workspace:*
         version: link:../../packages/note-share-og
-      '@nota/notes-chrome-core':
+      '@getmadrid/notes-chrome-core':
         specifier: workspace:*
         version: link:../../packages/notes-chrome-core
-      '@nota/notes-chrome-ui':
+      '@getmadrid/notes-chrome-ui':
         specifier: workspace:*
         version: link:../../packages/notes-chrome-ui
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../../packages/notes-offline
-      '@nota/notes-offline-core':
+      '@getmadrid/notes-offline-core':
         specifier: workspace:*
         version: link:../../packages/notes-offline-core
-      '@nota/notes-yjs-core':
+      '@getmadrid/notes-yjs-core':
         specifier: workspace:*
         version: link:../../packages/notes-yjs-core
-      '@nota/validation':
+      '@getmadrid/validation':
         specifier: workspace:*
         version: link:../../packages/validation
-      '@nota/writing-activity-core':
+      '@getmadrid/writing-activity-core':
         specifier: workspace:*
         version: link:../../packages/writing-activity-core
-      '@nota/writing-activity-ui':
+      '@getmadrid/writing-activity-ui':
         specifier: workspace:*
         version: link:../../packages/writing-activity-ui
       '@posthog/react':
@@ -601,7 +601,7 @@ importers:
 
   apps/nota-electron:
     dependencies:
-      '@nota/clerk-oauth-protocol':
+      '@getmadrid/clerk-oauth-protocol':
         specifier: workspace:*
         version: link:../../packages/clerk-oauth-protocol
       electron-updater:
@@ -647,10 +647,10 @@ importers:
       '@microsoft/clarity':
         specifier: ^1.0.2
         version: 1.0.2
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../../packages/design
-      '@nota/note-doc-plain-text':
+      '@getmadrid/note-doc-plain-text':
         specifier: workspace:*
         version: link:../../packages/note-doc-plain-text
       '@nx/eslint':
@@ -708,13 +708,13 @@ importers:
 
   packages/app-navigation-core:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
     devDependencies:
@@ -730,22 +730,22 @@ importers:
 
   packages/app-navigation-ui:
     dependencies:
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
       next:
@@ -776,16 +776,16 @@ importers:
 
   packages/data-source:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/env-nextjs':
+      '@getmadrid/env-nextjs':
         specifier: workspace:*
         version: link:../env-nextjs
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
-      '@nota/notes-offline-core':
+      '@getmadrid/notes-offline-core':
         specifier: workspace:*
         version: link:../notes-offline-core
       '@supabase/supabase-js':
@@ -813,7 +813,7 @@ importers:
       '@base-ui/react':
         specifier: ^1.3.0
         version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@nota/helper-hooks':
+      '@getmadrid/helper-hooks':
         specifier: workspace:*
         version: link:../helper-hooks
       class-variance-authority:
@@ -898,25 +898,25 @@ importers:
       '@base-ui/react':
         specifier: ^1.3.0
         version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/internal-note-link':
+      '@getmadrid/internal-note-link':
         specifier: workspace:*
         version: link:../internal-note-link
-      '@nota/isomorphic-helpers':
+      '@getmadrid/isomorphic-helpers':
         specifier: workspace:*
         version: link:../isomorphic-helpers
-      '@nota/link-platform-preview':
+      '@getmadrid/link-platform-preview':
         specifier: workspace:*
         version: link:../link-platform-preview
-      '@nota/note-editor-settings':
+      '@getmadrid/note-editor-settings':
         specifier: workspace:*
         version: link:../note-editor-settings
-      '@nota/notes-yjs-core':
+      '@getmadrid/notes-yjs-core':
         specifier: workspace:*
         version: link:../notes-yjs-core
       '@tiptap/extension-code-block':
@@ -1016,7 +1016,7 @@ importers:
 
   packages/electron-bridge-core:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
     devDependencies:
@@ -1035,34 +1035,34 @@ importers:
       '@base-ui/react':
         specifier: ^1.3.0
         version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/electron-bridge-core':
+      '@getmadrid/electron-bridge-core':
         specifier: workspace:*
         version: link:../electron-bridge-core
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/note-capture-ui':
+      '@getmadrid/note-capture-ui':
         specifier: workspace:*
         version: link:../note-capture-ui
-      '@nota/note-folders-ui':
+      '@getmadrid/note-folders-ui':
         specifier: workspace:*
         version: link:../note-folders-ui
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
       react:
@@ -1099,10 +1099,10 @@ importers:
 
   packages/error-boundary:
     dependencies:
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
       react:
@@ -1216,10 +1216,10 @@ importers:
       '@gsap/react':
         specifier: 'catalog:'
         version: 2.1.2(gsap@3.15.0)(react@19.2.3)
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/nota-motion-core':
+      '@getmadrid/nota-motion-core':
         specifier: workspace:*
         version: link:../nota-motion-core
       gsap:
@@ -1244,7 +1244,7 @@ importers:
 
   packages/note-capture-core:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
     devDependencies:
@@ -1260,25 +1260,25 @@ importers:
 
   packages/note-capture-ui:
     dependencies:
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/note-capture-core':
+      '@getmadrid/note-capture-core':
         specifier: workspace:*
         version: link:../note-capture-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
       react:
@@ -1315,7 +1315,7 @@ importers:
 
   packages/note-editor-core:
     dependencies:
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
     devDependencies:
@@ -1331,7 +1331,7 @@ importers:
 
   packages/note-editor-settings:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
       zod:
@@ -1350,64 +1350,64 @@ importers:
 
   packages/note-editor-ui:
     dependencies:
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/app-navigation-ui':
+      '@getmadrid/app-navigation-ui':
         specifier: workspace:*
         version: link:../app-navigation-ui
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/editor':
+      '@getmadrid/editor':
         specifier: workspace:*
         version: link:../editor
-      '@nota/electron-bridge-ui':
+      '@getmadrid/electron-bridge-ui':
         specifier: workspace:*
         version: link:../electron-bridge-ui
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/internal-note-link':
+      '@getmadrid/internal-note-link':
         specifier: workspace:*
         version: link:../internal-note-link
-      '@nota/isomorphic-helpers':
+      '@getmadrid/isomorphic-helpers':
         specifier: workspace:*
         version: link:../isomorphic-helpers
-      '@nota/link-platform-preview':
+      '@getmadrid/link-platform-preview':
         specifier: workspace:*
         version: link:../link-platform-preview
-      '@nota/nota-motion-core':
+      '@getmadrid/nota-motion-core':
         specifier: workspace:*
         version: link:../nota-motion-core
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-editor-core':
+      '@getmadrid/note-editor-core':
         specifier: workspace:*
         version: link:../note-editor-core
-      '@nota/note-link-graph':
+      '@getmadrid/note-link-graph':
         specifier: workspace:*
         version: link:../note-link-graph
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/notes-chrome-core':
+      '@getmadrid/notes-chrome-core':
         specifier: workspace:*
         version: link:../notes-chrome-core
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
-      '@nota/notes-yjs-core':
+      '@getmadrid/notes-yjs-core':
         specifier: workspace:*
         version: link:../notes-yjs-core
-      '@nota/writing-activity-ui':
+      '@getmadrid/writing-activity-ui':
         specifier: workspace:*
         version: link:../writing-activity-ui
       '@supabase/supabase-js':
@@ -1450,10 +1450,10 @@ importers:
 
   packages/note-folders-core:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
     devDependencies:
@@ -1472,28 +1472,28 @@ importers:
       '@base-ui/react':
         specifier: ^1.3.0
         version: 1.4.1(@date-fns/tz@1.4.1)(@types/react@19.2.14)(date-fns@4.1.0)(react-dom@19.2.5(react@19.2.3))(react@19.2.3)
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/note-folders-core':
+      '@getmadrid/note-folders-core':
         specifier: workspace:*
         version: link:../note-folders-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/writing-activity-ui':
+      '@getmadrid/writing-activity-ui':
         specifier: workspace:*
         version: link:../writing-activity-ui
       react:
@@ -1515,19 +1515,19 @@ importers:
 
   packages/note-graph:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/editor':
+      '@getmadrid/editor':
         specifier: workspace:*
         version: link:../editor
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/note-link-graph':
+      '@getmadrid/note-link-graph':
         specifier: workspace:*
         version: link:../note-link-graph
       '@xyflow/react':
@@ -1567,7 +1567,7 @@ importers:
 
   packages/note-journal-core:
     dependencies:
-      '@nota/note-doc-plain-text':
+      '@getmadrid/note-doc-plain-text':
         specifier: workspace:*
         version: link:../note-doc-plain-text
       chrono-node:
@@ -1592,19 +1592,19 @@ importers:
 
   packages/note-journal-ui:
     dependencies:
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
       '@tanstack/react-virtual':
@@ -1629,10 +1629,10 @@ importers:
 
   packages/note-link-graph:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/internal-note-link':
+      '@getmadrid/internal-note-link':
         specifier: workspace:*
         version: link:../internal-note-link
     devDependencies:
@@ -1648,7 +1648,7 @@ importers:
 
   packages/note-palette-core:
     dependencies:
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
       react:
@@ -1676,52 +1676,52 @@ importers:
       '@clerk/react':
         specifier: ^6.1.2
         version: 6.12.10(react-dom@19.2.5(react@19.2.3))(react@19.2.3)
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/app-navigation-ui':
+      '@getmadrid/app-navigation-ui':
         specifier: workspace:*
         version: link:../app-navigation-ui
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/editor':
+      '@getmadrid/editor':
         specifier: workspace:*
         version: link:../editor
-      '@nota/electron-bridge-core':
+      '@getmadrid/electron-bridge-core':
         specifier: workspace:*
         version: link:../electron-bridge-core
-      '@nota/electron-bridge-ui':
+      '@getmadrid/electron-bridge-ui':
         specifier: workspace:*
         version: link:../electron-bridge-ui
-      '@nota/helper-hooks':
+      '@getmadrid/helper-hooks':
         specifier: workspace:*
         version: link:../helper-hooks
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-capture-ui':
+      '@getmadrid/note-capture-ui':
         specifier: workspace:*
         version: link:../note-capture-ui
-      '@nota/note-folders-core':
+      '@getmadrid/note-folders-core':
         specifier: workspace:*
         version: link:../note-folders-core
-      '@nota/note-folders-ui':
+      '@getmadrid/note-folders-ui':
         specifier: workspace:*
         version: link:../note-folders-ui
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
-      '@nota/note-palette-core':
+      '@getmadrid/note-palette-core':
         specifier: workspace:*
         version: link:../note-palette-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
       cmdk:
@@ -1734,7 +1734,7 @@ importers:
         specifier: 19.2.3
         version: 19.2.3
     devDependencies:
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
       '@testing-library/react':
@@ -1761,19 +1761,19 @@ importers:
       '@clerk/react':
         specifier: ^6.1.2
         version: 6.12.10(react-dom@19.2.5(react@19.2.3))(react@19.2.3)
-      '@nota/data-source':
+      '@getmadrid/data-source':
         specifier: workspace:*
         version: link:../data-source
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/helper-hooks':
+      '@getmadrid/helper-hooks':
         specifier: workspace:*
         version: link:../helper-hooks
-      '@nota/isomorphic-helpers':
+      '@getmadrid/isomorphic-helpers':
         specifier: workspace:*
         version: link:../isomorphic-helpers
-      '@nota/notes-offline':
+      '@getmadrid/notes-offline':
         specifier: workspace:*
         version: link:../notes-offline
       react:
@@ -1798,7 +1798,7 @@ importers:
 
   packages/note-share-og:
     dependencies:
-      '@nota/note-doc-plain-text':
+      '@getmadrid/note-doc-plain-text':
         specifier: workspace:*
         version: link:../note-doc-plain-text
     devDependencies:
@@ -1814,7 +1814,7 @@ importers:
 
   packages/notes-chrome-core:
     dependencies:
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
       class-variance-authority:
@@ -1833,55 +1833,55 @@ importers:
 
   packages/notes-chrome-ui:
     dependencies:
-      '@nota/app-navigation-core':
+      '@getmadrid/app-navigation-core':
         specifier: workspace:*
         version: link:../app-navigation-core
-      '@nota/app-navigation-ui':
+      '@getmadrid/app-navigation-ui':
         specifier: workspace:*
         version: link:../app-navigation-ui
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/electron-bridge-core':
+      '@getmadrid/electron-bridge-core':
         specifier: workspace:*
         version: link:../electron-bridge-core
-      '@nota/electron-bridge-ui':
+      '@getmadrid/electron-bridge-ui':
         specifier: workspace:*
         version: link:../electron-bridge-ui
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/nota-motion-ui':
+      '@getmadrid/nota-motion-ui':
         specifier: workspace:*
         version: link:../nota-motion-ui
-      '@nota/note-capture-ui':
+      '@getmadrid/note-capture-ui':
         specifier: workspace:*
         version: link:../note-capture-ui
-      '@nota/note-editor-core':
+      '@getmadrid/note-editor-core':
         specifier: workspace:*
         version: link:../note-editor-core
-      '@nota/note-editor-ui':
+      '@getmadrid/note-editor-ui':
         specifier: workspace:*
         version: link:../note-editor-ui
-      '@nota/note-folders-core':
+      '@getmadrid/note-folders-core':
         specifier: workspace:*
         version: link:../note-folders-core
-      '@nota/note-folders-ui':
+      '@getmadrid/note-folders-ui':
         specifier: workspace:*
         version: link:../note-folders-ui
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/notes-chrome-core':
+      '@getmadrid/notes-chrome-core':
         specifier: workspace:*
         version: link:../notes-chrome-core
-      '@nota/writing-activity-core':
+      '@getmadrid/writing-activity-core':
         specifier: workspace:*
         version: link:../writing-activity-core
       next:
@@ -1912,10 +1912,10 @@ importers:
 
   packages/notes-offline:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
-      '@nota/notes-offline-core':
+      '@getmadrid/notes-offline-core':
         specifier: workspace:*
         version: link:../notes-offline-core
     devDependencies:
@@ -1925,7 +1925,7 @@ importers:
 
   packages/notes-offline-core:
     dependencies:
-      '@nota/database-types':
+      '@getmadrid/database-types':
         specifier: workspace:*
         version: link:../database-types
     devDependencies:
@@ -1969,7 +1969,7 @@ importers:
 
   packages/writing-activity-core:
     dependencies:
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
     devDependencies:
@@ -1985,19 +1985,19 @@ importers:
 
   packages/writing-activity-ui:
     dependencies:
-      '@nota/design':
+      '@getmadrid/design':
         specifier: workspace:*
         version: link:../design
-      '@nota/i18n':
+      '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
-      '@nota/note-journal-core':
+      '@getmadrid/note-journal-core':
         specifier: workspace:*
         version: link:../note-journal-core
-      '@nota/note-runtime':
+      '@getmadrid/note-runtime':
         specifier: workspace:*
         version: link:../note-runtime
-      '@nota/writing-activity-core':
+      '@getmadrid/writing-activity-core':
         specifier: workspace:*
         version: link:../writing-activity-core
       react:

@@ -1,11 +1,11 @@
 {
-  "name": "@nota/writing-activity-core",
+  "name": "@getmadrid/writing-activity-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./writing-activity": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/writing-activity.ts",
         "import": "./src/writing-activity.ts",
         "default": "./src/writing-activity.ts"
@@ -18,7 +18,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -36,7 +36,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/note-journal-core": "workspace:*"
+    "@getmadrid/note-journal-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

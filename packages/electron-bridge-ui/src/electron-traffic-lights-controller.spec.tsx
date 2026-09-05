@@ -1,7 +1,7 @@
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ElectronTrafficLightsController } from './electron-traffic-lights-controller';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
 
 describe('ElectronTrafficLightsController', () => {
   const setWindowButtonVisibility = vi.fn(() => Promise.resolve());

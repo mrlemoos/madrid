@@ -1,14 +1,14 @@
-import type { Note } from '@nota/database-types';
-import { createNote } from '@nota/data-source/models/notes';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { createLocalOnlyNote } from '@nota/notes-offline';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
+import type { Note } from '@getmadrid/database-types';
+import { createNote } from '@getmadrid/data-source/models/notes';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { createLocalOnlyNote } from '@getmadrid/notes-offline';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
 import {
   dailyNoteDisplayTitle,
   localDateKey,
   resolveTodaysNoteId,
-} from '@nota/app-navigation-core/todays-note';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
+} from '@getmadrid/app-navigation-core/todays-note';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 
 /**
  * Opens or creates the user's **root** daily note for the local calendar day

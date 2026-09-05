@@ -2,10 +2,10 @@ import {
   countNotesInFolder,
   deleteFolderById,
   folderHasChildFolders,
-} from '@nota/data-source/models/folders';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import type { UserPreferences } from '@nota/database-types';
+} from '@getmadrid/data-source/models/folders';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import type { UserPreferences } from '@getmadrid/database-types';
 
 /**
  * When the user preference is enabled, deletes a folder that has zero notes left.

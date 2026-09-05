@@ -8,8 +8,8 @@ import {
   type NodeViewProps,
 } from '@tiptap/react';
 import { useEffect, useId, useRef, useState, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
-import { debounce } from '@nota/isomorphic-helpers';
+import { cn } from '@getmadrid/design/utils';
+import { debounce } from '@getmadrid/isomorphic-helpers';
 
 /** Wider than TipTap default `[a-z]+` so fences like ```c++``` / ```f#``` work when typed. */
 const backtickFenceRegex = /^```([\w+#.-]+)?[\s\n]$/;

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 import { getSupabaseAnonClient } from './supabase/anon';
 
 /** Path prefix for the public shared-note page (matched in `main.tsx`). */
@@ -24,7 +24,7 @@ function shareOrigin(): string {
   }
   // ponytail: hardcoded prod fallback for packaged Electron (file: origin);
   // set NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN to override per environment.
-  return 'https://app.nota.mrlemoos.dev';
+  return 'https://app.getmadrid.app';
 }
 
 /** Full public URL for a share token. */

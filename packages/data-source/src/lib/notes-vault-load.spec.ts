@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { StoredNote } from '@nota/notes-offline';
-import type { Folder, Note, UserPreferences } from '@nota/database-types';
+import type { StoredNote } from '@getmadrid/notes-offline';
+import type { Folder, Note, UserPreferences } from '@getmadrid/database-types';
 import {
   loadVault,
   type VaultLoadPorts,

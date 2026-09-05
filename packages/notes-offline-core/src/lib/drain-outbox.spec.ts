@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_NOTE_CONTENT } from './types';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 import type { OutboxEntry, StoredNote } from './types';
 import {
   createOutboxDrainer,

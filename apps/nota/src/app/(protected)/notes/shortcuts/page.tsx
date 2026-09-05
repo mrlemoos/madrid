@@ -2,15 +2,15 @@
 
 import { useLayoutEffect, useState, type JSX } from 'react';
 import { cn } from '@/lib/utils';
-import { notaKbdReferenceValueClass } from '@nota/note-palette-core/nota-kbd-styles';
+import { notaKbdReferenceValueClass } from '@getmadrid/note-palette-core/nota-kbd-styles';
 import {
   filterShortcutCatalogSections,
   NOTA_SHORTCUT_PLACEHOLDER_KEY,
   NOTA_SHORTCUT_SECTIONS,
-} from '@nota/note-palette-core/nota-shortcuts-catalogue';
+} from '@getmadrid/note-palette-core/nota-shortcuts-catalogue';
 import { navigatorLooksLikeApplePlatform } from '@/lib/navigator-apple-platform';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 
 /** `/notes/shortcuts` — keyboard reference. */
 export default function NotesShortcutsPage(): JSX.Element {
@@ -41,7 +41,7 @@ export default function NotesShortcutsPage(): JSX.Element {
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {t(
-              'Keyboard reference for Nota. Mod means {modChar} on your device.',
+              'Keyboard reference for Madrid. Mod means {modChar} on your device.',
               {
                 modChar: isApple ? '⌘' : 'Ctrl',
               },

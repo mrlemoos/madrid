@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
+import { markNavIntent } from '@getmadrid/nota-motion-ui/panel-motion';
 
-vi.mock('@nota/nota-motion-ui/panel-motion', () => ({
+vi.mock('@getmadrid/nota-motion-ui/panel-motion', () => ({
   markNavIntent: vi.fn(),
 }));
 

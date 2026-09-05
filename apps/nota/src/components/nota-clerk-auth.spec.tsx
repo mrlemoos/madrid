@@ -58,7 +58,7 @@ describe('NotaClerk auth', () => {
     expect(hidesFooter).toBe(true);
   });
 
-  it('uses Clerk shadcn theme and Nota form styling', () => {
+  it('uses Clerk shadcn theme and Madrid form styling', () => {
     // Arrange
     const source = loadAuthComponentSource();
 
@@ -71,7 +71,6 @@ describe('NotaClerk auth', () => {
       'unsafe_disableDevelopmentModeWarnings: true',
     );
     const flattensClerkCard = source.includes('colorBackground:');
-    const hidesSymbolArrow = source.includes("formButtonPrimary: 'Continue'");
     const hidesClerkButtonIcon = source.includes('formButtonPrimaryIcon:');
     const skipsContinueIconClass = !source.includes(
       'nota-auth-primary-with-icon',
@@ -88,7 +87,6 @@ describe('NotaClerk auth', () => {
     expect(hidesClerkLogo).toBe(true);
     expect(disablesDevBadge).toBe(true);
     expect(flattensClerkCard).toBe(true);
-    expect(hidesSymbolArrow).toBe(true);
     expect(hidesClerkButtonIcon).toBe(true);
     expect(skipsContinueIconClass).toBe(true);
     expect(largerPrimaryType).toBe(true);

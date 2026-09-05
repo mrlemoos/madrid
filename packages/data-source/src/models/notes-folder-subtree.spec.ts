@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { Folder } from '@nota/database-types';
+import type { Folder } from '@getmadrid/database-types';
 import { moveAllNotesInFolderSubtree } from './notes';
 import type { TypedSupabaseClient } from './notes';
 

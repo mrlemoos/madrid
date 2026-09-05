@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Folder } from '@nota/database-types';
+import type { Folder } from '@getmadrid/database-types';
 import {
   ancestorFolderIds,
   buildFolderTree,

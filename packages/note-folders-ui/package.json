@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-folders-ui",
+  "name": "@getmadrid/note-folders-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./delete-folder-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/delete-folder-client.ts",
         "import": "./src/delete-folder-client.ts",
         "default": "./src/delete-folder-client.ts"
@@ -15,7 +15,7 @@
       "default": "./src/delete-folder-client.ts"
     },
     "./rename-folder-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/rename-folder-client.ts",
         "import": "./src/rename-folder-client.ts",
         "default": "./src/rename-folder-client.ts"
@@ -25,7 +25,7 @@
       "default": "./src/rename-folder-client.ts"
     },
     "./update-folder-tint-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/update-folder-tint-client.ts",
         "import": "./src/update-folder-tint-client.ts",
         "default": "./src/update-folder-tint-client.ts"
@@ -35,7 +35,7 @@
       "default": "./src/update-folder-tint-client.ts"
     },
     "./move-note-folder-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/move-note-folder-client.ts",
         "import": "./src/move-note-folder-client.ts",
         "default": "./src/move-note-folder-client.ts"
@@ -45,7 +45,7 @@
       "default": "./src/move-note-folder-client.ts"
     },
     "./maybe-prune-empty-folder": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/maybe-prune-empty-folder.ts",
         "import": "./src/maybe-prune-empty-folder.ts",
         "default": "./src/maybe-prune-empty-folder.ts"
@@ -55,7 +55,7 @@
       "default": "./src/maybe-prune-empty-folder.ts"
     },
     "./folder-rename-request": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/folder-rename-request.ts",
         "import": "./src/folder-rename-request.ts",
         "default": "./src/folder-rename-request.ts"
@@ -65,7 +65,7 @@
       "default": "./src/folder-rename-request.ts"
     },
     "./use-create-folder-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-create-folder-shortcut.ts",
         "import": "./src/use-create-folder-shortcut.ts",
         "default": "./src/use-create-folder-shortcut.ts"
@@ -75,7 +75,7 @@
       "default": "./src/use-create-folder-shortcut.ts"
     },
     "./folder-create-dialog": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/folder-create-dialog.tsx",
         "import": "./src/folder-create-dialog.tsx",
         "default": "./src/folder-create-dialog.tsx"
@@ -85,7 +85,7 @@
       "default": "./src/folder-create-dialog.tsx"
     },
     "./folder-delete-dialog": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/folder-delete-dialog.tsx",
         "import": "./src/folder-delete-dialog.tsx",
         "default": "./src/folder-delete-dialog.tsx"
@@ -95,7 +95,7 @@
       "default": "./src/folder-delete-dialog.tsx"
     },
     "./create-note-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/create-note-client.ts",
         "import": "./src/create-note-client.ts",
         "default": "./src/create-note-client.ts"
@@ -105,7 +105,7 @@
       "default": "./src/create-note-client.ts"
     },
     "./delete-note-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/delete-note-client.ts",
         "import": "./src/delete-note-client.ts",
         "default": "./src/delete-note-client.ts"
@@ -118,7 +118,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -137,14 +137,14 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
-    "@nota/app-navigation-core": "workspace:*",
-    "@nota/data-source": "workspace:*",
-    "@nota/database-types": "workspace:*",
-    "@nota/i18n": "workspace:*",
-    "@nota/note-folders-core": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/design": "workspace:*",
-    "@nota/writing-activity-ui": "workspace:*",
+    "@getmadrid/app-navigation-core": "workspace:*",
+    "@getmadrid/data-source": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "@getmadrid/note-folders-core": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/design": "workspace:*",
+    "@getmadrid/writing-activity-ui": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

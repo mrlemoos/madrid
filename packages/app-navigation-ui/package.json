@@ -1,11 +1,11 @@
 {
-  "name": "@nota/app-navigation-ui",
+  "name": "@getmadrid/app-navigation-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./use-app-navigation-screen": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-app-navigation-screen.ts",
         "import": "./src/use-app-navigation-screen.ts",
         "default": "./src/use-app-navigation-screen.ts"
@@ -15,7 +15,7 @@
       "default": "./src/use-app-navigation-screen.ts"
     },
     "./use-settings-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-settings-shortcut.ts",
         "import": "./src/use-settings-shortcut.ts",
         "default": "./src/use-settings-shortcut.ts"
@@ -25,7 +25,7 @@
       "default": "./src/use-settings-shortcut.ts"
     },
     "./use-notes-history-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-notes-history-shortcut.ts",
         "import": "./src/use-notes-history-shortcut.ts",
         "default": "./src/use-notes-history-shortcut.ts"
@@ -35,7 +35,7 @@
       "default": "./src/use-notes-history-shortcut.ts"
     },
     "./use-notes-sidebar-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-notes-sidebar-shortcut.ts",
         "import": "./src/use-notes-sidebar-shortcut.ts",
         "default": "./src/use-notes-sidebar-shortcut.ts"
@@ -45,7 +45,7 @@
       "default": "./src/use-notes-sidebar-shortcut.ts"
     },
     "./use-nota-zoom-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-nota-zoom-shortcut.ts",
         "import": "./src/use-nota-zoom-shortcut.ts",
         "default": "./src/use-nota-zoom-shortcut.ts"
@@ -55,7 +55,7 @@
       "default": "./src/use-nota-zoom-shortcut.ts"
     },
     "./use-todays-note-shortcut": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-todays-note-shortcut.ts",
         "import": "./src/use-todays-note-shortcut.ts",
         "default": "./src/use-todays-note-shortcut.ts"
@@ -65,7 +65,7 @@
       "default": "./src/use-todays-note-shortcut.ts"
     },
     "./open-todays-note": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/open-todays-note.ts",
         "import": "./src/open-todays-note.ts",
         "default": "./src/open-todays-note.ts"
@@ -78,7 +78,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -96,13 +96,13 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/app-navigation-core": "workspace:*",
-    "@nota/data-source": "workspace:*",
+    "@getmadrid/app-navigation-core": "workspace:*",
+    "@getmadrid/data-source": "workspace:*",
     "next": "catalog:",
-    "@nota/database-types": "workspace:*",
-    "@nota/nota-motion-ui": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/notes-offline": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/nota-motion-ui": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/notes-offline": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

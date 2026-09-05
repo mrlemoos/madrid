@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/notes-chrome-ui',
   test: {
-    name: '@nota/notes-chrome-ui',
+    name: '@getmadrid/notes-chrome-ui',
     watch: false,
     globals: true,
     environment: 'jsdom',

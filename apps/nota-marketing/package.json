@@ -1,5 +1,5 @@
 {
-  "name": "@nota/nota-marketing",
+  "name": "@getmadrid/nota-marketing",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,8 +10,8 @@
     "generate:favicons": "node scripts/generate-favicons.mjs"
   },
   "dependencies": {
-    "@nota/note-doc-plain-text": "workspace:*",
-    "@nota/design": "workspace:*",
+    "@getmadrid/note-doc-plain-text": "workspace:*",
+    "@getmadrid/design": "workspace:*",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/geist-sans": "^5.2.5",
@@ -39,7 +39,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:app",
       "platform:web"
     ],

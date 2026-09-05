@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/app-navigation-core',
   test: {
-    name: '@nota/app-navigation-core',
+    name: '@getmadrid/app-navigation-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

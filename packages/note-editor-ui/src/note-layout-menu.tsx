@@ -1,21 +1,21 @@
 import { useCallback, useRef, useState, type JSX } from 'react';
-import { Icon } from '@nota/design/icon';
-import { Button } from '@nota/design/button';
+import { Icon } from '@getmadrid/design/icon';
+import { Button } from '@getmadrid/design/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@nota/design/dialog';
-import { cn } from '@nota/design/utils';
+} from '@getmadrid/design/dialog';
+import { cn } from '@getmadrid/design/utils';
 import {
   NOTE_THEME_LABEL,
   NOTE_THEME_OPTIONS,
   noteEditorFontFromThemeSelectValue,
   noteThemeSelectValue,
   type NoteEditorSettings,
-} from '@nota/editor';
+} from '@getmadrid/editor';
 
 type NoteLayoutMenuProps = {
   settings: NoteEditorSettings;

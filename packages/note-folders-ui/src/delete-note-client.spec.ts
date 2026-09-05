@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientDeleteNoteById } from './delete-note-client';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
 
 const removeNoteFromList = vi.fn();
 const removeFolderFromList = vi.fn();
 const refreshNotesList = vi.fn();
 
-vi.mock('@nota/data-source/vault-runtime', () => ({
+vi.mock('@getmadrid/data-source/vault-runtime', () => ({
   vaultMutator: {
     deleteNote: vi.fn(),
   },
 }));
 
-vi.mock('@nota/app-navigation-core/navigation', () => ({
+vi.mock('@getmadrid/app-navigation-core/navigation', () => ({
   navigateToScreen: vi.fn(),
 }));
 

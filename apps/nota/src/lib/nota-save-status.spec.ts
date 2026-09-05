@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
-import { NOTA_SAVE_PULSE_CLASS } from '@nota/nota-motion-ui/interaction';
+import { NOTA_SAVE_PULSE_CLASS } from '@getmadrid/nota-motion-ui/interaction';
 
 const stylesCss = readFileSync(
   resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),

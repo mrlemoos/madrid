@@ -9,6 +9,6 @@ tags:
 draft: true
 ---
 
-_Draft: part of the Nota feature series. To be published after [Introducing Nota](/blog/introducing-nota)._
+_Draft: part of the Madrid feature series. To be published after [Introducing Madrid](/blog/introducing-nota)._
 
-Nota’s recording flow is deliberate: you start it, you receive blocks to edit, you delete what you do not want. This post will contrast assistive capture with apps that treat every blank line as a prompt to generate copy.
+Madrid’s recording flow is deliberate: you start it, you receive blocks to edit, you delete what you do not want. This post will contrast assistive capture with apps that treat every blank line as a prompt to generate copy.

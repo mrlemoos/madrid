@@ -1,9 +1,9 @@
-import type { Folder, Note, UserPreferences } from '@nota/database-types';
+import type { Folder, Note, UserPreferences } from '@getmadrid/database-types';
 import {
   mergeNoteLists,
   storedNoteToListRow,
   type StoredNote,
-} from '@nota/notes-offline';
+} from '@getmadrid/notes-offline';
 
 /**
  * Everything the vault load decision tree needs from the outside world.
@@ -12,7 +12,7 @@ import {
  */
 export type VaultLoadPorts = {
   entitlement: {
-    /** Resolves the server-confirmed Nota Pro entitlement; throws on network/HTTP failure. */
+    /** Resolves the server-confirmed Madrid Pro entitlement; throws on network/HTTP failure. */
     fetchEntitled(): Promise<boolean>;
     readSession(): boolean;
     syncSession(entitled: boolean): void;

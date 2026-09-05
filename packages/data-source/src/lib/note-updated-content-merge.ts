@@ -1,4 +1,4 @@
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 /**
  * After `updateNote`, the `.select()` row can carry stale `content` relative to the

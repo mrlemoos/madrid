@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/notes-offline-core',
   test: {
-    name: '@nota/notes-offline-core',
+    name: '@getmadrid/notes-offline-core',
     watch: false,
     globals: true,
     environment: 'node',

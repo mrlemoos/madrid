@@ -15,7 +15,7 @@ const envMock = vi.hoisted(() =>
   }),
 );
 
-vi.mock('@nota/env-nextjs', () => ({
+vi.mock('@getmadrid/env-nextjs', () => ({
   env: (key: string) => envMock(key),
 }));
 
@@ -39,13 +39,13 @@ vi.mock('./components/deferred-posthog-root', () => ({
   ),
 }));
 
-vi.mock('@nota/note-runtime/clerk-supabase-bridge', () => ({
+vi.mock('@getmadrid/note-runtime/clerk-supabase-bridge', () => ({
   ClerkSupabaseBridge: ({ children }: { children: ReactNode }) => (
     <>{children}</>
   ),
 }));
 
-vi.mock('@nota/design/theme', () => ({
+vi.mock('@getmadrid/design/theme', () => ({
   ThemeProvider: ({
     children,
     defaultTheme,
@@ -65,25 +65,25 @@ vi.mock('@nota/design/theme', () => ({
   ),
 }));
 
-vi.mock('@nota/note-runtime/session-context', () => ({
+vi.mock('@getmadrid/note-runtime/session-context', () => ({
   AppSessionProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="app-session-provider">{children}</div>
   ),
 }));
 
-vi.mock('@nota/note-runtime/sticky-doc-title', () => ({
+vi.mock('@getmadrid/note-runtime/sticky-doc-title', () => ({
   StickyDocTitleProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="sticky-doc-title-provider">{children}</div>
   ),
 }));
 
-vi.mock('@nota/editor', () => ({
+vi.mock('@getmadrid/editor', () => ({
   NoteEditorCommandsProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="note-editor-commands-provider">{children}</div>
   ),
 }));
 
-vi.mock('@nota/error-boundary/error-boundary', () => ({
+vi.mock('@getmadrid/error-boundary/error-boundary', () => ({
   ErrorBoundary: ({ children }: { children: ReactNode }) => (
     <div data-testid="error-boundary">{children}</div>
   ),
@@ -113,12 +113,12 @@ describe('AppProviders', () => {
     // Act
     render(
       <AppProviders>
-        <span>Nota child</span>
+        <span>Madrid child</span>
       </AppProviders>,
     );
 
     // Assert
-    expect(screen.getByText('Nota child')).toBeTruthy();
+    expect(screen.getByText('Madrid child')).toBeTruthy();
     expect(screen.getByTestId('auth-provider')).toBeTruthy();
     expect(screen.getByTestId('posthog-root')).toBeTruthy();
     expect(screen.getByTestId('theme-provider')).toBeTruthy();

@@ -20,7 +20,7 @@ describe('shouldOpenInAppOAuthPopupWindow', () => {
   it('allows Clerk Frontend API token refresh URLs', () => {
     // Arrange
     const tokenUrl =
-      'https://clerk.nota.mrlemoos.dev/v1/client/sessions/sess_x/tokens';
+      'https://clerk.getmadrid.app/v1/client/sessions/sess_x/tokens';
 
     // Act
     const result = shouldOpenInAppOAuthPopupWindow(tokenUrl);
@@ -35,7 +35,7 @@ describe('shouldOpenInAppOAuthPopupWindow', () => {
       'https://example.com/article',
       'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       'https://www.reddit.com/r/programming/comments/abc/title/',
-      'https://en.wikipedia.org/wiki/Nota',
+      'https://en.wikipedia.org/wiki/Madrid',
       'https://checkout.stripe.com/c/pay/cs_test_abc',
     ];
 

@@ -1,4 +1,4 @@
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 
 /** Extra fields persisted with a note row in IndexedDB. */
 export type LocalNoteMeta = {

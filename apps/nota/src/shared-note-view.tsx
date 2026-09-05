@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import {
   noteSurfaceClassNames,
   parseNoteEditorSettings,
-} from '@nota/note-editor-settings';
+} from '@getmadrid/note-editor-settings';
 import { cn } from './lib/utils';
 import { useNotaTranslator } from './lib/use-nota-translator';
 
@@ -14,13 +14,13 @@ import {
   subscribeSharedNote,
   type SharedNote,
   type SharedNoteAttachment,
-} from '@nota/data-source/note-share-client';
+} from '@getmadrid/data-source/note-share-client';
 
 // Reuse the real editor in read-only mode so the preview matches the app
 // exactly. `useEditor` throws when it detects a server render, so the body loads
 // in the browser only and suspends behind a placeholder; everything around it
 // (title, chrome, empty states) still renders on the server. Surface helpers come
-// from `@nota/note-editor-settings` so TipTap stays out of the server graph.
+// from `@getmadrid/note-editor-settings` so TipTap stays out of the server graph.
 const SharedNoteBody = dynamic(() => import('./shared-note-body'), {
   ssr: false,
 });
@@ -167,12 +167,12 @@ export function SharedNoteView(props: SharedNoteViewProps): JSX.Element {
         <footer className="mt-16 border-t border-border/60 pt-6 text-sm text-muted-foreground">
           Shared with{' '}
           <a
-            href="https://nota.mrlemoos.dev"
+            href="https://getmadrid.app"
             target="_blank"
             rel="noopener noreferrer"
             className="font-medium underline underline-offset-2"
           >
-            Nota
+            Madrid
           </a>
         </footer>
       </main>

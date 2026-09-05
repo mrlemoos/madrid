@@ -2,8 +2,8 @@ import type { Editor } from '@tiptap/core';
 import { TextSelection } from '@tiptap/pm/state';
 import type { EditorView } from '@tiptap/pm/view';
 import type { Dispatch, RefObject, SetStateAction } from 'react';
-import type { Note } from '@nota/database-types';
-import { hrefForNote } from '@nota/internal-note-link';
+import type { Note } from '@getmadrid/database-types';
+import { hrefForNote } from '@getmadrid/internal-note-link';
 import { persistedDisplayTitle } from './lib/note-title';
 import { findNoteMentionTrigger } from './lib/tiptap-note-mention';
 

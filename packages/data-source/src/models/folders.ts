@@ -1,4 +1,8 @@
-import type { Folder, FolderInsert, FolderUpdate } from '@nota/database-types';
+import type {
+  Folder,
+  FolderInsert,
+  FolderUpdate,
+} from '@getmadrid/database-types';
 import type { TypedSupabaseClient } from './notes';
 
 export async function listFolders(

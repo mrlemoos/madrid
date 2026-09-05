@@ -2,7 +2,7 @@
 
 import type { JSX } from 'react';
 import { cn } from '@/lib/utils';
-import { electronWindowDragClasses } from '@nota/electron-bridge-core/window-chrome';
+import { electronWindowDragClasses } from '@getmadrid/electron-bridge-core/window-chrome';
 import { AuthScreenHashLink } from '@/components/auth-screen-hash-link';
 import { SignedOutStage } from '@/components/signed-out-stage';
 import { captureAuthCardOrigin } from '@/lib/auth-card-origin';

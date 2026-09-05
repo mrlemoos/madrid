@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { Icon } from '@nota/design/icon';
+import { Icon } from '@getmadrid/design/icon';
 
 type SlideArrowDownloadButtonProps = {
   href: string;

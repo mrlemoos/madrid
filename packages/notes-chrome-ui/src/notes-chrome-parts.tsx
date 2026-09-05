@@ -1,41 +1,41 @@
 import type { ComponentProps, CSSProperties, JSX, ReactNode } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Button } from '@nota/design/button';
-import { Icon } from '@nota/design/icon';
-import { cn } from '@nota/design/utils';
-import { replaceScreen } from '@nota/app-navigation-core/navigation';
+import { Button } from '@getmadrid/design/button';
+import { Icon } from '@getmadrid/design/icon';
+import { cn } from '@getmadrid/design/utils';
+import { replaceScreen } from '@getmadrid/app-navigation-core/navigation';
 import {
   consumeNavIntent,
   markNavIntent,
   resolvePanelMotion,
   type NavIntent,
-} from '@nota/nota-motion-ui/panel-motion';
+} from '@getmadrid/nota-motion-ui/panel-motion';
 import {
   NOTA_PRESSABLE_CLASS,
   NOTA_CHROME_NAV_ITEM_CLASS,
-} from '@nota/nota-motion-ui/interaction';
-import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
+} from '@getmadrid/nota-motion-ui/interaction';
+import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@getmadrid/electron-bridge-core/window-chrome';
 import {
   NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX,
   NOTA_SIDEBAR_RAIL_WIDTH_PX,
-} from '@nota/nota-motion-ui/motion';
-import { notesSidebarChrome } from '@nota/notes-chrome-core/notes-chrome';
+} from '@getmadrid/nota-motion-ui/motion';
+import { notesSidebarChrome } from '@getmadrid/notes-chrome-core/notes-chrome';
 import {
   NOTA_CHROME_CONTROL_COMPACT_CLASS,
   NOTA_SECTION_HEAD_CLASS,
   NOTA_TRACKING_CHROME_XS_CLASS,
-} from '@nota/notes-chrome-core/chrome-type';
+} from '@getmadrid/notes-chrome-core/chrome-type';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import {
   buildActivityGridCells,
   computeCurrentStreak,
   computeLongestStreak,
   ACTIVITY_LEVEL_CLASSES,
-} from '@nota/writing-activity-core/writing-activity';
+} from '@getmadrid/writing-activity-core/writing-activity';
 import {
   Tooltip,
   TooltipPortal,
@@ -43,7 +43,7 @@ import {
   TooltipPopup,
   TooltipProvider,
   TooltipTrigger,
-} from '@nota/design/tooltip';
+} from '@getmadrid/design/tooltip';
 
 export function SidebarToggle({
   className,

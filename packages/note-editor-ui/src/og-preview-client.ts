@@ -1,4 +1,4 @@
-import type { PlatformLinkPreview } from '@nota/link-platform-preview';
+import type { PlatformLinkPreview } from '@getmadrid/link-platform-preview';
 
 export type OgPreviewJson = {
   url: string;

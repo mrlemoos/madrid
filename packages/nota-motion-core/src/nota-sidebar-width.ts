@@ -1,6 +1,6 @@
 /**
  * Default notes sidebar width (px). Canonical source of the 288px design token;
- * `@nota/nota-motion-ui/motion` re-exports it as `NOTA_SIDEBAR_WIDTH_PX`.
+ * `@getmadrid/nota-motion-ui/motion` re-exports it as `NOTA_SIDEBAR_WIDTH_PX`.
  */
 export const NOTA_SIDEBAR_DEFAULT_WIDTH_PX = 288;
 

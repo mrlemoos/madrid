@@ -1,4 +1,4 @@
-import { localDateKey } from '@nota/note-journal-core/local-date-key';
+import { localDateKey } from '@getmadrid/note-journal-core/local-date-key';
 
 /** 5 intensity levels for the contribution graph. */
 export type ActivityLevel = 0 | 1 | 2 | 3 | 4;

@@ -1,9 +1,9 @@
 import { act, render, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { PendingAudioNoteJob } from './audio-note-pending-idb';
-import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
+import type { AudioNoteStudyResult } from '@getmadrid/note-capture-core/audio-note-blocks-to-doc';
 import { useAudioNotePendingDrain } from './use-audio-note-pending-drain';
-import { useAudioToNoteSession } from '@nota/note-runtime/stores/audio-session';
+import { useAudioToNoteSession } from '@getmadrid/note-runtime/stores/audio-session';
 
 const studyResult: AudioNoteStudyResult = {
   title: 'Study',
@@ -78,16 +78,16 @@ const drainMocks = vi.hoisted(() => {
   };
 });
 
-vi.mock('@nota/note-runtime/session-context', () => ({
+vi.mock('@getmadrid/note-runtime/session-context', () => ({
   useRootLoaderData: () => drainMocks.useRootLoaderData(),
 }));
 
-vi.mock('@nota/note-runtime/notes-data-context', () => ({
+vi.mock('@getmadrid/note-runtime/notes-data-context', () => ({
   useNotesDataMeta: () => drainMocks.useNotesDataMeta(),
   useNotesDataActions: () => drainMocks.useNotesDataActions(),
 }));
 
-vi.mock('@nota/data-source/notes-offline-sync', () => ({
+vi.mock('@getmadrid/data-source/notes-offline-sync', () => ({
   isLikelyOnline: () => drainMocks.isLikelyOnline(),
 }));
 
@@ -107,7 +107,7 @@ vi.mock('./audio-to-note-apply', () => ({
     drainMocks.applyAudioNoteStudyResult(opts),
 }));
 
-vi.mock('@nota/data-source/pdf-attachment-client', () => ({
+vi.mock('@getmadrid/data-source/pdf-attachment-client', () => ({
   uploadStudyRecordingAttachment: (
     noteId: string,
     userId: string,
@@ -121,7 +121,7 @@ vi.mock('./study-recording-upload-warning', () => ({
     drainMocks.formatStudyRecordingUploadWarning(err),
 }));
 
-vi.mock('@nota/data-source/browser-connectivity', () => ({
+vi.mock('@getmadrid/data-source/browser-connectivity', () => ({
   subscribeOnline: (listener: () => void) =>
     drainMocks.subscribeOnline(listener),
 }));
@@ -168,7 +168,7 @@ describe('useAudioNotePendingDrain', () => {
     expect(drainMocks.subscribeOnline).not.toHaveBeenCalled();
   });
 
-  it('does not list pending jobs when the user is not Nota Pro entitled', async () => {
+  it('does not list pending jobs when the user is not Madrid Pro entitled', async () => {
     // Arrange
     drainMocks.useNotesDataMeta.mockReturnValue({
       notaProEntitled: false,

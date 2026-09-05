@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import {
   parseScreenFromPath,
   type AppNavScreen,
-} from '@nota/app-navigation-core/navigation';
+} from '@getmadrid/app-navigation-core/navigation';
 
 /**
  * Active workspace screen derived from the Next App Router pathname. `usePathname`

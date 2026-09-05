@@ -1,11 +1,11 @@
 {
-  "name": "@nota/electron-bridge-core",
+  "name": "@getmadrid/electron-bridge-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./menubar-payload": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/electron-menubar-payload.ts",
         "import": "./src/electron-menubar-payload.ts",
         "default": "./src/electron-menubar-payload.ts"
@@ -15,7 +15,7 @@
       "default": "./src/electron-menubar-payload.ts"
     },
     "./window-chrome": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/electron-window-chrome.ts",
         "import": "./src/electron-window-chrome.ts",
         "default": "./src/electron-window-chrome.ts"
@@ -25,7 +25,7 @@
       "default": "./src/electron-window-chrome.ts"
     },
     "./menubar-events": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/electron-menubar-events.ts",
         "import": "./src/electron-menubar-events.ts",
         "default": "./src/electron-menubar-events.ts"
@@ -35,7 +35,7 @@
       "default": "./src/electron-menubar-events.ts"
     },
     "./update-status": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-update-status.ts",
         "import": "./src/nota-update-status.ts",
         "default": "./src/nota-update-status.ts"
@@ -45,7 +45,7 @@
       "default": "./src/nota-update-status.ts"
     },
     "./clipboard-plain-text": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/clipboard-plain-text-to-tiptap-doc.ts",
         "import": "./src/clipboard-plain-text-to-tiptap-doc.ts",
         "default": "./src/clipboard-plain-text-to-tiptap-doc.ts"
@@ -58,7 +58,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -76,7 +76,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*"
+    "@getmadrid/database-types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

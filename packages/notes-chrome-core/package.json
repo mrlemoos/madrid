@@ -1,11 +1,11 @@
 {
-  "name": "@nota/notes-chrome-core",
+  "name": "@getmadrid/notes-chrome-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./notes-chrome": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-chrome.ts",
         "import": "./src/notes-chrome.ts",
         "default": "./src/notes-chrome.ts"
@@ -15,7 +15,7 @@
       "default": "./src/notes-chrome.ts"
     },
     "./chrome-type": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-chrome-type.ts",
         "import": "./src/notes-chrome-type.ts",
         "default": "./src/notes-chrome-type.ts"
@@ -25,7 +25,7 @@
       "default": "./src/notes-chrome-type.ts"
     },
     "./banner-chrome": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-banner-chrome.ts",
         "import": "./src/note-banner-chrome.ts",
         "default": "./src/note-banner-chrome.ts"
@@ -35,7 +35,7 @@
       "default": "./src/note-banner-chrome.ts"
     },
     "./sidebar-tree-styles": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/notes-sidebar-tree-styles.ts",
         "import": "./src/notes-sidebar-tree-styles.ts",
         "default": "./src/notes-sidebar-tree-styles.ts"
@@ -48,7 +48,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -66,7 +66,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/design": "workspace:*",
+    "@getmadrid/design": "workspace:*",
     "class-variance-authority": "^0.7.1"
   },
   "devDependencies": {

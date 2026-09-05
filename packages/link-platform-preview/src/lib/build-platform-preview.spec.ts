@@ -37,7 +37,7 @@ describe('buildYoutubeVideoPreview', () => {
     // Arrange
     const input = {
       videoTitle: 'My video',
-      channelName: 'Nota',
+      channelName: 'Madrid',
       thumbnailUrl: 'https://i.ytimg.com/vi/x/hqdefault.jpg',
       channelAvatarUrl: 'https://yt.example/avatar.jpg',
     };
@@ -47,7 +47,7 @@ describe('buildYoutubeVideoPreview', () => {
 
     // Assert
     expect(preview.boldText).toBe('My video');
-    expect(preview.suffixText).toBe(' by Nota');
+    expect(preview.suffixText).toBe(' by Madrid');
     expect(preview.logoUrl).toContain('youtube.svg');
     expect(preview.thumbnailUrl).toBe('https://i.ytimg.com/vi/x/hqdefault.jpg');
     expect(preview.channelAvatarUrl).toBe('https://yt.example/avatar.jpg');
@@ -57,13 +57,13 @@ describe('buildYoutubeVideoPreview', () => {
 describe('stripYoutubeChannelTitleSuffix', () => {
   it('removes trailing YouTube branding', () => {
     // Arrange
-    const title = 'Nota Labs - YouTube';
+    const title = 'Madrid Labs - YouTube';
 
     // Act
     const stripped = stripYoutubeChannelTitleSuffix(title);
 
     // Assert
-    expect(stripped).toBe('Nota Labs');
+    expect(stripped).toBe('Madrid Labs');
   });
 });
 

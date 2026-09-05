@@ -1,15 +1,15 @@
-import { buildNoteLinkGraph, notesToIdMap } from '@nota/note-link-graph';
+import { buildNoteLinkGraph, notesToIdMap } from '@getmadrid/note-link-graph';
 import { useDeferredValue, useMemo, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
+import { cn } from '@getmadrid/design/utils';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
 import {
   NOTA_PRESSABLE_CLASS,
   NOTA_CHROME_NAV_ITEM_CLASS,
-} from '@nota/nota-motion-ui/interaction';
-import { useNotesDataVault } from '@nota/note-runtime/notes-data-context';
-import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
-import { noteHashHref } from '@nota/note-editor-core/note-hash-href';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
+} from '@getmadrid/nota-motion-ui/interaction';
+import { useNotesDataVault } from '@getmadrid/note-runtime/notes-data-context';
+import { useAppNavigationScreen } from '@getmadrid/app-navigation-ui/use-app-navigation-screen';
+import { noteHashHref } from '@getmadrid/note-editor-core/note-hash-href';
+import { markNavIntent } from '@getmadrid/nota-motion-ui/panel-motion';
 import Link from 'next/link';
 
 export function NoteBacklinksPanel({

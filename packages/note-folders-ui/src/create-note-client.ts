@@ -1,7 +1,7 @@
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
-import { recordWritingActivityToday } from '@nota/writing-activity-ui/tracking';
-import type { Note } from '@nota/database-types';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
+import { recordWritingActivityToday } from '@getmadrid/writing-activity-ui/tracking';
+import type { Note } from '@getmadrid/database-types';
 
 export async function clientCreateNote(options: {
   userId: string;

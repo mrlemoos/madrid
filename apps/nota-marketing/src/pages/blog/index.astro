@@ -12,9 +12,9 @@ if (!site) {
 const siteRoot = new URL('/', site).href;
 const blogUrl = new URL('/blog', site).href;
 
-const pageTitle = 'Blog | Nota';
+const pageTitle = 'Blog | Madrid';
 const pageDescription =
-  'Product updates and notes on building a calm Mac notes app. Occasional essays from the Nota team.';
+  'Product updates and notes on building a calm Mac notes app. Occasional essays from the Madrid team.';
 
 const posts = sortBlogPostsByDate(
   (await getCollection('blog')).filter(isBlogPostPublished),
@@ -32,10 +32,10 @@ const structuredData = {
     },
     {
       '@type': 'Blog',
-      name: 'Nota blog',
+      name: 'Madrid blog',
       description: pageDescription,
       url: blogUrl,
-      publisher: { '@type': 'Organization', name: 'Nota', url: siteRoot },
+      publisher: { '@type': 'Organization', name: 'Madrid', url: siteRoot },
     },
   ],
 };

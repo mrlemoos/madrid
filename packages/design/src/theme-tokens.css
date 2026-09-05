@@ -1,8 +1,8 @@
 /**
- * Nota design tokens: shadcn-style semantic palette (`--primary`, `--muted`, …) plus the
+ * Madrid design tokens: shadcn-style semantic palette (`--primary`, `--muted`, …) plus the
  * `@theme inline` mapping Tailwind utilities (`bg-primary`, `border-border`, …) read.
  *
- * Imported by every surface that renders `@nota/design` primitives (app globals, Storybook preview).
+ * Imported by every surface that renders `@getmadrid/design` primitives (app globals, Storybook preview).
  * Font families are declared here; the webfonts themselves are loaded by the consuming app.
  */
 

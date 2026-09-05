@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/writing-activity-core',
   test: {
-    name: '@nota/writing-activity-core',
+    name: '@getmadrid/writing-activity-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

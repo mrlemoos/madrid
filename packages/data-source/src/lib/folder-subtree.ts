@@ -1,9 +1,9 @@
-import type { Folder } from '@nota/database-types';
+import type { Folder } from '@getmadrid/database-types';
 
 /**
  * This folder id plus every descendant folder id (depth-first from root).
  *
- * Pure folder-tree math owned locally by `@nota/data-source` so the `models`
+ * Pure folder-tree math owned locally by `@getmadrid/data-source` so the `models`
  * layer does not reach upward into the app's folder feature cluster. Mirrors
  * `subtreeFolderIds` in the app's `lib/folder-tree`.
  */

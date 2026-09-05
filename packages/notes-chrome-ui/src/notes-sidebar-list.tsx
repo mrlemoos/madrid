@@ -12,8 +12,8 @@ import {
   type SetStateAction,
   type JSX,
 } from 'react';
-import { Icon } from '@nota/design/icon';
-import { TintCircle } from '@nota/design/nota-tint-circle';
+import { Icon } from '@getmadrid/design/icon';
+import { TintCircle } from '@getmadrid/design/nota-tint-circle';
 import {
   ContextMenu,
   ContextMenuItem,
@@ -25,16 +25,16 @@ import {
   ContextMenuSubmenuTrigger,
   ContextMenuTrigger,
   ContextMenuViewport,
-} from '@nota/design/context-menu';
+} from '@getmadrid/design/context-menu';
 import {
   Tooltip,
   TooltipPopup,
   TooltipPortal,
   TooltipPositioner,
   TooltipTrigger,
-} from '@nota/design/tooltip';
-import { cn } from '@nota/design/utils';
-import { NOTA_TRACKING_CHROME_XS_CLASS } from '@nota/notes-chrome-core/chrome-type';
+} from '@getmadrid/design/tooltip';
+import { cn } from '@getmadrid/design/utils';
+import { NOTA_TRACKING_CHROME_XS_CLASS } from '@getmadrid/notes-chrome-core/chrome-type';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
   NOTA_SIDEBAR_TREE_BRANCH_CLASS,
@@ -44,36 +44,36 @@ import {
   notesSidebarTreeFolderTriggerClass,
   notesSidebarTreeLeafRowVariants,
   notesSidebarTreeRowVariants,
-} from '@nota/notes-chrome-core/sidebar-tree-styles';
-import type { Folder, Note, UserPreferences } from '@nota/database-types';
-import type { NotesPanel } from '@nota/app-navigation-core/navigation';
-import { markNavIntent } from '@nota/nota-motion-ui/panel-motion';
-import { noteHashHref } from '@nota/note-editor-core/note-hash-href';
+} from '@getmadrid/notes-chrome-core/sidebar-tree-styles';
+import type { Folder, Note, UserPreferences } from '@getmadrid/database-types';
+import type { NotesPanel } from '@getmadrid/app-navigation-core/navigation';
+import { markNavIntent } from '@getmadrid/nota-motion-ui/panel-motion';
+import { noteHashHref } from '@getmadrid/note-editor-core/note-hash-href';
 import Link from 'next/link';
-import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
-import { clientDeleteNoteById } from '@nota/note-folders-ui/delete-note-client';
-import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';
+import { clientCreateNote } from '@getmadrid/note-folders-ui/create-note-client';
+import { clientDeleteNoteById } from '@getmadrid/note-folders-ui/delete-note-client';
+import { clientMoveNoteToFolder } from '@getmadrid/note-folders-ui/move-note-folder-client';
 import {
   NOTA_RENAME_FOLDER_REQUEST_EVENT,
   type RenameFolderRequestDetail,
-} from '@nota/note-folders-ui/folder-rename-request';
+} from '@getmadrid/note-folders-ui/folder-rename-request';
 import {
   FOLDER_TINT_PRESET_LABEL_KEY,
   FOLDER_TINT_SWATCH_PRESETS,
   folderHasPersistedTint,
-} from '@nota/note-folders-core/folder-tint-presets';
-import { clientRenameFolder } from '@nota/note-folders-ui/rename-folder-client';
-import { clientUpdateFolderTint } from '@nota/note-folders-ui/update-folder-tint-client';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
-import { compareNoteTitles } from '@nota/note-folders-core/note-sidebar-groups';
+} from '@getmadrid/note-folders-core/folder-tint-presets';
+import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
+import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { compareNoteTitles } from '@getmadrid/note-folders-core/note-sidebar-groups';
 import {
   ancestorFolderIds,
   buildFolderTree,
   flattenFoldersWithPathLabels,
   type FolderTreeNode,
-} from '@nota/note-folders-core/folder-tree';
-import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
-import { FolderDeleteDialog } from '@nota/note-folders-ui/folder-delete-dialog';
+} from '@getmadrid/note-folders-core/folder-tree';
+import { FolderCreateDialog } from '@getmadrid/note-folders-ui/folder-create-dialog';
+import { FolderDeleteDialog } from '@getmadrid/note-folders-ui/folder-delete-dialog';
 
 type NotesSidebarListProps = {
   notes: Note[];

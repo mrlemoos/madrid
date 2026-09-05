@@ -17,7 +17,7 @@ import path from 'node:path';
 import {
   NOTA_CLERK_SSO_CALLBACK_PATH,
   NOTA_CUSTOM_SCHEME_URL_PREFIX,
-} from '@nota/clerk-oauth-protocol';
+} from '@getmadrid/clerk-oauth-protocol';
 import { buildNotaAppMenuTemplate } from './native-app-menu.js';
 import {
   DEV_PORT,
@@ -38,7 +38,7 @@ import {
 } from './window-open-policy.js';
 
 /** Human-readable name for menus, notifications, and `electron-updater` `{appName}` (not `package.json` `name`). */
-app.setName('Nota');
+app.setName('Madrid');
 
 registerNotaUpdaterIpc();
 
@@ -258,7 +258,7 @@ function createTray(): void {
     return;
   }
   tray = new Tray(icon);
-  tray.setToolTip('Nota');
+  tray.setToolTip('Madrid');
   tray.setContextMenu(
     Menu.buildFromTemplate([
       {
@@ -291,7 +291,7 @@ function createTray(): void {
       },
       { type: 'separator' },
       {
-        label: 'Open Nota',
+        label: 'Open Madrid',
         click: () => {
           ensureMainWindow();
         },

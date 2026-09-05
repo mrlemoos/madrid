@@ -1,6 +1,6 @@
 import { maybePruneEmptyFolder } from './maybe-prune-empty-folder';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
-import type { Note, UserPreferences } from '@nota/database-types';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
+import type { Note, UserPreferences } from '@getmadrid/database-types';
 
 export async function clientMoveNoteToFolder(options: {
   noteId: string;

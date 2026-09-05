@@ -41,7 +41,7 @@ describe('ErrorBoundary', () => {
     // Assert
     expect(
       screen.getByText(
-        'Something went wrong loading Nota. You can try again or reload the app.',
+        'Something went wrong loading Madrid. You can try again or reload the app.',
       ),
     ).toBeTruthy();
     expect(screen.getByText('boom from child')).toBeTruthy();

@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-editor-ui",
+  "name": "@getmadrid/note-editor-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./note-editor": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-editor.tsx",
         "import": "./src/note-editor.tsx",
         "default": "./src/note-editor.tsx"
@@ -15,7 +15,7 @@
       "default": "./src/note-editor.tsx"
     },
     "./note-detail-panel": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-detail-panel.tsx",
         "import": "./src/note-detail-panel.tsx",
         "default": "./src/note-detail-panel.tsx"
@@ -25,7 +25,7 @@
       "default": "./src/note-detail-panel.tsx"
     },
     "./note-backlinks-panel": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-backlinks-panel.tsx",
         "import": "./src/note-backlinks-panel.tsx",
         "default": "./src/note-backlinks-panel.tsx"
@@ -35,7 +35,7 @@
       "default": "./src/note-backlinks-panel.tsx"
     },
     "./note-layout-menu": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-layout-menu.tsx",
         "import": "./src/note-layout-menu.tsx",
         "default": "./src/note-layout-menu.tsx"
@@ -45,7 +45,7 @@
       "default": "./src/note-layout-menu.tsx"
     },
     "./note-image-lightbox": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-image-lightbox.tsx",
         "import": "./src/note-image-lightbox.tsx",
         "default": "./src/note-image-lightbox.tsx"
@@ -55,7 +55,7 @@
       "default": "./src/note-image-lightbox.tsx"
     },
     "./note-share-button": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/note-share-button.tsx",
         "import": "./src/note-share-button.tsx",
         "default": "./src/note-share-button.tsx"
@@ -65,7 +65,7 @@
       "default": "./src/note-share-button.tsx"
     },
     "./og-preview-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/og-preview-client.ts",
         "import": "./src/og-preview-client.ts",
         "default": "./src/og-preview-client.ts"
@@ -78,7 +78,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -96,27 +96,27 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/app-navigation-core": "workspace:*",
-    "@nota/app-navigation-ui": "workspace:*",
-    "@nota/data-source": "workspace:*",
+    "@getmadrid/app-navigation-core": "workspace:*",
+    "@getmadrid/app-navigation-ui": "workspace:*",
+    "@getmadrid/data-source": "workspace:*",
     "next": "catalog:",
-    "@nota/database-types": "workspace:*",
-    "@nota/editor": "workspace:*",
-    "@nota/electron-bridge-ui": "workspace:*",
-    "@nota/i18n": "workspace:*",
-    "@nota/internal-note-link": "workspace:*",
-    "@nota/isomorphic-helpers": "workspace:*",
-    "@nota/link-platform-preview": "workspace:*",
-    "@nota/note-editor-core": "workspace:*",
-    "@nota/note-link-graph": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/nota-motion-core": "workspace:*",
-    "@nota/nota-motion-ui": "workspace:*",
-    "@nota/notes-chrome-core": "workspace:*",
-    "@nota/notes-offline": "workspace:*",
-    "@nota/notes-yjs-core": "workspace:*",
-    "@nota/design": "workspace:*",
-    "@nota/writing-activity-ui": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/editor": "workspace:*",
+    "@getmadrid/electron-bridge-ui": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "@getmadrid/internal-note-link": "workspace:*",
+    "@getmadrid/isomorphic-helpers": "workspace:*",
+    "@getmadrid/link-platform-preview": "workspace:*",
+    "@getmadrid/note-editor-core": "workspace:*",
+    "@getmadrid/note-link-graph": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/nota-motion-core": "workspace:*",
+    "@getmadrid/nota-motion-ui": "workspace:*",
+    "@getmadrid/notes-chrome-core": "workspace:*",
+    "@getmadrid/notes-offline": "workspace:*",
+    "@getmadrid/notes-yjs-core": "workspace:*",
+    "@getmadrid/design": "workspace:*",
+    "@getmadrid/writing-activity-ui": "workspace:*",
     "@supabase/supabase-js": "catalog:",
     "@tiptap/core": "^2.11.5",
     "react": "catalog:",

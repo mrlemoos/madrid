@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-capture-ui",
+  "name": "@getmadrid/note-capture-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./audio-to-xai-stt-format": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-to-xai-stt-format.ts",
         "import": "./src/audio-to-xai-stt-format.ts",
         "default": "./src/audio-to-xai-stt-format.ts"
@@ -15,7 +15,7 @@
       "default": "./src/audio-to-xai-stt-format.ts"
     },
     "./audio-to-note-client": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-to-note-client.ts",
         "import": "./src/audio-to-note-client.ts",
         "default": "./src/audio-to-note-client.ts"
@@ -25,7 +25,7 @@
       "default": "./src/audio-to-note-client.ts"
     },
     "./audio-to-note-apply": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-to-note-apply.ts",
         "import": "./src/audio-to-note-apply.ts",
         "default": "./src/audio-to-note-apply.ts"
@@ -35,7 +35,7 @@
       "default": "./src/audio-to-note-apply.ts"
     },
     "./audio-note-pending-idb": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-note-pending-idb.ts",
         "import": "./src/audio-note-pending-idb.ts",
         "default": "./src/audio-note-pending-idb.ts"
@@ -45,7 +45,7 @@
       "default": "./src/audio-note-pending-idb.ts"
     },
     "./study-recording-upload-warning": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/study-recording-upload-warning.ts",
         "import": "./src/study-recording-upload-warning.ts",
         "default": "./src/study-recording-upload-warning.ts"
@@ -55,7 +55,7 @@
       "default": "./src/study-recording-upload-warning.ts"
     },
     "./study-recording-upload-warning-banner": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/study-recording-upload-warning-banner.tsx",
         "import": "./src/study-recording-upload-warning-banner.tsx",
         "default": "./src/study-recording-upload-warning-banner.tsx"
@@ -65,7 +65,7 @@
       "default": "./src/study-recording-upload-warning-banner.tsx"
     },
     "./audio-to-note-start": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-to-note-start.ts",
         "import": "./src/audio-to-note-start.ts",
         "default": "./src/audio-to-note-start.ts"
@@ -75,7 +75,7 @@
       "default": "./src/audio-to-note-start.ts"
     },
     "./audio-to-note-dock": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/audio-to-note-dock.tsx",
         "import": "./src/audio-to-note-dock.tsx",
         "default": "./src/audio-to-note-dock.tsx"
@@ -85,7 +85,7 @@
       "default": "./src/audio-to-note-dock.tsx"
     },
     "./use-audio-note-pending-drain": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/use-audio-note-pending-drain.ts",
         "import": "./src/use-audio-note-pending-drain.ts",
         "default": "./src/use-audio-note-pending-drain.ts"
@@ -98,7 +98,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -116,13 +116,13 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/app-navigation-core": "workspace:*",
-    "@nota/data-source": "workspace:*",
-    "@nota/database-types": "workspace:*",
-    "@nota/note-capture-core": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/notes-offline": "workspace:*",
-    "@nota/design": "workspace:*",
+    "@getmadrid/app-navigation-core": "workspace:*",
+    "@getmadrid/data-source": "workspace:*",
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/note-capture-core": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/notes-offline": "workspace:*",
+    "@getmadrid/design": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

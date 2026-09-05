@@ -52,7 +52,7 @@ export function buildNotaAppMenuTemplate(
   const { isMac } = options;
   return [
     {
-      label: 'Nota',
+      label: 'Madrid',
       submenu: [
         { role: 'about' },
         { type: 'separator' },

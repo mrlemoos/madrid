@@ -2,15 +2,15 @@ import type { JSX } from 'react';
 import {
   WIKIPEDIA_ARTICLE_SUFFIX_I18N_KEY,
   type PlatformLinkPreview,
-} from '@nota/link-platform-preview';
+} from '@getmadrid/link-platform-preview';
 import {
   HoverCard,
   HoverCardPortal,
   HoverCardPositioner,
   HoverCardPopup,
   HoverCardTrigger,
-} from '@nota/design/hover-card';
-import { cn } from '@nota/design/utils';
+} from '@getmadrid/design/hover-card';
+import { cn } from '@getmadrid/design/utils';
 import { safeOgImageSrcForPreview } from '../../lib/og-image-url';
 import { useNotePdfDocContext } from './note-pdf-extension';
 

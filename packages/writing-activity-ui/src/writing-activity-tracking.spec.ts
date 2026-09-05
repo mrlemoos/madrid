@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import {
   createWritingActivitySessionRecorder,
   recordWritingActivityDay,

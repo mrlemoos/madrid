@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 import { noteAfterPatchMutation } from './note-patch-result';
 
 function makeNote(overrides: Partial<Note> = {}): Note {

@@ -1,4 +1,4 @@
-import type { IconName } from '@nota/design/icon';
+import type { IconName } from '@getmadrid/design/icon';
 
 export type NotaThemeChoice = 'light' | 'dark' | 'system';
 

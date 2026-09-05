@@ -1,23 +1,23 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { clientCreateNote } from './create-note-client';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
-import { recordWritingActivityToday } from '@nota/writing-activity-ui/tracking';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
+import { recordWritingActivityToday } from '@getmadrid/writing-activity-ui/tracking';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
 
 const insertNoteAtFront = vi.fn();
 const refreshNotesList = vi.fn();
 
-vi.mock('@nota/data-source/vault-runtime', () => ({
+vi.mock('@getmadrid/data-source/vault-runtime', () => ({
   vaultMutator: {
     createNote: vi.fn(),
   },
 }));
 
-vi.mock('@nota/app-navigation-core/navigation', () => ({
+vi.mock('@getmadrid/app-navigation-core/navigation', () => ({
   navigateToScreen: vi.fn(),
 }));
 
-vi.mock('@nota/writing-activity-ui/tracking', () => ({
+vi.mock('@getmadrid/writing-activity-ui/tracking', () => ({
   recordWritingActivityToday: vi.fn(),
 }));
 

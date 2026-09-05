@@ -1,1 +1,1 @@
-export * from '@nota/database-types';
+export * from '@getmadrid/database-types';

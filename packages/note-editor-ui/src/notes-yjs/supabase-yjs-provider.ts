@@ -1,10 +1,10 @@
 import type { RealtimeChannel } from '@supabase/supabase-js';
-import { encodeDocAsSnapshot, shouldCompact } from '@nota/notes-yjs-core';
+import { encodeDocAsSnapshot, shouldCompact } from '@getmadrid/notes-yjs-core';
 import * as Y from 'yjs';
 
-import type { Database } from '@nota/database-types';
+import type { Database } from '@getmadrid/database-types';
 
-import type { TypedSupabaseBrowserClient } from '@nota/data-source/supabase/browser';
+import type { TypedSupabaseBrowserClient } from '@getmadrid/data-source/supabase/browser';
 import { base64ToUint8, uint8ToBase64 } from './yjs-base64';
 
 type NoteYjsUpdateRow = Database['public']['Tables']['note_yjs_updates']['Row'];

@@ -1,5 +1,5 @@
 {
-  "name": "@nota/source",
+  "name": "@getmadrid/source",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@10.10.0",
@@ -9,12 +9,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mrlemoos/nota.git"
+    "url": "https://github.com/mrlemoos/madrid.git"
   },
   "scripts": {
     "electron:dev": "nx dev nota-electron",
     "electron:pack": "nx electron:pack nota-electron",
-    "release:electron": "nx run @nota/nota-electron:electron:release",
+    "release:electron": "nx run @getmadrid/nota-electron:electron:release",
     "dev": "nx run-many -t dev",
     "generate:nota-icons": "node apps/nota/scripts/generate-nota-icons.mjs",
     "test": "nx run-many -t test",

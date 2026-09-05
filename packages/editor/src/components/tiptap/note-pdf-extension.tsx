@@ -14,8 +14,8 @@ import {
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { Button } from '@nota/design/button';
-import { LoadingStatus } from '@nota/design/spinner';
+import { Button } from '@getmadrid/design/button';
+import { LoadingStatus } from '@getmadrid/design/spinner';
 import {
   Tooltip,
   TooltipPopup,
@@ -23,13 +23,13 @@ import {
   TooltipPositioner,
   TooltipProvider,
   TooltipTrigger,
-} from '@nota/design/tooltip';
-import { cn } from '@nota/design/utils';
+} from '@getmadrid/design/tooltip';
+import { cn } from '@getmadrid/design/utils';
 import { pdfPreviewSrc } from '../../lib/pdf-preview-url';
 import { PdfJsModalPreview } from '../pdf-js-modal-preview';
 import { NotePdfThumbnailFrame } from './note-pdf-thumbnail-frame';
-import type { NoteAttachment } from '@nota/database-types';
-import type { PlatformLinkPreview } from '@nota/link-platform-preview';
+import type { NoteAttachment } from '@getmadrid/database-types';
+import type { PlatformLinkPreview } from '@getmadrid/link-platform-preview';
 // Asset URL for the PDF.js worker. `new URL(..., import.meta.url)` is the
 // bundler-native way to emit and reference the asset (replaces Vite's `?url`).
 const pdfjsWorkerUrl = new URL(

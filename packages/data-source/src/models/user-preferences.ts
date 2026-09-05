@@ -1,4 +1,4 @@
-import type { UserPreferences } from '@nota/database-types';
+import type { UserPreferences } from '@getmadrid/database-types';
 import type { TypedSupabaseClient } from './notes';
 
 export async function getUserPreferences(

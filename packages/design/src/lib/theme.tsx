@@ -5,7 +5,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { useOrThrow } from '@nota/helper-hooks';
+import { useOrThrow } from '@getmadrid/helper-hooks';
 
 import {
   applySafariChromeBackground,

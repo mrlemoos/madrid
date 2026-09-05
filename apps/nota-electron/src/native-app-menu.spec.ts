@@ -39,7 +39,7 @@ function noopActions() {
 }
 
 describe('buildNotaAppMenuTemplate', () => {
-  it('includes Nota app submenu roles in order', () => {
+  it('includes Madrid app submenu roles in order', () => {
     // Arrange
     const actions = noopActions();
 
@@ -47,7 +47,7 @@ describe('buildNotaAppMenuTemplate', () => {
     const template = buildNotaAppMenuTemplate(actions, { isMac: true });
 
     // Assert
-    const notaItems = submenuOf(template, 'Nota');
+    const notaItems = submenuOf(template, 'Madrid');
     expect(rolesOnly(notaItems)).toEqual([
       'about',
       'services',
@@ -64,7 +64,7 @@ describe('buildNotaAppMenuTemplate', () => {
 
     // Act
     const template = buildNotaAppMenuTemplate(actions, { isMac: true });
-    const notaItems = submenuOf(template, 'Nota');
+    const notaItems = submenuOf(template, 'Madrid');
     const quitItem = notaItems.find(
       (i): i is MenuItemConstructorOptions & { role: 'quit' } =>
         'role' in i && i.role === 'quit',

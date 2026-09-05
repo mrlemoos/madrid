@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/editor',
   test: {
-    name: '@nota/editor',
+    name: '@getmadrid/editor',
     watch: false,
     globals: true,
     environment: 'jsdom',

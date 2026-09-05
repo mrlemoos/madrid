@@ -1,8 +1,8 @@
 import { useEffect, useEffectEvent, useRef } from 'react';
 import { openTodaysNoteClient } from './open-todays-note';
-import type { Note } from '@nota/database-types';
-import { navigateFromLegacyPath } from '@nota/app-navigation-core/navigation';
-import { useOptionalNotesDataActions } from '@nota/note-runtime/notes-data-context';
+import type { Note } from '@getmadrid/database-types';
+import { navigateFromLegacyPath } from '@getmadrid/app-navigation-core/navigation';
+import { useOptionalNotesDataActions } from '@getmadrid/note-runtime/notes-data-context';
 
 export function useTodaysNoteShortcut(
   notes: Pick<Note, 'id' | 'folder_id'>[],

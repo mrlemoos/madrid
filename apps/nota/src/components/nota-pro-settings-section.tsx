@@ -1,11 +1,11 @@
 import { PricingTable } from '@clerk/react';
 import { useCallback, useState, type JSX } from 'react';
-import { Button } from '@nota/design/button';
-import { LoadingStatus } from '@nota/design/spinner';
+import { Button } from '@getmadrid/design/button';
+import { LoadingStatus } from '@getmadrid/design/spinner';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '@nota/note-runtime/notes-data-context';
+} from '@getmadrid/note-runtime/notes-data-context';
 import { postNotaProInvalidate } from '../lib/nota-server-client';
 
 export function NotaProSettingsSection(): JSX.Element {
@@ -46,13 +46,13 @@ export function NotaProSettingsSection(): JSX.Element {
             >
               {notaProEntitled ? (
                 <>
-                  You have an active Nota subscription on this account. Notes
+                  You have an active Madrid subscription on this account. Notes
                   sync and attachments are enabled. Manage or change your plan
                   below.
                 </>
               ) : (
                 <>
-                  Nota requires an active subscription. Choose a plan below to
+                  Madrid requires an active subscription. Choose a plan below to
                   subscribe with Clerk Billing.
                 </>
               )}

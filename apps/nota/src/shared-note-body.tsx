@@ -1,9 +1,9 @@
 'use client';
 
 import { useMemo, type JSX } from 'react';
-import { TipTapEditor, type AttachmentStorageOps } from '@nota/editor';
-import type { NoteAttachment } from '@nota/database-types';
-import type { SharedNoteAttachment } from '@nota/data-source/note-share-client';
+import { TipTapEditor, type AttachmentStorageOps } from '@getmadrid/editor';
+import type { NoteAttachment } from '@getmadrid/database-types';
+import type { SharedNoteAttachment } from '@getmadrid/data-source/note-share-client';
 
 export interface SharedNoteBodyProps {
   noteId: string;
@@ -24,7 +24,7 @@ export function attachmentUrl(token: string, attachmentId: string): string {
  *
  * Split into its own module so the share view can lazy-load it: `useEditor`
  * throws when it detects a server render, and the lazy boundary has to be a
- * local file — dynamically importing `@nota/editor` itself would ban the static
+ * local file — dynamically importing `@getmadrid/editor` itself would ban the static
  * imports the rest of the app relies on (`@nx/enforce-module-boundaries`).
  */
 export default function SharedNoteBody({

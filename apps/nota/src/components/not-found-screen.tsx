@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
-import { Icon } from '@nota/design/icon';
+import { Icon } from '@getmadrid/design/icon';
 import { NotaLogo } from '@/components/nota-logo';
-import { buttonVariants } from '@nota/design/button';
+import { buttonVariants } from '@getmadrid/design/button';
 import { cn } from '@/lib/utils';
-import { pathForScreen } from '@nota/app-navigation-core/navigation';
+import { pathForScreen } from '@getmadrid/app-navigation-core/navigation';
 
 export function NotFoundScreen({
   signedIn,
@@ -88,7 +88,7 @@ export function NotFoundScreen({
           />
 
           <p className="mx-auto max-w-[22rem] text-center text-pretty text-muted-foreground text-sm/relaxed">
-            Nothing in Nota lives at this address. It may have moved, never
+            Nothing in Madrid lives at this address. It may have moved, never
             existed, or the link was copied wrong.
           </p>
 

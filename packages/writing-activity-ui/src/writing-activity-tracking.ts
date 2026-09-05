@@ -1,6 +1,6 @@
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { localDateKey } from '@nota/note-journal-core/local-date-key';
-import { incrementActivityDay } from '@nota/writing-activity-core/writing-activity';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { localDateKey } from '@getmadrid/note-journal-core/local-date-key';
+import { incrementActivityDay } from '@getmadrid/writing-activity-core/writing-activity';
 
 export function recordWritingActivityDay(dateKey: string): void {
   const { writingActivityDays, setWritingActivityDays } =

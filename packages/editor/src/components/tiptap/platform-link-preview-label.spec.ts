@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { PlatformLinkPreview } from '@nota/link-platform-preview';
+import type { PlatformLinkPreview } from '@getmadrid/link-platform-preview';
 import {
   platformAttrsFromPreview,
   platformPreviewFromAttrs,

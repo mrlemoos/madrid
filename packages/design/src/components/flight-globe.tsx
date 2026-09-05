@@ -6,7 +6,7 @@
  *
  * @remarks
  * Import from the package subpath only:
- * `import { FlightGlobe } from '@nota/design/flight-globe'`.
+ * `import { FlightGlobe } from '@getmadrid/design/flight-globe'`.
  *
  * @packageDocumentation
  */

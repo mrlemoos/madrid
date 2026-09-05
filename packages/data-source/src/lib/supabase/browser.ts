@@ -1,7 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@nota/database-types';
+import type { Database } from '@getmadrid/database-types';
 
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 
 const supabaseUrl = env('NEXT_PUBLIC_SUPABASE_URL');
 const supabaseAnonKey = env('NEXT_PUBLIC_SUPABASE_ANON_KEY');

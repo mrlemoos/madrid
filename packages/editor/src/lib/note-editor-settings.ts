@@ -11,9 +11,9 @@ export {
   noteSurfaceMaxWidthPx,
   noteThemeSelectValue,
   parseNoteEditorSettings,
-} from '@nota/note-editor-settings';
+} from '@getmadrid/note-editor-settings';
 export type {
   NotaSurfaceFontRole,
   NotaSurfaceMeasure,
   NoteEditorSettings,
-} from '@nota/note-editor-settings';
+} from '@getmadrid/note-editor-settings';

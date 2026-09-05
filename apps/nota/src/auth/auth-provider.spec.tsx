@@ -19,7 +19,7 @@ const clerkProviderProps = vi.hoisted(() => ({
 const routerPush = vi.hoisted(() => vi.fn());
 const routerReplace = vi.hoisted(() => vi.fn());
 
-vi.mock('@nota/env-nextjs', () => ({
+vi.mock('@getmadrid/env-nextjs', () => ({
   env: (key: string) => envMock(key),
 }));
 
@@ -111,6 +111,7 @@ describe('AuthProvider', () => {
       signUpUrl: '/signup',
       signInForceRedirectUrl: '/notes',
       signUpForceRedirectUrl: '/notes',
+      localization: { formButtonPrimary: 'Continue' },
       allowedRedirectProtocols: ['nota:'],
     });
     expect(clerkProviderProps.current?.routerPush).toBeTypeOf('function');

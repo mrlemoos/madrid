@@ -1,4 +1,4 @@
-import type { Json, Note } from '@nota/database-types';
+import type { Json, Note } from '@getmadrid/database-types';
 import type { OutboxEntry, StoredNote } from './types';
 
 /** Fields replayed to the remote note store on outbox upsert. */

@@ -11,67 +11,67 @@ import {
 import { Dialog } from '@base-ui/react/dialog';
 import type { DialogRoot } from '@base-ui/react/dialog';
 import { Command, defaultFilter } from 'cmdk';
-import { Icon, type IconName } from '@nota/design/icon';
-import { cn } from '@nota/design/utils';
+import { Icon, type IconName } from '@getmadrid/design/icon';
+import { cn } from '@getmadrid/design/utils';
 import {
   notaKbdFooterClass,
   notaKbdHintClass,
-} from '@nota/note-palette-core/nota-kbd-styles';
-import { useNoteEditorCommands } from '@nota/editor';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
-import { useNotesData } from '@nota/note-runtime/notes-data-context';
-import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
-import { openTodaysNoteClient } from '@nota/app-navigation-ui/open-todays-note';
+} from '@getmadrid/note-palette-core/nota-kbd-styles';
+import { useNoteEditorCommands } from '@getmadrid/editor';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
+import { useNotesData } from '@getmadrid/note-runtime/notes-data-context';
+import { useAppNavigationScreen } from '@getmadrid/app-navigation-ui/use-app-navigation-screen';
+import { openTodaysNoteClient } from '@getmadrid/app-navigation-ui/open-todays-note';
 import {
   navigateFromLegacyPath,
   navigateToScreen,
-} from '@nota/app-navigation-core/navigation';
-import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
+} from '@getmadrid/app-navigation-core/navigation';
+import { NOTA_MENUBAR_MOVE_NOTE_REQUEST_EVENT } from '@getmadrid/electron-bridge-core/menubar-events';
 import { useClerk } from '@clerk/react';
-import { clientCreateNote } from '@nota/note-folders-ui/create-note-client';
-import { clientDeleteNoteById } from '@nota/note-folders-ui/delete-note-client';
-import { clientMoveNoteToFolder } from '@nota/note-folders-ui/move-note-folder-client';
-import { dispatchRenameFolderRequest } from '@nota/note-folders-ui/folder-rename-request';
-import { useMetaShortcutKey } from '@nota/helper-hooks';
-import { movePickEnterAction } from '@nota/note-palette-core/move-pick-enter';
+import { clientCreateNote } from '@getmadrid/note-folders-ui/create-note-client';
+import { clientDeleteNoteById } from '@getmadrid/note-folders-ui/delete-note-client';
+import { clientMoveNoteToFolder } from '@getmadrid/note-folders-ui/move-note-folder-client';
+import { dispatchRenameFolderRequest } from '@getmadrid/note-folders-ui/folder-rename-request';
+import { useMetaShortcutKey } from '@getmadrid/helper-hooks';
+import { movePickEnterAction } from '@getmadrid/note-palette-core/move-pick-enter';
 import {
   parseMovePickNoteId,
   readHighlightedCmdkItemValue,
   readMovePickNoteIdFromHighlightedItem,
-} from '@nota/note-palette-core/move-pick-helpers';
-import type { Folder } from '@nota/database-types';
+} from '@getmadrid/note-palette-core/move-pick-helpers';
+import type { Folder } from '@getmadrid/database-types';
 import { useNotaTranslator } from './use-palette-translator';
-import { flattenFoldersWithPathLabels } from '@nota/note-folders-core/folder-tree';
-import { hasJournalNotes } from '@nota/note-journal-core/notes';
+import { flattenFoldersWithPathLabels } from '@getmadrid/note-folders-core/folder-tree';
+import { hasJournalNotes } from '@getmadrid/note-journal-core/notes';
 import {
   FOLDER_TINT_PALETTE_PRESETS,
   FOLDER_TINT_PRESET_LABEL_KEY,
-} from '@nota/note-folders-core/folder-tint-presets';
-import { clientUpdateFolderTint } from '@nota/note-folders-ui/update-folder-tint-client';
-import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
-import { FolderDeleteDialog } from '@nota/note-folders-ui/folder-delete-dialog';
-import { ReleaseNotesDialog } from '@nota/electron-bridge-ui/release-notes-dialog';
+} from '@getmadrid/note-folders-core/folder-tint-presets';
+import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
+import { FolderCreateDialog } from '@getmadrid/note-folders-ui/folder-create-dialog';
+import { FolderDeleteDialog } from '@getmadrid/note-folders-ui/folder-delete-dialog';
+import { ReleaseNotesDialog } from '@getmadrid/electron-bridge-ui/release-notes-dialog';
 import {
   startStudyNotesAppendToOpenNote,
   startStudyNotesFromRecording,
-} from '@nota/note-capture-ui/audio-to-note-start';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { useTheme } from '@nota/design/theme';
-import { TintCircle } from '@nota/design/nota-tint-circle';
+} from '@getmadrid/note-capture-ui/audio-to-note-start';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { useTheme } from '@getmadrid/design/theme';
+import { TintCircle } from '@getmadrid/design/nota-tint-circle';
 import { CommandPaletteSemanticSync } from './command-palette-semantic-sync';
-import { NOTA_CMDK_ITEM_CLASS } from '@nota/nota-motion-ui/interaction';
+import { NOTA_CMDK_ITEM_CLASS } from '@getmadrid/nota-motion-ui/interaction';
 import {
   initialPaletteMode,
   moveCommandGroupHeading as selectMoveHeading,
   moveTargetNoteIds as selectMoveTargetNoteIds,
   paletteModeReducer,
-} from '@nota/note-palette-core/palette-mode';
+} from '@getmadrid/note-palette-core/palette-mode';
 import {
   buildAppearanceCommands,
   buildZoomCommands,
   type PaletteActionCommand,
-} from '@nota/note-palette-core/palette-commands';
-import { useNotaZoomStore } from '@nota/note-runtime/stores/zoom';
+} from '@getmadrid/note-palette-core/palette-commands';
+import { useNotaZoomStore } from '@getmadrid/note-runtime/stores/zoom';
 
 const PALETTE_EMPTY_ID_SET: ReadonlySet<string> = new Set();
 
@@ -594,7 +594,7 @@ export function CommandPalette(): JSX.Element {
             <Dialog.Description className="sr-only">
               Search commands and notes. Use arrow keys to move, Enter to run.
               Quoted phrases match note text literally; other text uses Semantic
-              Search when Nota Pro is active.
+              Search when Madrid Pro is active.
             </Dialog.Description>
             <Command
               className="overflow-hidden"

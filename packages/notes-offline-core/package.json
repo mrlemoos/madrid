@@ -1,5 +1,5 @@
 {
-  "name": "@nota/notes-offline-core",
+  "name": "@getmadrid/notes-offline-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -7,7 +7,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/index.ts",
         "import": "./src/index.ts",
         "default": "./src/index.ts"
@@ -20,7 +20,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:shared"
     ],
@@ -38,7 +38,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*"
+    "@getmadrid/database-types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

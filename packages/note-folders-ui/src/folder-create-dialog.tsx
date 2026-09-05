@@ -1,12 +1,12 @@
 import { useCallback, useId, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { Button } from '@nota/design/button';
-import { NOTA_DIALOG_MOTION_CLASS } from '@nota/design/popup-motion';
-import { cn } from '@nota/design/utils';
-import type { Folder } from '@nota/database-types';
+import { Button } from '@getmadrid/design/button';
+import { NOTA_DIALOG_MOTION_CLASS } from '@getmadrid/design/popup-motion';
+import { cn } from '@getmadrid/design/utils';
+import type { Folder } from '@getmadrid/database-types';
 import { useFolderTranslator } from './use-folder-translator';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { createFolder } from '@nota/data-source/models/folders';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { createFolder } from '@getmadrid/data-source/models/folders';
 
 type FolderCreateDialogProps = {
   open: boolean;

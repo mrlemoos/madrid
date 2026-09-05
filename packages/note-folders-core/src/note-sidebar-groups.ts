@@ -1,4 +1,4 @@
-import type { Folder, Note } from '@nota/database-types';
+import type { Folder, Note } from '@getmadrid/database-types';
 
 /** Matches persisted title used when saving empty titles to the database. */
 function persistedDisplayTitle(raw: string): string {

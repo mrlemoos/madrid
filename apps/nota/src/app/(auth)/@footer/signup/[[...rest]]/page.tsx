@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 import Link from 'next/link';
-import { buttonVariants } from '@nota/design/button';
+import { buttonVariants } from '@getmadrid/design/button';
 import { cn } from '@/lib/utils';
 
 /** `@footer` slot for `/signup` — prompt to switch to sign in. */

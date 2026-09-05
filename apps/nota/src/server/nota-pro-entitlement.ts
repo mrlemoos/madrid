@@ -1,7 +1,7 @@
 import 'server-only';
 import { createClerkClient } from '@clerk/backend';
 
-// Nota Pro entitlement, served by the Next app (moved off nota-server). The
+// Madrid Pro entitlement, served by the Next app (moved off nota-server). The
 // caller is authenticated by Clerk middleware (`auth()` in the route); this
 // reads Clerk Billing. Server-only: needs CLERK_SECRET_KEY, never client-shipped.
 
@@ -31,7 +31,7 @@ export function invalidateServerNotaProCache(userId: string): void {
   entitlementCache.delete(userId);
 }
 
-/** Server truth for Nota Pro via Clerk Billing (fail closed). */
+/** Server truth for Madrid Pro via Clerk Billing (fail closed). */
 export async function getServerNotaProEntitled(
   userId: string,
 ): Promise<boolean> {

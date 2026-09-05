@@ -15,7 +15,7 @@ import {
   wikipediaSummaryApiUrl,
   wikipediaTitleFromSlug,
   type PlatformLinkPreview,
-} from '@nota/link-platform-preview';
+} from '@getmadrid/link-platform-preview';
 
 const urlSchema = z.string().url();
 
@@ -332,7 +332,7 @@ async function fetchJsonForPlatform(url: string): Promise<unknown> {
       headers: {
         Accept: 'application/json',
         'User-Agent':
-          'NotaLinkPreview/1.0 (link preview; contact: https://nota.mrlemoos.dev)',
+          'MadridLinkPreview/1.0 (link preview; contact: https://getmadrid.app)',
       },
     });
     if (!res.ok) {

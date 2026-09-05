@@ -2,8 +2,8 @@ import { SignIn, SignUp } from '@clerk/react';
 import { shadcn } from '@clerk/ui/themes';
 import type { JSX } from 'react';
 
-import { buttonVariants } from '@nota/design/button';
-import { LoadingStatus } from '@nota/design/spinner';
+import { buttonVariants } from '@getmadrid/design/button';
+import { LoadingStatus } from '@getmadrid/design/spinner';
 import { cn } from '@/lib/utils';
 
 import './nota-clerk-auth.css';
@@ -34,12 +34,7 @@ const clerkPrimaryButton = cn(
   'focus-visible:ring-0',
 );
 
-/** Strip Clerk's "Continue →" glyph; keep the label as plain "Continue". */
-const clerkAuthLocalization = {
-  formButtonPrimary: 'Continue',
-} as const;
-
-/** Nota glass-card auth: shadcn tokens, no nested Clerk card chrome. */
+/** Madrid glass-card auth: shadcn tokens, no nested Clerk card chrome. */
 // Not exported: its inferred type reaches into @clerk/ui internals that can't be
 // named portably (TS2742), and only the two components below use it.
 const notaClerkAuthAppearance = {
@@ -130,7 +125,6 @@ export function NotaClerkSignIn(): JSX.Element {
       path="/signin"
       signUpUrl="/signup"
       appearance={notaClerkAuthAppearance}
-      localization={clerkAuthLocalization}
       fallback={authFallback}
     />
   );
@@ -143,7 +137,6 @@ export function NotaClerkSignUp(): JSX.Element {
       path="/signup"
       signInUrl="/signin"
       appearance={notaClerkAuthAppearance}
-      localization={clerkAuthLocalization}
       fallback={authFallback}
     />
   );

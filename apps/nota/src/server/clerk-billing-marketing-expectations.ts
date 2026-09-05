@@ -120,7 +120,7 @@ export function validateUserBillingPlansAgainstExpectations(
       level: 'error',
       code: 'no_public_user_plans',
       message:
-        'No publicly visible Clerk Billing plans for payer type `user`. AGENTS.md expects in-app Clerk Billing (PricingTable) for Nota Pro.',
+        'No publicly visible Clerk Billing plans for payer type `user`. AGENTS.md expects in-app Clerk Billing (PricingTable) for Madrid Pro.',
     });
     return issues;
   }
@@ -198,7 +198,7 @@ export function validateUserBillingPlansAgainstExpectations(
       issues.push({
         level: 'error',
         code: 'default_plan_free',
-        message: `Default plan "${defaultPlan.name}" appears free ($0). That conflicts with "no unpaid tier" unless it is intentionally non-vault (unlikely for Nota).`,
+        message: `Default plan "${defaultPlan.name}" appears free ($0). That conflicts with "no unpaid tier" unless it is intentionally non-vault (unlikely for Madrid).`,
       });
     }
   }

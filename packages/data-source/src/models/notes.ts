@@ -5,7 +5,7 @@ import type {
   Json,
   NoteInsert,
   NoteUpdate,
-} from '@nota/database-types';
+} from '@getmadrid/database-types';
 import { subtreeFolderIds } from '../lib/folder-subtree';
 import { listNoteAttachments, NOTE_PDFS_BUCKET } from './note-attachments';
 

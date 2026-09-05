@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-folders-ui',
   test: {
-    name: '@nota/note-folders-ui',
+    name: '@getmadrid/note-folders-ui',
     watch: false,
     globals: true,
     environment: 'jsdom',

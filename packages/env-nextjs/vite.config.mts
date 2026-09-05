@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/env-nextjs',
   test: {
-    name: '@nota/env-nextjs',
+    name: '@getmadrid/env-nextjs',
     watch: false,
     globals: true,
     environment: 'node',

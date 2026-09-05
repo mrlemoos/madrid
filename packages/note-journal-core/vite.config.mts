@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-journal-core',
   test: {
-    name: '@nota/note-journal-core',
+    name: '@getmadrid/note-journal-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

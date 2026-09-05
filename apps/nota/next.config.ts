@@ -16,7 +16,7 @@ const CONTENT_SECURITY_POLICY = [
   "img-src 'self' data: blob: https: http:",
   "font-src 'self' data: https://fonts.gstatic.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  `script-src 'self' 'unsafe-inline'${IS_DEV ? " 'unsafe-eval'" : ''} https://*.accounts.dev https://*.clerk.accounts.dev https://clerk.com https://*.clerk.com https://challenges.cloudflare.com https://*.nota.mrlemoos.dev https://clerk.nota.mrlemoos.dev https://*.i.posthog.com`,
+  `script-src 'self' 'unsafe-inline'${IS_DEV ? " 'unsafe-eval'" : ''} https://*.accounts.dev https://*.clerk.accounts.dev https://clerk.com https://*.clerk.com https://challenges.cloudflare.com https://*.getmadrid.app https://clerk.getmadrid.app https://*.i.posthog.com`,
   "worker-src 'self' blob:",
   `connect-src 'self' https: wss:${IS_DEV ? ' ws:' : ''}`,
   "frame-src 'self' https:",
@@ -25,10 +25,10 @@ const CONTENT_SECURITY_POLICY = [
 ].join('; ');
 
 function isNotaWorkspacePackage(packageName: string): boolean {
-  return packageName.startsWith('@nota/');
+  return packageName.startsWith('@getmadrid/');
 }
 
-// Workspace libraries are published via the `@nota/source` export condition to
+// Workspace libraries are published via the `@getmadrid/source` export condition to
 // raw `src/*.tsx`; Next must compile them (Vite did this via `conditions`).
 const NOTA_WORKSPACE_PACKAGES = [
   ...Object.keys(packageJson.dependencies).filter(isNotaWorkspacePackage),

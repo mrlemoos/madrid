@@ -1,19 +1,19 @@
-import type { Json, Note } from '@nota/database-types';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
+import type { Json, Note } from '@getmadrid/database-types';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
 import {
   getStoredNote,
   mergeNoteWithLocal,
   saveLocalNoteDraft,
   storedNoteToListRow,
-} from '@nota/notes-offline';
-import { getNote, updateNote } from '@nota/data-source/models/notes';
+} from '@getmadrid/notes-offline';
+import { getNote, updateNote } from '@getmadrid/data-source/models/notes';
 import {
   noteAudioContentNode,
   studyNotesBlocksToTiptapNodes,
   studyNotesResultToTiptapDoc,
   type AudioNoteStudyResult,
-} from '@nota/note-capture-core/audio-note-blocks-to-doc';
-import { formatStudyNoteTitle } from '@nota/note-capture-core/study-note-title';
+} from '@getmadrid/note-capture-core/audio-note-blocks-to-doc';
+import { formatStudyNoteTitle } from '@getmadrid/note-capture-core/study-note-title';
 
 async function resolveNoteCreatedAtIso(
   noteId: string,

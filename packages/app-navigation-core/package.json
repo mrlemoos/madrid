@@ -1,11 +1,11 @@
 {
-  "name": "@nota/app-navigation-core",
+  "name": "@getmadrid/app-navigation-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./navigation": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/app-navigation.ts",
         "import": "./src/app-navigation.ts",
         "default": "./src/app-navigation.ts"
@@ -15,7 +15,7 @@
       "default": "./src/app-navigation.ts"
     },
     "./auth": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/app-navigation-auth.ts",
         "import": "./src/app-navigation-auth.ts",
         "default": "./src/app-navigation-auth.ts"
@@ -25,7 +25,7 @@
       "default": "./src/app-navigation-auth.ts"
     },
     "./clerk-hash": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/clerk-hash-navigation.ts",
         "import": "./src/clerk-hash-navigation.ts",
         "default": "./src/clerk-hash-navigation.ts"
@@ -35,7 +35,7 @@
       "default": "./src/clerk-hash-navigation.ts"
     },
     "./pathname-policy": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/pathname-policy.ts",
         "import": "./src/pathname-policy.ts",
         "default": "./src/pathname-policy.ts"
@@ -45,7 +45,7 @@
       "default": "./src/pathname-policy.ts"
     },
     "./todays-note": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/todays-note.ts",
         "import": "./src/todays-note.ts",
         "default": "./src/todays-note.ts"
@@ -55,7 +55,7 @@
       "default": "./src/todays-note.ts"
     },
     "./open-note-vault-list-sync": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/open-note-vault-list-sync.ts",
         "import": "./src/open-note-vault-list-sync.ts",
         "default": "./src/open-note-vault-list-sync.ts"
@@ -68,7 +68,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -86,9 +86,9 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/database-types": "workspace:*",
-    "@nota/nota-motion-ui": "workspace:*",
-    "@nota/note-journal-core": "workspace:*"
+    "@getmadrid/database-types": "workspace:*",
+    "@getmadrid/nota-motion-ui": "workspace:*",
+    "@getmadrid/note-journal-core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "catalog:",

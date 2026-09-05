@@ -8,6 +8,6 @@ tags:
 draft: true
 ---
 
-_Draft: part of the Nota feature series. To be published after [Introducing Nota](/blog/introducing-nota)._
+_Draft: part of the Madrid feature series. To be published after [Introducing Madrid](/blog/introducing-nota)._
 
 Link previews should help you remember why you saved a page, not hijack the paragraph you were writing. This post will cover paste-to-preview behaviour, safe image handling, and why failed fetches still leave you with a link.

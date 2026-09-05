@@ -4,8 +4,8 @@ import {
   OUTBOX_OBJECT_STORE,
   transactionComplete,
 } from './db';
-import type { OutboxEntry, OutboxKind } from '@nota/notes-offline-core';
-import { sortOutboxForProcessing } from '@nota/notes-offline-core';
+import type { OutboxEntry, OutboxKind } from '@getmadrid/notes-offline-core';
+import { sortOutboxForProcessing } from '@getmadrid/notes-offline-core';
 
 export { sortOutboxForProcessing };
 

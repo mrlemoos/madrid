@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent } from 'react';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
 
 export function useNotesSidebarShortcut(
   userId: string | undefined,

@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/data-source',
   test: {
-    name: '@nota/data-source',
+    name: '@getmadrid/data-source',
     watch: false,
     globals: true,
     environment: 'jsdom',

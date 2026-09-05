@@ -1,7 +1,12 @@
 'use client';
 
 import { useRef, type JSX, type ReactNode } from 'react';
-import { Card, CardContent, CardFooter, CardHeader } from '@nota/design/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@getmadrid/design/card';
 import {
   SignedOutStage,
   signedOutCardClass,

@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-share-og',
   test: {
-    name: '@nota/note-share-og',
+    name: '@getmadrid/note-share-og',
     watch: false,
     globals: true,
     environment: 'jsdom',

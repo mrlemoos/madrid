@@ -1,5 +1,5 @@
 import { useMemo, type JSX } from 'react';
-import { cn } from '@nota/design/utils';
+import { cn } from '@getmadrid/design/utils';
 import {
   buildActivityGridCells,
   countActiveDaysLast365,
@@ -8,14 +8,14 @@ import {
   ACTIVITY_LEVEL_CLASSES,
   type ActivityLevel,
   type WritingActivityColor,
-} from '@nota/writing-activity-core/writing-activity';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { submitUserPreferencesPatch } from '@nota/note-runtime/use-sync-user-preferences';
+} from '@getmadrid/writing-activity-core/writing-activity';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { submitUserPreferencesPatch } from '@getmadrid/note-runtime/use-sync-user-preferences';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '@nota/note-runtime/notes-data-context';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
 import { useWritingActivityTranslator } from './use-writing-activity-translator';
 import {
   Tooltip,
@@ -23,7 +23,7 @@ import {
   TooltipPortal,
   TooltipPositioner,
   TooltipTrigger,
-} from '@nota/design/tooltip';
+} from '@getmadrid/design/tooltip';
 
 const COLOR_FAMILIES: WritingActivityColor[] = ['blue', 'red', 'pink', 'rose'];
 

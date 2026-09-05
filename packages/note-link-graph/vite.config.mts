@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/note-link-graph',
   test: {
-    name: '@nota/note-link-graph',
+    name: '@getmadrid/note-link-graph',
     watch: false,
     globals: true,
     environment: 'jsdom',

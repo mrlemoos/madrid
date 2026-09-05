@@ -8,6 +8,6 @@ tags:
 draft: true
 ---
 
-_Draft: part of the Nota feature series. To be published after [Introducing Nota](/blog/introducing-nota)._
+_Draft: part of the Madrid feature series. To be published after [Introducing Madrid](/blog/introducing-nota)._
 
 The writing surface should stay yours. This post will cover the lack of a formatting toolbar, ⌘K for structure, and typewriter scroll that stops pulling you back after you scroll away on purpose.

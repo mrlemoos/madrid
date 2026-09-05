@@ -1,11 +1,11 @@
 import { useMemo, type JSX } from 'react';
 import { Menu } from '@base-ui/react/menu';
-import { Icon } from '@nota/design/icon';
-import { buttonVariants } from '@nota/design/button';
-import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
+import { Icon } from '@getmadrid/design/icon';
+import { buttonVariants } from '@getmadrid/design/button';
+import { NOTA_POPUP_MOTION_CLASS } from '@getmadrid/design/popup-motion';
 import { cn } from '@/lib/utils';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
-import { type Theme, useTheme } from '@nota/design/theme';
+import { type Theme, useTheme } from '@getmadrid/design/theme';
 
 const itemClass = cn(
   'flex cursor-default items-center gap-2 rounded-md px-2 py-1.5 text-sm text-foreground outline-none',

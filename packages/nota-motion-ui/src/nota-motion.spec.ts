@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { NOTA_EASE_OUT, NOTA_SPRING_SHELL } from '@nota/design/motion-tokens';
+import {
+  NOTA_EASE_OUT,
+  NOTA_SPRING_SHELL,
+} from '@getmadrid/design/motion-tokens';
 import {
   NOTA_MOTION_EASE_IN,
   NOTA_MOTION_EASE_IN_OUT,

@@ -9,9 +9,9 @@ if (!site) {
 const siteRoot = new URL('/', site).href;
 const refundsUrl = new URL('/refunds', site).href;
 
-const pageTitle = 'Refund policy | Nota';
+const pageTitle = 'Refund policy | Madrid';
 const pageDescription =
-  'How refunds work for Nota (web-billed subscriptions). UK statutory rights are not limited by this policy.';
+  'How refunds work for Madrid (web-billed subscriptions). UK statutory rights are not limited by this policy.';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -38,7 +38,7 @@ const structuredData = {
       name: pageTitle,
       description: pageDescription,
       url: refundsUrl,
-      isPartOf: { '@type': 'WebSite', name: 'Nota', url: siteRoot },
+      isPartOf: { '@type': 'WebSite', name: 'Madrid', url: siteRoot },
     },
   ],
 };
@@ -56,7 +56,7 @@ const structuredData = {
     <div class="mx-auto max-w-4xl px-6 py-16 md:px-10 md:py-24">
       <h1 class="mb-4 font-serif text-4xl font-normal text-foreground md:text-5xl">Refund policy</h1>
       <p class="mb-10 max-w-2xl text-lg text-muted-foreground">
-        This policy describes how we handle refunds for Nota. It is written in plain language; it does not replace
+        This policy describes how we handle refunds for Madrid. It is written in plain language; it does not replace
         your statutory rights as a UK consumer where those apply.
       </p>
 
@@ -64,7 +64,7 @@ const structuredData = {
         <section>
           <h2 class="mb-3 font-serif text-xl text-foreground">Download only</h2>
           <p>
-            You may download the Nota app for macOS without charge. If you have not completed a paid subscription or
+            You may download the Madrid app for macOS without charge. If you have not completed a paid subscription or
             one-time purchase, there is no payment to refund. Uninstall the app from your Mac if you no longer want
             it.
           </p>
@@ -73,9 +73,9 @@ const structuredData = {
         <section>
           <h2 class="mb-3 font-serif text-xl text-foreground">Web billing (subscriptions)</h2>
           <p class="mb-3">
-            If you subscribed to <span class="text-foreground/90">Nota</span> through web billing (checkout powered
+            If you subscribed to <span class="text-foreground/90">Madrid</span> through web billing (checkout powered
             by Stripe via our subscription provider), you may request a refund by contacting us from{' '}
-            <span class="text-foreground/90">Settings</span> in the Nota app after you sign in, or by replying to your
+            <span class="text-foreground/90">Settings</span> in the Madrid app after you sign in, or by replying to your
             purchase receipt if one was emailed to you. We aim to respond within a few business days.
           </p>
           <p class="mb-3">
@@ -92,7 +92,7 @@ const structuredData = {
         <section>
           <h2 class="mb-3 font-serif text-xl text-foreground">App Store and other storefronts</h2>
           <p>
-            If you buy or renew Nota through the Mac App Store or another platform, refunds and billing support
+            If you buy or renew Madrid through the Mac App Store or another platform, refunds and billing support
             are handled by that store under its own rules. Use Apple’s support flows (or the relevant store’s
             process) for those purchases; this page applies to web-billed subscriptions only.
           </p>

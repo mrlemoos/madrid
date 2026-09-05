@@ -4,13 +4,13 @@ import type { Preview } from '@storybook/react-vite';
 import './preview.css';
 
 /**
- * `@nota/design` reads light / dark from `html.light` / `html.dark` (see `src/lib/theme.tsx`),
+ * `@getmadrid/design` reads light / dark from `html.light` / `html.dark` (see `src/lib/theme.tsx`),
  * so the toolbar toggle just stamps the class instead of pulling in an addon.
  */
 const preview: Preview = {
   globalTypes: {
     theme: {
-      description: 'Nota colour scheme',
+      description: 'Madrid colour scheme',
       toolbar: {
         icon: 'circlehollow',
         items: [

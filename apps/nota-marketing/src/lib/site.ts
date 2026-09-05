@@ -1,5 +1,5 @@
 /** Monorepo root on GitHub. Mirrors [package.json](../../../../package.json) `repository`. */
-export const NOTA_GITHUB_REPO = 'https://github.com/mrlemoos/nota';
+export const NOTA_GITHUB_REPO = 'https://github.com/mrlemoos/madrid';
 
 /** Desktop builds and release assets (Electron). */
 export const NOTA_GITHUB_RELEASES = `${NOTA_GITHUB_REPO}/releases`;

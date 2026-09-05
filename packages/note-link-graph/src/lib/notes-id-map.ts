@@ -1,4 +1,4 @@
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 
 /** O(1) lookups by id for vault-sized lists (graph, backlinks, link resolution). */
 export function notesToIdMap(notes: readonly Note[]): Map<string, Note> {

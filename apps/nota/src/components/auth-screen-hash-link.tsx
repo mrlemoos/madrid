@@ -1,8 +1,8 @@
 import type { VariantProps } from 'class-variance-authority';
 import type { JSX, MouseEvent, ReactNode } from 'react';
 import Link from 'next/link';
-import { buttonVariants } from '@nota/design/button';
-import { authPathnameForScreenKind } from '@nota/app-navigation-core/auth';
+import { buttonVariants } from '@getmadrid/design/button';
+import { authPathnameForScreenKind } from '@getmadrid/app-navigation-core/auth';
 import { cn } from '@/lib/utils';
 
 type AuthHashTarget = 'login' | 'signup';

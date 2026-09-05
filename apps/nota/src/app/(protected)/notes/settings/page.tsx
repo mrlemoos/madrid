@@ -4,22 +4,22 @@ import { UserButton } from '@clerk/react';
 import { useLayoutEffect, useMemo, useState, type JSX } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { LOCALE_OPTIONS } from '@nota/i18n';
+import { LOCALE_OPTIONS } from '@getmadrid/i18n';
 import { ThemeMenu } from '@/components/theme-menu';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
 import {
   useNotesDataActions,
   useNotesDataMeta,
-} from '@nota/note-runtime/notes-data-context';
-import { submitUserPreferencesPatch } from '@nota/note-runtime/use-sync-user-preferences';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { submitUserPreferencesPatch } from '@getmadrid/note-runtime/use-sync-user-preferences';
 import {
   useNotaPreferencesStore,
   type CursorVisualStyle,
-} from '@nota/note-runtime/stores/preferences';
-import { ElectronUpdateSettingsSection } from '@nota/electron-bridge-ui/update-settings-section';
+} from '@getmadrid/note-runtime/stores/preferences';
+import { ElectronUpdateSettingsSection } from '@getmadrid/electron-bridge-ui/update-settings-section';
 import { NotaProSettingsSection } from '@/components/nota-pro-settings-section';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { pathForScreen } from '@nota/app-navigation-core/navigation';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
+import { pathForScreen } from '@getmadrid/app-navigation-core/navigation';
 import { navigatorLooksLikeApplePlatform } from '@/lib/navigator-apple-platform';
 import { useNotaTranslator } from '@/lib/use-nota-translator';
 
@@ -151,7 +151,7 @@ export default function NotesSettingsPage(): JSX.Element {
             </div>
             <p className="mt-2 text-xs text-muted-foreground">
               {t(
-                'If you leave this on system default, Nota follows your device language.',
+                'If you leave this on system default, Madrid follows your device language.',
               )}
             </p>
           </div>

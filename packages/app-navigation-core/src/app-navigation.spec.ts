@@ -8,7 +8,7 @@ import {
 import {
   peekNavIntent,
   resetNavIntent,
-} from '@nota/nota-motion-ui/panel-motion';
+} from '@getmadrid/nota-motion-ui/panel-motion';
 
 const SAMPLE_NOTE_ID = 'aaaaaaaa-bbbb-4ccc-dddd-eeeeeeeeeeee';
 

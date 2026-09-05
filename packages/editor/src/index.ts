@@ -29,7 +29,7 @@ export type {
   NotaSurfaceMeasure,
 } from './lib/note-editor-settings';
 
-export { parseNoteLinkPath, hrefForNote } from '@nota/internal-note-link';
+export { parseNoteLinkPath, hrefForNote } from '@getmadrid/internal-note-link';
 export { persistedDisplayTitle } from './lib/note-title';
 export { safeOgImageSrcForPreview } from './lib/og-image-url';
 export { findNoteMentionTrigger } from './lib/tiptap-note-mention';

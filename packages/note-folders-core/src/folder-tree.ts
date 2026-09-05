@@ -1,4 +1,4 @@
-import type { Folder } from '@nota/database-types';
+import type { Folder } from '@getmadrid/database-types';
 import { compareFolderNames } from './note-sidebar-groups';
 
 export type FolderTreeNode = {

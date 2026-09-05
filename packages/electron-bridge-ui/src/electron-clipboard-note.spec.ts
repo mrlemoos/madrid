@@ -1,40 +1,41 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createNoteFromMenubarClipboard } from './electron-clipboard-note';
-import { navigateToScreen } from '@nota/app-navigation-core/navigation';
-import { isLikelyOnline } from '@nota/data-source/notes-offline-sync';
-import { createNote } from '@nota/data-source/models/notes';
-import { createLocalOnlyNote } from '@nota/notes-offline';
+import { navigateToScreen } from '@getmadrid/app-navigation-core/navigation';
+import { isLikelyOnline } from '@getmadrid/data-source/notes-offline-sync';
+import { createNote } from '@getmadrid/data-source/models/notes';
+import { createLocalOnlyNote } from '@getmadrid/notes-offline';
 
-vi.mock('@nota/app-navigation-core/navigation', () => ({
+vi.mock('@getmadrid/app-navigation-core/navigation', () => ({
   navigateToScreen: vi.fn(),
 }));
 
-vi.mock('@nota/data-source/supabase/browser', () => ({
+vi.mock('@getmadrid/data-source/supabase/browser', () => ({
   getBrowserClient: () => ({}),
 }));
 
-vi.mock('@nota/data-source/notes-offline-sync', async (importOriginal) => {
+vi.mock('@getmadrid/data-source/notes-offline-sync', async (importOriginal) => {
   const actual =
     await importOriginal<
-      typeof import('@nota/data-source/notes-offline-sync')
+      typeof import('@getmadrid/data-source/notes-offline-sync')
     >();
   return { ...actual, isLikelyOnline: vi.fn() };
 });
 
-vi.mock('@nota/data-source/models/notes', () => ({
+vi.mock('@getmadrid/data-source/models/notes', () => ({
   createNote: vi.fn(),
   updateNote: vi.fn(),
 }));
 
-vi.mock('@nota/notes-offline', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@nota/notes-offline')>();
+vi.mock('@getmadrid/notes-offline', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('@getmadrid/notes-offline')>();
   return {
     ...actual,
     createLocalOnlyNote: vi.fn(() => Promise.resolve('local-1')),
   };
 });
 
-vi.mock('@nota/data-source/pdf-attachment-client', () => ({
+vi.mock('@getmadrid/data-source/pdf-attachment-client', () => ({
   uploadNoteAttachmentFile: vi.fn(),
 }));
 

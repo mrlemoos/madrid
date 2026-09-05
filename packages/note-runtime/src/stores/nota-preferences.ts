@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UserPreferences } from '@nota/database-types';
+import type { UserPreferences } from '@getmadrid/database-types';
 
 /**
  * Supported colour families for the writing-activity graph (Tailwind ramps).

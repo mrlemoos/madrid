@@ -1,5 +1,5 @@
 import type { StoredNote } from './types';
-import type { Note } from '@nota/database-types';
+import type { Note } from '@getmadrid/database-types';
 
 function noteFromStored(stored: StoredNote): Note {
   const { dirty, pending_create, pending_delete, server_updated_at, ...note } =

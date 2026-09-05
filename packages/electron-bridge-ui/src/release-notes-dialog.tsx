@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type JSX } from 'react';
 import { Dialog } from '@base-ui/react/dialog';
-import { Button } from '@nota/design/button';
-import { cn } from '@nota/design/utils';
+import { Button } from '@getmadrid/design/button';
+import { cn } from '@getmadrid/design/utils';
 
 /** `GET /api/releases` — same-origin Next route, Clerk cookie auth. */
 function fetchReleases(limit: number): Promise<Response> {

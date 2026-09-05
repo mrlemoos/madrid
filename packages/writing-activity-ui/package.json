@@ -1,11 +1,11 @@
 {
-  "name": "@nota/writing-activity-ui",
+  "name": "@getmadrid/writing-activity-ui",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./tracking": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/writing-activity-tracking.ts",
         "import": "./src/writing-activity-tracking.ts",
         "default": "./src/writing-activity-tracking.ts"
@@ -15,7 +15,7 @@
       "default": "./src/writing-activity-tracking.ts"
     },
     "./section": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/writing-activity-section.tsx",
         "import": "./src/writing-activity-section.tsx",
         "default": "./src/writing-activity-section.tsx"
@@ -28,7 +28,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:feature",
       "platform:web"
     ],
@@ -46,11 +46,11 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/i18n": "workspace:*",
-    "@nota/note-journal-core": "workspace:*",
-    "@nota/note-runtime": "workspace:*",
-    "@nota/design": "workspace:*",
-    "@nota/writing-activity-core": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "@getmadrid/note-journal-core": "workspace:*",
+    "@getmadrid/note-runtime": "workspace:*",
+    "@getmadrid/design": "workspace:*",
+    "@getmadrid/writing-activity-core": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

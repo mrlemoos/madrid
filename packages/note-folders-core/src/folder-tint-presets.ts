@@ -1,4 +1,4 @@
-import type { TranslationKey } from '@nota/i18n';
+import type { TranslationKey } from '@getmadrid/i18n';
 
 /** Persisted folder tint keys :  must match supabase check constraint `folders_tint_valid`. */
 export const FOLDER_TINT_DB_VALUES = [

@@ -1,11 +1,11 @@
 {
-  "name": "@nota/note-palette-core",
+  "name": "@getmadrid/note-palette-core",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "exports": {
     "./palette-commands": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/palette-commands.ts",
         "import": "./src/palette-commands.ts",
         "default": "./src/palette-commands.ts"
@@ -15,7 +15,7 @@
       "default": "./src/palette-commands.ts"
     },
     "./palette-mode": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/palette-mode.ts",
         "import": "./src/palette-mode.ts",
         "default": "./src/palette-mode.ts"
@@ -25,7 +25,7 @@
       "default": "./src/palette-mode.ts"
     },
     "./nota-shortcuts-catalogue": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-shortcuts-catalogue.ts",
         "import": "./src/nota-shortcuts-catalogue.ts",
         "default": "./src/nota-shortcuts-catalogue.ts"
@@ -35,7 +35,7 @@
       "default": "./src/nota-shortcuts-catalogue.ts"
     },
     "./nota-kbd-styles": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/nota-kbd-styles.ts",
         "import": "./src/nota-kbd-styles.ts",
         "default": "./src/nota-kbd-styles.ts"
@@ -45,7 +45,7 @@
       "default": "./src/nota-kbd-styles.ts"
     },
     "./move-pick-helpers": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/move-pick-helpers.ts",
         "import": "./src/move-pick-helpers.ts",
         "default": "./src/move-pick-helpers.ts"
@@ -55,7 +55,7 @@
       "default": "./src/move-pick-helpers.ts"
     },
     "./move-pick-enter": {
-      "@nota/source": {
+      "@getmadrid/source": {
         "types": "./src/move-pick-enter.ts",
         "import": "./src/move-pick-enter.ts",
         "default": "./src/move-pick-enter.ts"
@@ -68,7 +68,7 @@
   },
   "nx": {
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:util",
       "platform:web"
     ],
@@ -86,7 +86,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@nota/design": "workspace:*",
+    "@getmadrid/design": "workspace:*",
     "react": "catalog:"
   },
   "devDependencies": {

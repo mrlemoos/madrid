@@ -11,7 +11,7 @@ export async function requireUserId(): Promise<{ userId: string } | Response> {
   return { userId };
 }
 
-/** Signed-in AND Nota Pro entitled, or a 401/403 Response. */
+/** Signed-in AND Madrid Pro entitled, or a 401/403 Response. */
 export async function requireEntitledUserId(): Promise<
   { userId: string } | Response
 > {

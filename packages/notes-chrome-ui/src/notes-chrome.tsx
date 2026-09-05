@@ -5,49 +5,49 @@ import {
   type JSX,
   type ReactNode,
 } from 'react';
-import { TooltipProvider } from '@nota/design/tooltip';
-import { LoadingStatus } from '@nota/design/spinner';
-import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@nota/electron-bridge-core/window-chrome';
+import { TooltipProvider } from '@getmadrid/design/tooltip';
+import { LoadingStatus } from '@getmadrid/design/spinner';
+import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@getmadrid/electron-bridge-core/window-chrome';
 import {
   notesMainChrome,
   notesSidebarChrome,
   notesStickyTitleChrome,
-} from '@nota/notes-chrome-core/notes-chrome';
-import { cn } from '@nota/design/utils';
-import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
-import { useIsElectron } from '@nota/electron-bridge-ui/use-is-electron';
-import { useNotesOfflineSync } from '@nota/note-runtime/use-notes-offline-sync';
-import { useNotesHistoryShortcut } from '@nota/app-navigation-ui/use-notes-history-shortcut';
-import { useNotesSidebarShortcut } from '@nota/app-navigation-ui/use-notes-sidebar-shortcut';
-import { useCreateFolderShortcut } from '@nota/note-folders-ui/use-create-folder-shortcut';
-import { useSettingsShortcut } from '@nota/app-navigation-ui/use-settings-shortcut';
-import { useNotaZoomShortcut } from '@nota/app-navigation-ui/use-nota-zoom-shortcut';
-import { useTodaysNoteShortcut } from '@nota/app-navigation-ui/use-todays-note-shortcut';
+} from '@getmadrid/notes-chrome-core/notes-chrome';
+import { cn } from '@getmadrid/design/utils';
+import { useStickyDocTitle } from '@getmadrid/note-runtime/sticky-doc-title';
+import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
+import { useNotesOfflineSync } from '@getmadrid/note-runtime/use-notes-offline-sync';
+import { useNotesHistoryShortcut } from '@getmadrid/app-navigation-ui/use-notes-history-shortcut';
+import { useNotesSidebarShortcut } from '@getmadrid/app-navigation-ui/use-notes-sidebar-shortcut';
+import { useCreateFolderShortcut } from '@getmadrid/note-folders-ui/use-create-folder-shortcut';
+import { useSettingsShortcut } from '@getmadrid/app-navigation-ui/use-settings-shortcut';
+import { useNotaZoomShortcut } from '@getmadrid/app-navigation-ui/use-nota-zoom-shortcut';
+import { useTodaysNoteShortcut } from '@getmadrid/app-navigation-ui/use-todays-note-shortcut';
 import {
   useSyncUserPreferences,
   useSyncClerkDisplayName,
-} from '@nota/note-runtime/use-sync-user-preferences';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { useNotesSidebarMotion } from '@nota/nota-motion-ui/use-notes-sidebar-motion';
-import { useNotesSidebarResize } from '@nota/nota-motion-ui/use-notes-sidebar-resize';
-import { hasJournalNotes } from '@nota/note-journal-core/notes';
-import { useNotesSidebarStore } from '@nota/note-runtime/stores/sidebar';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
-import { useNotesData } from '@nota/note-runtime/notes-data-context';
-import { useAppNavigationScreen } from '@nota/app-navigation-ui/use-app-navigation-screen';
+} from '@getmadrid/note-runtime/use-sync-user-preferences';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { useNotesSidebarMotion } from '@getmadrid/nota-motion-ui/use-notes-sidebar-motion';
+import { useNotesSidebarResize } from '@getmadrid/nota-motion-ui/use-notes-sidebar-resize';
+import { hasJournalNotes } from '@getmadrid/note-journal-core/notes';
+import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
+import { useNotesData } from '@getmadrid/note-runtime/notes-data-context';
+import { useAppNavigationScreen } from '@getmadrid/app-navigation-ui/use-app-navigation-screen';
 import {
   pathForScreen,
   replaceScreen,
   type NotesPanel,
-} from '@nota/app-navigation-core/navigation';
-import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@nota/electron-bridge-core/menubar-events';
-import { FolderCreateDialog } from '@nota/note-folders-ui/folder-create-dialog';
+} from '@getmadrid/app-navigation-core/navigation';
+import { NOTA_MENUBAR_NEW_FOLDER_REQUEST_EVENT } from '@getmadrid/electron-bridge-core/menubar-events';
+import { FolderCreateDialog } from '@getmadrid/note-folders-ui/folder-create-dialog';
 import { NotesSidebarList } from './notes-sidebar-list';
-import { AudioToNoteDock } from '@nota/note-capture-ui/audio-to-note-dock';
-import { ElectronMenubarBridge } from '@nota/electron-bridge-ui/menubar-bridge';
-import { ElectronTrafficLightsController } from '@nota/electron-bridge-ui/traffic-lights-controller';
-import { StudyRecordingUploadWarningBanner } from '@nota/note-capture-ui/study-recording-upload-warning-banner';
-import { useAudioNotePendingDrain } from '@nota/note-capture-ui/use-audio-note-pending-drain';
+import { AudioToNoteDock } from '@getmadrid/note-capture-ui/audio-to-note-dock';
+import { ElectronMenubarBridge } from '@getmadrid/electron-bridge-ui/menubar-bridge';
+import { ElectronTrafficLightsController } from '@getmadrid/electron-bridge-ui/traffic-lights-controller';
+import { StudyRecordingUploadWarningBanner } from '@getmadrid/note-capture-ui/study-recording-upload-warning-banner';
+import { useAudioNotePendingDrain } from '@getmadrid/note-capture-ui/use-audio-note-pending-drain';
 import { useNotesChromeTranslator } from './use-notes-chrome-translator';
 import {
   ChromeNavLinks,
@@ -55,7 +55,7 @@ import {
   SidebarToggle,
   type ChromeNavItem,
 } from './notes-chrome-parts';
-import { NotesSidebarResizeHandle } from '@nota/nota-motion-ui/notes-sidebar-resize-handle';
+import { NotesSidebarResizeHandle } from '@getmadrid/nota-motion-ui/notes-sidebar-resize-handle';
 
 /**
  * Persistent chrome for the notes workspace: sidebar (vault list), footer nav, the
@@ -391,7 +391,7 @@ export function NotesChrome({ children }: NotesChromeProps): JSX.Element {
               >
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {t(
-                    'An active Nota subscription is required to write and sync notes.',
+                    'An active Madrid subscription is required to write and sync notes.',
                   )}{' '}
                   {t('Choose a plan in')}{' '}
                   <span className="font-medium text-foreground">

@@ -3,8 +3,8 @@
  *
  * @remarks
  * Import from the package subpath only:
- * `import { Dialog, DialogContent, … } from '@nota/design/dialog'`.
- * {@link DialogContent} portals the overlay + popup with Nota surface styles
+ * `import { Dialog, DialogContent, … } from '@getmadrid/design/dialog'`.
+ * {@link DialogContent} portals the overlay + popup with Madrid surface styles
  * and {@link NOTA_DIALOG_MOTION_CLASS}.
  *
  * @packageDocumentation

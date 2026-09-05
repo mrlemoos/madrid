@@ -1,5 +1,5 @@
 import { useEffect, useState, type ComponentType, type ReactNode } from 'react';
-import { env } from '@nota/env-nextjs';
+import { env } from '@getmadrid/env-nextjs';
 
 const POSTHOG_OPTIONS = {
   api_host: env('NEXT_PUBLIC_POSTHOG_HOST'),

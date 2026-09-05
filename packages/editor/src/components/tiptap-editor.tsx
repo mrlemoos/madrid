@@ -5,7 +5,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Collaboration from '@tiptap/extension-collaboration';
 import Placeholder from '@tiptap/extension-placeholder';
-import { NOTA_YDOC_FIELD } from '@nota/notes-yjs-core';
+import { NOTA_YDOC_FIELD } from '@getmadrid/notes-yjs-core';
 import type * as Y from 'yjs';
 import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
@@ -31,7 +31,7 @@ import { FlightCode } from './tiptap/flight-code-extension';
 import { useFlightCode } from './tiptap/flight-code-ui';
 import { NotaLink } from './tiptap/nota-link';
 import { convertLinkOnlyParagraphs } from './tiptap/link-preview-scan';
-import { debounce } from '@nota/isomorphic-helpers';
+import { debounce } from '@getmadrid/isomorphic-helpers';
 import {
   NotePdf,
   NotePdfDocProvider,
@@ -40,7 +40,7 @@ import {
 } from './tiptap/note-pdf-extension';
 import { NoteImage } from './tiptap/note-image-extension';
 import { NoteAudio } from './tiptap/note-audio-extension';
-import type { Note, NoteAttachment } from '@nota/database-types';
+import type { Note, NoteAttachment } from '@getmadrid/database-types';
 import {
   useRegisterNoteEditorMermaidInserter,
   useRegisterNoteEditorTableInserter,
@@ -462,7 +462,7 @@ export function TipTapEditor({
           if (!canInsertAttachmentsRef.current || uploadingRef.current)
             return true;
           if (!proEntitledRef.current) {
-            setUploadError('Cloud attachments require Nota Pro.');
+            setUploadError('Cloud attachments require Madrid Pro.');
             return true;
           }
           void processFilesRef.current(files);
@@ -629,7 +629,7 @@ export function TipTapEditor({
       const list = Array.from(files);
       if (list.length === 0) return;
       if (!proEntitledRef.current) {
-        setUploadError('Cloud attachments require Nota Pro.');
+        setUploadError('Cloud attachments require Madrid Pro.');
         return;
       }
 

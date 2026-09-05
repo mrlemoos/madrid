@@ -15,26 +15,26 @@ import {
   noteEditorSettingsToJson,
   parseNoteEditorSettings,
   type NoteEditorSettings,
-} from '@nota/editor';
-import { useStickyDocTitle } from '@nota/note-runtime/sticky-doc-title';
-import { persistedDisplayTitle } from '@nota/data-source/note-title';
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
-import { useRootLoaderData } from '@nota/note-runtime/session-context';
+} from '@getmadrid/editor';
+import { useStickyDocTitle } from '@getmadrid/note-runtime/sticky-doc-title';
+import { persistedDisplayTitle } from '@getmadrid/data-source/note-title';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
+import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
 import {
   useNotesDataMeta,
   useNotesDataActions,
-} from '@nota/note-runtime/notes-data-context';
-import { vaultMutator } from '@nota/data-source/vault-runtime';
-import { createNoteFieldSaver } from '@nota/data-source/save-note-fields';
-import type { Json, Note, NoteAttachment } from '@nota/database-types';
+} from '@getmadrid/note-runtime/notes-data-context';
+import { vaultMutator } from '@getmadrid/data-source/vault-runtime';
+import { createNoteFieldSaver } from '@getmadrid/data-source/save-note-fields';
+import type { Json, Note, NoteAttachment } from '@getmadrid/database-types';
 import { NoteLayoutMenu } from './note-layout-menu';
 import { NoteShareButton } from './note-share-button';
 import {
   NoteImageLightbox,
   type NoteImageLightboxImage,
 } from './note-image-lightbox';
-import { cn } from '@nota/design/utils';
-import { NOTA_TRACKING_DISPLAY_CLASS } from '@nota/notes-chrome-core/chrome-type';
+import { cn } from '@getmadrid/design/utils';
+import { NOTA_TRACKING_DISPLAY_CLASS } from '@getmadrid/notes-chrome-core/chrome-type';
 import type { Editor } from '@tiptap/core';
 import {
   classifyNoteAttachmentFile,
@@ -42,27 +42,27 @@ import {
   uploadNoteAttachmentFile,
   getOrFetchNoteAttachmentSignedUrl,
   downloadBlobFromSignedUrl,
-} from '@nota/data-source/pdf-attachment-client';
-import { ATTACHMENT_SIGNED_URL_TTL_SEC } from '@nota/data-source/attachment-signed-url-ttl';
-import { getValidNoteAttachmentSignedUrlCacheEntry } from '@nota/data-source/attachment-signed-url-cache';
+} from '@getmadrid/data-source/pdf-attachment-client';
+import { ATTACHMENT_SIGNED_URL_TTL_SEC } from '@getmadrid/data-source/attachment-signed-url-ttl';
+import { getValidNoteAttachmentSignedUrlCacheEntry } from '@getmadrid/data-source/attachment-signed-url-cache';
 import {
   NOTE_PDFS_BUCKET,
   deleteNoteAttachment,
   updateNoteAttachmentFilename,
-} from '@nota/data-source/models/note-attachments';
+} from '@getmadrid/data-source/models/note-attachments';
 import { fetchOgPreviewForEditor } from './og-preview-client';
 import { useNoteEditorTranslator } from './use-note-editor-translator';
-import { parseNoteLinkPath, hrefForNote } from '@nota/internal-note-link';
+import { parseNoteLinkPath, hrefForNote } from '@getmadrid/internal-note-link';
 import {
   absoluteUrlForNote,
   navigateFromLegacyPath,
-} from '@nota/app-navigation-core/navigation';
-import { useNotaPreferencesStore } from '@nota/note-runtime/stores/preferences';
-import { createTypewriterScrollUserGuard } from '@nota/nota-motion-core/typewriter-scroll-guard';
-import { NOTA_SAVE_PULSE_CLASS } from '@nota/nota-motion-ui/interaction';
-import { createWritingActivitySessionRecorder } from '@nota/writing-activity-ui/tracking';
+} from '@getmadrid/app-navigation-core/navigation';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
+import { createTypewriterScrollUserGuard } from '@getmadrid/nota-motion-core/typewriter-scroll-guard';
+import { NOTA_SAVE_PULSE_CLASS } from '@getmadrid/nota-motion-ui/interaction';
+import { createWritingActivitySessionRecorder } from '@getmadrid/writing-activity-ui/tracking';
 import { useNoteYjsDoc } from './notes-yjs/use-note-yjs-doc';
-import { debounce } from '@nota/isomorphic-helpers';
+import { debounce } from '@getmadrid/isomorphic-helpers';
 
 function buildStorageOps(
   noteId: string,

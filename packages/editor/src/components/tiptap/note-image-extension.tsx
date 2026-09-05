@@ -1,15 +1,15 @@
 import { Menu } from '@base-ui/react/menu';
 import { Node, mergeAttributes } from '@tiptap/core';
-import { Icon, type IconName } from '@nota/design/icon';
+import { Icon, type IconName } from '@getmadrid/design/icon';
 import {
   NodeViewWrapper,
   ReactNodeViewRenderer,
   type NodeViewProps,
 } from '@tiptap/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, buttonVariants } from '@nota/design/button';
-import { NOTA_POPUP_MOTION_CLASS } from '@nota/design/popup-motion';
-import { LoadingStatus } from '@nota/design/spinner';
+import { Button, buttonVariants } from '@getmadrid/design/button';
+import { NOTA_POPUP_MOTION_CLASS } from '@getmadrid/design/popup-motion';
+import { LoadingStatus } from '@getmadrid/design/spinner';
 import {
   Tooltip,
   TooltipPopup,
@@ -17,8 +17,8 @@ import {
   TooltipPositioner,
   TooltipProvider,
   TooltipTrigger,
-} from '@nota/design/tooltip';
-import { cn } from '@nota/design/utils';
+} from '@getmadrid/design/tooltip';
+import { cn } from '@getmadrid/design/utils';
 import { useNotePdfDocContext } from './note-pdf-extension';
 
 export type NoteImageAlign = 'left' | 'center' | 'right';

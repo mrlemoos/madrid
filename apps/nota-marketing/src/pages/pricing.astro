@@ -16,9 +16,9 @@ const priceMonthlyUsd = '2.49';
 const priceAnnualUsd = '19.49';
 const priceAnnualMonthlyUsd = (Number.parseFloat(priceAnnualUsd) / 12).toFixed(2);
 
-const pricingTitle = 'Nota pricing: from $2.49/month';
+const pricingTitle = 'Madrid pricing: from $2.49/month';
 const pricingDescription =
-  'Nota is a paid Mac notes app: subscribe in-app for cloud sync and backup. Guide prices $19.49/year or $2.49/month (USD); lifetime offered when available in checkout.';
+  'Madrid is a paid Mac notes app: subscribe in-app for cloud sync and backup. Guide prices $19.49/year or $2.49/month (USD); lifetime offered when available in checkout.';
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -42,7 +42,7 @@ const structuredData = {
     },
     {
       '@type': 'SoftwareApplication',
-      name: 'Nota',
+      name: 'Madrid',
       operatingSystem: 'macOS',
       applicationCategory: 'ProductivityApplication',
       description:
@@ -51,7 +51,7 @@ const structuredData = {
       offers: [
         {
           '@type': 'Offer',
-          name: 'Nota, annual',
+          name: 'Madrid, annual',
           price: priceAnnualUsd,
           priceCurrency: 'USD',
           description: 'Full app access; billed annually. Subscribe from Settings in the macOS app.',
@@ -60,7 +60,7 @@ const structuredData = {
         },
         {
           '@type': 'Offer',
-          name: 'Nota, monthly',
+          name: 'Madrid, monthly',
           price: priceMonthlyUsd,
           priceCurrency: 'USD',
           description: 'Full app access; billed monthly. Subscribe from Settings in the macOS app.',
@@ -120,7 +120,7 @@ const structuredData = {
           <h2 class="font-serif text-2xl font-normal text-foreground">Lifetime</h2>
           <p class="mt-3 text-3xl font-semibold tracking-tight text-foreground">In-app</p>
           <p class="mt-6 text-sm leading-relaxed text-muted-foreground">
-            When offered in your build of Nota, lifetime is a one-time purchase alongside monthly and yearly.
+            When offered in your build of Madrid, lifetime is a one-time purchase alongside monthly and yearly.
           </p>
         </article>
       </div>

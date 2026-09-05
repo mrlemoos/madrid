@@ -19,7 +19,7 @@ const heroScreenshotUrl = new URL(heroScreenshotImage.src, site).href;
 const priceMonthlyUsd = '2.49';
 const priceAnnualUsd = '19.49';
 
-const homeTitle = 'Nota: Quiet Mac Notes';
+const homeTitle = 'Madrid: Quiet Mac Notes';
 const homeDescription =
   'A native Mac notes app that protects your attention. No feeds, no nudges, just a calm place to write and link ideas. Subscribe in-app after install.';
 
@@ -30,7 +30,7 @@ const faqEntities = [
     acceptedAnswer: {
       '@type': 'Answer',
       text:
-        'No. Download the Mac app from GitHub Releases, create an account, then subscribe in Settings to use Nota. USD guide prices are on the pricing page; checkout in the app shows the final charge.',
+        'No. Download the Mac app from GitHub Releases, create an account, then subscribe in Settings to use Madrid. USD guide prices are on the pricing page; checkout in the app shows the final charge.',
     },
   },
   {
@@ -39,7 +39,7 @@ const faqEntities = [
     acceptedAnswer: {
       '@type': 'Answer',
       text:
-        'Full access to writing, the note graph, attachments, and cloud sync with secure backup across devices where you use Nota while signed in.',
+        'Full access to writing, the note graph, attachments, and cloud sync with secure backup across devices where you use Madrid while signed in.',
     },
   },
 ];
@@ -50,7 +50,7 @@ const structuredData = {
     {
       '@type': 'Organization',
       '@id': `${siteRoot}#organization`,
-      name: 'Nota',
+      name: 'Madrid',
       url: siteRoot,
       sameAs: [NOTA_GITHUB_REPO],
     },
@@ -58,14 +58,14 @@ const structuredData = {
       '@type': 'WebSite',
       '@id': `${siteRoot}#website`,
       url: siteRoot,
-      name: 'Nota',
+      name: 'Madrid',
       description: homeDescription,
       publisher: { '@id': `${siteRoot}#organization` },
     },
     {
       '@type': 'SoftwareApplication',
       '@id': `${siteRoot}#software`,
-      name: 'Nota',
+      name: 'Madrid',
       operatingSystem: 'macOS',
       applicationCategory: 'ProductivityApplication',
       description: homeDescription,
@@ -81,7 +81,7 @@ const structuredData = {
       offers: [
         {
           '@type': 'Offer',
-          name: 'Nota, monthly',
+          name: 'Madrid, monthly',
           price: priceMonthlyUsd,
           priceCurrency: 'USD',
           description:
@@ -91,7 +91,7 @@ const structuredData = {
         },
         {
           '@type': 'Offer',
-          name: 'Nota, annual',
+          name: 'Madrid, annual',
           price: priceAnnualUsd,
           priceCurrency: 'USD',
           description:
@@ -110,7 +110,7 @@ const structuredData = {
 };
 
 const heroScreenshotAlt =
-  'Nota on macOS over a soft cityscape: dark glass sidebar, serif note title, and a calm writing surface without feeds or nudges';
+  'Madrid on macOS over a soft cityscape: dark glass sidebar, serif note title, and a calm writing surface without feeds or nudges';
 ---
 
 <BaseLayout
@@ -136,7 +136,7 @@ const heroScreenshotAlt =
             Think without the feed.
           </h1>
           <p class="text-base leading-relaxed text-muted-foreground md:text-lg">
-            A native Mac notes app for writing and linking ideas. Nota steps back when you pause.<br />
+            A native Mac notes app for writing and linking ideas. Madrid steps back when you pause.<br />
             <span class="text-foreground">No performance, no nudges.</span>
           </p>
           <div

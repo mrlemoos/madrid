@@ -4,7 +4,7 @@ export default defineConfig(() => ({
   root: import.meta.dirname,
   cacheDir: '../../node_modules/.vite/packages/electron-bridge-core',
   test: {
-    name: '@nota/electron-bridge-core',
+    name: '@getmadrid/electron-bridge-core',
     watch: false,
     globals: true,
     environment: 'jsdom',

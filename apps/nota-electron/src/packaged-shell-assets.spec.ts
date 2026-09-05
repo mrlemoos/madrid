@@ -21,7 +21,7 @@ describe('Electron package does not embed the Next app', () => {
     expect(yml).not.toMatch(/\.\.\/nota\/dist/);
   });
 
-  it('electron:pack and electron:release do not depend on @nota/nota build', () => {
+  it('electron:pack and electron:release do not depend on @getmadrid/nota build', () => {
     // Arrange
     const pkg = JSON.parse(
       fs.readFileSync(path.join(APP_ROOT, 'package.json'), 'utf8'),
@@ -40,7 +40,7 @@ describe('Electron package does not embed the Next app', () => {
       const notaBuildDeps = dependsOn.filter(
         (dep) =>
           dep.target === 'build' &&
-          (dep.projects === 'nota' || dep.projects === '@nota/nota'),
+          (dep.projects === 'nota' || dep.projects === '@getmadrid/nota'),
       );
 
       // Assert

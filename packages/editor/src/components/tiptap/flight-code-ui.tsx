@@ -5,10 +5,10 @@ import {
   HoverCardPortal,
   HoverCardPositioner,
   HoverCardPopup,
-} from '@nota/design/hover-card';
+} from '@getmadrid/design/hover-card';
 // FlightGlobe is a light wrapper that lazy-loads its own d3-geo + atlas chunk,
 // so a static import here doesn't pull that weight into the editor's chunk.
-import { FlightGlobe } from '@nota/design/flight-globe';
+import { FlightGlobe } from '@getmadrid/design/flight-globe';
 import { fetchFlightInfo, type FlightInfo } from '../../lib/flight-client';
 import type {
   FlightCodeHandlers,

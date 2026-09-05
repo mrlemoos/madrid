@@ -1,4 +1,4 @@
-import type { AudioNoteStudyResult } from '@nota/note-capture-core/audio-note-blocks-to-doc';
+import type { AudioNoteStudyResult } from '@getmadrid/note-capture-core/audio-note-blocks-to-doc';
 import {
   ensureBlobForXaiStt,
   filenameForSttUpload,
@@ -41,7 +41,9 @@ export async function postAudioToNoteStream(
   });
 
   if (res.status === 401 || res.status === 403) {
-    throw new Error(res.status === 403 ? 'Nota Pro required' : 'Unauthorized');
+    throw new Error(
+      res.status === 403 ? 'Madrid Pro required' : 'Unauthorized',
+    );
   }
 
   if (!res.ok) {

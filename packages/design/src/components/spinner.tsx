@@ -2,7 +2,7 @@
  * Loading affordances: indeterminate spinner and labelled status row for async UI.
  *
  * @remarks
- * Import from the package subpath only: `import { Spinner, LoadingStatus } from '@nota/design/spinner'`.
+ * Import from the package subpath only: `import { Spinner, LoadingStatus } from '@getmadrid/design/spinner'`.
  * `Spinner` is decorative (`aria-hidden`); prefer {@link LoadingStatus} when screen readers should announce progress.
  *
  * @packageDocumentation
@@ -38,7 +38,7 @@ export type SpinnerProps = {
  *
  * @example
  * ```tsx
- * import { Spinner } from '@nota/design/spinner';
+ * import { Spinner } from '@getmadrid/design/spinner';
  *
  * export function Inline() {
  *   return <Spinner size="sm" />;
@@ -81,7 +81,7 @@ export type LoadingStatusProps = {
  *
  * @example
  * ```tsx
- * import { LoadingStatus } from '@nota/design/spinner';
+ * import { LoadingStatus } from '@getmadrid/design/spinner';
  *
  * export function LoadingNotes() {
  *   return <LoadingStatus label="Loading notes…" spinnerSize="sm" />;

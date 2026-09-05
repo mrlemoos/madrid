@@ -1,6 +1,6 @@
 /**
  * Desktop (Electron): Clerk OAuth + Apple/Google passkeys must run in the **system browser**.
- * The OAuth redirect uses this custom URL scheme so macOS/Windows hand control back to Nota.
+ * The OAuth redirect uses this custom URL scheme so macOS/Windows hand control back to Madrid.
  *
  * Add **`nota://oauth-callback`** to your Clerk instance → **Allowed redirect URLs** (or OAuth
  * redirect allowlist), alongside your usual `http://localhost:4200` / production origins.

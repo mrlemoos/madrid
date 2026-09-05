@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import * as editor from './index';
 
-describe('@nota/editor public API', () => {
+describe('@getmadrid/editor public API', () => {
   it('exports core editor entry points', () => {
     // Arrange / Act
     const {

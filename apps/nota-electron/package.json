@@ -1,5 +1,5 @@
 {
-  "name": "@nota/nota-electron",
+  "name": "@getmadrid/nota-electron",
   "version": "0.1.4",
   "private": true,
   "type": "module",
@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@nota/clerk-oauth-protocol": "workspace:*",
+    "@getmadrid/clerk-oauth-protocol": "workspace:*",
     "electron-updater": "^6.8.9",
     "semver": "^7.7.3"
   },
@@ -38,7 +38,7 @@
         "dependsOn": [
           {
             "target": "build",
-            "projects": "@nota/clerk-oauth-protocol"
+            "projects": "@getmadrid/clerk-oauth-protocol"
           }
         ],
         "options": {
@@ -52,7 +52,7 @@
         "dependsOn": [
           {
             "target": "build",
-            "projects": "@nota/clerk-oauth-protocol"
+            "projects": "@getmadrid/clerk-oauth-protocol"
           }
         ],
         "options": {
@@ -92,7 +92,7 @@
       }
     },
     "tags": [
-      "scope:nota",
+      "scope:getmadrid",
       "type:app",
       "platform:node"
     ]

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type * as Y from 'yjs';
 
-import { getBrowserClient } from '@nota/data-source/supabase/browser';
+import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
 import { createNoteYjsDoc } from './note-yjs-doc';
 import { SupabaseYjsProvider } from './supabase-yjs-provider';
 
