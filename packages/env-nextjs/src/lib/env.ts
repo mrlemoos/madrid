@@ -2,6 +2,8 @@ interface NextJSPublicEnv {
   readonly NEXT_PUBLIC_SUPABASE_URL: string | undefined;
   readonly NEXT_PUBLIC_SUPABASE_ANON_KEY: string | undefined;
   readonly NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: string | undefined;
+  readonly NEXT_PUBLIC_POSTHOG_HOST: string | undefined;
+  readonly NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN: string | undefined;
   readonly NEXT_PUBLIC_NOTA_WEB_APP_ORIGIN:
     | 'app.getmadrid.app'
     | (string & {})
