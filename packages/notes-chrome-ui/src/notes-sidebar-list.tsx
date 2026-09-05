@@ -16,6 +16,8 @@ import { Icon } from '@getmadrid/design/icon';
 import { TintCircle } from '@getmadrid/design/nota-tint-circle';
 import {
   ContextMenu,
+  Menu,
+  MenuTrigger,
   ContextMenuItem,
   ContextMenuPortal,
   ContextMenuPositioner,
@@ -60,7 +62,7 @@ import {
 import {
   FOLDER_TINT_PRESET_LABEL_KEY,
   FOLDER_TINT_SWATCH_PRESETS,
-  folderHasPersistedTint,
+  folderTintOptionForPersisted,
 } from '@getmadrid/note-folders-core/folder-tint-presets';
 import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
 import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
@@ -175,7 +177,10 @@ function NoteRow(options: {
               />
               <Link
                 href={noteHashHref(note.id)}
-                className="relative z-0 min-w-0 flex-1 truncate text-sm font-normal"
+                className={cn(
+                  'relative z-0 min-w-0 flex-1 truncate text-sm',
+                  isActive ? 'font-semibold text-foreground' : 'font-normal',
+                )}
                 aria-current={isActive ? 'page' : undefined}
                 onClick={() => {
                   markNavIntent('pointer');
@@ -316,6 +321,7 @@ function NoteRow(options: {
 
 function FolderRow(options: {
   folder: Folder;
+  isActive: boolean;
   folderContentId: string;
   isCollapsed: boolean;
   isDropTarget: boolean;
@@ -342,6 +348,7 @@ function FolderRow(options: {
   const { t } = useNotesChromeTranslator();
   const {
     folder,
+    isActive,
     folderContentId,
     isCollapsed,
     isDropTarget,
@@ -365,7 +372,30 @@ function FolderRow(options: {
     children,
   } = options;
 
-  const hasTint = folderHasPersistedTint(folder.tint ?? null);
+  const tint = folderTintOptionForPersisted(folder.tint ?? null);
+  const tintItems = FOLDER_TINT_SWATCH_PRESETS.map((preset) => (
+    <ContextMenuItem
+      key={preset.id}
+      className="size-8 shrink-0 justify-center p-0"
+      label={t(FOLDER_TINT_PRESET_LABEL_KEY[preset.id])}
+      onClick={() => {
+        void clientUpdateFolderTint({
+          folderId: folder.id,
+          nextPersistedTint: preset.persistedTint,
+          previousPersistedTint: folder.tint ?? null,
+          userId,
+          notaProEntitled,
+          patchFolderInList,
+        });
+      }}
+    >
+      <TintCircle
+        colour={preset.swatchColour}
+        sizePx={18}
+        aria-label={t(FOLDER_TINT_PRESET_LABEL_KEY[preset.id])}
+      />
+    </ContextMenuItem>
+  ));
 
   return (
     <li className="list-none">
@@ -378,7 +408,8 @@ function FolderRow(options: {
                 'px-1.5 text-muted-foreground',
               )}
               data-slot="sidebar-folder-row"
-              data-folder-tint={hasTint ? folder.tint : undefined}
+              data-folder-tint={tint.id}
+              data-selected={isActive ? '' : undefined}
               onDragEnter={(event) => {
                 if (!draggedNoteId) {
                   return;
@@ -411,6 +442,32 @@ function FolderRow(options: {
                 void moveDraggedNoteToFolder(folder.id);
               }}
             >
+              <Menu>
+                <MenuTrigger
+                  disabled={!notaProEntitled}
+                  aria-label={`${t('Tint folder')} ${folder.name}`}
+                  className="mr-1 inline-flex size-6 shrink-0 items-center justify-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                >
+                  <TintCircle
+                    colour={tint.swatchColour}
+                    sizePx={10}
+                    className="border-0"
+                  />
+                </MenuTrigger>
+                <ContextMenuPortal>
+                  <ContextMenuPositioner
+                    side="bottom"
+                    align="start"
+                    sideOffset={4}
+                  >
+                    <ContextMenuPopup className="min-w-[unset] p-1">
+                      <ContextMenuViewport className="flex max-h-none max-w-[11rem] flex-row flex-wrap gap-1 overflow-visible">
+                        {tintItems}
+                      </ContextMenuViewport>
+                    </ContextMenuPopup>
+                  </ContextMenuPositioner>
+                </ContextMenuPortal>
+              </Menu>
               <button
                 type="button"
                 data-slot="sidebar-folder-trigger"
@@ -438,15 +495,6 @@ function FolderRow(options: {
                   startRenamingFolder(folder);
                 }}
               >
-                <span
-                  className={cn(
-                    'inline-flex shrink-0',
-                    hasTint && 'nota-folder-tint-accent',
-                  )}
-                  aria-hidden
-                >
-                  <Icon name="folder" size={14} strokeWidth={1.5} />
-                </span>
                 {renamingFolderId === folder.id ? (
                   <input
                     ref={renameInputRef}
@@ -485,7 +533,10 @@ function FolderRow(options: {
                           className={cn(
                             notesSidebarTreeFolderLabelClass,
                             'relative z-0 cursor-default decoration-dotted underline-offset-2 hover:underline',
-                            hasTint && 'nota-folder-tint-accent',
+                            isActive || !isCollapsed
+                              ? 'font-semibold'
+                              : 'font-normal',
+                            isActive && 'text-foreground',
                           )}
                           onDoubleClick={(event) => {
                             event.preventDefault();
@@ -584,33 +635,7 @@ function FolderRow(options: {
                       >
                         <ContextMenuPopup className="min-w-[unset] p-1">
                           <ContextMenuViewport className="flex max-h-none max-w-[11rem] flex-row flex-wrap gap-1 overflow-visible">
-                            {FOLDER_TINT_SWATCH_PRESETS.map((preset) => (
-                              <ContextMenuItem
-                                key={preset.id}
-                                className="size-8 shrink-0 justify-center p-0"
-                                label={t(
-                                  FOLDER_TINT_PRESET_LABEL_KEY[preset.id],
-                                )}
-                                onClick={() => {
-                                  void clientUpdateFolderTint({
-                                    folderId: folder.id,
-                                    nextPersistedTint: preset.persistedTint,
-                                    previousPersistedTint: folder.tint ?? null,
-                                    userId,
-                                    notaProEntitled,
-                                    patchFolderInList,
-                                  });
-                                }}
-                              >
-                                <TintCircle
-                                  colour={preset.swatchColour}
-                                  sizePx={18}
-                                  aria-label={t(
-                                    FOLDER_TINT_PRESET_LABEL_KEY[preset.id],
-                                  )}
-                                />
-                              </ContextMenuItem>
-                            ))}
+                            {tintItems}
                           </ContextMenuViewport>
                         </ContextMenuPopup>
                       </ContextMenuPositioner>
@@ -941,6 +966,10 @@ export function NotesSidebarList({
     return (
       <FolderRow
         folder={folder}
+        isActive={
+          panel === 'note' &&
+          notesInFolder.some((note) => note.id === routeNoteId)
+        }
         folderContentId={folderContentId}
         isCollapsed={isCollapsed}
         isDropTarget={isDropTarget}

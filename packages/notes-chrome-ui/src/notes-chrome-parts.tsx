@@ -1,4 +1,4 @@
-import type { ComponentProps, CSSProperties, JSX, ReactNode } from 'react';
+import type { CSSProperties, JSX, ReactNode } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@getmadrid/design/button';
@@ -16,10 +16,7 @@ import {
   NOTA_CHROME_NAV_ITEM_CLASS,
 } from '@getmadrid/nota-motion-ui/interaction';
 import { ELECTRON_WINDOW_NO_DRAG_CLASS } from '@getmadrid/electron-bridge-core/window-chrome';
-import {
-  NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX,
-  NOTA_SIDEBAR_RAIL_WIDTH_PX,
-} from '@getmadrid/nota-motion-ui/motion';
+import { NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX } from '@getmadrid/nota-motion-ui/motion';
 import { notesSidebarChrome } from '@getmadrid/notes-chrome-core/notes-chrome';
 import {
   NOTA_CHROME_CONTROL_COMPACT_CLASS,
@@ -92,73 +89,42 @@ export function SidebarToggle({
   );
 }
 
-/** One footer nav destination, rendered as a full row or as an icon-rail button. */
+/** One sidebar navigation destination. */
 export type ChromeNavItem = {
   key: string;
   href: string;
   label: string;
-  icon: ComponentProps<typeof Icon>['name'];
   active: boolean;
 };
 
-/**
- * Footer nav links. `collapsed` renders the icon-only rail variant (tooltip
- * carries the label) so the expanded and collapsed sidebars stay one list.
- */
 export function ChromeNavLinks({
   items,
-  collapsed = false,
 }: {
   items: ChromeNavItem[];
-  collapsed?: boolean;
 }): JSX.Element {
   return (
-    <div
-      className={cn('flex flex-col gap-3', collapsed && 'items-center gap-1')}
-      data-slot="chrome-nav"
-    >
-      {items.map((item) => {
-        const link = (
-          <Link
-            href={item.href}
-            aria-current={item.active ? 'page' : undefined}
-            aria-label={collapsed ? item.label : undefined}
-            data-slot="chrome-nav-item"
-            onClick={() => {
-              markNavIntent('pointer');
-            }}
-            className={cn(
-              NOTA_CHROME_NAV_ITEM_CLASS,
-              NOTA_PRESSABLE_CLASS,
-              'flex items-center rounded-md text-sm',
-              collapsed ? 'size-9 justify-center' : 'gap-2 px-3 py-2',
-              item.active
-                ? 'bg-muted font-medium text-foreground'
-                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
-            )}
-          >
-            <span className="inline-flex shrink-0" aria-hidden>
-              <Icon name={item.icon} size={16} />
-            </span>
-            {collapsed ? null : item.label}
-          </Link>
-        );
-
-        if (!collapsed) {
-          return <div key={item.key}>{link}</div>;
-        }
-
-        return (
-          <Tooltip key={item.key}>
-            <TooltipTrigger render={link} />
-            <TooltipPortal>
-              <TooltipPositioner side="right" sideOffset={6}>
-                <TooltipPopup>{item.label}</TooltipPopup>
-              </TooltipPositioner>
-            </TooltipPortal>
-          </Tooltip>
-        );
-      })}
+    <div className="flex flex-col gap-3" data-slot="chrome-nav">
+      {items.map((item) => (
+        <Link
+          key={item.key}
+          href={item.href}
+          aria-current={item.active ? 'page' : undefined}
+          data-slot="chrome-nav-item"
+          onClick={() => {
+            markNavIntent('pointer');
+          }}
+          className={cn(
+            NOTA_CHROME_NAV_ITEM_CLASS,
+            NOTA_PRESSABLE_CLASS,
+            'flex items-center rounded-md px-3 py-2 text-sm',
+            item.active
+              ? 'bg-muted font-medium text-foreground'
+              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
+          )}
+        >
+          {item.label}
+        </Link>
+      ))}
     </div>
   );
 }
@@ -167,7 +133,7 @@ export function ChromeNavLinks({
 export const NOTA_COLLAPSED_SIDEBAR_PEEK_LEAVE_MS = 80;
 
 /**
- * Collapsed sidebar: overlay icon rail. Hidden until the pointer hits the
+ * Collapsed sidebar: navigation revealed on hover. Hidden until the pointer hits the
  * left-edge target, then panel-reveals (slide + fade + cross-blur).
  */
 export function SidebarIconRail({
@@ -243,9 +209,8 @@ export function SidebarIconRail({
         aria-hidden={!peekOpen}
         inert={!peekOpen ? true : undefined}
         {...peekHandlers}
-        style={{ width: NOTA_SIDEBAR_RAIL_WIDTH_PX }}
         className={cn(
-          't-panel-slide absolute inset-y-0 left-0 flex flex-col items-center pb-3',
+          't-panel-slide absolute inset-y-0 left-0 flex w-max flex-col items-start whitespace-nowrap px-3 pb-3',
           notesSidebarChrome,
           isElectron
             ? cn(
@@ -257,7 +222,7 @@ export function SidebarIconRail({
       >
         <SidebarToggle />
         <div className="mt-auto pt-4">
-          <ChromeNavLinks items={items} collapsed />
+          <ChromeNavLinks items={items} />
         </div>
       </div>
     </div>

@@ -72,6 +72,8 @@ const DEFAULT_CONTEXT_MENU_SUBMENU_TRIGGER_CLASS = cn(
 
 const DEFAULT_CONTEXT_MENU_SEPARATOR_CLASS = 'my-1 h-px bg-border/70';
 
+export const Menu = BaseMenu.Root;
+export const MenuTrigger = BaseMenu.Trigger;
 export const ContextMenu = BaseContextMenu.Root;
 export const ContextMenuTrigger = BaseContextMenu.Trigger;
 export const ContextMenuPortal = BaseContextMenu.Portal;

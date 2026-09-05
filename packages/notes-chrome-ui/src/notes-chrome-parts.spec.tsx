@@ -167,14 +167,12 @@ describe('SidebarIconRail', () => {
       key: 'graph',
       href: '/notes/graph',
       label: 'Note Graph',
-      icon: 'brain-circuit',
       active: false,
     },
     {
       key: 'settings',
       href: '/notes/settings',
       label: 'Settings',
-      icon: 'gear',
       active: true,
     },
   ];
@@ -204,7 +202,7 @@ describe('SidebarIconRail', () => {
     expect(rail?.hasAttribute('inert')).toBe(true);
   });
 
-  it('reveals the expand toggle and nav icons after hovering the left edge', () => {
+  it('reveals the expand toggle and text links after hovering the left edge', () => {
     // Arrange
     useNotesSidebarStore.setState({ open: false });
     const { container } = render(<SidebarIconRail items={items} />);
@@ -225,7 +223,10 @@ describe('SidebarIconRail', () => {
         .getByRole('link', { name: 'Settings' })
         .getAttribute('aria-current'),
     ).toBe('page');
-    expect(screen.getByRole('link', { name: 'Note Graph' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Note Graph' }).textContent).toBe(
+      'Note Graph',
+    );
+    expect(rail?.querySelector('[data-slot="chrome-nav"] svg')).toBeNull();
   });
 
   it('hides the collapsed rail again after the pointer leaves the peek', () => {

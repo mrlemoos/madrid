@@ -219,21 +219,18 @@ export function NotesChrome({ children }: NotesChromeProps): JSX.Element {
       key: 'graph',
       href: graphHref,
       label: t('Note Graph'),
-      icon: 'brain-circuit',
       active: panel === 'graph',
     },
     {
       key: 'shortcuts',
       href: shortcutsHref,
       label: t('Shortcuts'),
-      icon: 'sparkles',
       active: panel === 'shortcuts',
     },
     {
       key: 'settings',
       href: settingsHref,
       label: t('Settings'),
-      icon: 'gear',
       active: panel === 'settings',
     },
     ...(showJournalNav
@@ -242,7 +239,6 @@ export function NotesChrome({ children }: NotesChromeProps): JSX.Element {
             key: 'journal',
             href: journalHref,
             label: t('Journal'),
-            icon: 'clock',
             active: panel === 'journal',
           } satisfies ChromeNavItem,
         ]

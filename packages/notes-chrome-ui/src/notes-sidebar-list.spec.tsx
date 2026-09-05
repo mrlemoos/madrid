@@ -1,7 +1,9 @@
+import type { ComponentProps } from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NotesSidebarList } from './notes-sidebar-list';
 import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
 import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
 import { clientMoveNoteToFolder } from '@getmadrid/note-folders-ui/move-note-folder-client';
 import { clientCreateNote } from '@getmadrid/note-folders-ui/create-note-client';
@@ -75,51 +77,57 @@ describe('NotesSidebarList', () => {
     expect(screen.queryByText(formattedDate)).toBeNull();
   });
 
-  it('renders a note icon beside each sidebar note title', () => {
-    // Arrange
-    render(
-      <NotesSidebarList
-        notes={[
-          {
-            id: 'note-1',
-            user_id: 'user-1',
-            title: 'Alpha note',
-            content: {},
-            created_at: '2026-04-15T12:00:00.000Z',
-            updated_at: '2026-04-15T12:00:00.000Z',
-            due_at: null,
-            is_deadline: false,
-            editor_settings: {},
-            banner_attachment_id: null,
-            folder_id: null,
-            share_token: null,
-          },
-        ]}
-        folders={[]}
-        panel="list"
-        routeNoteId={null}
-        userId="user-1"
-        notaProEntitled
-        userPreferences={null}
-        insertNoteAtFront={vi.fn()}
-        insertFolderSorted={vi.fn()}
-        patchNoteInList={vi.fn()}
-        patchFolderInList={vi.fn()}
-        removeNoteFromList={vi.fn()}
-        removeFolderFromList={vi.fn()}
-        refreshNotesList={vi.fn(() => Promise.resolve())}
-      />,
-    );
+  it.each([true, false])(
+    'renders a note icon and selection weight when active is %s',
+    (active) => {
+      // Arrange
+      render(
+        <NotesSidebarList
+          notes={[
+            {
+              id: 'note-1',
+              user_id: 'user-1',
+              title: 'Alpha note',
+              content: {},
+              created_at: '2026-04-15T12:00:00.000Z',
+              updated_at: '2026-04-15T12:00:00.000Z',
+              due_at: null,
+              is_deadline: false,
+              editor_settings: {},
+              banner_attachment_id: null,
+              folder_id: null,
+              share_token: null,
+            },
+          ]}
+          folders={[]}
+          panel={active ? 'note' : 'list'}
+          routeNoteId={active ? 'note-1' : null}
+          userId="user-1"
+          notaProEntitled
+          userPreferences={null}
+          insertNoteAtFront={vi.fn()}
+          insertFolderSorted={vi.fn()}
+          patchNoteInList={vi.fn()}
+          patchFolderInList={vi.fn()}
+          removeNoteFromList={vi.fn()}
+          removeFolderFromList={vi.fn()}
+          refreshNotesList={vi.fn(() => Promise.resolve())}
+        />,
+      );
 
-    // Act
-    const noteLink = screen.getByRole('link', { name: 'Alpha note' });
-    const noteRow = noteLink.parentElement;
+      // Act
+      const noteLink = screen.getByRole('link', { name: 'Alpha note' });
+      const noteRow = noteLink.parentElement;
 
-    // Assert
-    expect(
-      noteRow?.querySelector('[data-nota-sidebar-note-icon]'),
-    ).toBeTruthy();
-  });
+      // Assert
+      expect(noteLink.className).toContain(
+        active ? 'font-semibold' : 'font-normal',
+      );
+      expect(
+        noteRow?.querySelector('[data-nota-sidebar-note-icon]'),
+      ).toBeTruthy();
+    },
+  );
 
   it('allows inline folder rename on double click and commits on blur', () => {
     // Arrange
@@ -767,46 +775,162 @@ describe('NotesSidebarList', () => {
     expect(row.style.background).toBe('');
   });
 
-  it('applies tint accent class to the folder icon and name when tinted', () => {
+  it.each(['green', null, '', 'invalid'])(
+    'shows a coloured dot and neutral name for tint %s',
+    (tint) => {
+      // Arrange
+      render(
+        <NotesSidebarList
+          notes={[]}
+          folders={[
+            {
+              id: 'folder-1',
+              user_id: 'user-1',
+              name: 'Tinted folder',
+              parent_id: null,
+              tint,
+              created_at: '2026-04-25T00:00:00.000Z',
+              updated_at: '2026-04-25T00:00:00.000Z',
+            },
+          ]}
+          panel="list"
+          routeNoteId={null}
+          userId="user-1"
+          notaProEntitled
+          userPreferences={null}
+          insertNoteAtFront={vi.fn()}
+          insertFolderSorted={vi.fn()}
+          patchNoteInList={vi.fn()}
+          patchFolderInList={vi.fn()}
+          removeNoteFromList={vi.fn()}
+          removeFolderFromList={vi.fn()}
+          refreshNotesList={vi.fn(() => Promise.resolve())}
+        />,
+      );
+
+      // Act
+      const label = screen.getByText('Tinted folder');
+      const trigger = screen.getByRole('button', {
+        name: 'Tint folder Tinted folder',
+      });
+      const dot = trigger?.querySelector('span.rounded-full');
+
+      // Assert
+      expect(label.className).not.toContain('nota-folder-tint-accent');
+      expect(trigger?.querySelector('svg')).toBeNull();
+      expect(dot).toBeTruthy();
+      expect(dot?.getAttribute('style')).toContain(
+        tint === 'green' ? 'oklch(0.55 0.14 145)' : 'oklch(0.55 0.02 250)',
+      );
+    },
+  );
+
+  it('selects the direct folder, weights expanded folders, and changes colour without collapsing', async () => {
     // Arrange
-    render(
-      <NotesSidebarList
-        notes={[]}
-        folders={[
-          {
-            id: 'folder-1',
-            user_id: 'user-1',
-            name: 'Tinted folder',
-            parent_id: null,
-            tint: 'green',
-            created_at: '2026-04-25T00:00:00.000Z',
-            updated_at: '2026-04-25T00:00:00.000Z',
-          },
-        ]}
-        panel="list"
-        routeNoteId={null}
-        userId="user-1"
-        notaProEntitled
-        userPreferences={null}
-        insertNoteAtFront={vi.fn()}
-        insertFolderSorted={vi.fn()}
-        patchNoteInList={vi.fn()}
-        patchFolderInList={vi.fn()}
-        removeNoteFromList={vi.fn()}
-        removeFolderFromList={vi.fn()}
-        refreshNotesList={vi.fn(() => Promise.resolve())}
-      />,
-    );
+    const timestamp = '2026-04-25T00:00:00.000Z';
+    const props: ComponentProps<typeof NotesSidebarList> = {
+      notes: [
+        {
+          id: 'note-1',
+          user_id: 'user-1',
+          title: 'Nested note',
+          content: {},
+          created_at: timestamp,
+          updated_at: timestamp,
+          due_at: null,
+          is_deadline: false,
+          editor_settings: {},
+          banner_attachment_id: null,
+          folder_id: 'child',
+          share_token: null,
+        },
+      ],
+      folders: [
+        {
+          id: 'parent',
+          name: 'Parent',
+          parent_id: null,
+          tint: 'blue',
+          user_id: 'user-1',
+          created_at: timestamp,
+          updated_at: timestamp,
+        },
+        {
+          id: 'child',
+          name: 'Child',
+          parent_id: 'parent',
+          tint: null,
+          user_id: 'user-1',
+          created_at: timestamp,
+          updated_at: timestamp,
+        },
+      ],
+      panel: 'note',
+      routeNoteId: 'note-1',
+      userId: 'user-1',
+      notaProEntitled: true,
+      userPreferences: null,
+      insertNoteAtFront: vi.fn(),
+      insertFolderSorted: vi.fn(),
+      patchNoteInList: vi.fn(),
+      patchFolderInList: vi.fn(),
+      removeNoteFromList: vi.fn(),
+      removeFolderFromList: vi.fn(),
+      refreshNotesList: vi.fn(() => Promise.resolve()),
+    };
 
     // Act
-    const label = screen.getByText('Tinted folder');
-    const iconWrapper = label
-      .closest('button')
-      ?.querySelector('.nota-folder-tint-accent');
+    const { rerender } = render(<NotesSidebarList {...props} />);
 
     // Assert
-    expect(label.className).toContain('nota-folder-tint-accent');
-    expect(iconWrapper).toBeTruthy();
+    expect(screen.getByText('Child').className).toContain('font-semibold');
+    expect(screen.getByText('Parent').className).toContain('font-semibold');
+    expect(
+      document.querySelectorAll(
+        '[data-slot="sidebar-folder-row"][data-selected]',
+      ),
+    ).toHaveLength(1);
+
+    // Act
+    fireEvent.click(screen.getByRole('button', { name: 'Tint folder Child' }));
+    const blue = await screen.findByRole('menuitem', {
+      name: 'Folder tint Blue',
+    });
+    fireEvent.click(blue);
+
+    // Assert
+    expect(clientUpdateFolderTint).toHaveBeenCalledWith({
+      folderId: 'child',
+      nextPersistedTint: 'blue',
+      previousPersistedTint: null,
+      userId: 'user-1',
+      notaProEntitled: true,
+      patchFolderInList: props.patchFolderInList,
+    });
+    expect(
+      screen
+        .getByRole('button', { name: 'Collapse folder Child' })
+        .getAttribute('aria-expanded'),
+    ).toBe('true');
+
+    // Act
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Collapse folder Child' }),
+    );
+
+    // Assert
+    expect(screen.getByText('Child').className).toContain('font-semibold');
+
+    // Act
+    rerender(<NotesSidebarList {...props} panel="settings" />);
+
+    // Assert
+    expect(
+      document.querySelectorAll(
+        '[data-slot="sidebar-folder-row"][data-selected]',
+      ),
+    ).toHaveLength(0);
+    expect(screen.getByText('Child').className).toContain('font-normal');
   });
 
   it('shows Create note in the folder context menu and creates a note in that folder', async () => {
