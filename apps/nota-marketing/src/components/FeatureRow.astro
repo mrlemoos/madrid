@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  image: ImageMetadata;
+  alt: string;
+  href: string;
+  linkLabel: string;
+  /** Places the screenshot first on wide viewports. */
+  reverse?: boolean;
+}
+
+const { eyebrow, title, image, alt, href, linkLabel, reverse = false } = Astro.props;
+---
+
+<section class="mkt-container mkt-section" data-reveal>
+  <div class:list={['grid items-center gap-12 md:grid-cols-2 md:gap-16', reverse && 'md:[&>figure]:order-first']}>
+    <div class="max-w-md">
+      <p class="mkt-eyebrow">{eyebrow}</p>
+      <h2 class="mkt-heading">{title}</h2>
+      <div class="mkt-lede mt-5 space-y-4">
+        <slot />
+      </div>
+      <a href={href} class="mkt-link mkt-focus mt-6 inline-block text-sm font-medium">{linkLabel}</a>
+    </div>
+    <figure class="mkt-shot">
+      <Image src={image} alt={alt} class="h-auto w-full" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</section>

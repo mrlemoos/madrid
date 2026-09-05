@@ -1,8 +1,11 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DownloadMacButton from '@/components/DownloadMacButton.astro';
+import FeatureRow from '@/components/FeatureRow.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
+import editorOverviewImage from '@/assets/marketing/editor-overview.png';
+import noteGraphImage from '@/assets/marketing/note-graph.png';
 import heroScreenshotImage from '@/assets/marketing/desktop-app-screenshot.png';
 import { MKT_THEME_COLOR_HERO } from '@/lib/marketing-theme';
 import { NOTA_GITHUB_LATEST, NOTA_GITHUB_RELEASES, NOTA_GITHUB_REPO } from '@/lib/site';
@@ -40,6 +43,24 @@ const faqEntities = [
       '@type': 'Answer',
       text:
         'Full access to writing, the note graph, attachments, and cloud sync with secure backup across devices where you use Madrid while signed in.',
+    },
+  },
+  {
+    '@type': 'Question',
+    name: 'Does Madrid work offline?',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text:
+        'Yes. Notes are written to local storage first and sync when you are back online, so a lost connection never blocks writing.',
+    },
+  },
+  {
+    '@type': 'Question',
+    name: 'Where are my notes stored?',
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text:
+        'On your Mac, and in your own row-secured space in the cloud while you are signed in. Attachments live in private storage and are served through short-lived links.',
     },
   },
 ];
@@ -109,93 +130,166 @@ const structuredData = {
   ],
 };
 
-const heroScreenshotAlt =
-  'Madrid on macOS over a soft cityscape: dark glass sidebar, serif note title, and a calm writing surface without feeds or nudges';
+const macDetails = [
+  {
+    title: 'Native window chrome',
+    body: 'Vibrancy, traffic lights, and a sidebar that behaves like a Mac rail rather than a web panel.',
+  },
+  {
+    title: 'Keyboard first',
+    body: 'Command palette on Mod+K, today’s note on Mod+D, history on Mod+[ and Mod+]. Keyboard actions never wait on animation.',
+  },
+  {
+    title: 'Quiet by default',
+    body: 'No streaks, no badges, no weekly report on how much you wrote.',
+  },
+];
 ---
 
-<BaseLayout
-  title={homeTitle}
-  description={homeDescription}
-  image="/og/home.png"
-  themeColor={MKT_THEME_COLOR_HERO}
->
+<BaseLayout title={homeTitle} description={homeDescription} image="/og/home.png" themeColor={MKT_THEME_COLOR_HERO}>
   <script type="application/ld+json" slot="head-extras" is:inline set:html={JSON.stringify(structuredData)} />
   <main id="main-content">
     <div class="mkt-dark mkt-hero-band overflow-hidden">
       <SiteHeader borderless />
 
-      <section
-        class="relative z-10 mx-auto flex max-w-6xl flex-col gap-16 px-6 pb-16 pt-16 md:gap-20 md:px-10 md:pb-20 md:pt-20 lg:gap-24"
-        aria-labelledby="hero-heading"
-      >
+      <section class="mkt-container relative z-10 pt-16 pb-16 md:pt-20 md:pb-20" aria-labelledby="hero-heading">
         <div class="mx-auto flex max-w-2xl flex-col items-center gap-10 text-center md:gap-12 lg:max-w-3xl">
-          <h1
-            id="hero-heading"
-            class="font-serif text-4xl font-normal leading-[1.1] text-balance text-foreground md:text-5xl lg:text-[3.25rem]"
-          >
-            Think without the feed.
-          </h1>
-          <p class="text-base leading-relaxed text-muted-foreground md:text-lg">
+          <h1 id="hero-heading" class="mkt-display lg:text-[3.25rem]">Think without the feed.</h1>
+          <p class="mkt-lede">
             A native Mac notes app for writing and linking ideas. Madrid steps back when you pause.<br />
             <span class="text-foreground">No performance, no nudges.</span>
           </p>
-          <div
-            class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5"
-            id="download"
-          >
-            <DownloadMacButton variant="hero" class="mkt-hero-fade mkt-hero-fade-delay-1" />
+          <div class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5" id="download">
+            <DownloadMacButton variant="hero" />
             <a
               href="/pricing"
-              class="mkt-hero-fade mkt-hero-fade-delay-2 mkt-focus inline-flex min-h-11 items-center justify-center px-2 py-3 text-sm font-medium text-muted-foreground underline decoration-muted-foreground/40 underline-offset-4 transition hover:text-foreground"
+              class="mkt-focus inline-flex min-h-11 items-center justify-center px-2 py-3 text-sm font-medium text-muted-foreground underline decoration-muted-foreground/40 underline-offset-4 transition hover:text-foreground"
             >
               Pricing
             </a>
           </div>
           <p class="text-sm leading-relaxed text-muted-foreground/90">
-            Install from GitHub Releases, sign in, subscribe in Settings.
+            Install the Mac app, sign in, subscribe in Settings.
           </p>
         </div>
 
-        <figure class="mkt-hero-fade mkt-hero-fade-delay-3 mx-auto w-full max-w-5xl">
-          <div
-            class="mkt-hero-screenshot-frame overflow-hidden rounded-xl border border-border/80 bg-card/20 p-1.5 shadow-[0_32px_90px_-24px_rgba(0,0,0,0.65)] ring-1 ring-white/10"
-          >
-            <Image
-              src={heroScreenshotImage}
-              alt={heroScreenshotAlt}
+        <figure class="mx-auto mt-16 w-full max-w-5xl md:mt-20">
+          <div class="mkt-shot p-1.5">
+            <video
               class="h-auto w-full rounded-[calc(var(--radius)-2px)]"
-              data-nota-hero-screenshot
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
+              poster="/video/nota-hero-poster.jpg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Madrid on macOS: writing in a note, opening the command palette, and following a link to another note"
+            >
+              <source src="/video/nota-hero.webm" type="video/webm" />
+              <source src="/video/nota-hero.mp4" type="video/mp4" />
+            </video>
           </div>
         </figure>
       </section>
     </div>
 
-    <section
-      id="faq"
-      class="border-t border-border bg-background px-6 py-16 md:px-10 md:py-20"
-      aria-labelledby="faq-heading"
+    <section class="mkt-container mkt-section--tight border-b border-border" data-reveal>
+      <p class="mkt-heading mx-auto max-w-3xl text-center">
+        One window, your words, and the links between them. Everything else stays out of the way.
+      </p>
+    </section>
+
+    <FeatureRow
+      eyebrow="Writing"
+      title="An editor that steps back"
+      image={editorOverviewImage}
+      alt="A note open in Madrid: serif title, plain paragraphs, and no toolbar hovering over the text"
+      href="/writing"
+      linkLabel="More about writing"
     >
-      <div class="mx-auto max-w-xl">
-        <h2 id="faq-heading" class="mb-10 font-serif text-2xl font-normal text-foreground md:text-3xl">
-          Common questions
-        </h2>
+      <p>
+        Rich text without the chrome. Headings, lists, tables, code, and images live in the document, and the controls
+        appear where you need them rather than along the top of the window.
+      </p>
+      <p>Drag a PDF in and it stays in the note at the point you dropped it.</p>
+    </FeatureRow>
+
+    <FeatureRow
+      eyebrow="Links"
+      title="Connections you can see"
+      image={noteGraphImage}
+      alt="The Madrid note graph: labelled nodes joined by thin lines, one note highlighted with its neighbours"
+      href="/graph"
+      linkLabel="More about the note graph"
+      reverse
+    >
+      <p>
+        Type <code class="rounded-sm bg-muted px-1.5 py-0.5 text-sm">@</code> to link one note to another. There is no
+        syntax to learn and no toolbar button to find.
+      </p>
+      <p>The graph shows what your notes have grown into, and you can leave any note out of it.</p>
+    </FeatureRow>
+
+    <FeatureRow
+      eyebrow="Offline and sync"
+      title="Your notes stay yours"
+      image={heroScreenshotImage}
+      alt="Madrid running on macOS over a soft cityscape: dark glass sidebar and a calm writing surface"
+      href="/sync"
+      linkLabel="More about offline and sync"
+    >
+      <p>
+        Writing lands in local storage first. When the connection comes back, changes sync in the order you made them,
+        with a backup you did not have to think about.
+      </p>
+      <p>On a plane, on a train, or with the wifi off, the app behaves the same way.</p>
+    </FeatureRow>
+
+    <section class="mkt-container mkt-section border-t border-border" aria-labelledby="mac-heading" data-reveal>
+      <p class="mkt-eyebrow">Built for the Mac</p>
+      <h2 id="mac-heading" class="mkt-heading max-w-xl">Not a web page in a window</h2>
+      <dl class="mt-12 grid gap-10 md:grid-cols-3 md:gap-12">
+        {
+          macDetails.map(({ title, body }) => (
+            <div>
+              <dt class="font-medium text-foreground">{title}</dt>
+              <dd class="mkt-lede mt-3 text-sm md:text-base">{body}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="mkt-container mkt-section border-t border-border" aria-labelledby="price-heading" data-reveal>
+      <div class="flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
+        <div class="max-w-md">
+          <p class="mkt-eyebrow">Pricing</p>
+          <h2 id="price-heading" class="mkt-heading">
+            ${priceAnnualUsd} a year, or ${priceMonthlyUsd} a month
+          </h2>
+          <p class="mkt-lede mt-5">
+            One subscription covers the app, the graph, attachments, and sync. You subscribe from Settings after you
+            install, and prices in checkout are shown in your currency.
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <DownloadMacButton />
+          <a href="/pricing" class="mkt-btn mkt-btn--secondary mkt-focus">See what is included</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mkt-container mkt-section border-t border-border" aria-labelledby="faq-heading">
+      <div class="mx-auto max-w-2xl">
+        <h2 id="faq-heading" class="mkt-heading mb-10">Common questions</h2>
         <dl class="space-y-8 text-sm md:text-base">
           <div>
             <dt class="font-medium text-foreground">Is there a free tier or trial?</dt>
             <dd class="mt-2 leading-relaxed text-muted-foreground">
               No. Download the Mac app from
-              <a
-                href={NOTA_GITHUB_RELEASES}
-                class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-                >GitHub Releases</a
-              >, sign in, and subscribe in Settings to write and sync. See
-              <a href="/pricing" class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-                >pricing</a
-              > for current USD guide prices.
+              <a href={NOTA_GITHUB_RELEASES} class="mkt-link mkt-focus">GitHub Releases</a>, sign in, and subscribe in
+              Settings to write and sync. See <a href="/pricing" class="mkt-link mkt-focus">pricing</a> for current USD guide
+              prices.
             </dd>
           </div>
           <div>
@@ -204,53 +298,23 @@ const heroScreenshotAlt =
               Writing, internal links, the note graph, attachments, and cloud sync with backup while you are signed in.
             </dd>
           </div>
+          <div>
+            <dt class="font-medium text-foreground">Does Madrid work offline?</dt>
+            <dd class="mt-2 leading-relaxed text-muted-foreground">
+              Yes. Notes are written locally first and sync when you are back online, so a dropped connection never
+              stops you writing.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-medium text-foreground">Where are my notes stored?</dt>
+            <dd class="mt-2 leading-relaxed text-muted-foreground">
+              On your Mac, and in your own row-secured space in the cloud while you are signed in. Attachments sit in
+              private storage and are served through short-lived links.
+            </dd>
+          </div>
         </dl>
       </div>
     </section>
-
-    <footer class="bg-background px-6 py-12 md:px-10 md:py-14">
-      <div class="mx-auto max-w-6xl text-center">
-        <p class="font-serif text-xl text-foreground">Ready when you are.</p>
-        <p class="mt-2 text-sm text-muted-foreground">Download for Mac. Subscribe when it suits you.</p>
-        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-          <DownloadMacButton />
-          <a
-            href="/pricing"
-            class="mkt-focus inline-flex min-h-11 min-w-[12rem] items-center justify-center rounded-[var(--radius)] border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:bg-muted"
-          >
-            View pricing
-          </a>
-        </div>
-      </div>
-      <div
-        class="mx-auto mt-10 flex max-w-6xl flex-col items-center gap-4 text-center text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-10 sm:gap-y-3 md:flex-col md:items-end md:justify-end md:text-right md:gap-3"
-      >
-        <p>
-          <a
-            href={NOTA_GITHUB_REPO}
-            class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-            rel="noopener noreferrer"
-            target="_blank">Open source</a
-          >
-          ·
-          <a href="/pricing" class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-            >Pricing</a
-          >
-          ·
-          <a href="/refunds" class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-            >Refunds</a
-          >
-        </p>
-        <p>
-          Copyright &copy; 2026{' '}
-          <a
-            href="https://mrlemoos.dev"
-            class="mkt-focus underline decoration-border underline-offset-4 hover:text-foreground"
-            rel="noopener noreferrer"
-            target="_blank">mrlemoos.dev</a
-          >. All rights reserved.
-        </p>
-      </div>
-    </footer>
   </main>
+  <SiteFooter />
 </BaseLayout>

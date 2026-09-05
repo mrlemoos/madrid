@@ -1,0 +1,77 @@
+---
+import DownloadMacButton from '@/components/DownloadMacButton.astro';
+import { NOTA_APP_URL, NOTA_AUTHOR_URL, NOTA_GITHUB_REPO } from '@/lib/site';
+
+const productLinks = [
+  { href: '/writing', label: 'Writing' },
+  { href: '/graph', label: 'Note graph' },
+  { href: '/sync', label: 'Offline and sync' },
+  { href: '/pricing', label: 'Pricing' },
+];
+
+const moreLinks = [
+  { href: '/blog', label: 'Blog' },
+  { href: NOTA_APP_URL, label: 'Open in browser' },
+  { href: NOTA_GITHUB_REPO, label: 'Source on GitHub' },
+  { href: '/refunds', label: 'Refunds' },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mkt-dark mkt-hero-band">
+  <div class="mkt-container mkt-section--tight">
+    <div class="flex flex-col gap-12 md:flex-row md:items-start md:justify-between">
+      <div class="max-w-sm">
+        <p class="font-serif text-2xl text-foreground">Ready when you are.</p>
+        <p class="mkt-lede mt-3 text-sm md:text-base">
+          Download for Mac, sign in, and subscribe from Settings.
+        </p>
+        <div class="mt-7">
+          <DownloadMacButton variant="hero" />
+        </div>
+      </div>
+
+      <div class="flex gap-16 text-sm">
+        <nav aria-label="Product">
+          <p class="mkt-eyebrow">Product</p>
+          <ul class="space-y-3">
+            {
+              productLinks.map(({ href, label }) => (
+                <li>
+                  <a href={href} class="mkt-focus text-muted-foreground transition hover:text-foreground">
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <nav aria-label="More">
+          <p class="mkt-eyebrow">More</p>
+          <ul class="space-y-3">
+            {
+              moreLinks.map(({ href, label }) => (
+                <li>
+                  <a
+                    href={href}
+                    class="mkt-focus text-muted-foreground transition hover:text-foreground"
+                    rel="noopener noreferrer"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <p class="mt-14 border-t border-border pt-8 text-sm text-muted-foreground">
+      Copyright &copy; {currentYear}{' '}
+      <a href={NOTA_AUTHOR_URL} class="mkt-link" rel="noopener noreferrer" target="_blank">mrlemoos.dev</a>. All rights
+      reserved.
+    </p>
+  </div>
+</footer>
