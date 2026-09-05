@@ -1,8 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import PillarLayout from '@/layouts/PillarLayout.astro';
-import desktopImage from '@/assets/marketing/desktop-app-screenshot.png';
-import signInImage from '@/assets/marketing/sign-in.png';
+import noteBannerImage from '@/assets/marketing/note-banner.png';
 
 const title = 'Offline and sync in Madrid: your notes stay yours';
 const description =
@@ -32,8 +31,8 @@ const description =
       </div>
       <figure class="mkt-shot">
         <Image
-          src={desktopImage}
-          alt="Madrid running on macOS with a note open and the sidebar showing recent notes"
+          src={noteBannerImage}
+          alt="A Madrid note with a photographic banner, open on macOS"
           class="h-auto w-full"
           loading="eager"
           decoding="async"
@@ -43,24 +42,13 @@ const description =
   </section>
 
   <section class="mkt-container mkt-section border-t border-border" data-reveal>
-    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
-      <figure class="mkt-shot md:order-last">
-        <Image
-          src={signInImage}
-          alt="The Madrid sign-in screen on macOS"
-          class="h-auto w-full"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-      <div class="mkt-lede max-w-md space-y-4">
-        <h2 class="mkt-heading text-foreground">Backed up without ceremony</h2>
-        <p>
-          Signed in, your notes are kept in your own row-secured space in the cloud. Nobody else's account can read
-          them, and attachments live in private storage reached through links that expire.
-        </p>
-        <p>Sign in on another Mac and your vault is there, including folders, links, and the graph.</p>
-      </div>
+    <div class="mkt-lede max-w-2xl space-y-4">
+      <h2 class="mkt-heading text-foreground">Backed up without ceremony</h2>
+      <p>
+        Signed in, your notes are kept in your own row-secured space in the cloud. Nobody else's account can read them,
+        and attachments live in private storage reached through links that expire.
+      </p>
+      <p>Sign in on another Mac and your vault is there, including folders, links, and the graph.</p>
     </div>
   </section>
 

@@ -118,8 +118,11 @@ const chromeScheme = chromeSchemeForThemeColor(themeColor);
     </script>
     <script is:inline>
       /**
-       * Reveal-on-scroll for `[data-reveal]`. Adds the ready class first so
-       * content stays visible when JS never runs or motion is reduced.
+       * Reveal-on-scroll for `[data-reveal]`. The ready class is added only
+       * once the observer is wired, and anything already in the viewport is
+       * marked revealed in the same tick, so visible content never waits on a
+       * transition. No JS, no IntersectionObserver, or reduced motion: content
+       * is simply visible.
        */
       (function () {
         if (
@@ -128,7 +131,6 @@ const chromeScheme = chromeSchemeForThemeColor(themeColor);
         ) {
           return;
         }
-        document.documentElement.classList.add('mkt-reveal-ready');
         document.addEventListener('DOMContentLoaded', function () {
           var observer = new IntersectionObserver(
             function (entries) {
@@ -140,7 +142,12 @@ const chromeScheme = chromeSchemeForThemeColor(themeColor);
             },
             { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
           );
+          document.documentElement.classList.add('mkt-reveal-ready');
           document.querySelectorAll('[data-reveal]').forEach(function (node) {
+            if (node.getBoundingClientRect().top < window.innerHeight) {
+              node.setAttribute('data-reveal', 'in');
+              return;
+            }
             observer.observe(node);
           });
         });

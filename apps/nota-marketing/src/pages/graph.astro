@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import PillarLayout from '@/layouts/PillarLayout.astro';
 import noteGraphImage from '@/assets/marketing/note-graph.png';
-import welcomeImage from '@/assets/marketing/hero-welcome-code.png';
 
 const title = 'The Madrid note graph: connections you can see';
 const description =
@@ -18,8 +17,8 @@ const description =
   breadcrumb="Note graph"
 >
   <section class="mkt-container mkt-section" data-reveal>
-    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
-      <div class="mkt-lede max-w-md space-y-4">
+    <div class="grid gap-12 md:gap-16">
+      <div class="mkt-lede max-w-2xl space-y-4">
         <h2 class="mkt-heading text-foreground">One key, no syntax</h2>
         <p>
           Type <code class="rounded-sm bg-muted px-1.5 py-0.5 text-sm">@</code> and start typing a title. Pick the note
@@ -30,15 +29,6 @@ const description =
           nothing to configure first.
         </p>
       </div>
-      <figure class="mkt-shot">
-        <Image
-          src={welcomeImage}
-          alt="Typing an @ mention in a Madrid note, with matching note titles listed below the caret"
-          class="h-auto w-full"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
     </div>
   </section>
 
@@ -49,7 +39,7 @@ const description =
           src={noteGraphImage}
           alt="The Madrid note graph: labelled nodes joined by thin lines, with one note and its neighbours highlighted"
           class="h-auto w-full"
-          loading="lazy"
+          loading="eager"
           decoding="async"
         />
       </figure>

@@ -1,8 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import PillarLayout from '@/layouts/PillarLayout.astro';
-import editorOverviewImage from '@/assets/marketing/editor-overview.png';
-import editorCodeImage from '@/assets/marketing/editor-code.png';
+import noteWritingImage from '@/assets/marketing/note-writing.png';
 
 const title = 'Writing in Madrid: an editor that steps back';
 const description =
@@ -32,7 +31,7 @@ const description =
       </div>
       <figure class="mkt-shot">
         <Image
-          src={editorOverviewImage}
+          src={noteWritingImage}
           alt="A note in Madrid with a serif title, plain paragraphs, and no toolbar above the text"
           class="h-auto w-full"
           loading="eager"
@@ -43,27 +42,16 @@ const description =
   </section>
 
   <section class="mkt-container mkt-section border-t border-border" data-reveal>
-    <div class="grid gap-12 md:grid-cols-2 md:gap-16">
-      <figure class="mkt-shot md:order-last">
-        <Image
-          src={editorCodeImage}
-          alt="A highlighted code block inside a Madrid note"
-          class="h-auto w-full"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-      <div class="mkt-lede max-w-md space-y-4">
-        <h2 class="mkt-heading text-foreground">Things you drop in stay put</h2>
-        <p>
-          Drag a PDF into a note and it lands at the caret, previewable without leaving the page. Images work the same
-          way, and a link on its own line becomes a small preview card instead of a bare URL.
-        </p>
-        <p>
-          Attachments sit in private storage tied to your account, served through short-lived links rather than public
-          URLs.
-        </p>
-      </div>
+    <div class="mkt-lede max-w-2xl space-y-4">
+      <h2 class="mkt-heading text-foreground">Things you drop in stay put</h2>
+      <p>
+        Drag a PDF into a note and it lands at the caret, previewable without leaving the page. Images work the same
+        way, and a link on its own line becomes a small preview card instead of a bare URL.
+      </p>
+      <p>
+        Attachments sit in private storage tied to your account, served through short-lived links rather than public
+        URLs.
+      </p>
     </div>
   </section>
 

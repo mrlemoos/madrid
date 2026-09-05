@@ -4,9 +4,9 @@ import DownloadMacButton from '@/components/DownloadMacButton.astro';
 import FeatureRow from '@/components/FeatureRow.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import SiteHeader from '@/components/SiteHeader.astro';
-import editorOverviewImage from '@/assets/marketing/editor-overview.png';
+import noteWritingImage from '@/assets/marketing/note-writing.png';
 import noteGraphImage from '@/assets/marketing/note-graph.png';
-import heroScreenshotImage from '@/assets/marketing/desktop-app-screenshot.png';
+import noteBannerImage from '@/assets/marketing/note-banner.png';
 import { MKT_THEME_COLOR_HERO } from '@/lib/marketing-theme';
 import {
   NOTA_GITHUB_LATEST,
@@ -22,7 +22,7 @@ if (!site) {
 }
 const siteRoot = new URL('/', site).href;
 const downloadUrl = NOTA_GITHUB_LATEST;
-const heroScreenshotUrl = new URL(heroScreenshotImage.src, site).href;
+const heroScreenshotUrl = new URL(noteWritingImage.src, site).href;
 
 const priceMonthlyUsd = NOTA_PRICE_MONTHLY_USD;
 const priceAnnualUsd = NOTA_PRICE_ANNUAL_USD;
@@ -207,7 +207,7 @@ const macDetails = [
     <FeatureRow
       eyebrow="Writing"
       title="An editor that steps back"
-      image={editorOverviewImage}
+      image={noteWritingImage}
       alt="A note open in Madrid: serif title, plain paragraphs, and no toolbar hovering over the text"
       href="/writing"
       linkLabel="More about writing"
@@ -238,8 +238,8 @@ const macDetails = [
     <FeatureRow
       eyebrow="Offline and sync"
       title="Your notes stay yours"
-      image={heroScreenshotImage}
-      alt="Madrid running on macOS over a soft cityscape: dark glass sidebar and a calm writing surface"
+      image={noteBannerImage}
+      alt="A Madrid note with a photographic banner behind the title and the text still easy to read"
       href="/sync"
       linkLabel="More about offline and sync"
     >
