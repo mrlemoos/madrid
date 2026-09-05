@@ -1,4 +1,4 @@
-import type { Content, Editor } from '@tiptap/core';
+import type { Editor } from '@tiptap/core';
 import { Node as PMNode } from '@tiptap/pm/model';
 import type { EditorView } from '@tiptap/pm/view';
 import { useEditor, EditorContent } from '@tiptap/react';
@@ -523,7 +523,7 @@ export function TipTapEditor({
       prevNoteIdRef.current = noteId;
       prevContentRevisionRef.current = contentRevision;
       if (!isDocContentEqual(editor, content)) {
-        cancel = scheduleEditorSetContent(editor, content as Content);
+        cancel = scheduleEditorSetContent(editor, content);
       }
     } else if (
       contentRevision !== undefined &&
@@ -531,7 +531,7 @@ export function TipTapEditor({
     ) {
       prevContentRevisionRef.current = contentRevision;
       if (!isDocContentEqual(editor, content)) {
-        cancel = scheduleEditorSetContent(editor, content as Content);
+        cancel = scheduleEditorSetContent(editor, content);
       }
     }
     return cancel;
@@ -550,10 +550,7 @@ export function TipTapEditor({
       return;
     }
     seededDocRef.current = ydoc;
-    const cancel = scheduleEditorSetContent(
-      editor,
-      seedContentIfEmpty as Content,
-    );
+    const cancel = scheduleEditorSetContent(editor, seedContentIfEmpty);
     return () => {
       cancel();
       if (ydoc.getXmlFragment(NOTA_YDOC_FIELD).length === 0) {

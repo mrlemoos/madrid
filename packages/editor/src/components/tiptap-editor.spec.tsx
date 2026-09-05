@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { TipTapEditor } from './tiptap-editor';
 
 const { stableHandlersRef } = vi.hoisted(() => ({
-  stableHandlersRef: { current: null as null },
+  stableHandlersRef: { current: null },
 }));
 
 vi.mock('./tiptap/flight-code-ui', () => ({
@@ -18,8 +19,6 @@ vi.mock('mermaid', () => ({
     render: async () => ({ svg: '<svg></svg>', bindFunctions: () => {} }),
   },
 }));
-
-import { TipTapEditor } from './tiptap-editor';
 
 const emptyDoc = {
   type: 'doc',

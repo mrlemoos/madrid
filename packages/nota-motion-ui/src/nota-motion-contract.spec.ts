@@ -1,3 +1,4 @@
+import { NOTA_PRESS_IN_MS } from '@getmadrid/design/motion-tokens';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -105,7 +106,7 @@ describe('nota-motion-contract', () => {
 
     // Assert
     expect(decision.kind).toBe('ease-out');
-    expect(decision.durationMs).toBe(100);
+    expect(decision.durationMs).toBe(NOTA_PRESS_IN_MS);
     expect(decision.dataMotion).toBe('animated');
   });
 

@@ -53,9 +53,8 @@ describe('FlightCode', () => {
     });
     try {
       // Act
-      const el = editor.view.dom.querySelector(
-        '[data-flight-code]',
-      ) as HTMLElement | null;
+      const el =
+        editor.view.dom.querySelector<HTMLElement>('[data-flight-code]');
       if (el) {
         el.dispatchEvent(
           new MouseEvent('mouseover', { bubbles: true, cancelable: true }),

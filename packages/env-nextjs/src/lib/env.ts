@@ -28,15 +28,16 @@ const NEXT_PUBLIC_ENV = {
 } as const;
 
 declare global {
+  // ProcessEnv must remain an interface for declaration merging.
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-empty-interface
     export interface ProcessEnv extends NextJSPublicEnv {}
   }
 }
 
-export function env<K extends keyof NextJSPublicEnv>(
-  key: K,
-): string | undefined {
-  const fromNext = NEXT_PUBLIC_ENV[key];
+export function env(key: string): string | undefined {
+  const fromNext = NEXT_PUBLIC_ENV[key as keyof typeof NEXT_PUBLIC_ENV];
   if (typeof fromNext === 'string' && fromNext.length > 0) {
     return fromNext;
   }
@@ -44,7 +45,7 @@ export function env<K extends keyof NextJSPublicEnv>(
   try {
     fromVite = (
       import.meta as unknown as {
-        env?: { [$ in keyof NextJSPublicEnv]: unknown };
+        env?: Record<string, unknown>;
       }
     ).env?.[key];
   } catch {

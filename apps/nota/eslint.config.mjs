@@ -3,6 +3,8 @@ import tseslint from 'typescript-eslint';
 import baseConfig from '../../eslint.config.mjs';
 import { notaReactStrictRules } from '../../tools/eslint-react-strict.mjs';
 
+const tsconfigRootDir = import.meta.dirname;
+
 export default [
   {
     ignores: [
@@ -17,6 +19,12 @@ export default [
   ...baseConfig,
   ...nx.configs['flat/react'],
   notaReactStrictRules,
+  {
+    files: ['src/lib/*.mjs'],
+    languageOptions: {
+      parserOptions: { tsconfigRootDir },
+    },
+  },
   {
     files: ['src/**/*.{ts,tsx}'],
     ignores: ['**/*.{spec,test}.{ts,tsx}', '**/vitest.setup.ts'],
