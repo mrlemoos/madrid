@@ -3,6 +3,7 @@ import type { Note, NoteAttachment } from '@getmadrid/database-types';
 import { NoteEditor } from './note-editor';
 import { NoteBacklinksPanel } from './note-backlinks-panel';
 import { cn } from '@getmadrid/design/utils';
+import { Button } from '@getmadrid/design/button';
 import {
   noteSurfaceClassNames,
   parseNoteEditorSettings,
@@ -38,6 +39,7 @@ import {
 import { useStickyDocTitle } from '@getmadrid/note-runtime/sticky-doc-title';
 import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import { noteBannerNoteSurfaceClass } from '@getmadrid/notes-chrome-core/banner-chrome';
+import { useNoteEditorTranslator } from './use-note-editor-translator';
 
 /** `POST /api/search/index-note` — same-origin Next route, Clerk cookie auth. */
 function postSearchIndexNote(body: { noteId: string }): Promise<Response> {
@@ -53,6 +55,7 @@ export function NoteDetailPanel({
 }: {
   noteId: string;
 }): React.ReactNode {
+  const { t } = useNoteEditorTranslator();
   const { notes } = useNotesDataVault();
   const { notaProEntitled, loading: vaultLoading } = useNotesDataMeta();
   const { patchNoteInList } = useNotesDataActions();
@@ -62,6 +65,8 @@ export function NoteDetailPanel({
   const [note, setNote] = useState<Note | null>(null);
   const [attachments, setAttachments] = useState<NoteAttachment[]>([]);
   const [fetchSettled, setFetchSettled] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
   const [hadAuthenticatedUser, setHadAuthenticatedUser] = useState(false);
   const notesRef = useRef(notes);
   notesRef.current = notes;
@@ -85,6 +90,7 @@ export function NoteDetailPanel({
     let cancelled = false;
     setAttachments([]);
     setFetchSettled(false);
+    setLoadFailed(false);
     setHadAuthenticatedUser(false);
 
     async function load(): Promise<void> {
@@ -101,7 +107,7 @@ export function NoteDetailPanel({
         }
         authedThisFetch = true;
 
-        const finishFromLocal = async (): Promise<void> => {
+        const finishFromLocal = async (): Promise<boolean> => {
           const local = await getStoredNote(uid, noteId);
           const rowFromList =
             notesRef.current.find((n) => n.id === noteId) ?? null;
@@ -113,19 +119,20 @@ export function NoteDetailPanel({
               setNote(merged);
               setAttachments([]);
             }
-            return;
+            return true;
           }
           if (rowFromList) {
             if (!cancelled) {
               setNote(rowFromList);
               setAttachments([]);
             }
-            return;
+            return true;
           }
           if (!cancelled) {
             setNote(null);
             setAttachments([]);
           }
+          return false;
         };
 
         if (!notaProEntitled) {
@@ -133,6 +140,7 @@ export function NoteDetailPanel({
           return;
         }
 
+        let remoteFetchFailed = false;
         try {
           const { row, attachments: atts } =
             await fetchNoteRowAndAttachmentsParallel(client, noteId, {
@@ -156,10 +164,14 @@ export function NoteDetailPanel({
         } catch (e) {
           if (isLikelyOnline()) {
             console.error(e);
+            remoteFetchFailed = true;
           }
         }
 
-        await finishFromLocal();
+        const foundLocally = await finishFromLocal();
+        if (!foundLocally && remoteFetchFailed && !cancelled) {
+          setLoadFailed(true);
+        }
       } finally {
         if (!cancelled) {
           setHadAuthenticatedUser(authedThisFetch);
@@ -173,6 +185,7 @@ export function NoteDetailPanel({
         setNote(null);
         setAttachments([]);
         setHadAuthenticatedUser(false);
+        setLoadFailed(isLikelyOnline());
         setFetchSettled(true);
       }
     });
@@ -180,7 +193,7 @@ export function NoteDetailPanel({
     return () => {
       cancelled = true;
     };
-  }, [noteId, notaProEntitled, user?.id]);
+  }, [noteId, notaProEntitled, retryKey, user?.id]);
 
   /** When the vault list row updates ahead of this panel (e.g. study notes + `patchNoteInList`), re-merge and refetch attachments. */
   useEffect(() => {
@@ -238,6 +251,7 @@ export function NoteDetailPanel({
       vaultLoading ||
       !fetchSettled ||
       !hadAuthenticatedUser ||
+      loadFailed ||
       displayNote
     ) {
       return;
@@ -259,7 +273,14 @@ export function NoteDetailPanel({
       cancelled = true;
       window.clearTimeout(t);
     };
-  }, [user?.id, vaultLoading, fetchSettled, hadAuthenticatedUser, displayNote]);
+  }, [
+    user?.id,
+    vaultLoading,
+    fetchSettled,
+    hadAuthenticatedUser,
+    loadFailed,
+    displayNote,
+  ]);
 
   // --- Banner signed URL ---
   const bannerAttachmentId = displayNote?.banner_attachment_id ?? null;
@@ -418,6 +439,23 @@ export function NoteDetailPanel({
   }, [noteId]);
 
   if (!displayNote) {
+    if (loadFailed) {
+      return (
+        <div className="flex h-full flex-col items-center justify-center gap-3 px-4 py-16 text-center text-sm text-muted-foreground">
+          <p>{t('Could not load this note.')}</p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setRetryKey((key) => key + 1);
+            }}
+          >
+            {t('Try again')}
+          </Button>
+        </div>
+      );
+    }
     return (
       <div className="flex h-full flex-col items-center justify-center px-4 py-16 text-sm text-muted-foreground">
         Note not found or still loading…

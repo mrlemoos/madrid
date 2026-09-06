@@ -27,6 +27,7 @@ export function NoteShareButton({
   const [token, setToken] = useState<string | null>(shareToken);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState<'copy' | 'share' | null>(null);
   const copiedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -52,13 +53,15 @@ export function NoteShareButton({
     try {
       await navigator.clipboard.writeText(url);
       flashCopied();
+      setError(null);
     } catch {
-      // Clipboard blocked (permissions/insecure context): leave state as-is.
+      setError('copy');
     }
   };
 
   const handleClick = async () => {
     if (busy) return;
+    setError(null);
     if (token) {
       await copy(buildShareUrl(token));
       return;
@@ -70,19 +73,23 @@ export function NoteShareButton({
       onShared?.(result.token);
       await copy(result.url);
     } catch {
-      // Surface nothing intrusive; the button stays actionable to retry.
+      setError('share');
     } finally {
       setBusy(false);
     }
   };
 
   const label = token
-    ? copied
-      ? t('Link copied')
-      : t('Shared')
-    : busy
-      ? t('Sharing…')
-      : t('Share');
+    ? error === 'copy'
+      ? t('Could not copy link. Try again.')
+      : copied
+        ? t('Link copied')
+        : t('Shared')
+    : error === 'share'
+      ? t('Could not share link. Try again.')
+      : busy
+        ? t('Sharing…')
+        : t('Share');
 
   return (
     <Button
@@ -93,7 +100,7 @@ export function NoteShareButton({
       onClick={() => {
         void handleClick();
       }}
-      aria-label={token ? t('Copy link again') : t('Share')}
+      aria-label={label}
       title={token ? t('Anyone with the link can view this note.') : undefined}
       className={cn(
         'gap-1.5 text-muted-foreground hover:text-foreground',

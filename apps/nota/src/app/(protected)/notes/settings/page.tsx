@@ -415,11 +415,14 @@ export default function NotesSettingsPage(): JSX.Element {
                 }}
                 className="size-4 accent-primary"
               />
-              <span>Show writing activity graph when no note is open</span>
+              <span>
+                {t('Show writing activity graph when no note is open')}
+              </span>
             </label>
             <div className="text-xs text-muted-foreground">
-              Appears below when you have no note selected. Cmd+K → "View
-              writing activity" to jump there.
+              {t(
+                'Appears below when you have no note selected. Cmd+K → "View writing activity" to jump there.',
+              )}
             </div>
           </section>
         )}

@@ -590,15 +590,17 @@ export function CommandPalette(): JSX.Element {
               'backdrop-blur-xl backdrop-saturate-150',
             )}
           >
-            <Dialog.Title className="sr-only">Command palette</Dialog.Title>
+            <Dialog.Title className="sr-only">
+              {t('Command palette')}
+            </Dialog.Title>
             <Dialog.Description className="sr-only">
-              Search commands and notes. Use arrow keys to move, Enter to run.
-              Quoted phrases match note text literally; other text uses Semantic
-              Search when Madrid Pro is active.
+              {t(
+                'Search commands and notes. Use arrow keys to move, Enter to run. Quoted phrases match note text literally; other text uses Semantic Search when Madrid Pro is active.',
+              )}
             </Dialog.Description>
             <Command
               className="overflow-hidden"
-              label="Command palette"
+              label={t('Command palette')}
               vimBindings={false}
               filter={commandFilter}
               value={paletteValue}
@@ -615,8 +617,10 @@ export function CommandPalette(): JSX.Element {
                 onValueChange={setPaletteSearch}
                 placeholder={
                   semanticSearchEnabled
-                    ? 'Commands and Semantic Search: use quotes for exact phrases…'
-                    : 'Type a command…'
+                    ? t(
+                        'Commands and Semantic Search: use quotes for exact phrases…',
+                      )
+                    : t('Type a command…')
                 }
                 className={cn(
                   'w-full bg-transparent px-3 py-3 text-sm',
@@ -1750,18 +1754,15 @@ export function CommandPalette(): JSX.Element {
                   </Command.Item>
                 </Command.Group>
               </Command.List>
-              <div
-                className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/40 px-3 py-2 text-muted-foreground text-xs"
-                aria-hidden
-              >
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/40 px-3 py-2 text-muted-foreground text-xs">
                 <span>
-                  Back{' '}
+                  {t('Back')}{' '}
                   <span className={notaKbdFooterClass}>
                     {formatShortcut({ key: '[' })}
                   </span>
                 </span>
                 <span>
-                  Forward{' '}
+                  {t('Forward')}{' '}
                   <span className={notaKbdFooterClass}>
                     {formatShortcut({ key: ']' })}
                   </span>

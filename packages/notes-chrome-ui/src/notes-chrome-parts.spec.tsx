@@ -185,7 +185,7 @@ describe('SidebarIconRail', () => {
     vi.useRealTimers();
   });
 
-  it('keeps the collapsed rail inert until the pointer enters the left-edge hit target', () => {
+  it('keeps collapsed navigation inert but exposes its expand control', () => {
     // Arrange
     useNotesSidebarStore.setState({ open: false });
 
@@ -196,10 +196,27 @@ describe('SidebarIconRail', () => {
 
     // Assert
     expect(edge).not.toBeNull();
-    expect(screen.queryByRole('button', { name: 'Open sidebar' })).toBeNull();
+    expect(
+      screen.getByRole('button', { name: 'Show sidebar controls' }),
+    ).toBeTruthy();
     expect(rail?.getAttribute('data-open')).toBe('false');
     expect(rail?.getAttribute('aria-hidden')).toBe('true');
     expect(rail?.hasAttribute('inert')).toBe(true);
+  });
+
+  it('opens the sidebar from the keyboard-reachable edge control', () => {
+    // Arrange
+    const toggle = vi.fn();
+    useNotesSidebarStore.setState({ open: false, toggle });
+    render(<SidebarIconRail items={items} />);
+
+    // Act
+    fireEvent.click(
+      screen.getByRole('button', { name: 'Show sidebar controls' }),
+    );
+
+    // Assert
+    expect(toggle).toHaveBeenCalledTimes(1);
   });
 
   it('reveals the expand toggle and text links after hovering the left edge', () => {
@@ -217,7 +234,9 @@ describe('SidebarIconRail', () => {
     // Assert
     const rail = container.querySelector('[data-slot="sidebar-icon-rail"]');
     expect(rail?.getAttribute('data-open')).toBe('true');
-    expect(screen.getByRole('button', { name: 'Open sidebar' })).toBeTruthy();
+    expect(
+      screen.getByRole('button', { name: 'Show sidebar controls' }),
+    ).toBeTruthy();
     expect(
       screen
         .getByRole('link', { name: 'Settings' })
@@ -248,7 +267,9 @@ describe('SidebarIconRail', () => {
     });
 
     // Assert
-    expect(screen.queryByRole('button', { name: 'Open sidebar' })).toBeNull();
+    expect(
+      screen.getByRole('button', { name: 'Show sidebar controls' }),
+    ).toBeTruthy();
     expect(rail.getAttribute('data-open')).toBe('false');
     vi.useRealTimers();
   });

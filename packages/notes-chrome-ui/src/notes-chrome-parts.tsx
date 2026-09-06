@@ -29,8 +29,6 @@ import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
 import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import {
   buildActivityGridCells,
-  computeCurrentStreak,
-  computeLongestStreak,
   ACTIVITY_LEVEL_CLASSES,
 } from '@getmadrid/writing-activity-core/writing-activity';
 import {
@@ -142,6 +140,8 @@ export function SidebarIconRail({
   items: ChromeNavItem[];
 }): JSX.Element {
   const isElectron = useIsElectron();
+  const { t } = useNotesChromeTranslator();
+  const { toggle } = useNotesSidebarStore();
   const [pointerOver, setPointerOver] = useState(false);
   const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -187,13 +187,19 @@ export function SidebarIconRail({
         } as CSSProperties
       }
     >
-      <div
+      <button
+        type="button"
         data-slot="sidebar-hover-edge"
-        aria-hidden
         {...peekHandlers}
+        onFocus={() => {
+          cancelLeave();
+          setPointerOver(true);
+        }}
+        onClick={toggle}
+        aria-label={t('Show sidebar controls')}
         style={{ width: NOTA_SIDEBAR_HOVER_EDGE_WIDTH_PX }}
         className={cn(
-          'pointer-events-auto absolute bottom-0 left-0',
+          'pointer-events-auto absolute bottom-0 left-0 opacity-0 outline-none focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-ring',
           isElectron
             ? cn(
                 'top-[max(3.25rem,calc(env(safe-area-inset-top)+2.5rem))]',
@@ -286,8 +292,6 @@ export function NotesIndexPanel({
   // Show a more compact recent window in the empty state (last ~20 weeks)
   const allCells = buildActivityGridCells(days);
   const cells = allCells.slice(-140);
-  const current = computeCurrentStreak(days);
-  const longest = computeLongestStreak(days);
 
   return (
     <div className="flex h-full flex-col items-center justify-center px-4 py-10">
@@ -315,10 +319,10 @@ export function NotesIndexPanel({
             NOTA_SECTION_HEAD_CLASS,
           )}
         >
-          {t('Select a note')}
+          {t('Your notes')}
         </h2>
         <p className="mb-6 text-muted-foreground">
-          {t('Choose a note from the sidebar or create a new one.')}
+          {t('Create a note to begin.')}
         </p>
         <Button
           type="button"
@@ -338,14 +342,7 @@ export function NotesIndexPanel({
               NOTA_TRACKING_CHROME_XS_CLASS,
             )}
           >
-            <div>
-              Current streak:{' '}
-              <span className="font-medium text-foreground">{current}</span>
-              <span className="ml-3">
-                Longest:{' '}
-                <span className="font-medium text-foreground">{longest}</span>
-              </span>
-            </div>
+            <div>{t('Writing activity')}</div>
             <button
               onClick={() => {
                 replaceScreen(
@@ -379,10 +376,12 @@ export function NotesIndexPanel({
                 <TooltipPortal>
                   <TooltipPositioner side="top" sideOffset={4}>
                     <TooltipPopup>
-                      {cell.count} on{' '}
-                      {cell.date.toLocaleDateString(undefined, {
-                        month: 'short',
-                        day: 'numeric',
+                      {t('{count} on {date}', {
+                        count: cell.count,
+                        date: cell.date.toLocaleDateString(undefined, {
+                          month: 'short',
+                          day: 'numeric',
+                        }),
                       })}
                     </TooltipPopup>
                   </TooltipPositioner>
@@ -393,11 +392,11 @@ export function NotesIndexPanel({
 
           {cells.every((c) => c.count === 0) ? (
             <div className="mt-1 text-[10px] text-muted-foreground text-center">
-              Start writing to light up your activity graph.
+              {t('Start writing to light up your activity graph.')}
             </div>
           ) : (
             <div className="mt-1 text-[10px] text-muted-foreground">
-              Your writing activity
+              {t('Your writing activity')}
             </div>
           )}
         </div>

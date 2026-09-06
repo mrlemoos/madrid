@@ -16,6 +16,7 @@ import {
   noteThemeSelectValue,
   type NoteEditorSettings,
 } from '@getmadrid/editor';
+import { useNoteEditorTranslator } from './use-note-editor-translator';
 
 type NoteLayoutMenuProps = {
   settings: NoteEditorSettings;
@@ -36,8 +37,10 @@ export function NoteLayoutMenu({
   onBannerChange,
   onBannerUpload,
 }: NoteLayoutMenuProps): JSX.Element {
+  const { t } = useNoteEditorTranslator();
   const [open, setOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [bannerUploadFailed, setBannerUploadFailed] = useState(false);
   const bannerInputRef = useRef<HTMLInputElement>(null);
 
   const handleBannerFileChange = useCallback(
@@ -46,12 +49,14 @@ export function NoteLayoutMenu({
       if (!file || !onBannerUpload || !onBannerChange) return;
       // Reset input so the same file can be re-selected
       e.target.value = '';
+      setBannerUploadFailed(false);
       setUploading(true);
       try {
         const attachmentId = await onBannerUpload(file);
         onBannerChange(attachmentId);
       } catch (err) {
         console.error('Failed to upload banner:', err);
+        setBannerUploadFailed(true);
       } finally {
         setUploading(false);
       }
@@ -68,7 +73,7 @@ export function NoteLayoutMenu({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         disabled={disabled}
-        aria-label="Note layout"
+        aria-label={t('Note layout')}
         render={
           <Button
             type="button"
@@ -85,7 +90,7 @@ export function NoteLayoutMenu({
         className="top-[22%] w-[min(100vw-2rem,18rem)] max-w-none translate-y-0 gap-0 p-3 sm:max-w-none"
       >
         <DialogHeader>
-          <DialogTitle>Note layout</DialogTitle>
+          <DialogTitle>{t('Note layout')}</DialogTitle>
         </DialogHeader>
         <div className="mt-3 space-y-3">
           <div>
@@ -118,7 +123,7 @@ export function NoteLayoutMenu({
               htmlFor="nota-note-layout-measure"
               className="text-xs font-medium text-muted-foreground"
             >
-              Column width
+              {t('Column width')}
             </label>
             <select
               id="nota-note-layout-measure"
@@ -135,9 +140,9 @@ export function NoteLayoutMenu({
                 });
               }}
             >
-              <option value="">Standard</option>
-              <option value="narrow">Narrow</option>
-              <option value="wide">Wide</option>
+              <option value="">{t('Standard')}</option>
+              <option value="narrow">{t('Narrow')}</option>
+              <option value="wide">{t('Wide')}</option>
             </select>
           </div>
           <label className="flex cursor-pointer items-center gap-2 text-sm text-foreground">
@@ -154,12 +159,12 @@ export function NoteLayoutMenu({
               }}
               className="size-3.5 shrink-0 rounded border-input accent-primary"
             />
-            <span>Show in note graph</span>
+            <span>{t('Show in note graph')}</span>
           </label>
           {onBannerChange && (
             <div>
               <span className="text-xs font-medium text-muted-foreground">
-                Banner image
+                {t('Banner image')}
               </span>
               <input
                 ref={bannerInputRef}
@@ -175,7 +180,7 @@ export function NoteLayoutMenu({
                   {bannerSignedUrl && (
                     <img
                       src={bannerSignedUrl}
-                      alt="Banner preview"
+                      alt={t('Banner preview')}
                       className="h-8 w-14 rounded border border-border object-cover"
                     />
                   )}
@@ -189,7 +194,7 @@ export function NoteLayoutMenu({
                       onBannerChange(null);
                     }}
                   >
-                    Remove
+                    {t('Remove')}
                   </Button>
                 </div>
               ) : (
@@ -201,9 +206,14 @@ export function NoteLayoutMenu({
                   disabled={disabled || uploading}
                   onClick={() => bannerInputRef.current?.click()}
                 >
-                  {uploading ? 'Uploading…' : 'Add banner image'}
+                  {uploading ? t('Uploading…') : t('Add banner image')}
                 </Button>
               )}
+              {bannerUploadFailed ? (
+                <p className="mt-2 text-xs text-destructive" role="alert">
+                  {t('Banner upload failed.')}
+                </p>
+              ) : null}
             </div>
           )}
           <Button
@@ -216,7 +226,7 @@ export function NoteLayoutMenu({
               onBannerChange?.(null);
             }}
           >
-            Reset to defaults
+            {t('Reset to defaults')}
           </Button>
         </div>
       </DialogContent>

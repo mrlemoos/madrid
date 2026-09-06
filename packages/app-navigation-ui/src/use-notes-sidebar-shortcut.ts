@@ -16,7 +16,11 @@ export function useNotesSidebarShortcut(
     }
 
     const t = e.target;
-    if (t instanceof Element && t.closest('[data-nota-command-palette]')) {
+    if (
+      t instanceof Element &&
+      (t.closest('[data-nota-command-palette]') ||
+        t.closest('input, textarea, select, [contenteditable="true"]'))
+    ) {
       return;
     }
 
