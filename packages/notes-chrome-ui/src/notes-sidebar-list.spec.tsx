@@ -825,7 +825,7 @@ describe('NotesSidebarList', () => {
     },
   );
 
-  it('selects the direct folder, weights expanded folders, and changes colour without collapsing', async () => {
+  it('selects the folder containing the open note and changes colour without collapsing', async () => {
     // Arrange
     const timestamp = '2026-04-25T00:00:00.000Z';
     const props: ComponentProps<typeof NotesSidebarList> = {
@@ -884,7 +884,7 @@ describe('NotesSidebarList', () => {
 
     // Assert
     expect(screen.getByText('Child').className).toContain('font-semibold');
-    expect(screen.getByText('Parent').className).toContain('font-semibold');
+    expect(screen.getByText('Parent').className).toContain('font-normal');
     expect(
       document.querySelectorAll(
         '[data-slot="sidebar-folder-row"][data-selected]',
@@ -931,6 +931,7 @@ describe('NotesSidebarList', () => {
       ),
     ).toHaveLength(0);
     expect(screen.getByText('Child').className).toContain('font-normal');
+    expect(screen.getByText('Parent').className).toContain('font-normal');
   });
 
   it('shows Create note in the folder context menu and creates a note in that folder', async () => {

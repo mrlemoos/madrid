@@ -533,9 +533,7 @@ function FolderRow(options: {
                           className={cn(
                             notesSidebarTreeFolderLabelClass,
                             'relative z-0 cursor-default decoration-dotted underline-offset-2 hover:underline',
-                            isActive || !isCollapsed
-                              ? 'font-semibold'
-                              : 'font-normal',
+                            isActive ? 'font-semibold' : 'font-normal',
                             isActive && 'text-foreground',
                           )}
                           onDoubleClick={(event) => {
