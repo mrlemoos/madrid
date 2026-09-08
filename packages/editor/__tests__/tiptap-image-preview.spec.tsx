@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { TipTapEditor } from '@getmadrid/editor';
+import { TipTapEditor } from '../src';
 import type { NoteAttachment } from '@getmadrid/database-types';
 
 const SIGNED_IMAGE_URL = 'https://cdn.example.test/image-signed.webp';

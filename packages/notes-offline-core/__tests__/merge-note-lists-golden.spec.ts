@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { Note } from '@getmadrid/database-types';
-import { mergeNoteLists } from './merge-note-with-local';
-import type { StoredNote } from './types';
-import golden from './fixtures/merge-note-lists-golden.json' with { type: 'json' };
+import { mergeNoteLists } from '../src/lib/merge-note-with-local';
+import type { StoredNote } from '../src/lib/types';
+import golden from '../src/lib/fixtures/merge-note-lists-golden.json' with { type: 'json' };
 
 describe('mergeNoteLists golden fixture', () => {
   it('matches stable cross-platform expectations for server + dirty local merge', () => {

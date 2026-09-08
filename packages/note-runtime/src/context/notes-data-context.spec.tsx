@@ -1,7 +1,7 @@
 import { act, render, screen } from '@testing-library/react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { describe, expect, it } from 'vitest';
-import type { Note } from '~/types/database.types';
+import type { Note } from '@getmadrid/database-types';
 import {
   NotesDataActionsContext,
   NotesDataMetaContext,
@@ -10,7 +10,7 @@ import {
   type NotesDataActionsSlice,
   type NotesDataMetaSlice,
   type NotesDataVaultSlice,
-} from '@getmadrid/note-runtime/notes-data-context';
+} from './notes-data-context';
 
 const noopRefresh = async (): Promise<void> => {};
 

@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+/**
+ * Enforces the 1:1 test layout documented in AGENTS.md:
+ *   - every runtime module under `<project>/src/` has a sibling `<name>.spec.ts(x)`
+ *   - every spec under `<project>/src/` has a sibling source file of the same name
+ *   - specs that map to no single module (architecture guards, cross-module
+ *     integration, golden fixtures) live in `<project>/__tests__/` instead
+ *
+ * Usage: node tools/check-test-structure.mjs [--json]
+ */
+import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+
+const SPEC_RE = /\.(spec|test)\.tsx?$/;
+const SOURCE_RE = /\.tsx?$/;
+
+/** Paths that are never expected to carry their own spec. */
+const EXEMPT = [
+  /(^|\/)index\.tsx?$/, // barrels re-export, nothing to assert
+  /\.d\.ts$/,
+  /\.stories\.tsx?$/,
+  /(^|\/)\.storybook\//,
+  /(^|\/)scripts\//,
+  /(^|\/)(vite|vitest|next|astro|tailwind|postcss|eslint)\.config\.[cm]?tsx?$/,
+  /(^|\/)vitest\.setup\.tsx?$/,
+  /(^|\/)content\.config\.ts$/,
+  /(^|\/)preload\.cts$/,
+];
+
+/** True when the module exports only types, so there is no behaviour to test. */
+function isTypeOnly(file) {
+  const body = readFileSync(file, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^\s*\/\/.*$/gm, '');
+  return !/^\s*export\s+(?!type\b|interface\b)/m.test(body);
+}
+
+function gitFiles() {
+  return execFileSync('git', ['ls-files', 'apps', 'packages'], {
+    encoding: 'utf8',
+  })
+    .trim()
+    .split('\n');
+}
+
+const all = gitFiles();
+// `<project>/src/**` only: `apps/x/src/...` and `packages/x/src/...`.
+const inSrc = all.filter((f) => /^(apps|packages)\/[^/]+\/src\//.test(f));
+
+const sources = inSrc.filter(
+  (f) =>
+    SOURCE_RE.test(f) && !SPEC_RE.test(f) && !EXEMPT.some((r) => r.test(f)),
+);
+const specs = inSrc.filter((f) => SPEC_RE.test(f));
+
+const specBases = new Set(specs.map((f) => f.replace(SPEC_RE, '')));
+const sourceBases = new Set(
+  inSrc
+    .filter((f) => SOURCE_RE.test(f) && !SPEC_RE.test(f))
+    .map((f) => f.replace(SOURCE_RE, '')),
+);
+
+const missingSpec = sources
+  .filter((f) => !specBases.has(f.replace(SOURCE_RE, '')))
+  .filter((f) => !isTypeOnly(f));
+
+const orphanSpec = specs.filter(
+  (f) => !sourceBases.has(f.replace(SPEC_RE, '')),
+);
+
+if (process.argv.includes('--json')) {
+  console.log(JSON.stringify({ missingSpec, orphanSpec }, null, 2));
+} else {
+  for (const f of missingSpec) console.error(`missing spec: ${f}`);
+  for (const f of orphanSpec)
+    console.error(`orphan spec (no sibling source — move to __tests__/): ${f}`);
+  if (missingSpec.length || orphanSpec.length) {
+    console.error(
+      `\n${missingSpec.length} module(s) without a spec, ${orphanSpec.length} orphan spec(s). See AGENTS.md → Testing.`,
+    );
+  } else {
+    console.log('test structure ok');
+  }
+}
+
+process.exit(missingSpec.length || orphanSpec.length ? 1 : 0);

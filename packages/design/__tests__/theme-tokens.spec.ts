@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 function loadThemeTokens(): string {
   const thisDir = dirname(fileURLToPath(import.meta.url));
-  return readFileSync(resolve(thisDir, 'theme-tokens.css'), 'utf8');
+  return readFileSync(resolve(thisDir, '../src/theme-tokens.css'), 'utf8');
 }
 
 describe('theme radius tokens', () => {

@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import {
   NOTA_SIDEBAR_MAX_WIDTH_PX,
   NOTA_SIDEBAR_MIN_WIDTH_PX,
-} from './nota-sidebar-width';
+} from '../src/nota-sidebar-width';
 import {
   computeSidebarResizeLiveWidth,
   resolveSidebarResizeSettle,
-} from './nota-sidebar-resize-settle';
+} from '../src/nota-sidebar-resize-settle';
 
 /**
  * Contract specs for the resize hook's physics seam

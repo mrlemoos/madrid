@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { NOTA_SAVE_PULSE_CLASS } from '@getmadrid/nota-motion-ui/interaction';
 
 const stylesCss = readFileSync(
-  resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),
+  resolve(dirname(fileURLToPath(import.meta.url)), '../styles.css'),
   'utf8',
 );
 

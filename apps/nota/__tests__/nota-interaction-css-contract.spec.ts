@@ -14,14 +14,14 @@ import {
 } from '@getmadrid/nota-motion-ui/interaction';
 
 const stylesCss = readFileSync(
-  resolve(dirname(fileURLToPath(import.meta.url)), '../../styles.css'),
+  resolve(dirname(fileURLToPath(import.meta.url)), '../styles.css'),
   'utf8',
 );
 
 const folderCreateDialog = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../../../../packages/note-folders-ui/src/folder-create-dialog.tsx',
+    '../../../packages/note-folders-ui/src/folder-create-dialog.tsx',
   ),
   'utf8',
 );
@@ -29,7 +29,7 @@ const folderCreateDialog = readFileSync(
 const folderDeleteDialog = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../../../../packages/note-folders-ui/src/folder-delete-dialog.tsx',
+    '../../../packages/note-folders-ui/src/folder-delete-dialog.tsx',
   ),
   'utf8',
 );
@@ -37,7 +37,7 @@ const folderDeleteDialog = readFileSync(
 const commandPalette = readFileSync(
   resolve(
     dirname(fileURLToPath(import.meta.url)),
-    '../../../../packages/note-palette-ui/src/command-palette.tsx',
+    '../../../packages/note-palette-ui/src/command-palette.tsx',
   ),
   'utf8',
 );

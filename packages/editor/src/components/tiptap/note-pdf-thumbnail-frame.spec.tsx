@@ -14,6 +14,7 @@ describe('NotePdfThumbnailFrame', () => {
     // Assert
     expect(screen.getByTestId('note-pdf-thumbnail')).toBeTruthy();
     expect(screen.getByText('Loading preview…')).toBeTruthy();
+    expect(screen.queryByTestId('note-pdf-thumbnail-placeholder')).toBeNull();
   });
 
   it('shows PDF placeholder on error', () => {
@@ -24,9 +25,11 @@ describe('NotePdfThumbnailFrame', () => {
     render(<NotePdfThumbnailFrame phase="error" canvasRef={canvasRef} />);
 
     // Assert
-    expect(
-      screen.getByTestId('note-pdf-thumbnail-placeholder').textContent,
-    ).toBe('PDF');
+    const placeholder = screen.getByTestId('note-pdf-thumbnail-placeholder');
+    expect(placeholder.textContent).toBe('PDF');
+    expect(screen.getByTestId('note-pdf-thumbnail').contains(placeholder)).toBe(
+      true,
+    );
   });
 
   it('hides placeholder overlay when ready', () => {
