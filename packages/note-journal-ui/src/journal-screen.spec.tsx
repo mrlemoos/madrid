@@ -29,7 +29,7 @@ function dated(id: string, title: string): Note {
     id,
     title,
     content: { type: 'doc', content: [] },
-  } as unknown as Note;
+  };
 }
 
 function grid() {

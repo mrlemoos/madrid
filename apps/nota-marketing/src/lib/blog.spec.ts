@@ -5,11 +5,20 @@ import {
   formatBlogDate,
   isBlogPostPublished,
   sortBlogPostsByDate,
-  type BlogPost,
 } from './blog';
 
-function post(id: string, pubDate: Date, draft?: boolean): BlogPost {
-  return { id, data: { pubDate, draft } } as unknown as BlogPost;
+/**
+ * `CollectionEntry<'blog'>` resolves to `any` until Astro generates its content
+ * types, so the specs work against the shape these helpers actually read.
+ */
+type TestPost = { id: string; data: { pubDate: Date; draft?: boolean } };
+
+function post(id: string, pubDate: Date, draft?: boolean): TestPost {
+  return { id, data: { pubDate, draft } };
+}
+
+function ids(posts: readonly TestPost[]): string[] {
+  return posts.map((entry) => entry.id);
 }
 
 describe('isBlogPostPublished', () => {
@@ -44,10 +53,10 @@ describe('sortBlogPostsByDate', () => {
     ];
 
     // Act
-    const sorted = sortBlogPostsByDate(posts);
+    const sorted = sortBlogPostsByDate(posts) as TestPost[];
 
     // Assert
-    expect(sorted.map((p) => p.id)).toEqual(['newest', 'middle', 'older']);
+    expect(ids(sorted)).toEqual(['newest', 'middle', 'older']);
   });
 
   it('leaves the given array untouched', () => {
@@ -61,7 +70,7 @@ describe('sortBlogPostsByDate', () => {
     sortBlogPostsByDate(posts);
 
     // Assert
-    expect(posts.map((p) => p.id)).toEqual(['older', 'newest']);
+    expect(ids(posts)).toEqual(['older', 'newest']);
   });
 });
 

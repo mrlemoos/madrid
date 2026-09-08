@@ -13,14 +13,19 @@ vi.mock('../../styles.css', () => ({}));
 
 const layout = await import('./layout');
 
+type TreeNode = {
+  type?: unknown;
+  props?: Record<string, unknown> & { children?: unknown };
+};
+
 /** Walks the element tree looking for the first node of a given tag. */
-function findElement(node: unknown, type: string): Record<string, any> | null {
+function findElement(node: unknown, type: string): TreeNode | null {
   if (!node || typeof node !== 'object') {
     return null;
   }
-  const element = node as { type?: unknown; props?: { children?: unknown } };
+  const element = node as TreeNode;
   if (element.type === type) {
-    return element as Record<string, any>;
+    return element;
   }
   const children = element.props?.children;
   for (const child of Array.isArray(children) ? children : [children]) {
@@ -63,11 +68,11 @@ describe('RootLayout', () => {
 
   it('lets the theme script set the colour scheme without a hydration warning', () => {
     // Arrange|Act
-    const tree = layout.default({ children: 'app' });
+    const tree = layout.default({ children: 'app' }) as unknown as TreeNode;
 
     // Assert
-    expect(tree.props.lang).toBe('en');
-    expect(tree.props.suppressHydrationWarning).toBe(true);
+    expect(tree.props?.lang).toBe('en');
+    expect(tree.props?.suppressHydrationWarning).toBe(true);
   });
 
   it('renders the app inside the providers', () => {

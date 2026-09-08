@@ -5,10 +5,8 @@ const imageResponses: { element: unknown; options: unknown }[] = [];
 
 vi.mock('server-only', () => ({}));
 vi.mock('next/og', () => ({
-  ImageResponse: class {
-    constructor(element: unknown, options: unknown) {
-      imageResponses.push({ element, options });
-    }
+  ImageResponse: function ImageResponse(element: unknown, options: unknown) {
+    imageResponses.push({ element, options });
   },
 }));
 vi.mock('@/server/supabase-service.server', () => ({ requireServiceSupabase }));

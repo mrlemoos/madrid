@@ -31,7 +31,7 @@ describe('NOTA_ELECTRON_HTML_CLASS_SCRIPT', () => {
     document.documentElement.classList.remove(NOTA_ELECTRON_HTML_CLASS);
 
     // Act
-    // eslint-disable-next-line no-eval
+
     (0, eval)(NOTA_ELECTRON_HTML_CLASS_SCRIPT);
 
     // Assert
@@ -47,7 +47,7 @@ describe('NOTA_ELECTRON_HTML_CLASS_SCRIPT', () => {
     document.documentElement.classList.remove(NOTA_ELECTRON_HTML_CLASS);
 
     // Act
-    // eslint-disable-next-line no-eval
+
     (0, eval)(NOTA_ELECTRON_HTML_CLASS_SCRIPT);
 
     // Assert

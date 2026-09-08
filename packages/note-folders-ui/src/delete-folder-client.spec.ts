@@ -79,7 +79,7 @@ describe('clientMoveAllNotesThenDeleteFolder', () => {
     );
     const moveOrder = moveAllNotesInFolderSubtree.mock.invocationCallOrder[0];
     expect(deleteFolderById.mock.invocationCallOrder[0]).toBeGreaterThan(
-      moveOrder as number,
+      moveOrder,
     );
   });
 

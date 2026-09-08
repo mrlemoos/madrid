@@ -165,9 +165,7 @@ describe('startPackagedNotaUpdater', () => {
     const { startPackagedNotaUpdater } = await loadModule();
     await startPackagedNotaUpdater();
     const send = vi.fn();
-    windows.current = [
-      { isDestroyed: () => true, webContents: { send } },
-    ] as unknown as typeof windows.current;
+    windows.current = [{ isDestroyed: () => true, webContents: { send } }];
 
     // Act
     autoUpdater.listeners.get('checking-for-update')?.();

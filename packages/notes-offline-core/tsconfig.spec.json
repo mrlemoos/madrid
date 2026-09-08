@@ -16,6 +16,7 @@
   "include": [
     "vite.config.mts",
     "src/**/*.spec.ts",
+    "__tests__/**/*.spec.ts",
     "src/lib/fixtures/**/*.json"
   ],
   "references": [{ "path": "./tsconfig.lib.json" }]

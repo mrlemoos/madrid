@@ -1,5 +1,3 @@
-'use strict';
-
 import { forwardRef, useImperativeHandle, useCallback } from 'react';
 import type { AnimatedIconHandle, AnimatedIconProps } from './types.js';
 import { motion, useAnimate } from 'motion/react';

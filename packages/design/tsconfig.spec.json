@@ -17,9 +17,13 @@
     "vite.config.mts",
     "vitest.config.mts",
     "src/**/*.test.ts",
+    "__tests__/**/*.test.ts",
     "src/**/*.spec.ts",
+    "__tests__/**/*.spec.ts",
     "src/**/*.test.tsx",
+    "__tests__/**/*.test.tsx",
     "src/**/*.spec.tsx",
+    "__tests__/**/*.spec.tsx",
     "src/**/*.d.ts"
   ],
   "references": [

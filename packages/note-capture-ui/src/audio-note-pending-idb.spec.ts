@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   fakeIndexedDB,
   resetFakeIndexedDb,
-} from '../../../tools/testing/fake-indexed-db';
+} from '@getmadrid/testing-fakes/indexed-db';
 import {
   enqueuePendingAudioNoteJob,
   listPendingAudioNoteJobs,

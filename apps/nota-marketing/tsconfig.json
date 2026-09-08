@@ -11,7 +11,8 @@
     "src/**/*.astro",
     "src/content.config.ts",
     "scripts/**/*.ts",
-    "astro.config.mjs"
+    "astro.config.mjs",
+    "vitest.config.mts"
   ],
   "references": [
     {

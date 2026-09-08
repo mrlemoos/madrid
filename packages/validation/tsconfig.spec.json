@@ -9,19 +9,16 @@
       "node",
       "vitest"
     ],
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "rootDir": "."
   },
   "include": [
-    "vite.config.mts",
-    "vitest.setup.ts",
+    "vitest.config.mts",
     "src/**/*.spec.ts",
-    "__tests__/**/*.spec.ts",
-    "src/**/*.spec.tsx",
-    "__tests__/**/*.spec.tsx",
-    "src/nota-electron-globals.d.ts"
+    "__tests__/**/*.spec.ts"
   ],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

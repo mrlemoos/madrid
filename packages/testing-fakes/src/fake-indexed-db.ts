@@ -12,17 +12,30 @@
 
 type Row = Record<string, unknown>;
 
-class FakeRequest<T> {
+export interface FakeRequest<T> {
   result: T | undefined;
-  error: Error | null = null;
-  onsuccess: (() => void) | null = null;
-  onerror: (() => void) | null = null;
-  onupgradeneeded:
-    | ((event: { target: { result: FakeDatabase } }) => void)
-    | null = null;
+  error: Error | null;
+  onsuccess: (() => void) | null;
+  onerror: (() => void) | null;
 }
 
-class FakeObjectStore {
+function fakeRequest<T>(): FakeRequest<T> {
+  return {
+    result: undefined,
+    error: null,
+    onsuccess: null,
+    onerror: null,
+  };
+}
+
+/** Only the open request carries an upgrade callback. */
+export interface FakeOpenRequest extends FakeRequest<FakeDatabase> {
+  onupgradeneeded:
+    | ((event: { target: { result: FakeDatabase } }) => void)
+    | null;
+}
+
+export class FakeObjectStore {
   constructor(
     private readonly tx: FakeTransaction,
     private readonly rows: Map<string, Row>,
@@ -53,14 +66,17 @@ class FakeObjectStore {
   }
 }
 
-class FakeTransaction {
+export class FakeTransaction {
   error: Error | null = null;
   onerror: (() => void) | null = null;
   onabort: (() => void) | null = null;
   private pending = 0;
   private complete: (() => void) | null = null;
 
-  constructor(private readonly db: FakeDatabase) {}
+  constructor(
+    private readonly db: FakeDatabase,
+    readonly mode: 'readonly' | 'readwrite',
+  ) {}
 
   /** Assigned by `transactionComplete`; fires once every queued request settles. */
   set oncomplete(fn: (() => void) | null) {
@@ -69,7 +85,7 @@ class FakeTransaction {
   }
 
   request<T>(run: () => T): FakeRequest<T> {
-    const req = new FakeRequest<T>();
+    const req = fakeRequest<T>();
     this.pending += 1;
     setTimeout(() => {
       try {
@@ -109,8 +125,9 @@ class FakeTransaction {
   }
 }
 
-class FakeDatabase {
+export class FakeDatabase {
   closed = false;
+  version = 0;
   stores = new Map<string, { rows: Map<string, Row>; keyPath: string }>();
 
   get objectStoreNames() {
@@ -122,11 +139,19 @@ class FakeDatabase {
     this.stores.set(name, { rows: new Map(), keyPath: options.keyPath });
   }
 
-  transaction(_names: string | string[], _mode?: string): FakeTransaction {
+  transaction(
+    names: string | string[],
+    mode: 'readonly' | 'readwrite' = 'readonly',
+  ): FakeTransaction {
     if (this.closed) {
       throw new Error('Database is closed');
     }
-    return new FakeTransaction(this);
+    for (const name of Array.isArray(names) ? names : [names]) {
+      if (!this.stores.has(name)) {
+        throw new Error(`No object store named ${name}`);
+      }
+    }
+    return new FakeTransaction(this, mode);
   }
 
   close(): void {
@@ -137,17 +162,20 @@ class FakeDatabase {
 const databases = new Map<string, FakeDatabase>();
 
 export const fakeIndexedDB = {
-  open(name: string, _version: number) {
-    const req = new FakeRequest<FakeDatabase>();
+  open(name: string, version: number) {
+    const req: FakeOpenRequest = {
+      ...fakeRequest<FakeDatabase>(),
+      onupgradeneeded: null,
+    };
     setTimeout(() => {
       let db = databases.get(name);
-      const isNew = !db;
       if (!db) {
         db = new FakeDatabase();
         databases.set(name, db);
       }
       db.closed = false;
-      if (isNew) {
+      if (version > db.version) {
+        db.version = version;
         req.onupgradeneeded?.({ target: { result: db } });
       }
       req.result = db;
@@ -156,7 +184,7 @@ export const fakeIndexedDB = {
     return req;
   },
   deleteDatabase(name: string) {
-    const req = new FakeRequest<undefined>();
+    const req = fakeRequest<undefined>();
     setTimeout(() => {
       databases.delete(name);
       req.onsuccess?.();

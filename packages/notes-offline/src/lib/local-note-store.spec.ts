@@ -5,7 +5,7 @@ import { DEFAULT_NOTE_CONTENT } from '@getmadrid/notes-offline-core';
 import {
   fakeIndexedDB,
   resetFakeIndexedDb,
-} from '../../../../tools/testing/fake-indexed-db';
+} from '@getmadrid/testing-fakes/indexed-db';
 import { closeNotaNotesDb } from './db';
 import {
   createLocalOnlyNote,
@@ -34,7 +34,7 @@ function serverNote(overrides: Partial<Note> = {}): Note {
     folder_id: null,
     share_token: null,
     ...overrides,
-  } as Note;
+  };
 }
 
 beforeEach(() => {

@@ -5,7 +5,7 @@ const persistenceSynced = { current: Promise.resolve() };
 const destroyPersistence = vi.fn();
 const destroyDoc = vi.fn();
 const createNoteYjsDoc = vi.fn(() => ({
-  doc: { destroy: destroyDoc } as unknown,
+  doc: { destroy: destroyDoc },
   persistence: {
     get whenSynced() {
       return persistenceSynced.current;

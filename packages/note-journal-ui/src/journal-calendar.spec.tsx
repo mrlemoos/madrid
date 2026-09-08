@@ -92,7 +92,7 @@ describe('JournalCalendar', () => {
 
     // Act — March 2026 starts on a Sunday, so the grid opens with padding
     const cells = within(screen.getByRole('grid')).getAllByRole('gridcell');
-    fireEvent.click(cells[0] as HTMLElement);
+    fireEvent.click(cells[0]);
 
     // Assert
     expect((cells[0] as HTMLButtonElement).disabled).toBe(true);

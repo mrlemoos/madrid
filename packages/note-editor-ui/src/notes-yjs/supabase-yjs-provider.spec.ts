@@ -121,7 +121,7 @@ describe('SupabaseYjsProvider.connect', () => {
     }).connect();
 
     // Assert
-    expect(doc.getText('body').toString()).toBe('hello');
+    expect(doc.getText('body').toJSON()).toBe('hello');
   });
 
   it('writes no row when the server already has everything', async () => {
@@ -214,7 +214,7 @@ describe('SupabaseYjsProvider live edits', () => {
     supabase.emitRemote(rowFor(2, 'from elsewhere'));
 
     // Assert — echoing would loop the two clients forever
-    expect(doc.getText('body').toString()).toBe('from elsewhere');
+    expect(doc.getText('body').toJSON()).toBe('from elsewhere');
     expect(supabase.inserts).toEqual([]);
   });
 
@@ -236,7 +236,7 @@ describe('SupabaseYjsProvider live edits', () => {
     });
 
     // Assert — IndexedDB still holds it; reconnect re-pushes it
-    expect(doc.getText('body').toString()).toBe('typed');
+    expect(doc.getText('body').toJSON()).toBe('typed');
   });
 });
 
@@ -336,6 +336,6 @@ describe('SupabaseYjsProvider.destroy', () => {
     supabase.emitRemote(rowFor(2, 'late'));
 
     // Assert
-    expect(doc.getText('body').toString()).toBe('');
+    expect(doc.getText('body').toJSON()).toBe('');
   });
 });

@@ -76,7 +76,7 @@ function note(overrides: Partial<Note> = {}): Note {
     due_at: null,
     is_deadline: false,
     ...overrides,
-  } as Note;
+  };
 }
 
 function renderEditor(overrides: Partial<Note> = {}) {
@@ -92,7 +92,7 @@ function renderEditor(overrides: Partial<Note> = {}) {
 }
 
 function titleField() {
-  return screen.getByLabelText('Note title') as HTMLTextAreaElement;
+  return screen.getByLabelText('Note title');
 }
 
 beforeEach(() => {

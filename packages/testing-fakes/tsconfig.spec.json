@@ -9,19 +9,10 @@
       "node",
       "vitest"
     ],
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM"],
     "noEmit": true,
     "rootDir": "."
   },
-  "include": [
-    "vite.config.mts",
-    "vitest.setup.ts",
-    "src/**/*.spec.ts",
-    "__tests__/**/*.spec.ts",
-    "src/**/*.spec.tsx",
-    "__tests__/**/*.spec.tsx",
-    "src/nota-electron-globals.d.ts"
-  ],
+  "include": ["vite.config.mts", "src/**/*.spec.ts"],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

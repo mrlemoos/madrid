@@ -33,10 +33,8 @@ vi.mock('@getmadrid/nota-motion-core/critically-damped-spring', async () => {
 function setup(widthPx = 260) {
   const aside = document.createElement('aside');
   const rail = document.createElement('div');
-  const asideRef =
-    createRef<HTMLElement>() as React.RefObject<HTMLElement | null>;
-  const railRef =
-    createRef<HTMLElement>() as React.RefObject<HTMLElement | null>;
+  const asideRef = createRef<HTMLElement>();
+  const railRef = createRef<HTMLElement>();
   asideRef.current = aside;
   railRef.current = rail;
   const setSidebarWidthPx = vi.fn();

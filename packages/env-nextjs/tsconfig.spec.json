@@ -16,7 +16,9 @@
   "include": [
     "vite.config.mts",
     "src/**/*.test.ts",
+    "__tests__/**/*.test.ts",
     "src/**/*.spec.ts",
+    "__tests__/**/*.spec.ts",
     "src/**/*.d.ts"
   ],
   "references": [

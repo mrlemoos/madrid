@@ -26,7 +26,8 @@ describe('platform logo URLs', () => {
   });
 
   it('keeps the deprecated Wikipedia alias pointing at the canonical URL', () => {
-    // Arrange|Act|Assert
+    // Arrange|Act|Assert — the alias only exists for callers not yet migrated
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- the deprecation is what is under test
     expect(SVGL_WIKIPEDIA_LOGO_URL).toBe(WIKIPEDIA_LOGO_URL);
   });
 });

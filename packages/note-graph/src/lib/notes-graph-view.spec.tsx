@@ -22,19 +22,21 @@ vi.mock('@xyflow/react', () => {
             <button
               key={node.id}
               type="button"
-              onClick={(event) =>
+              onClick={(event) => {
                 (props.onNodeClick as (e: unknown, n: unknown) => void)(
                   event,
                   node,
-                )
-              }
-              onMouseEnter={(event) =>
+                );
+              }}
+              onMouseEnter={(event) => {
                 (props.onNodeMouseEnter as (e: unknown, n: unknown) => void)(
                   event,
                   node,
-                )
-              }
-              onMouseLeave={() => (props.onNodeMouseLeave as () => void)()}
+                );
+              }}
+              onMouseLeave={() => {
+                (props.onNodeMouseLeave as () => void)();
+              }}
             >
               {node.data.label}
             </button>

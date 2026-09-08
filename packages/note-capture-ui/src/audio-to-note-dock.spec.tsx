@@ -60,12 +60,12 @@ function installRecorder(options: { canPause?: boolean } = {}) {
         }),
   };
 
-  class FakeMediaRecorder {
-    static isTypeSupported = () => true;
-    constructor() {
-      return recorder as unknown as MediaRecorder;
-    }
-  }
+  const FakeMediaRecorder = Object.assign(
+    function FakeMediaRecorder() {
+      return recorder;
+    },
+    { isTypeSupported: () => true },
+  );
   vi.stubGlobal('MediaRecorder', FakeMediaRecorder);
   vi.stubGlobal('navigator', {
     ...navigator,

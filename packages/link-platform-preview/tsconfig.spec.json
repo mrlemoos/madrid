@@ -5,6 +5,6 @@
     "types": ["vitest/globals", "node"],
     "rootDir": "."
   },
-  "include": ["src/**/*.spec.ts", "vitest.config.ts"],
+  "include": ["src/**/*.spec.ts", "vitest.config.ts", "__tests__/**/*.spec.ts"],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

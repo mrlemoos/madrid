@@ -12,6 +12,6 @@
     "noEmit": true,
     "rootDir": "."
   },
-  "include": ["vite.config.mts", "src/**/*.spec.ts"],
+  "include": ["vite.config.mts", "src/**/*.spec.ts", "__tests__/**/*.spec.ts"],
   "references": [{ "path": "./tsconfig.lib.json" }]
 }

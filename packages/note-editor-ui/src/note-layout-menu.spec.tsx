@@ -10,7 +10,7 @@ function open() {
 
 function props(overrides: Record<string, unknown> = {}) {
   return {
-    settings: {} as NoteEditorSettings,
+    settings: {},
     onSettingsChange: vi.fn(),
     ...overrides,
   } as Parameters<typeof NoteLayoutMenu>[0] & {
