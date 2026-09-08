@@ -20,7 +20,8 @@
     "test": "nx run-many -t test",
     "postinstall": "husky",
     "format": "nx format:write",
-    "lint": "nx run-many -t lint"
+    "lint": "nx run-many -t lint",
+    "check:test-structure": "node tools/check-test-structure.mjs"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,mjs,cjs}": [

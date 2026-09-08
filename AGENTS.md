@@ -61,6 +61,10 @@ Must use [Conventional Commits](https://www.conventionalcommits.org/).
 
 - **Unit tests** use **Arrange–Act–Assert (AAA)**; mark w/ `// Arrange|Act|Assert`—[`.cursor/rules/aaa-testing-pattern.mdc`](.cursor/rules/aaa-testing-pattern.mdc). Vitest [`vitest.setup.ts`](apps/nota/vitest.setup.ts); colocate `*.spec.ts(x)` under `src/`. Server-lib specs are Vitest beside the source in [`apps/nota/src/server/`](apps/nota/src/server).
 - **E2E tests** use **Given–When–Then**: **Given** initial context, **When** action, **Then** assert outcome (structure scenarios/steps so).
+- **One spec per module (enforced).** Every runtime module under `<project>/src/` owns exactly **one** sibling spec: `foo.ts` → `foo.spec.ts`. No split suffixes (`foo.binding.spec.ts`), no spec named after an export instead of its file. Exempt: `index.ts` barrels, `*.d.ts`, `*.stories.tsx`, `vitest.setup.ts`, tool configs, `scripts/`, and type-only modules (nothing exported but `type`/`interface`).
+- **`__tests__/` is for specs that map to no single module** — architecture guards ([`nota-app-client-boundary`](apps/nota/__tests__/nota-app-client-boundary.spec.ts)), CSS/asset contracts, cross-module integration, golden fixtures. It sits **beside** `src/`, never inside it. Every vitest `include` is `{src,__tests__}/**`.
+- [`tools/check-test-structure.mjs`](tools/check-test-structure.mjs) (`pnpm run check:test-structure`) enforces both directions — module without a spec, spec without a module. Wired to [`.husky/pre-push`](.husky/pre-push).
+- **Components: assert rendered output, never CSS classes.** Test what the user gets — text, roles, `data-testid`, attributes, what appears and disappears per prop. Do **not** assert on class strings (`toMatch(/absolute/)`, `inset-2`, colour or spacing utilities); Tailwind churn breaks those tests without any behaviour changing. The **only** exception is a class the component computes as logic (a selected/disabled/tint token toggled by state), and then assert the toggle, not the styling around it.
 
 ## Learned User Preferences
 
