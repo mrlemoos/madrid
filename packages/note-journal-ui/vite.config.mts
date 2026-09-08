@@ -9,6 +9,7 @@ export default defineConfig(() => ({
     globals: true,
     environment: 'jsdom',
     passWithNoTests: true,
+    setupFiles: ['./vitest.setup.ts'],
     include: ['{src,__tests__}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     coverage: {
