@@ -56,6 +56,14 @@ export default tseslint.config(
     },
   },
   {
+    files: ['**/*.{js,jsx,cjs,mjs}'],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir,
+      },
+    },
+  },
+  {
     files: ['**/*.{ts,tsx,cts,mts,js,jsx,cjs,mjs}'],
     plugins: { import: importPlugin },
     rules: {
