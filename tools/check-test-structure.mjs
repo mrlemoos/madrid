@@ -36,9 +36,20 @@ function isTypeOnly(file) {
 }
 
 function gitFiles() {
-  return execFileSync('git', ['ls-files', 'apps', 'packages'], {
-    encoding: 'utf8',
-  })
+  return execFileSync(
+    'git',
+    [
+      'ls-files',
+      '--cached',
+      '--others',
+      '--exclude-standard',
+      'apps',
+      'packages',
+    ],
+    {
+      encoding: 'utf8',
+    },
+  )
     .trim()
     .split('\n');
 }
