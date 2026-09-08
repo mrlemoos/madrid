@@ -1,8 +1,8 @@
 /**
- * Minimal in-memory IndexedDB for the offline store specs.
+ * Minimal in-memory IndexedDB for specs that exercise the offline stores.
  *
- * The package runs its tests in the `node` environment, and the store is the
- * thing under test, so a hand-rolled double keeps the dependency graph flat.
+ * Those packages test under `node`, and the stores are the thing under test,
+ * so a hand-rolled double keeps the dependency graph flat.
  * It implements only what `db.ts` uses: `open`, `deleteDatabase`, versioned
  * upgrades, `get` / `getAll` / `put` / `delete`, and transaction completion.
  *

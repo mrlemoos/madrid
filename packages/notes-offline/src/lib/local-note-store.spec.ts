@@ -5,7 +5,7 @@ import { DEFAULT_NOTE_CONTENT } from '@getmadrid/notes-offline-core';
 import {
   fakeIndexedDB,
   resetFakeIndexedDb,
-} from '../../__tests__/fake-indexed-db';
+} from '../../../../tools/testing/fake-indexed-db';
 import { closeNotaNotesDb } from './db';
 import {
   createLocalOnlyNote,

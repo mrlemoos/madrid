@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   fakeIndexedDB,
   resetFakeIndexedDb,
-} from '../../__tests__/fake-indexed-db';
+} from '../../../../tools/testing/fake-indexed-db';
 import { closeNotaNotesDb } from './db';
 import {
   enqueueOutbox,
