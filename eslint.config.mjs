@@ -17,6 +17,7 @@ export default tseslint.config(
       '**/.react-router',
       '**/vite.config.*.timestamp*',
       '**/vitest.config.*.timestamp*',
+      'pnpm-lock.yaml',
     ],
   },
   {
