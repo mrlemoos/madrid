@@ -76,15 +76,20 @@ function LinkPreviewNodeView(props: NodeViewProps): JSX.Element {
   const getPosRef = useRef(props.getPos);
   getPosRef.current = props.getPos;
 
+  // Depend on the function, not on `ctx`: the whole context value gets a new
+  // identity on every editor re-render (attachment map, inline callbacks), and
+  // keying the unfurl effect on it re-fetched every preview on every keystroke.
+  const fetchOgPreview = ctx?.fetchOgPreview;
+
   useEffect(() => {
-    if (!href || !ctx?.fetchOgPreview) return;
-    const fetchOgPreview = ctx.fetchOgPreview;
+    if (!href || !fetchOgPreview) return;
     let cancelled = false;
     setError(null);
     setLoading(true);
     void (async () => {
       try {
-        const data = await fetchOgPreview(href);
+        // Any run past the first came from the Refresh button.
+        const data = await fetchOgPreview(href, { force: refreshNonce > 0 });
         if (cancelled) return;
 
         const pos = getPosRef.current();
@@ -136,7 +141,7 @@ function LinkPreviewNodeView(props: NodeViewProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [href, refreshNonce, ctx]);
+  }, [href, refreshNonce, fetchOgPreview]);
 
   const displayTitle = titleAttr || href;
   const displayLinkLabel = linkTextAttr.trim() || href;
