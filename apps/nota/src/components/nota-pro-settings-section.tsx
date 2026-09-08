@@ -19,6 +19,9 @@ export function NotaProSettingsSection(): JSX.Element {
       try {
         await postNotaProInvalidate();
         await refreshNotesList();
+      } catch {
+        // Nothing to say beyond re-enabling the button: the reader can retry,
+        // and an unhandled rejection here would surface as a dev error overlay.
       } finally {
         setRefreshBusy(false);
       }
