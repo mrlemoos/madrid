@@ -27,3 +27,22 @@ if (
     key: (i: number) => Object.keys(inMemoryLocalStorage)[i] ?? null,
   });
 }
+
+// jsdom does not implement `window.matchMedia`; `usePrefersReducedMotion`
+// (journal calendar month crossfade) needs it.
+if (typeof window.matchMedia !== 'function') {
+  vi.stubGlobal(
+    'matchMedia',
+    (query: string): MediaQueryList =>
+      ({
+        matches: false,
+        media: query,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+        addListener: () => undefined,
+        removeListener: () => undefined,
+        dispatchEvent: () => false,
+        onchange: null,
+      }) as unknown as MediaQueryList,
+  );
+}
