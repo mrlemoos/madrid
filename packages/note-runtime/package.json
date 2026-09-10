@@ -126,7 +126,7 @@
     "build": "tsc -p tsconfig.lib.json"
   },
   "dependencies": {
-    "@clerk/react": "^6.1.2",
+    "@clerk/react": "^6.15.1",
     "@getmadrid/data-source": "workspace:*",
     "@getmadrid/database-types": "workspace:*",
     "@getmadrid/helper-hooks": "workspace:*",

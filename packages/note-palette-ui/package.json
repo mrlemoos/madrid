@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
-    "@clerk/react": "^6.1.2",
+    "@clerk/react": "^6.15.1",
     "@getmadrid/app-navigation-core": "workspace:*",
     "@getmadrid/app-navigation-ui": "workspace:*",
     "@getmadrid/database-types": "workspace:*",
