@@ -7,8 +7,10 @@ import {
   useNotesDataMeta,
 } from '@getmadrid/note-runtime/notes-data-context';
 import { postNotaProInvalidate } from '../lib/nota-server-client';
+import { useNotaTranslator } from '../lib/use-nota-translator';
 
 export function NotaProSettingsSection(): JSX.Element {
+  const { t } = useNotaTranslator();
   const { notaProEntitled, loading } = useNotesDataMeta();
   const { refreshNotesList } = useNotesDataActions();
   const [refreshBusy, setRefreshBusy] = useState(false);
@@ -30,53 +32,66 @@ export function NotaProSettingsSection(): JSX.Element {
 
   return (
     <section className="space-y-3">
-      <h2 className="text-sm font-medium text-foreground">Subscription</h2>
-      <div className="space-y-5 rounded-xl border border-border/60 bg-linear-to-b from-muted/25 to-muted/10 px-5 py-5 shadow-sm">
+      <h3 className="text-sm font-medium text-foreground">
+        {t('Subscription')}
+      </h3>
+      <div className="overflow-hidden rounded-lg border border-border/60 bg-muted/10">
         {loading ? (
-          <LoadingStatus
-            className="justify-start text-left"
-            label="Loading subscription status…"
-            spinnerSize="sm"
-          />
-        ) : (
-          <div className="space-y-4">
-            <p
-              className={
-                notaProEntitled
-                  ? 'text-sm text-muted-foreground'
-                  : 'text-sm leading-relaxed text-muted-foreground'
-              }
-            >
-              {notaProEntitled ? (
-                <>
-                  You have an active Madrid subscription on this account. Notes
-                  sync and attachments are enabled. Manage or change your plan
-                  below.
-                </>
-              ) : (
-                <>
-                  Madrid requires an active subscription. Choose a plan below to
-                  subscribe with Clerk Billing.
-                </>
-              )}
-            </p>
-            <div className="nota-clerk-pricing-table [&_.cl-card]:bg-transparent [&_.cl-card]:shadow-none">
-              <PricingTable />
-            </div>
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              disabled={refreshBusy}
-              onClick={runRefresh}
-            >
-              {refreshBusy
-                ? 'Refreshing…'
-                : notaProEntitled
-                  ? 'Refresh subscription status'
-                  : 'I completed checkout :  refresh'}
-            </Button>
+          <div className="px-4 py-3">
+            <LoadingStatus
+              className="justify-start text-left"
+              label={t('Loading subscription status…')}
+              spinnerSize="sm"
+            />
           </div>
+        ) : (
+          <>
+            <div className="flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-medium text-foreground">
+                  {notaProEntitled
+                    ? t('Active subscription')
+                    : t('No active subscription')}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {notaProEntitled
+                    ? t('Your plan is active.')
+                    : t('Choose a plan to use Madrid.')}
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                disabled={refreshBusy}
+                onClick={runRefresh}
+              >
+                {refreshBusy
+                  ? t('Refreshing…')
+                  : notaProEntitled
+                    ? t('Refresh status')
+                    : t('I completed checkout, refresh')}
+              </Button>
+            </div>
+            {notaProEntitled ? (
+              <details className="border-t border-border/60">
+                <summary className="cursor-pointer px-4 py-3 text-sm text-muted-foreground">
+                  {t('Manage subscription')}
+                </summary>
+                <div className="border-t border-border/60 px-4 py-3">
+                  <div className="nota-clerk-pricing-table [&_.cl-card]:bg-transparent [&_.cl-card]:shadow-none">
+                    <PricingTable />
+                  </div>
+                </div>
+              </details>
+            ) : (
+              <div className="border-t border-border/60 px-4 py-3">
+                <div className="nota-clerk-pricing-table [&_.cl-card]:bg-transparent [&_.cl-card]:shadow-none">
+                  <PricingTable />
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

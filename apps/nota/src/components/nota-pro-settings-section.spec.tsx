@@ -35,18 +35,17 @@ describe('NotaProSettingsSection', () => {
     expect(screen.queryByTestId('pricing-table')).toBeNull();
   });
 
-  it('asks an unsubscribed reader to choose a plan', () => {
+  it('keeps checkout primary for an unsubscribed reader', () => {
     // Arrange|Act
     render(<NotaProSettingsSection />);
 
     // Assert
-    expect(
-      screen.getByText(/Madrid requires an active subscription/),
-    ).toBeTruthy();
+    expect(screen.getByText('No active subscription')).toBeTruthy();
+    expect(screen.getByText('Choose a plan to use Madrid.')).toBeTruthy();
     expect(screen.getByTestId('pricing-table')).toBeTruthy();
   });
 
-  it('tells a subscriber their vault is syncing, and still shows the plans', () => {
+  it('shows a compact active status with plan management', () => {
     // Arrange
     meta.current = { notaProEntitled: true, loading: false };
 
@@ -54,10 +53,21 @@ describe('NotaProSettingsSection', () => {
     render(<NotaProSettingsSection />);
 
     // Assert — Settings is checkout and plan management, not an essay
-    expect(
-      screen.getByText(/You have an active Madrid subscription/),
-    ).toBeTruthy();
+    expect(screen.getByText('Active subscription')).toBeTruthy();
+    expect(screen.getByText('Your plan is active.')).toBeTruthy();
+    const manageSubscription = screen.getByText('Manage subscription');
+    expect(manageSubscription.closest('details')?.hasAttribute('open')).toBe(
+      false,
+    );
     expect(screen.getByTestId('pricing-table')).toBeTruthy();
+
+    // Act
+    fireEvent.click(manageSubscription);
+
+    // Assert
+    expect(manageSubscription.closest('details')?.hasAttribute('open')).toBe(
+      true,
+    );
   });
 
   it('offers the post-checkout refresh to an unsubscribed reader', () => {
@@ -66,7 +76,7 @@ describe('NotaProSettingsSection', () => {
 
     // Assert
     expect(
-      screen.getByRole('button', { name: /I completed checkout/ }),
+      screen.getByRole('button', { name: 'I completed checkout, refresh' }),
     ).toBeTruthy();
   });
 
@@ -76,7 +86,7 @@ describe('NotaProSettingsSection', () => {
 
     // Act
     fireEvent.click(
-      screen.getByRole('button', { name: /I completed checkout/ }),
+      screen.getByRole('button', { name: 'I completed checkout, refresh' }),
     );
 
     // Assert — refreshing without invalidating would read a stale entitlement
@@ -102,7 +112,7 @@ describe('NotaProSettingsSection', () => {
     await waitFor(() => {
       expect(
         screen
-          .getByRole('button', { name: /I completed checkout/ })
+          .getByRole('button', { name: 'I completed checkout, refresh' })
           .hasAttribute('disabled'),
       ).toBe(false);
     });

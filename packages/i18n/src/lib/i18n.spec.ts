@@ -109,6 +109,87 @@ describe('i18n', () => {
     expect(noteGraph).toBe('Grafo de notas');
   });
 
+  it('translates the Settings functional groups for Spanish and Portuguese', () => {
+    // Arrange
+    const spanish = createTranslator('es-ES');
+    const portuguese = createTranslator('pt-BR');
+    const groups = [
+      'General',
+      'Editor',
+      'Workflow',
+      'Search & activity',
+      'Account',
+    ];
+
+    // Act
+    const spanishGroups = groups.map((key) => spanish.t(key));
+    const portugueseGroups = groups.map((key) => portuguese.t(key));
+
+    // Assert
+    expect(spanishGroups).toEqual([
+      'General',
+      'Editor',
+      'Flujo de trabajo',
+      'Búsqueda y actividad',
+      'Cuenta',
+    ]);
+    expect(portugueseGroups).toEqual([
+      'Geral',
+      'Editor',
+      'Fluxo de trabalho',
+      'Pesquisa e atividade',
+      'Conta',
+    ]);
+  });
+
+  it('translates subscription status copy for Spanish and Portuguese', () => {
+    // Arrange
+    const spanish = createTranslator('es-ES');
+    const portuguese = createTranslator('pt-BR');
+    const copy = [
+      'Subscription',
+      'Loading subscription status…',
+      'Active subscription',
+      'Your plan is active.',
+      'No active subscription',
+      'Choose a plan to use Madrid.',
+      'Refreshing…',
+      'Refresh status',
+      'I completed checkout, refresh',
+      'Manage subscription',
+    ];
+
+    // Act
+    const spanishCopy = copy.map((key) => spanish.t(key));
+    const portugueseCopy = copy.map((key) => portuguese.t(key));
+
+    // Assert
+    expect(spanishCopy).toEqual([
+      'Suscripción',
+      'Cargando el estado de la suscripción…',
+      'Suscripción activa',
+      'Tu plan está activo.',
+      'No hay ninguna suscripción activa',
+      'Elige un plan para usar Madrid.',
+      'Actualizando…',
+      'Actualizar estado',
+      'He completado el pago, actualizar',
+      'Gestionar la suscripción',
+    ]);
+    expect(portugueseCopy).toEqual([
+      'Assinatura',
+      'Carregando o status da assinatura…',
+      'Assinatura ativa',
+      'Seu plano está ativo.',
+      'Nenhuma assinatura ativa',
+      'Escolha um plano para usar o Madrid.',
+      'Atualizando…',
+      'Atualizar status',
+      'Concluí o pagamento, atualizar',
+      'Gerenciar assinatura',
+    ]);
+  });
+
   it('translates Canadian French correctly', () => {
     // Arrange
     const translator = createTranslator('fr-CA');

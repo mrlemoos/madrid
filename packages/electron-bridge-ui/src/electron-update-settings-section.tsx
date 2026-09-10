@@ -80,19 +80,18 @@ export function ElectronUpdateSettingsSection(): JSX.Element | null {
 
   return (
     <section className="space-y-3">
-      <h2 className="text-sm font-medium text-foreground">
+      <h3 className="text-sm font-medium text-foreground">
         {t('Desktop app updates')}
-      </h2>
-      <div className="space-y-3 rounded-lg border border-border/60 bg-muted/20 px-4 py-3">
-        <p className="text-sm text-muted-foreground">
-          {t('Madrid checks GitHub Releases for the latest signed Mac build.')}
-        </p>
+      </h3>
+      <div className="overflow-hidden rounded-lg border border-border/60 bg-muted/10">
         {message ? (
-          <p className="text-sm text-foreground" role="status">
-            {message}
-          </p>
+          <div className="px-4 py-3">
+            <p className="text-sm text-foreground" role="status">
+              {message}
+            </p>
+          </div>
         ) : null}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap justify-end gap-2 px-4 py-3">
           <Button
             type="button"
             variant="secondary"

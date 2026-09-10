@@ -227,6 +227,38 @@ describe('NotesSettingsPage note preferences', () => {
 });
 
 describe('NotesSettingsPage gated sections', () => {
+  it('puts the account and plan before preferences for unpaid readers', () => {
+    // Arrange
+    meta.current = {
+      notaProEntitled: false,
+      userPreferences: { delete_empty_folders: true },
+    };
+
+    // Act
+    render(<NotesSettingsPage />);
+
+    // Assert
+    const headings = screen.getAllByRole('heading', { level: 2 });
+    expect(
+      headings.findIndex((heading) => heading.textContent === 'Account'),
+    ).toBeLessThan(
+      headings.findIndex((heading) => heading.textContent === 'General'),
+    );
+  });
+
+  it('puts preferences before the account for active subscribers', () => {
+    // Arrange|Act
+    render(<NotesSettingsPage />);
+
+    // Assert
+    const headings = screen.getAllByRole('heading', { level: 2 });
+    expect(
+      headings.findIndex((heading) => heading.textContent === 'General'),
+    ).toBeLessThan(
+      headings.findIndex((heading) => heading.textContent === 'Account'),
+    );
+  });
+
   it('offers semantic search and the activity graph only with Madrid Pro', () => {
     // Arrange|Act
     const { unmount } = render(<NotesSettingsPage />);
