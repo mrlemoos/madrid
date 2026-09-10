@@ -36,40 +36,24 @@ export type AlignmentIssue = {
   message: string;
 };
 
-const PRICE_RE_MONTHLY = /const\s+priceMonthlyUsd\s*=\s*'([\d.]+)'/;
-const PRICE_RE_ANNUAL = /const\s+priceAnnualUsd\s*=\s*'([\d.]+)'/;
+const PRICE_RE_MONTHLY = /NOTA_PRICE_MONTHLY_USD\s*=\s*'([\d.]+)'/;
+const PRICE_RE_ANNUAL = /NOTA_PRICE_ANNUAL_USD\s*=\s*'([\d.]+)'/;
 
 export type MarketingGuidePrices = { monthlyUsd: number; annualUsd: number };
 
-/** Read `priceMonthlyUsd` / `priceAnnualUsd` from marketing Astro; ensure pricing and home stay aligned. */
+/** Read shared marketing guide prices used by home and pricing. */
 export function readMarketingGuidePrices(
   repoRoot: string,
 ): MarketingGuidePrices {
-  const pricingPath = join(
-    repoRoot,
-    'apps/nota-marketing/src/pages/pricing.astro',
-  );
-  const homePath = join(repoRoot, 'apps/nota-marketing/src/pages/index.astro');
-  const pricingSrc = readFileSync(pricingPath, 'utf8');
-  const homeSrc = readFileSync(homePath, 'utf8');
-
-  const pm = PRICE_RE_MONTHLY.exec(pricingSrc);
-  const pa = PRICE_RE_ANNUAL.exec(pricingSrc);
-  const hm = PRICE_RE_MONTHLY.exec(homeSrc);
-  const ha = PRICE_RE_ANNUAL.exec(homeSrc);
+  const pricePath = join(repoRoot, 'apps/nota-marketing/src/lib/site.ts');
+  const priceSrc = readFileSync(pricePath, 'utf8');
+  const pm = PRICE_RE_MONTHLY.exec(priceSrc);
+  const pa = PRICE_RE_ANNUAL.exec(priceSrc);
   if (!pm || !pa) {
-    throw new Error(`Could not parse guide prices from ${pricingPath}`);
-  }
-  if (!hm || !ha) {
-    throw new Error(`Could not parse guide prices from ${homePath}`);
+    throw new Error(`Could not parse guide prices from ${pricePath}`);
   }
   const monthlyUsd = Number(pm[1]);
   const annualUsd = Number(pa[1]);
-  if (hm[1] !== pm[1] || ha[1] !== pa[1]) {
-    throw new Error(
-      `Marketing home vs pricing guide mismatch: home ${hm[1]}/${ha[1]} vs pricing ${pm[1]}/${pa[1]}. Sync index.astro and pricing.astro.`,
-    );
-  }
   if (!Number.isFinite(monthlyUsd) || !Number.isFinite(annualUsd)) {
     throw new Error('Parsed guide prices are not finite numbers');
   }

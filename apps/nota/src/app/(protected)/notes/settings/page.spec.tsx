@@ -94,7 +94,7 @@ describe('NotesSettingsPage appearance', () => {
 
     // Act
     fireEvent.click(select);
-    const spanish = screen.getByRole('option', { name: 'Español' });
+    const spanish = screen.getByRole('option', { name: 'Spanish (Spain)' });
     fireEvent.mouseMove(spanish);
     fireEvent.click(spanish);
 

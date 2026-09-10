@@ -43,12 +43,12 @@ export function useNotesSidebarMotion(params: {
 
     const layout = (isOpen: boolean, transition: string) => {
       aside.style.transition = transition;
-      aside.style.width = `${isOpen ? widthPx : NOTA_SIDEBAR_COLLAPSED_CLIP_WIDTH_PX}px`;
-      aside.style.maxWidth = isOpen ? `${widthPx}px` : 'none';
+      aside.style.width = `${String(isOpen ? widthPx : NOTA_SIDEBAR_COLLAPSED_CLIP_WIDTH_PX)}px`;
+      aside.style.maxWidth = isOpen ? `${String(widthPx)}px` : 'none';
     };
     const setRail = (isOpen: boolean, transition: string) => {
       rail.style.transition = transition;
-      rail.style.transform = `translateX(${isOpen ? 0 : -NOTA_SIDEBAR_REVEAL_PX}px)`;
+      rail.style.transform = `translateX(${String(isOpen ? 0 : -NOTA_SIDEBAR_REVEAL_PX)}px)`;
       rail.style.opacity = isOpen ? '1' : '0';
     };
     const shouldAnimate = motionReadyRef.current && !prefersReducedMotion;
