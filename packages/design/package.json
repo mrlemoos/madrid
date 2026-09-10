@@ -58,6 +58,12 @@
       "import": "./dist/sheet.js",
       "default": "./dist/sheet.js"
     },
+    "./select": {
+      "@getmadrid/source": "./src/components/select.tsx",
+      "types": "./dist/components/select.d.ts",
+      "import": "./dist/select.js",
+      "default": "./dist/select.js"
+    },
     "./spinner": {
       "@getmadrid/source": "./src/components/spinner.tsx",
       "types": "./dist/components/spinner.d.ts",

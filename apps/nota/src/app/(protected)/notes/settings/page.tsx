@@ -4,6 +4,13 @@ import { UserButton } from '@clerk/react';
 import { useLayoutEffect, useMemo, useState, type JSX } from 'react';
 import Link from 'next/link';
 import { LOCALE_OPTIONS } from '@getmadrid/i18n';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@getmadrid/design/select';
 import { ThemeMenu } from '@/components/theme-menu';
 import { useRootLoaderData } from '@getmadrid/note-runtime/session-context';
 import {
@@ -168,24 +175,20 @@ export default function NotesSettingsPage(): JSX.Element {
           <div className="divide-y divide-border/60 rounded-lg border border-border/60 bg-muted/20">
             <div className="flex flex-col gap-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div>
-                <label
-                  htmlFor="nota-locale"
-                  className="text-sm text-foreground"
-                >
+                <p id="nota-locale-label" className="text-sm text-foreground">
                   {t('Language')}
-                </label>
+                </p>
                 <p className="mt-1 text-xs leading-snug text-muted-foreground">
                   {t(
                     'If you leave this on system default, Madrid follows your device language.',
                   )}
                 </p>
               </div>
-              <select
-                id="nota-locale"
+              <Select
                 value={locale ?? 'system'}
-                onChange={(event) => {
-                  const next =
-                    event.target.value === 'system' ? null : event.target.value;
+                items={LOCALE_OPTIONS}
+                onValueChange={(value) => {
+                  const next = value === 'system' ? null : value;
                   setLocale(next);
                   submitUserPreferencesPatch(
                     { locale: next },
@@ -194,14 +197,18 @@ export default function NotesSettingsPage(): JSX.Element {
                     notaProEntitled,
                   );
                 }}
-                className="min-w-48 rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
               >
-                {LOCALE_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger aria-labelledby="nota-locale-label">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {LOCALE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex flex-col gap-1 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div>

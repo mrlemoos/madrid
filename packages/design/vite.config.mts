@@ -16,6 +16,7 @@ const libEntries = {
   dialog: path.join(root, 'src/components/dialog.tsx'),
   'flight-globe': path.join(root, 'src/components/flight-globe.tsx'),
   sheet: path.join(root, 'src/components/sheet.tsx'),
+  select: path.join(root, 'src/components/select.tsx'),
   spinner: path.join(root, 'src/components/spinner.tsx'),
   'nota-tint-circle': path.join(root, 'src/components/nota-tint-circle.tsx'),
   utils: path.join(root, 'src/lib/utils.ts'),

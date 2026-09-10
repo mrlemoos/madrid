@@ -82,8 +82,8 @@ describe('NotesSettingsPage appearance', () => {
     render(<NotesSettingsPage />);
 
     // Assert
-    expect((screen.getByLabelText('Language') as HTMLSelectElement).value).toBe(
-      'system',
+    expect(screen.getByLabelText('Language').textContent).toContain(
+      'System default',
     );
   });
 
@@ -93,7 +93,10 @@ describe('NotesSettingsPage appearance', () => {
     const select = screen.getByLabelText('Language');
 
     // Act
-    fireEvent.change(select, { target: { value: 'es-ES' } });
+    fireEvent.click(select);
+    const spanish = screen.getByRole('option', { name: 'Español' });
+    fireEvent.mouseMove(spanish);
+    fireEvent.click(spanish);
 
     // Assert
     expect(useNotaPreferencesStore.getState().locale).toBe('es-ES');
@@ -105,7 +108,10 @@ describe('NotesSettingsPage appearance', () => {
     );
 
     // Act
-    fireEvent.change(select, { target: { value: 'system' } });
+    fireEvent.click(select);
+    const system = screen.getByRole('option', { name: 'System default' });
+    fireEvent.mouseMove(system);
+    fireEvent.click(system);
 
     // Assert — "system" is stored as absent, not as a locale
     expect(submitUserPreferencesPatch).toHaveBeenLastCalledWith(
