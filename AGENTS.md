@@ -69,6 +69,7 @@ Must use [Conventional Commits](https://www.conventionalcommits.org/).
 
 ## Learned User Preferences
 
+- Before you stop, ask yourself "is there a next step that the user would want me to do?" If so, keep going — jobs not finished.
 - Folder sidebar tint: selection shows on folder icon + name only—no row background fill (tint applies to icon/name per light/dark tone). Sidebar must visually distinguish folders vs notes (icons), not rely on text alone.
 - Micro-interactions: UI feels responsive/alive; preserve typing/editing focus (no motion on TipTap surface). North star: native Swift/macOS (Apple Design)—AppKit Notes + Spotlight on desktop Mac, not iOS sheets/swipes. Keyboard-initiated UI (palette Mod+K, Mod+D, history, create) stays instant; pointer opens/nav may use short motion (≤180ms). Asymmetric press on chrome (fast press-in, slower release).
 - Customer-facing copy (marketing, blog, welcome note, i18n, in-app labels/empty states/paywall, share/OG titles): always invoke **`unslop`** before writing or editing. Read the skill, draft, then run its scan/rewrite/self-audit. Do not ship those strings without that pass.
