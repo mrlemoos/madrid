@@ -258,5 +258,18 @@
   "Refreshing…": "Refreshing…",
   "Refresh status": "Refresh status",
   "I completed checkout, refresh": "I completed checkout, refresh",
-  "Manage subscription": "Manage subscription"
+  "Manage subscription": "Manage subscription",
+  "Welcome to Madrid": "Welcome to Madrid",
+  "Step {step} of 3": "Step {step} of 3",
+  "Write anything": "Write anything",
+  "Start with the thought. The rest can follow.": "Start with the thought. The rest can follow.",
+  "Keep it tidy": "Keep it tidy",
+  "Folders make a little order when you want it.": "Folders make a little order when you want it.",
+  "Find it later": "Find it later",
+  "Use ⌘K or Ctrl+K to find notes and commands.": "Use ⌘K or Ctrl+K to find notes and commands.",
+  "Continue": "Continue",
+  "Open my notes": "Open my notes",
+  "Skip for now": "Skip for now",
+  "Saving…": "Saving…",
+  "Couldn't save onboarding. Try again.": "Couldn't save onboarding. Try again."
 }

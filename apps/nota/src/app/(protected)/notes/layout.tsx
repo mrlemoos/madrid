@@ -18,6 +18,7 @@ import { runWelcomeNoteSeedIfNeeded } from '@/lib/welcome-note-seed';
 import { clearNoteAttachmentSignedUrlCache } from '@getmadrid/data-source/attachment-signed-url-cache';
 import { SignedInCommandPalette } from '@getmadrid/note-palette-ui/signed-in-command-palette';
 import { cn } from '@/lib/utils';
+import { NotesOnboarding } from '@/components/notes-onboarding';
 
 /**
  * App-owned collaborators for the notes-data runtime spine. Module scope so the
@@ -63,6 +64,7 @@ export default function NotesLayout({
     >
       <ElectronWindowDragBand />
       <NotesDataProvider ports={notesDataPorts}>
+        <NotesOnboarding />
         <SignedInCommandPalette />
         <NotesChrome>{children}</NotesChrome>
       </NotesDataProvider>

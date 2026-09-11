@@ -195,7 +195,7 @@ export function useSyncClerkDisplayName(
 
 export type UserPreferencesSyncPatch = Omit<
   UserPreferencesUpsertPatch,
-  'welcome_seeded'
+  'welcome_seeded' | 'onboarding_version'
 >;
 
 /**

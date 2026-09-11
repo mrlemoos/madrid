@@ -42,3 +42,12 @@ _Avoid_: nota-server, "the API server", Bearer-token API clients
 **Welcome Landscape**:
 The full-bleed painting behind the unsigned-in welcome and auth cards.
 _Avoid_: cartoon landscape, hero image, share card (that term is for Shared Note Open Graph)
+
+**Onboarding**:
+The short orientation every entitled signed-in user completes once for a given
+Onboarding Version before entering their workspace. It introduces writing,
+folders, and search. A user may skip it, which counts as completion.
+
+**Onboarding Version**:
+The product-defined version of Onboarding a user has completed. A new version
+may introduce a new orientation without treating existing users as new accounts.

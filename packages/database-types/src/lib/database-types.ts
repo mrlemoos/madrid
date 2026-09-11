@@ -230,6 +230,7 @@ export interface Database {
           emoji_replacer_enabled: boolean;
           updated_at: string;
           welcome_seeded: boolean;
+          onboarding_version: number | null;
           delete_empty_folders: boolean;
           show_writing_activity_graph: boolean;
           writing_activity_color: string;
@@ -245,6 +246,7 @@ export interface Database {
           emoji_replacer_enabled?: boolean;
           updated_at?: string;
           welcome_seeded?: boolean;
+          onboarding_version?: number | null;
           delete_empty_folders?: boolean;
           show_writing_activity_graph?: boolean;
           writing_activity_color?: string;
@@ -260,6 +262,7 @@ export interface Database {
           emoji_replacer_enabled?: boolean;
           updated_at?: string;
           welcome_seeded?: boolean;
+          onboarding_version?: number | null;
           delete_empty_folders?: boolean;
           show_writing_activity_graph?: boolean;
           writing_activity_color?: string;

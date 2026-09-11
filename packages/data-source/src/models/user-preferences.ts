@@ -28,6 +28,7 @@ export async function getUserPreferences(
     semantic_search_enabled: true,
     emoji_replacer_enabled: true,
     welcome_seeded: false,
+    onboarding_version: null,
     delete_empty_folders: true,
     show_writing_activity_graph: false,
     writing_activity_color: 'blue',
@@ -44,6 +45,7 @@ export type UserPreferencesUpsertPatch = {
   semantic_search_enabled?: boolean;
   emoji_replacer_enabled?: boolean;
   welcome_seeded?: boolean;
+  onboarding_version?: number | null;
   delete_empty_folders?: boolean;
   show_writing_activity_graph?: boolean;
   writing_activity_color?: string;
@@ -83,6 +85,10 @@ export async function upsertUserPreferences(
       patch.welcome_seeded !== undefined
         ? patch.welcome_seeded
         : current.welcome_seeded,
+    onboarding_version:
+      patch.onboarding_version !== undefined
+        ? patch.onboarding_version
+        : current.onboarding_version,
     delete_empty_folders:
       patch.delete_empty_folders !== undefined
         ? patch.delete_empty_folders

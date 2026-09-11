@@ -262,6 +262,8 @@ export type Database = {
           user_id: string;
           writing_activity_color: string;
           writing_activity_days: Json;
+          welcome_seeded: boolean;
+          onboarding_version: number | null;
         };
         Insert: {
           delete_empty_folders?: boolean;
@@ -276,6 +278,8 @@ export type Database = {
           user_id: string;
           writing_activity_color?: string;
           writing_activity_days?: Json;
+          welcome_seeded?: boolean;
+          onboarding_version?: number | null;
         };
         Update: {
           delete_empty_folders?: boolean;
@@ -290,6 +294,8 @@ export type Database = {
           user_id?: string;
           writing_activity_color?: string;
           writing_activity_days?: Json;
+          welcome_seeded?: boolean;
+          onboarding_version?: number | null;
         };
         Relationships: [];
       };

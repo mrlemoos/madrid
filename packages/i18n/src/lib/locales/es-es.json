@@ -258,5 +258,18 @@
   "Refreshing…": "Actualizando…",
   "Refresh status": "Actualizar estado",
   "I completed checkout, refresh": "He completado el pago, actualizar",
-  "Manage subscription": "Gestionar la suscripción"
+  "Manage subscription": "Gestionar la suscripción",
+  "Welcome to Madrid": "Te damos la bienvenida a Madrid",
+  "Step {step} of 3": "Paso {step} de 3",
+  "Write anything": "Escribe lo que sea",
+  "Start with the thought. The rest can follow.": "Empieza con la idea. Lo demás puede venir después.",
+  "Keep it tidy": "Mantenlo ordenado",
+  "Folders make a little order when you want it.": "Las carpetas ponen un poco de orden cuando lo necesitas.",
+  "Find it later": "Encuéntralo después",
+  "Use ⌘K or Ctrl+K to find notes and commands.": "Usa ⌘K o Ctrl+K para encontrar notas y comandos.",
+  "Continue": "Continuar",
+  "Open my notes": "Abrir mis notas",
+  "Skip for now": "Omitir por ahora",
+  "Saving…": "Guardando…",
+  "Couldn't save onboarding. Try again.": "No se pudo guardar la introducción. Inténtalo de nuevo."
 }

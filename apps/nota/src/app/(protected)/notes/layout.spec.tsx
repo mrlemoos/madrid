@@ -38,6 +38,9 @@ vi.mock('@getmadrid/data-source/attachment-signed-url-cache', () => ({
 vi.mock('@getmadrid/note-palette-ui/signed-in-command-palette', () => ({
   SignedInCommandPalette: () => <div data-testid="palette" />,
 }));
+vi.mock('@/components/notes-onboarding', () => ({
+  NotesOnboarding: () => <div data-testid="onboarding" />,
+}));
 
 const { default: NotesLayout } = await import('./layout');
 

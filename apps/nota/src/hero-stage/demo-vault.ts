@@ -212,6 +212,7 @@ export const DEMO_PREFERENCES: UserPreferences = {
   display_name: null,
   locale: 'en-GB',
   welcome_seeded: true,
+  onboarding_version: 1,
   delete_empty_folders: false,
   emoji_replacer_enabled: false,
   open_todays_note_shortcut: true,

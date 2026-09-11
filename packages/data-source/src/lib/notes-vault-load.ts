@@ -58,6 +58,7 @@ function defaultPrefs(userId: string): UserPreferences {
     semantic_search_enabled: true,
     emoji_replacer_enabled: true,
     welcome_seeded: false,
+    onboarding_version: null,
     delete_empty_folders: true,
     show_writing_activity_graph: false,
     writing_activity_color: 'blue',
