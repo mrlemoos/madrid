@@ -24,4 +24,21 @@ describe('Dialog', () => {
     expect(screen.getByRole('dialog', { name: 'Note layout' })).toBeTruthy();
     expect(screen.getByText('Theme options')).toBeTruthy();
   });
+
+  it('can blur the backdrop', () => {
+    // Arrange
+    render(
+      <Dialog open>
+        <DialogContent blurBackdrop showCloseButton={false}>
+          <DialogTitle>Welcome</DialogTitle>
+        </DialogContent>
+      </Dialog>,
+    );
+
+    // Act
+    const backdrop = document.querySelector('[data-slot="dialog-overlay"]');
+
+    // Assert
+    expect(backdrop?.getAttribute('data-blurred-backdrop')).toBe('true');
+  });
 });

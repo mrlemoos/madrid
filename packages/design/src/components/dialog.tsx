@@ -60,17 +60,28 @@ export const DialogClose = DialogPrimitive.Close;
 /**
  * Dimmed backdrop behind the popup.
  */
-export function DialogOverlay({ className, ...props }: DialogOverlayProps) {
+export function DialogOverlay({
+  blurred = false,
+  className,
+  ...props
+}: DialogOverlayProps & { blurred?: boolean }) {
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
-      className={cn(DEFAULT_OVERLAY_CLASS, className)}
+      data-blurred-backdrop={blurred || undefined}
+      className={cn(
+        DEFAULT_OVERLAY_CLASS,
+        blurred && 'backdrop-blur-[2px]',
+        className,
+      )}
       {...props}
     />
   );
 }
 
 export type DialogContentProps = DialogPopupProps & {
+  /** When true, blur the backdrop behind the popup. @defaultValue false */
+  blurBackdrop?: boolean;
   /** When true, render a ghost icon close control in the top-right. @defaultValue true */
   showCloseButton?: boolean;
 };
@@ -81,12 +92,13 @@ export type DialogContentProps = DialogPopupProps & {
 export function DialogContent({
   className,
   children,
+  blurBackdrop = false,
   showCloseButton = true,
   ...props
 }: DialogContentProps) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogOverlay blurred={blurBackdrop} />
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(DEFAULT_CONTENT_CLASS, className)}

@@ -17,6 +17,7 @@ const libEntries = {
   'flight-globe': path.join(root, 'src/components/flight-globe.tsx'),
   sheet: path.join(root, 'src/components/sheet.tsx'),
   select: path.join(root, 'src/components/select.tsx'),
+  questionnaire: path.join(root, 'src/components/questionnaire.tsx'),
   spinner: path.join(root, 'src/components/spinner.tsx'),
   'nota-tint-circle': path.join(root, 'src/components/nota-tint-circle.tsx'),
   utils: path.join(root, 'src/lib/utils.ts'),
@@ -61,6 +62,7 @@ export default defineConfig(() => ({
         id === '@getmadrid/helper-hooks' ||
         id.startsWith('react/') ||
         id.startsWith('@base-ui/') ||
+        id.startsWith('@shadcn/react') ||
         id.startsWith('@getmadrid/helper-hooks/') ||
         id === 'motion/react' ||
         id.startsWith('motion/'),

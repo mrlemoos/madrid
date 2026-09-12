@@ -22,18 +22,22 @@ completed version, including existing users, see the current onboarding. Finishi
 or skipping records the current version. Raising the current version deliberately
 shows a later orientation to every user again.
 
-The flow teaches three parts of Madrid in plain language:
+The flow is a required-answer questionnaire, rather than an introductory
+walkthrough. It records three choices that already exist in `user_preferences`:
 
-1. "Write anything" opens the editor.
-2. "Keep it tidy" introduces folders and the sidebar.
-3. "Find it later" introduces search and the command palette.
+1. App language, including following the device language.
+2. Whether to show the existing writing activity and streak view.
+3. Whether to enable the existing daily-note shortcut.
 
-It ends with "Open my notes". Skipping is always available and does not create a
-sample note or alter the user's vault.
+The shared `@getmadrid/design/questionnaire` component owns question order,
+validation, keyboard navigation, progress, and focus. The onboarding component
+owns persistence and the global skip action. Skipping is always available and
+does not create a sample note or alter the user's vault.
 
 ## Consequences
 
-- Existing entitled users enter onboarding once after release.
+- Raising the version to 3 shows the questionnaire to users who completed an
+  earlier onboarding.
 - Completion follows the user across browsers and Electron because it lives in
   their preferences, not local storage.
 - A future onboarding needs only a version bump. It does not need a new
