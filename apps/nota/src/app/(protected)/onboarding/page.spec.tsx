@@ -15,36 +15,40 @@ vi.mock('@/server/nota-pro-entitlement', () => ({
 vi.mock('@/server/onboarding.server', () => ({
   getOnboardingVersion: mocks.getOnboardingVersion,
 }));
-vi.mock('./notes-workspace', () => ({
-  NotesWorkspace: ({ children }: { children: React.ReactNode }) => children,
+vi.mock('@/components/onboarding-paywall', () => ({
+  OnboardingPaywall: () => <p>Plans</p>,
+}));
+vi.mock('@/components/notes-onboarding', () => ({
+  NotesOnboarding: () => <p>Questions</p>,
 }));
 
-const { default: NotesLayout } = await import('./layout');
+const { default: OnboardingPage } = await import('./page');
 
-describe('NotesLayout', () => {
-  it('redirects an unfinished account before it renders notes', async () => {
-    // Arrange
-    mocks.auth.mockResolvedValue({ userId: 'user-1' });
-    mocks.getServerNotaProEntitled.mockResolvedValue(true);
-    mocks.getOnboardingVersion.mockResolvedValue(null);
-
-    // Act
-    await NotesLayout({ children: <p>Private note</p> });
-
-    // Assert
-    expect(mocks.redirect).toHaveBeenCalledWith('/onboarding');
-  });
-
-  it('redirects an unpaid account before it renders notes', async () => {
+describe('OnboardingPage', () => {
+  it('renders the paywall for users without a subscription', async () => {
     // Arrange
     mocks.auth.mockResolvedValue({ userId: 'user-1' });
     mocks.getServerNotaProEntitled.mockResolvedValue(false);
+    mocks.getOnboardingVersion.mockResolvedValue(null);
+
+    // Act
+    const page = await OnboardingPage();
+
+    // Assert
+    expect(page.type).toBeDefined();
+    expect(mocks.redirect).not.toHaveBeenCalled();
+  });
+
+  it('redirects completed subscribers to notes', async () => {
+    // Arrange
+    mocks.auth.mockResolvedValue({ userId: 'user-1' });
+    mocks.getServerNotaProEntitled.mockResolvedValue(true);
     mocks.getOnboardingVersion.mockResolvedValue(3);
 
     // Act
-    await NotesLayout({ children: <p>Private note</p> });
+    await OnboardingPage();
 
     // Assert
-    expect(mocks.redirect).toHaveBeenCalledWith('/onboarding');
+    expect(mocks.redirect).toHaveBeenCalledWith('/notes');
   });
 });

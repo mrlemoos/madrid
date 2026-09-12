@@ -2,22 +2,19 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const upsertUserPreferences = vi.fn();
-const setUserPreferencesInState = vi.fn();
 const browserClient = {};
+const replace = vi.fn();
+const refresh = vi.fn();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ replace, refresh }),
+}));
 
 vi.mock('@getmadrid/data-source/supabase/browser', () => ({
   getBrowserClient: () => browserClient,
 }));
 vi.mock('@getmadrid/data-source/models/user-preferences', () => ({
   upsertUserPreferences,
-}));
-vi.mock('@getmadrid/note-runtime/notes-data-context', () => ({
-  useNotesDataActions: () => ({ setUserPreferencesInState }),
-  useNotesDataMeta: () => ({
-    loading: false,
-    notaProEntitled: true,
-    userPreferences: { user_id: 'user-1', onboarding_version: null },
-  }),
 }));
 vi.mock('@/lib/use-nota-translator', () => ({
   useNotaTranslator: () => ({ t: (key: string) => key }),
@@ -33,7 +30,7 @@ describe('NotesOnboarding', () => {
 
   it('records a skipped questionnaire for an existing user', async () => {
     // Arrange
-    render(<NotesOnboarding />);
+    render(<NotesOnboarding userId="user-1" />);
 
     // Act
     fireEvent.click(screen.getByRole('button', { name: 'Skip' }));
@@ -46,14 +43,12 @@ describe('NotesOnboarding', () => {
         { onboarding_version: 3 },
       );
     });
-    expect(setUserPreferencesInState).toHaveBeenCalledWith({
-      onboarding_version: 3,
-    });
+    expect(replace).toHaveBeenCalledWith('/notes');
   });
 
   it('asks about language, writing streaks, and daily notes', () => {
     // Arrange
-    render(<NotesOnboarding />);
+    render(<NotesOnboarding userId="user-1" />);
 
     // Act
     fireEvent.click(
@@ -76,7 +71,7 @@ describe('NotesOnboarding', () => {
 
   it('saves the selected questionnaire preferences', async () => {
     // Arrange
-    render(<NotesOnboarding />);
+    render(<NotesOnboarding userId="user-1" />);
 
     // Act
     fireEvent.click(screen.getByRole('radio', { name: 'Spanish (Spain)' }));

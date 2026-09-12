@@ -1,18 +1,14 @@
-import type { JSX, ReactNode } from 'react';
+import type { JSX } from 'react';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
+import { NotesOnboarding } from '@/components/notes-onboarding';
+import { OnboardingPaywall } from '@/components/onboarding-paywall';
 import { getServerNotaProEntitled } from '@/server/nota-pro-entitlement';
 import { getOnboardingVersion } from '@/server/onboarding.server';
 import { CURRENT_ONBOARDING_VERSION } from '@/lib/onboarding-version';
 
-import { NotesWorkspace } from './notes-workspace';
-
-export default async function NotesLayout({
-  children,
-}: {
-  children: ReactNode;
-}): Promise<JSX.Element> {
+export default async function OnboardingPage(): Promise<JSX.Element> {
   const { userId } = await auth();
   if (!userId) {
     redirect('/signin');
@@ -22,9 +18,12 @@ export default async function NotesLayout({
     getServerNotaProEntitled(userId),
     getOnboardingVersion(userId),
   ]);
-  if (!entitled || onboardingVersion !== CURRENT_ONBOARDING_VERSION) {
-    redirect('/onboarding');
+  if (!entitled) {
+    return <OnboardingPaywall />;
+  }
+  if (onboardingVersion === CURRENT_ONBOARDING_VERSION) {
+    redirect('/notes');
   }
 
-  return <NotesWorkspace>{children}</NotesWorkspace>;
+  return <NotesOnboarding userId={userId} />;
 }

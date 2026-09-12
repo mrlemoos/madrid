@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, type JSX, type SyntheticEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@getmadrid/design/button';
 import {
@@ -26,15 +27,10 @@ import {
 import { LOCALE_OPTIONS, type SupportedLocale } from '@getmadrid/i18n';
 import { upsertUserPreferences } from '@getmadrid/data-source/models/user-preferences';
 import { getBrowserClient } from '@getmadrid/data-source/supabase/browser';
-import {
-  useNotesDataActions,
-  useNotesDataMeta,
-} from '@getmadrid/note-runtime/notes-data-context';
 import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 
 import { useNotaTranslator } from '@/lib/use-nota-translator';
-
-const CURRENT_ONBOARDING_VERSION = 3;
+import { CURRENT_ONBOARDING_VERSION } from '@/lib/onboarding-version';
 
 const QUESTIONS = [
   {
@@ -57,9 +53,8 @@ const QUESTIONS = [
   },
 ] as const;
 
-export function NotesOnboarding(): JSX.Element | null {
-  const { loading, notaProEntitled, userPreferences } = useNotesDataMeta();
-  const { setUserPreferencesInState } = useNotesDataActions();
+export function NotesOnboarding({ userId }: { userId: string }): JSX.Element {
+  const router = useRouter();
   const setLocale = useNotaPreferencesStore((state) => state.setLocale);
   const setShowWritingActivityGraph = useNotaPreferencesStore(
     (state) => state.setShowWritingActivityGraph,
@@ -70,16 +65,6 @@ export function NotesOnboarding(): JSX.Element | null {
   const { t } = useNotaTranslator();
   const [saving, setSaving] = useState(false);
   const [saveFailed, setSaveFailed] = useState(false);
-
-  const shouldShow =
-    !loading &&
-    notaProEntitled &&
-    userPreferences !== null &&
-    userPreferences.onboarding_version !== CURRENT_ONBOARDING_VERSION;
-
-  if (!shouldShow) {
-    return null;
-  }
 
   const complete = async (
     patch: {
@@ -96,16 +81,10 @@ export function NotesOnboarding(): JSX.Element | null {
     setSaveFailed(false);
 
     try {
-      const row = await upsertUserPreferences(
-        getBrowserClient(),
-        userPreferences.user_id,
-        {
-          onboarding_version: CURRENT_ONBOARDING_VERSION,
-          ...patch,
-        },
-      );
-      setUserPreferencesInState(row);
-
+      await upsertUserPreferences(getBrowserClient(), userId, {
+        onboarding_version: CURRENT_ONBOARDING_VERSION,
+        ...patch,
+      });
       if ('locale' in patch) {
         setLocale(patch.locale ?? null);
       }
@@ -115,6 +94,8 @@ export function NotesOnboarding(): JSX.Element | null {
       if ('open_todays_note_shortcut' in patch) {
         setOpenTodaysNoteShortcut(patch.open_todays_note_shortcut ?? false);
       }
+      router.replace('/notes');
+      router.refresh();
     } catch {
       setSaveFailed(true);
     } finally {
