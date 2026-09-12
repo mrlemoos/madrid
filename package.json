@@ -15,7 +15,7 @@
     "electron:dev": "nx dev nota-electron",
     "electron:pack": "nx electron:pack nota-electron",
     "release:electron": "nx run @getmadrid/nota-electron:electron:release",
-    "dev": "nx run-many -t dev",
+    "dev": "pnpm exec nx run-many -t dev --projects=@getmadrid/nota,@getmadrid/nota-electron",
     "generate:nota-icons": "node apps/nota/scripts/generate-nota-icons.mjs",
     "test": "nx run-many -t test",
     "postinstall": "husky",

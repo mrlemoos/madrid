@@ -131,6 +131,9 @@
     },
     {
       "path": "./packages/env-nextjs"
+    },
+    {
+      "path": "./packages/testing-fakes"
     }
   ]
 }

@@ -14,10 +14,13 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
+      "path": "../notes-offline-core/tsconfig.lib.json"
+    },
+    {
       "path": "../database-types/tsconfig.lib.json"
     },
     {
-      "path": "../notes-offline-core/tsconfig.lib.json"
+      "path": "../testing-fakes/tsconfig.lib.json"
     }
   ],
   "exclude": [
