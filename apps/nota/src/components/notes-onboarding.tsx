@@ -14,6 +14,7 @@ import {
   Questionnaire,
   QuestionnaireActions,
   QuestionnaireChoice,
+  QuestionnaireChoiceDescription,
   QuestionnaireChoices,
   QuestionnaireDescription,
   QuestionnaireError,
@@ -143,11 +144,14 @@ export function NotesOnboarding({ userId }: { userId: string }): JSX.Element {
           items={QUESTIONS}
           onSubmit={handleSubmit}
         >
-          <QuestionnaireProgress className="text-sm text-muted-foreground">
-            {({ current, total }: { current: number; total: number }) =>
-              t('Question {current} of {total}', { current, total })
-            }
-          </QuestionnaireProgress>
+          <QuestionnaireProgress
+            className="text-sm text-muted-foreground"
+            render={(props, { current, total }) => (
+              <div {...props}>
+                {t('Question {current} of {total}', { current, total })}
+              </div>
+            )}
+          />
 
           <QuestionnaireItem name="language" required>
             <QuestionnaireTitle>
@@ -157,11 +161,11 @@ export function NotesOnboarding({ userId }: { userId: string }): JSX.Element {
               {t('Pick a language for the app.')}
             </QuestionnaireDescription>
             <QuestionnaireChoices>
-              <QuestionnaireChoice
-                description={t('Follow the language set on this device.')}
-                value="system"
-              >
+              <QuestionnaireChoice value="system">
                 {t('Use my device language')}
+                <QuestionnaireChoiceDescription>
+                  {t('Follow the language set on this device.')}
+                </QuestionnaireChoiceDescription>
               </QuestionnaireChoice>
               {LOCALE_OPTIONS.map(({ label, value }) => (
                 <QuestionnaireChoice key={value} value={value}>
