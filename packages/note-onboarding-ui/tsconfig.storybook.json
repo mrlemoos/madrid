@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/storybook",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "es2022"],
+    "types": ["node", "vite/client"],
+    "rootDir": "."
+  },
+  "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
+  "include": ["src/**/*.stories.tsx", ".storybook/*.ts", ".storybook/*.tsx"],
+  "references": [{ "path": "./tsconfig.lib.json" }]
+}

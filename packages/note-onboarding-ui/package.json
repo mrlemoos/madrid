@@ -1,0 +1,71 @@
+{
+  "name": "@getmadrid/note-onboarding-ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./notes-onboarding": {
+      "@getmadrid/source": {
+        "types": "./src/notes-onboarding.tsx",
+        "import": "./src/notes-onboarding.tsx",
+        "default": "./src/notes-onboarding.tsx"
+      },
+      "types": "./src/notes-onboarding.tsx",
+      "import": "./src/notes-onboarding.tsx",
+      "default": "./src/notes-onboarding.tsx"
+    },
+    "./package.json": "./package.json"
+  },
+  "nx": {
+    "tags": [
+      "scope:getmadrid",
+      "type:feature",
+      "platform:web"
+    ],
+    "targets": {
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-onboarding-ui",
+          "command": "pnpm run build"
+        }
+      },
+      "test": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-onboarding-ui",
+          "command": "pnpm run test"
+        }
+      },
+      "lint": {
+        "executor": "nx:run-commands",
+        "options": {
+          "cwd": "packages/note-onboarding-ui",
+          "command": "eslint . --ignore-pattern storybook-static"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.lib.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@getmadrid/design": "workspace:*",
+    "@getmadrid/i18n": "workspace:*",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "10.5.6",
+    "@tailwindcss/vite": "catalog:",
+    "@testing-library/react": "16.3.0",
+    "@types/react": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "jsdom": "catalog:",
+    "storybook": "10.5.6",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

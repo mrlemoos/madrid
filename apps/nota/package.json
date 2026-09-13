@@ -45,6 +45,7 @@
     "@getmadrid/note-folders-core": "workspace:*",
     "@getmadrid/note-folders-ui": "workspace:*",
     "@getmadrid/note-graph": "workspace:*",
+    "@getmadrid/note-onboarding-ui": "workspace:*",
     "@getmadrid/note-journal-core": "workspace:*",
     "@getmadrid/note-journal-ui": "workspace:*",
     "@getmadrid/note-link-graph": "workspace:*",
