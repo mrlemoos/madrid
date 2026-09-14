@@ -32,12 +32,12 @@ function text(value) {
     .replaceAll('>', '&gt;');
 }
 
-async function roundedImage(filename, { width, height }) {
+async function screenshot(filename, { width, height }) {
   return sharp(path.join(assetsDir, filename))
     .resize(width, height, { fit: 'cover', position: 'top' })
     .composite([
       {
-        input: svg`<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="${width}" height="${height}" rx="24" fill="#fff"/></svg>`,
+        input: svg`<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="${width}" height="${height}" rx="18" fill="#fff"/></svg>`,
         blend: 'dest-in',
       },
     ])
@@ -48,77 +48,76 @@ async function roundedImage(filename, { width, height }) {
 function backdrop() {
   return svg`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="glow" cx="100%" cy="0%" r="78%"><stop stop-color="#5a4b3b" stop-opacity=".62"/><stop offset=".65" stop-color="#201a15" stop-opacity="0"/></radialGradient>
-    <linearGradient id="fade" x1="0" x2="1"><stop stop-color="#17120d"/><stop offset=".62" stop-color="#17120d" stop-opacity=".95"/><stop offset="1" stop-color="#17120d" stop-opacity=".24"/></linearGradient>
+    <radialGradient id="wash" cx="89%" cy="10%" r="78%"><stop stop-color="#ddc9ac" stop-opacity=".62"/><stop offset="1" stop-color="#f4ecdf" stop-opacity="0"/></radialGradient>
   </defs>
-  <rect width="${W}" height="${H}" fill="#17120d"/>
-  <rect width="${W}" height="${H}" fill="url(#glow)"/>
-  <path d="M0 524C264 450 505 550 711 495c186-49 294-142 489-74v209H0Z" fill="#e8dcc8" fill-opacity=".08"/>
-  <rect width="${W}" height="${H}" fill="url(#fade)"/>
+  <rect width="${W}" height="${H}" fill="#f4ecdf"/>
+  <rect width="${W}" height="${H}" fill="url(#wash)"/>
+  <rect x="28" y="28" width="1144" height="574" rx="30" fill="none" stroke="#17120d" stroke-opacity=".14"/>
+  <path d="M62 492C205 428 329 539 476 476" fill="none" stroke="#8d7252" stroke-opacity=".2" stroke-width="2"/>
 </svg>`;
 }
 
 async function logo() {
-  return sharp(path.join(publicRoot, 'madrid-logo-on-dark.svg'))
-    .resize({ width: 202 })
+  return sharp(path.join(publicRoot, 'madrid-logo.svg'))
+    .resize({ width: 228 })
     .png()
     .toBuffer();
 }
 
-async function writeCard({ filename, eyebrow, title, description, image }) {
-  const productImage = await roundedImage(image, { width: 520, height: 468 });
+function titleLines(lines) {
+  return lines
+    .map(
+      (line, index) =>
+        `<tspan x="72" dy="${index === 0 ? 0 : 72}">${text(line)}</tspan>`,
+    )
+    .join('');
+}
+
+async function writeCard({
+  filename,
+  eyebrow,
+  title,
+  description,
+  image,
+  price,
+}) {
+  const productImage = await screenshot(image, { width: 594, height: 458 });
   const copy = svg`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-    <text x="72" y="184" font-family="Georgia, 'Times New Roman', serif" font-size="52" fill="#f7efe2">${text(title)}</text>
-    <text x="72" y="246" font-family="ui-sans-serif, system-ui, sans-serif" font-size="25" fill="#d0c3b3">${text(description)}</text>
-    <text x="72" y="502" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" letter-spacing="2.4" fill="#b9a991">${text(eyebrow.toUpperCase())}</text>
-    <rect x="644" y="81" width="520" height="468" rx="24" fill="#000" fill-opacity=".3"/>
+    <text x="72" y="196" font-family="ui-sans-serif, system-ui, sans-serif" font-size="17" font-weight="600" letter-spacing="2.4" fill="#6f5137">${text(eyebrow.toUpperCase())}</text>
+    <text x="72" y="290" font-family="Georgia, 'Times New Roman', serif" font-size="64" fill="#17120d">${titleLines(title)}</text>
+    <text x="72" y="470" font-family="ui-sans-serif, system-ui, sans-serif" font-size="25" fill="#514337">${text(description)}</text>
+    ${price ? `<rect x="72" y="510" width="390" height="48" rx="24" fill="#17120d"/><text x="96" y="542" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600" fill="#f7efe2">${text(price)}</text>` : ''}
+    <rect x="534" y="94" width="594" height="458" rx="18" fill="#17120d" fill-opacity=".16" transform="translate(10 12)"/>
+    <rect x="534" y="94" width="594" height="458" rx="18" fill="#fff"/>
   </svg>`;
   const png = await sharp(backdrop())
     .composite([
       { input: copy },
-      { input: await logo(), left: 72, top: 61 },
-      { input: productImage, left: 644, top: 81 },
+      { input: await logo(), left: 72, top: 68 },
+      { input: productImage, left: 534, top: 94 },
     ])
     .png()
     .toBuffer();
   await fs.promises.writeFile(path.join(outDir, filename), png);
 }
 
-async function writePricing() {
-  const card = svg`<svg width="500" height="398" xmlns="http://www.w3.org/2000/svg">
-    <rect width="500" height="398" rx="28" fill="#f7efe2"/>
-    <text x="42" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" letter-spacing="2.4" fill="#746858">ANNUAL</text>
-    <text x="42" y="151" font-family="Georgia, 'Times New Roman', serif" font-size="66" fill="#17120d">$${priceAnnualUsd}</text>
-    <text x="42" y="190" font-family="ui-sans-serif, system-ui, sans-serif" font-size="21" fill="#746858">per year, USD</text>
-    <path d="M42 230H458" stroke="#cfc0ab"/>
-    <text x="42" y="278" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#17120d">Full app, sync, and backup</text>
-    <text x="42" y="326" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#746858">$${priceMonthlyUsd} monthly also available</text>
-  </svg>`;
-  const copy = svg`<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
-    <text x="72" y="210" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#f7efe2">Madrid pricing</text>
-    <text x="72" y="274" font-family="ui-sans-serif, system-ui, sans-serif" font-size="25" fill="#d0c3b3">Subscribe in Settings after install.</text>
-  </svg>`;
-  const png = await sharp(backdrop())
-    .composite([
-      { input: copy },
-      { input: await logo(), left: 72, top: 61 },
-      { input: card, left: 650, top: 116 },
-    ])
-    .png()
-    .toBuffer();
-  await fs.promises.writeFile(path.join(outDir, 'pricing.png'), png);
-}
-
 async function main() {
   await fs.promises.mkdir(outDir, { recursive: true });
   await writeCard({
     filename: 'home.png',
-    eyebrow: 'macOS notes app',
-    title: 'Think without the feed.',
-    description: 'A quiet place to write and link ideas.',
+    eyebrow: 'Mac notes, without the noise',
+    title: ['Think without', 'the feed.'],
+    description: 'A Mac notes app that steps back.',
     image: 'note-writing.png',
   });
-  await writePricing();
+  await writeCard({
+    filename: 'pricing.png',
+    eyebrow: 'Madrid for Mac',
+    title: ['One plan.', 'Whole app.'],
+    description: 'Sync and backup included.',
+    image: 'note-graph.png',
+    price: `$${priceAnnualUsd}/year · $${priceMonthlyUsd}/month`,
+  });
   await fs.promises.copyFile(
     path.join(outDir, 'home.png'),
     path.join(publicRoot, 'og-default.png'),
