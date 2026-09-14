@@ -48,7 +48,8 @@ export async function generateMetadata({
     // instead of letting the view render its own load-error state.
   }
 
-  const { title, description } = buildSharedNoteMeta(note);
+  const { title: noteTitle, description } = buildSharedNoteMeta(note);
+  const title = `${noteTitle} | Madrid`;
   return {
     title,
     ...(description ? { description } : {}),
