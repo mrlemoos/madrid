@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { CURRENT_ONBOARDING_VERSION } from '@/lib/onboarding-version';
+
 const upsertUserPreferences = vi.fn();
 const browserClient = {};
 const replace = vi.fn();
@@ -25,7 +27,9 @@ const { NotesOnboarding } = await import('./notes-onboarding');
 describe('NotesOnboarding', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    upsertUserPreferences.mockResolvedValue({ onboarding_version: 3 });
+    upsertUserPreferences.mockResolvedValue({
+      onboarding_version: CURRENT_ONBOARDING_VERSION,
+    });
   });
 
   it('records a skipped questionnaire for an existing user', async () => {
@@ -40,7 +44,7 @@ describe('NotesOnboarding', () => {
       expect(upsertUserPreferences).toHaveBeenCalledWith(
         browserClient,
         'user-1',
-        { onboarding_version: 3 },
+        { onboarding_version: CURRENT_ONBOARDING_VERSION },
       );
     });
     expect(replace).toHaveBeenCalledWith('/notes');
@@ -79,6 +83,12 @@ describe('NotesOnboarding', () => {
     fireEvent.click(screen.getByRole('radio', { name: 'Yes, show my streak' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('radio', { name: 'Yes, enable it' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Titles on their own' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(
+      screen.getByRole('radio', { name: 'A folder icon in its colour' }),
+    );
     fireEvent.click(screen.getByRole('button', { name: 'Finish' }));
 
     // Assert
@@ -87,10 +97,12 @@ describe('NotesOnboarding', () => {
         browserClient,
         'user-1',
         {
-          onboarding_version: 3,
+          onboarding_version: CURRENT_ONBOARDING_VERSION,
           locale: 'es-ES',
           show_writing_activity_graph: true,
           open_todays_note_shortcut: true,
+          show_sidebar_note_icons: false,
+          show_sidebar_folder_icons: true,
         },
       );
     });

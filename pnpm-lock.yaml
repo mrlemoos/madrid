@@ -1661,6 +1661,12 @@ importers:
       '@getmadrid/i18n':
         specifier: workspace:*
         version: link:../i18n
+      '@getmadrid/note-folders-core':
+        specifier: workspace:*
+        version: link:../note-folders-core
+      '@getmadrid/notes-chrome-core':
+        specifier: workspace:*
+        version: link:../notes-chrome-core
       react:
         specifier: 19.2.3
         version: 19.2.3

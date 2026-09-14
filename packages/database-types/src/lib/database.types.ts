@@ -258,6 +258,8 @@ export type Database = {
           semantic_search_enabled: boolean;
           show_note_backlinks: boolean;
           show_writing_activity_graph: boolean;
+          show_sidebar_note_icons: boolean;
+          show_sidebar_folder_icons: boolean;
           updated_at: string;
           user_id: string;
           writing_activity_color: string;
@@ -274,6 +276,8 @@ export type Database = {
           semantic_search_enabled?: boolean;
           show_note_backlinks?: boolean;
           show_writing_activity_graph?: boolean;
+          show_sidebar_note_icons?: boolean;
+          show_sidebar_folder_icons?: boolean;
           updated_at?: string;
           user_id: string;
           writing_activity_color?: string;
@@ -290,6 +294,8 @@ export type Database = {
           semantic_search_enabled?: boolean;
           show_note_backlinks?: boolean;
           show_writing_activity_graph?: boolean;
+          show_sidebar_note_icons?: boolean;
+          show_sidebar_folder_icons?: boolean;
           updated_at?: string;
           user_id?: string;
           writing_activity_color?: string;

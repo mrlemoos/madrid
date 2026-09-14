@@ -233,6 +233,8 @@ export interface Database {
           onboarding_version: number | null;
           delete_empty_folders: boolean;
           show_writing_activity_graph: boolean;
+          show_sidebar_note_icons: boolean;
+          show_sidebar_folder_icons: boolean;
           writing_activity_color: string;
           writing_activity_days: Json;
         };
@@ -249,6 +251,8 @@ export interface Database {
           onboarding_version?: number | null;
           delete_empty_folders?: boolean;
           show_writing_activity_graph?: boolean;
+          show_sidebar_note_icons?: boolean;
+          show_sidebar_folder_icons?: boolean;
           writing_activity_color?: string;
           writing_activity_days?: Json;
         };
@@ -265,6 +269,8 @@ export interface Database {
           onboarding_version?: number | null;
           delete_empty_folders?: boolean;
           show_writing_activity_graph?: boolean;
+          show_sidebar_note_icons?: boolean;
+          show_sidebar_folder_icons?: boolean;
           writing_activity_color?: string;
           writing_activity_days?: Json;
         };

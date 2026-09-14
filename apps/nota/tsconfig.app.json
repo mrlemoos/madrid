@@ -73,6 +73,9 @@
       "path": "../../packages/note-share-og/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/note-runtime/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/note-palette-ui/tsconfig.lib.json"
     },
     {
@@ -86,6 +89,9 @@
     },
     {
       "path": "../../packages/note-journal-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/note-onboarding-ui/tsconfig.lib.json"
     },
     {
       "path": "../../packages/note-graph/tsconfig.lib.json"
@@ -115,9 +121,6 @@
       "path": "../../packages/note-capture-core/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/nota-motion-ui/tsconfig.lib.json"
-    },
-    {
       "path": "../../packages/nota-motion-core/tsconfig.lib.json"
     },
     {
@@ -145,7 +148,13 @@
       "path": "../../packages/electron-bridge-core/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/editor/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/design/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/database-types/tsconfig.lib.json"
     },
     {
       "path": "../../packages/data-source/tsconfig.lib.json"
@@ -160,13 +169,7 @@
       "path": "../../packages/app-navigation-core/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/database-types/tsconfig.lib.json"
-    },
-    {
-      "path": "../../packages/note-runtime/tsconfig.lib.json"
-    },
-    {
-      "path": "../../packages/editor/tsconfig.lib.json"
+      "path": "../../packages/nota-motion-ui/tsconfig.lib.json"
     }
   ]
 }

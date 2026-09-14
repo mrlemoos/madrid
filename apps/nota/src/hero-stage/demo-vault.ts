@@ -219,6 +219,8 @@ export const DEMO_PREFERENCES: UserPreferences = {
   semantic_search_enabled: false,
   show_note_backlinks: true,
   show_writing_activity_graph: false,
+  show_sidebar_note_icons: true,
+  show_sidebar_folder_icons: false,
   writing_activity_color: 'amber',
   writing_activity_days: [],
   updated_at: AT,

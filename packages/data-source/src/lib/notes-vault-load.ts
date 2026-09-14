@@ -61,6 +61,8 @@ function defaultPrefs(userId: string): UserPreferences {
     onboarding_version: null,
     delete_empty_folders: true,
     show_writing_activity_graph: false,
+    show_sidebar_note_icons: true,
+    show_sidebar_folder_icons: false,
     writing_activity_color: 'blue',
     writing_activity_days: {},
     updated_at: new Date(0).toISOString(),

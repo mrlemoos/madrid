@@ -67,6 +67,9 @@
       "path": "../../packages/note-share-og"
     },
     {
+      "path": "../../packages/note-runtime"
+    },
+    {
       "path": "../../packages/note-palette-ui"
     },
     {
@@ -80,6 +83,9 @@
     },
     {
       "path": "../../packages/note-journal-core"
+    },
+    {
+      "path": "../../packages/note-onboarding-ui"
     },
     {
       "path": "../../packages/note-graph"
@@ -109,9 +115,6 @@
       "path": "../../packages/note-capture-core"
     },
     {
-      "path": "../../packages/nota-motion-ui"
-    },
-    {
       "path": "../../packages/nota-motion-core"
     },
     {
@@ -139,7 +142,13 @@
       "path": "../../packages/electron-bridge-core"
     },
     {
+      "path": "../../packages/editor"
+    },
+    {
       "path": "../../packages/design"
+    },
+    {
+      "path": "../../packages/database-types"
     },
     {
       "path": "../../packages/data-source"
@@ -154,13 +163,7 @@
       "path": "../../packages/app-navigation-core"
     },
     {
-      "path": "../../packages/database-types"
-    },
-    {
-      "path": "../../packages/note-runtime"
-    },
-    {
-      "path": "../../packages/editor"
+      "path": "../../packages/nota-motion-ui"
     }
   ]
 }

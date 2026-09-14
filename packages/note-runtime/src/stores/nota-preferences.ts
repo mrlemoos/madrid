@@ -64,6 +64,11 @@ interface NotaPreferencesState {
   writingActivityColor: WritingActivityColor;
   writingActivityDays: Record<string, number>;
 
+  /** Sidebar note rows draw a file icon beside the title. */
+  showSidebarNoteIcons: boolean;
+  /** Sidebar folder rows draw a tinted folder icon instead of the tint dot. */
+  showSidebarFolderIcons: boolean;
+
   setOpenTodaysNoteShortcut: (
     value: boolean,
     options?: { pendingSync?: boolean },
@@ -86,6 +91,14 @@ interface NotaPreferencesState {
   ) => void;
   setCursorVisualStyle: (value: CursorVisualStyle) => void;
   setShowWritingActivityGraph: (
+    value: boolean,
+    options?: { pendingSync?: boolean },
+  ) => void;
+  setShowSidebarNoteIcons: (
+    value: boolean,
+    options?: { pendingSync?: boolean },
+  ) => void;
+  setShowSidebarFolderIcons: (
     value: boolean,
     options?: { pendingSync?: boolean },
   ) => void;
@@ -112,6 +125,8 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
       showWritingActivityGraph: false,
       writingActivityColor: 'blue',
       writingActivityDays: {},
+      showSidebarNoteIcons: true,
+      showSidebarFolderIcons: false,
 
       setOpenTodaysNoteShortcut: (value, options) =>
         set({
@@ -160,6 +175,20 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
             options?.pendingSync !== undefined ? options.pendingSync : true,
         }),
 
+      setShowSidebarNoteIcons: (value, options) =>
+        set({
+          showSidebarNoteIcons: value,
+          preferencesPendingSync:
+            options?.pendingSync !== undefined ? options.pendingSync : true,
+        }),
+
+      setShowSidebarFolderIcons: (value, options) =>
+        set({
+          showSidebarFolderIcons: value,
+          preferencesPendingSync:
+            options?.pendingSync !== undefined ? options.pendingSync : true,
+        }),
+
       setWritingActivityColor: (value) =>
         set({
           writingActivityColor: value,
@@ -183,6 +212,10 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
           semanticSearchEnabled: prefs.semantic_search_enabled,
           emojiReplacerEnabled: prefs.emoji_replacer_enabled,
           showWritingActivityGraph: prefs.show_writing_activity_graph,
+          // Tolerates rows written before migration 0027, where the columns are
+          // absent: note icons stay on, folder icons stay off.
+          showSidebarNoteIcons: prefs.show_sidebar_note_icons !== false,
+          showSidebarFolderIcons: prefs.show_sidebar_folder_icons === true,
           writingActivityColor: parseWritingActivityColor(
             prefs.writing_activity_color,
           ),
@@ -201,6 +234,10 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
           semanticSearchEnabled: prefs.semantic_search_enabled,
           emojiReplacerEnabled: prefs.emoji_replacer_enabled,
           showWritingActivityGraph: prefs.show_writing_activity_graph,
+          // Tolerates rows written before migration 0027, where the columns are
+          // absent: note icons stay on, folder icons stay off.
+          showSidebarNoteIcons: prefs.show_sidebar_note_icons !== false,
+          showSidebarFolderIcons: prefs.show_sidebar_folder_icons === true,
           writingActivityColor: parseWritingActivityColor(
             prefs.writing_activity_color,
           ),

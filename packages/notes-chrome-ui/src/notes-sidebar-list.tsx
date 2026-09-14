@@ -67,6 +67,7 @@ import {
 import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
 import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
 import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import { compareNoteTitles } from '@getmadrid/note-folders-core/note-sidebar-groups';
 import {
   ancestorFolderIds,
@@ -134,6 +135,7 @@ function NoteRow(options: {
     onMoveNoteToFolder,
     onMoveNoteToNewFolder,
   } = options;
+  const showNoteIcons = useNotaPreferencesStore((s) => s.showSidebarNoteIcons);
   const noteLabel = note.title || 'Untitled Note';
 
   const noteIsDragged = draggedNoteId === note.id;
@@ -164,17 +166,19 @@ function NoteRow(options: {
                 setDropTargetId(null);
               }}
             >
-              <Icon
-                name="file-description"
-                size={14}
-                strokeWidth={1.5}
-                aria-hidden
-                data-nota-sidebar-note-icon
-                className={cn(
-                  'shrink-0',
-                  isActive ? 'text-foreground' : 'text-muted-foreground',
-                )}
-              />
+              {showNoteIcons ? (
+                <Icon
+                  name="file-description"
+                  size={14}
+                  strokeWidth={1.5}
+                  aria-hidden
+                  data-nota-sidebar-note-icon
+                  className={cn(
+                    'shrink-0',
+                    isActive ? 'text-foreground' : 'text-muted-foreground',
+                  )}
+                />
+              ) : null}
               <Link
                 href={noteHashHref(note.id)}
                 className={cn(
@@ -372,6 +376,9 @@ function FolderRow(options: {
     children,
   } = options;
 
+  const showFolderIcons = useNotaPreferencesStore(
+    (s) => s.showSidebarFolderIcons,
+  );
   const tint = folderTintOptionForPersisted(folder.tint ?? null);
   const tintItems = FOLDER_TINT_SWATCH_PRESETS.map((preset) => (
     <ContextMenuItem
@@ -448,11 +455,23 @@ function FolderRow(options: {
                   aria-label={`${t('Tint folder')} ${folder.name}`}
                   className="mr-1 inline-flex size-6 shrink-0 items-center justify-center rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                 >
-                  <TintCircle
-                    colour={tint.swatchColour}
-                    sizePx={10}
-                    className="border-0"
-                  />
+                  {showFolderIcons ? (
+                    <Icon
+                      name="folder"
+                      size={14}
+                      strokeWidth={1.5}
+                      aria-hidden
+                      data-nota-sidebar-folder-icon
+                      color={tint.swatchColour}
+                      className="shrink-0"
+                    />
+                  ) : (
+                    <TintCircle
+                      colour={tint.swatchColour}
+                      sizePx={10}
+                      className="border-0"
+                    />
+                  )}
                 </MenuTrigger>
                 <ContextMenuPortal>
                   <ContextMenuPositioner

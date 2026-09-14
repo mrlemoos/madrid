@@ -122,6 +122,26 @@ describe('NotesSettingsPage appearance', () => {
     );
   });
 
+  it('toggles the sidebar icon preferences independently', () => {
+    // Arrange
+    render(<NotesSettingsPage />);
+
+    // Act
+    fireEvent.click(screen.getByLabelText(/Mark folders with a folder icon/));
+
+    // Assert
+    expect(useNotaPreferencesStore.getState().showSidebarFolderIcons).toBe(
+      true,
+    );
+    expect(useNotaPreferencesStore.getState().showSidebarNoteIcons).toBe(true);
+    expect(submitUserPreferencesPatch).toHaveBeenCalledWith(
+      { show_sidebar_folder_icons: true },
+      'user-1',
+      setUserPreferencesInState,
+      true,
+    );
+  });
+
   it('switches the editor cursor style', () => {
     // Arrange
     render(<NotesSettingsPage />);

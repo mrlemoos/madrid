@@ -23,6 +23,12 @@ export function NotesOnboarding({ userId }: { userId: string }): JSX.Element {
   const setOpenTodaysNoteShortcut = useNotaPreferencesStore(
     (state) => state.setOpenTodaysNoteShortcut,
   );
+  const setShowSidebarNoteIcons = useNotaPreferencesStore(
+    (state) => state.setShowSidebarNoteIcons,
+  );
+  const setShowSidebarFolderIcons = useNotaPreferencesStore(
+    (state) => state.setShowSidebarFolderIcons,
+  );
   const { t } = useNotaTranslator();
   const complete = async (patch: OnboardingPreferences): Promise<void> => {
     await upsertUserPreferences(getBrowserClient(), userId, {
@@ -37,6 +43,12 @@ export function NotesOnboarding({ userId }: { userId: string }): JSX.Element {
     }
     if ('open_todays_note_shortcut' in patch) {
       setOpenTodaysNoteShortcut(patch.open_todays_note_shortcut ?? false);
+    }
+    if ('show_sidebar_note_icons' in patch) {
+      setShowSidebarNoteIcons(patch.show_sidebar_note_icons ?? true);
+    }
+    if ('show_sidebar_folder_icons' in patch) {
+      setShowSidebarFolderIcons(patch.show_sidebar_folder_icons ?? false);
     }
     router.replace('/notes');
     router.refresh();

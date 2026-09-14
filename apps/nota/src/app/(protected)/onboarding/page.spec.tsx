@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { CURRENT_ONBOARDING_VERSION } from '@/lib/onboarding-version';
+
 const mocks = vi.hoisted(() => ({
   auth: vi.fn(),
   getOnboardingVersion: vi.fn(),
@@ -43,7 +45,7 @@ describe('OnboardingPage', () => {
     // Arrange
     mocks.auth.mockResolvedValue({ userId: 'user-1' });
     mocks.getServerNotaProEntitled.mockResolvedValue(true);
-    mocks.getOnboardingVersion.mockResolvedValue(3);
+    mocks.getOnboardingVersion.mockResolvedValue(CURRENT_ONBOARDING_VERSION);
 
     // Act
     await OnboardingPage();

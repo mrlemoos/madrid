@@ -50,7 +50,11 @@ export function useSyncUserPreferences(
       hydratedLoaderRef.current.show_writing_activity_graph ===
         userPreferencesFromServer.show_writing_activity_graph &&
       hydratedLoaderRef.current.writing_activity_color ===
-        userPreferencesFromServer.writing_activity_color
+        userPreferencesFromServer.writing_activity_color &&
+      hydratedLoaderRef.current.show_sidebar_note_icons ===
+        userPreferencesFromServer.show_sidebar_note_icons &&
+      hydratedLoaderRef.current.show_sidebar_folder_icons ===
+        userPreferencesFromServer.show_sidebar_folder_icons
       // writing_activity_days intentionally omitted from cheap equality (large + mutated separately)
     ) {
       return;
@@ -74,6 +78,8 @@ export function useSyncUserPreferences(
         showWritingActivityGraph,
         writingActivityColor,
         writingActivityDays,
+        showSidebarNoteIcons,
+        showSidebarFolderIcons,
       } = useNotaPreferencesStore.getState();
       if (!preferencesPendingSync) {
         return;
@@ -88,6 +94,8 @@ export function useSyncUserPreferences(
             semantic_search_enabled: semanticSearchEnabled,
             emoji_replacer_enabled: emojiReplacerEnabled,
             show_writing_activity_graph: showWritingActivityGraph,
+            show_sidebar_note_icons: showSidebarNoteIcons,
+            show_sidebar_folder_icons: showSidebarFolderIcons,
             writing_activity_color: writingActivityColor,
             writing_activity_days: writingActivityDays,
           });

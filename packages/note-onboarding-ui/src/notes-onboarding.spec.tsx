@@ -17,6 +17,12 @@ describe('NotesOnboarding', () => {
     fireEvent.click(screen.getByRole('radio', { name: 'Yes, show my streak' }));
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     fireEvent.click(screen.getByRole('radio', { name: 'Yes, enable it' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Titles on their own' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
+    fireEvent.click(
+      screen.getByRole('radio', { name: 'A folder icon in its colour' }),
+    );
     fireEvent.click(screen.getByRole('button', { name: 'Finish' }));
 
     // Assert
@@ -25,6 +31,8 @@ describe('NotesOnboarding', () => {
         locale: 'es-ES',
         show_writing_activity_graph: true,
         open_todays_note_shortcut: true,
+        show_sidebar_note_icons: false,
+        show_sidebar_folder_icons: true,
       });
     });
   });

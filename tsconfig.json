@@ -134,6 +134,9 @@
     },
     {
       "path": "./packages/testing-fakes"
+    },
+    {
+      "path": "./packages/note-onboarding-ui"
     }
   ]
 }

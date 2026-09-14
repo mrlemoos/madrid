@@ -15,7 +15,17 @@
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx", "src/**/*.stories.tsx"],
   "references": [
-    { "path": "../design/tsconfig.lib.json" },
-    { "path": "../i18n/tsconfig.lib.json" }
+    {
+      "path": "../notes-chrome-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../note-folders-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../i18n/tsconfig.lib.json"
+    },
+    {
+      "path": "../design/tsconfig.lib.json"
+    }
   ]
 }

@@ -31,6 +31,8 @@ export async function getUserPreferences(
     onboarding_version: null,
     delete_empty_folders: true,
     show_writing_activity_graph: false,
+    show_sidebar_note_icons: true,
+    show_sidebar_folder_icons: false,
     writing_activity_color: 'blue',
     writing_activity_days: {},
     updated_at: new Date(0).toISOString(),
@@ -48,6 +50,8 @@ export type UserPreferencesUpsertPatch = {
   onboarding_version?: number | null;
   delete_empty_folders?: boolean;
   show_writing_activity_graph?: boolean;
+  show_sidebar_note_icons?: boolean;
+  show_sidebar_folder_icons?: boolean;
   writing_activity_color?: string;
   writing_activity_days?: Record<string, number>;
 };
@@ -97,6 +101,14 @@ export async function upsertUserPreferences(
       patch.show_writing_activity_graph !== undefined
         ? patch.show_writing_activity_graph
         : current.show_writing_activity_graph,
+    show_sidebar_note_icons:
+      patch.show_sidebar_note_icons !== undefined
+        ? patch.show_sidebar_note_icons
+        : current.show_sidebar_note_icons,
+    show_sidebar_folder_icons:
+      patch.show_sidebar_folder_icons !== undefined
+        ? patch.show_sidebar_folder_icons
+        : current.show_sidebar_folder_icons,
     writing_activity_color:
       patch.writing_activity_color !== undefined
         ? patch.writing_activity_color

@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NotesSidebarList } from './notes-sidebar-list';
 import { useNotesSidebarStore } from '@getmadrid/note-runtime/stores/sidebar';
+import { useNotaPreferencesStore } from '@getmadrid/note-runtime/stores/preferences';
 import { clientUpdateFolderTint } from '@getmadrid/note-folders-ui/update-folder-tint-client';
 import { clientRenameFolder } from '@getmadrid/note-folders-ui/rename-folder-client';
 import { clientMoveNoteToFolder } from '@getmadrid/note-folders-ui/move-note-folder-client';
@@ -28,6 +29,10 @@ describe('NotesSidebarList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useNotesSidebarStore.setState({ open: true, collapsedFolderIds: [] });
+    useNotaPreferencesStore.setState({
+      showSidebarNoteIcons: true,
+      showSidebarFolderIcons: false,
+    });
   });
 
   it('renders note title only without the last updated date', () => {
@@ -126,6 +131,105 @@ describe('NotesSidebarList', () => {
       expect(
         noteRow?.querySelector('[data-nota-sidebar-note-icon]'),
       ).toBeTruthy();
+    },
+  );
+
+  it('hides the note icon when the sidebar note icon preference is off', () => {
+    // Arrange
+    useNotaPreferencesStore.setState({ showSidebarNoteIcons: false });
+
+    render(
+      <NotesSidebarList
+        notes={[
+          {
+            id: 'note-1',
+            user_id: 'user-1',
+            title: 'Alpha note',
+            content: {},
+            created_at: '2026-04-15T12:00:00.000Z',
+            updated_at: '2026-04-15T12:00:00.000Z',
+            due_at: null,
+            is_deadline: false,
+            editor_settings: {},
+            banner_attachment_id: null,
+            folder_id: null,
+            share_token: null,
+          },
+        ]}
+        folders={[]}
+        panel="list"
+        routeNoteId={null}
+        userId="user-1"
+        notaProEntitled
+        userPreferences={null}
+        insertNoteAtFront={vi.fn()}
+        insertFolderSorted={vi.fn()}
+        patchNoteInList={vi.fn()}
+        patchFolderInList={vi.fn()}
+        removeNoteFromList={vi.fn()}
+        removeFolderFromList={vi.fn()}
+        refreshNotesList={vi.fn(() => Promise.resolve())}
+      />,
+    );
+
+    // Act
+    const noteLink = screen.getByRole('link', { name: 'Alpha note' });
+
+    // Assert
+    expect(
+      noteLink.parentElement?.querySelector('[data-nota-sidebar-note-icon]'),
+    ).toBeNull();
+    expect(screen.getByText('Alpha note')).toBeTruthy();
+  });
+
+  it.each([
+    [true, 1],
+    [false, 0],
+  ])(
+    'draws the tinted folder icon when the folder icon preference is %s',
+    (showFolderIcons, expectedIcons) => {
+      // Arrange
+      useNotaPreferencesStore.setState({
+        showSidebarFolderIcons: showFolderIcons,
+      });
+
+      const { container } = render(
+        <NotesSidebarList
+          notes={[]}
+          folders={[
+            {
+              id: 'folder-1',
+              user_id: 'user-1',
+              name: 'Computer Science Study',
+              parent_id: null,
+              tint: 'blue',
+              created_at: '2026-04-25T00:00:00.000Z',
+              updated_at: '2026-04-25T00:00:00.000Z',
+            },
+          ]}
+          panel="list"
+          routeNoteId={null}
+          userId="user-1"
+          notaProEntitled
+          userPreferences={null}
+          insertNoteAtFront={vi.fn()}
+          insertFolderSorted={vi.fn()}
+          patchNoteInList={vi.fn()}
+          patchFolderInList={vi.fn()}
+          removeNoteFromList={vi.fn()}
+          removeFolderFromList={vi.fn()}
+          refreshNotesList={vi.fn(() => Promise.resolve())}
+        />,
+      );
+
+      // Act
+      const folderIcons = container.querySelectorAll(
+        '[data-nota-sidebar-folder-icon]',
+      );
+
+      // Assert
+      expect(folderIcons).toHaveLength(expectedIcons);
+      expect(screen.getByText('Computer Science Study')).toBeTruthy();
     },
   );
 

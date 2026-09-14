@@ -22,6 +22,7 @@ import {
   useNotaPreferencesStore,
   type CursorVisualStyle,
 } from '@getmadrid/note-runtime/stores/preferences';
+import { SidebarIconPreview } from '@getmadrid/note-onboarding-ui/sidebar-icon-preview';
 import { ElectronUpdateSettingsSection } from '@getmadrid/electron-bridge-ui/update-settings-section';
 import { NotaProSettingsSection } from '@/components/nota-pro-settings-section';
 import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
@@ -67,6 +68,18 @@ export default function NotesSettingsPage(): JSX.Element {
   );
   const setShowWritingActivityGraph = useNotaPreferencesStore(
     (s) => s.setShowWritingActivityGraph,
+  );
+  const showSidebarNoteIcons = useNotaPreferencesStore(
+    (s) => s.showSidebarNoteIcons,
+  );
+  const setShowSidebarNoteIcons = useNotaPreferencesStore(
+    (s) => s.setShowSidebarNoteIcons,
+  );
+  const showSidebarFolderIcons = useNotaPreferencesStore(
+    (s) => s.showSidebarFolderIcons,
+  );
+  const setShowSidebarFolderIcons = useNotaPreferencesStore(
+    (s) => s.setShowSidebarFolderIcons,
   );
   const { t } = useNotaTranslator();
   const isElectron = useIsElectron();
@@ -215,6 +228,86 @@ export default function NotesSettingsPage(): JSX.Element {
                 <p className="text-sm text-foreground">{t('Theme')}</p>
               </div>
               <ThemeMenu />
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-3" aria-labelledby="settings-sidebar">
+          <h2
+            id="settings-sidebar"
+            className="text-sm font-medium text-foreground"
+          >
+            {t('Sidebar')}
+          </h2>
+          <div className="divide-y divide-border/60 rounded-lg border border-border/60 bg-muted/20">
+            <label
+              htmlFor="nota-show-sidebar-note-icons"
+              className="flex cursor-pointer select-none items-start gap-3 px-4 py-3"
+            >
+              <span className="order-1 flex-1">
+                <span className="block text-sm text-foreground">
+                  {t('Show an icon beside note titles')}
+                </span>
+                <span className="mt-1 block text-xs leading-snug text-muted-foreground">
+                  {t(
+                    'Each note in the sidebar can show a small page icon before its title.',
+                  )}
+                </span>
+              </span>
+              <input
+                id="nota-show-sidebar-note-icons"
+                type="checkbox"
+                checked={showSidebarNoteIcons}
+                onChange={(e) => {
+                  const checked = e.target.checked;
+                  setShowSidebarNoteIcons(checked);
+                  submitUserPreferencesPatch(
+                    { show_sidebar_note_icons: checked },
+                    user?.id,
+                    setUserPreferencesInState,
+                    notaProEntitled,
+                  );
+                }}
+                className="order-2 mt-0.5 ml-auto size-4 shrink-0 rounded border border-input accent-primary"
+              />
+            </label>
+            <label
+              htmlFor="nota-show-sidebar-folder-icons"
+              className="flex cursor-pointer select-none items-start gap-3 px-4 py-3"
+            >
+              <span className="order-1 flex-1">
+                <span className="block text-sm text-foreground">
+                  {t('Mark folders with a folder icon')}
+                </span>
+                <span className="mt-1 block text-xs leading-snug text-muted-foreground">
+                  {t(
+                    'The icon takes the colour you give the folder. Turn it off for the smaller coloured dot.',
+                  )}
+                </span>
+              </span>
+              <input
+                id="nota-show-sidebar-folder-icons"
+                type="checkbox"
+                checked={showSidebarFolderIcons}
+                onChange={(e) => {
+                  const checked = e.target.checked;
+                  setShowSidebarFolderIcons(checked);
+                  submitUserPreferencesPatch(
+                    { show_sidebar_folder_icons: checked },
+                    user?.id,
+                    setUserPreferencesInState,
+                    notaProEntitled,
+                  );
+                }}
+                className="order-2 mt-0.5 ml-auto size-4 shrink-0 rounded border border-input accent-primary"
+              />
+            </label>
+            <div className="px-4 py-3">
+              <SidebarIconPreview
+                showFolderIcons={showSidebarFolderIcons}
+                showNoteIcons={showSidebarNoteIcons}
+                t={t}
+              />
             </div>
           </div>
         </section>
