@@ -1,0 +1,14 @@
+# Madrid
+
+Madrid is a native macOS notes app for writing, linking, and searching personal notes.
+
+- Website: https://getmadrid.app/
+- Download: https://github.com/mrlemoos/madrid/releases/latest
+- Source: https://github.com/mrlemoos/madrid
+- Pricing: https://getmadrid.app/pricing
+- Writing: https://getmadrid.app/writing
+- Note graph: https://getmadrid.app/graph
+- Offline and sync: https://getmadrid.app/sync
+- Privacy: https://getmadrid.app/privacy
+
+Madrid writes notes locally first. Signed-in subscribers can sync notes and attachments. Public product claims, pricing, and policies live on the URLs above.

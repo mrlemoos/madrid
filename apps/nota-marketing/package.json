@@ -11,8 +11,8 @@
     "record:hero": "node scripts/record-hero.ts"
   },
   "dependencies": {
-    "@getmadrid/note-doc-plain-text": "workspace:*",
     "@getmadrid/design": "workspace:*",
+    "@getmadrid/note-doc-plain-text": "workspace:*",
     "@astrojs/sitemap": "^3.7.2",
     "@fontsource/geist-sans": "^5.2.5",
     "@fontsource/instrument-serif": "catalog:",

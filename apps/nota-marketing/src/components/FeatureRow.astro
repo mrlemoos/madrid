@@ -27,7 +27,15 @@ const { eyebrow, title, image, alt, href, linkLabel, reverse = false } = Astro.p
       <a href={href} class="mkt-link mkt-focus mt-6 inline-block text-sm font-medium">{linkLabel}</a>
     </div>
     <figure class="mkt-shot">
-      <Image src={image} alt={alt} class="h-auto w-full" loading="lazy" decoding="async" />
+      <Image
+        src={image}
+        alt={alt}
+        class="h-auto w-full"
+        widths={[360, 640, 960, 1280]}
+        sizes="(min-width: 768px) 50vw, calc(100vw - 3rem)"
+        loading="lazy"
+        decoding="async"
+      />
     </figure>
   </div>
 </section>

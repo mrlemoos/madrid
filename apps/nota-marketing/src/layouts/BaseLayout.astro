@@ -44,6 +44,7 @@ const site = Astro.site;
 if (!site) {
   throw new Error('BaseLayout requires `site` in astro.config so Open Graph URLs are absolute.');
 }
+const isVercelDeployment = process.env.VERCEL === '1';
 
 const pathForCanonical = canonicalPath ?? Astro.url.pathname;
 const canonicalUrl = new URL(pathForCanonical, site).href;
@@ -107,13 +108,20 @@ const chromeScheme = chromeSchemeForThemeColor(themeColor);
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <Analytics />
+    {isVercelDeployment && <Analytics />}
     <script>
-      import Clarity from '@microsoft/clarity';
+      const clarityProjectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
 
-      const projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
-      if (typeof projectId === 'string' && projectId.length > 0) {
-        Clarity.init(projectId);
+      if (clarityProjectId) {
+        window.addEventListener(
+          'load',
+          () => {
+            void import('@microsoft/clarity').then(({ default: Clarity }) => {
+              Clarity.init(clarityProjectId);
+            });
+          },
+          { once: true },
+        );
       }
     </script>
     <script is:inline>

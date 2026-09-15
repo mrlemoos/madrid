@@ -3,6 +3,7 @@
   "buildCommand": "cd ../.. && pnpm exec nx run @getmadrid/nota-marketing:build",
   "outputDirectory": "dist",
   "framework": null,
+  "trailingSlash": false,
   "installCommand": "cd ../.. && corepack enable pnpm && pnpm install --frozen-lockfile",
   "headers": [
     {
@@ -10,7 +11,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https: http:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; connect-src 'self' https:; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https: http:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://*.clarity.ms https://c.bing.com; connect-src 'self' https:; upgrade-insecure-requests"
         },
         {
           "key": "X-Content-Type-Options",

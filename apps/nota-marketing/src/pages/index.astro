@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DownloadMacButton from '@/components/DownloadMacButton.astro';
 import FeatureRow from '@/components/FeatureRow.astro';
@@ -30,45 +31,6 @@ const priceAnnualUsd = NOTA_PRICE_ANNUAL_USD;
 const homeTitle = 'Madrid: Quiet Mac Notes';
 const homeDescription =
   'A native Mac notes app that protects your attention. No feeds, no nudges, just a calm place to write and link ideas. Subscribe in-app after install.';
-
-const faqEntities = [
-  {
-    '@type': 'Question',
-    name: 'Is there a free tier or trial?',
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text:
-        'No. Download the Mac app from GitHub Releases, create an account, then subscribe in Settings to use Madrid. USD guide prices are on the pricing page; checkout in the app shows the final charge.',
-    },
-  },
-  {
-    '@type': 'Question',
-    name: 'What does a subscription include?',
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text:
-        'Full access to writing, the note graph, attachments, and cloud sync with secure backup across devices where you use Madrid while signed in.',
-    },
-  },
-  {
-    '@type': 'Question',
-    name: 'Does Madrid work offline?',
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text:
-        'Yes. Notes are written to local storage first and sync when you are back online, so a lost connection never blocks writing.',
-    },
-  },
-  {
-    '@type': 'Question',
-    name: 'Where are my notes stored?',
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text:
-        'On your Mac, and in your own row-secured space in the cloud while you are signed in. Attachments live in private storage and are served through short-lived links.',
-    },
-  },
-];
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -127,11 +89,6 @@ const structuredData = {
         },
       ],
     },
-    {
-      '@type': 'FAQPage',
-      '@id': `${siteRoot}#faq`,
-      mainEntity: faqEntities,
-    },
   ],
 };
 
@@ -180,8 +137,18 @@ const macDetails = [
 
         <figure class="mx-auto mt-16 w-full max-w-5xl md:mt-20">
           <div class="mkt-shot p-1.5">
+            <Image
+              src={noteWritingImage}
+              alt="Madrid on macOS: writing a note"
+              class="h-auto w-full rounded-[calc(var(--radius)-2px)] md:hidden"
+              widths={[360, 640]}
+              sizes="calc(100vw - 3rem)"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
             <video
-              class="h-auto w-full rounded-[calc(var(--radius)-2px)]"
+              class="hidden h-auto w-full rounded-[calc(var(--radius)-2px)] md:block"
               poster="/video/nota-hero-poster.jpg"
               width="1920"
               height="1280"
@@ -189,11 +156,11 @@ const macDetails = [
               muted
               loop
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="Madrid on macOS: writing a note, typing @ to link another note, then the note graph showing how they connect"
             >
-              <source src="/video/nota-hero.webm" type="video/webm" />
-              <source src="/video/nota-hero.mp4" type="video/mp4" />
+              <source media="(min-width: 768px)" src="/video/nota-hero.webm" type="video/webm" />
+              <source media="(min-width: 768px)" src="/video/nota-hero.mp4" type="video/mp4" />
             </video>
           </div>
         </figure>

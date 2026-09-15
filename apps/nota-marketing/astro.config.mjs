@@ -9,6 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   site: 'https://getmadrid.app',
+  trailingSlash: 'never',
   integrations: [sitemap()],
   vite: {
     envPrefix: ['VITE_', 'PUBLIC_'],
