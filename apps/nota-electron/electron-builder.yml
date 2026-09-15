@@ -24,8 +24,6 @@ protocols:
 files:
   - dist/**/*
 extraResources:
-  - from: buildResources/TrayTemplate.png
-    to: TrayTemplate.png
   - from: buildResources/icon.png
     to: icon.png
   - from: buildResources/icon-dark.png

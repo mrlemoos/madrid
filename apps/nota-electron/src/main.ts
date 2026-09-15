@@ -135,18 +135,7 @@ function notaProtocolOAuthUrlToSsoHttpUrl(protocolUrl: string): string | null {
 }
 
 function resolveTrayIconPath(): string | null {
-  const devPath = path.join(__dirname, '../buildResources/TrayTemplate.png');
-  if (existsSync(devPath)) {
-    return devPath;
-  }
-  const packagedPath = path.join(process.resourcesPath, 'TrayTemplate.png');
-  if (existsSync(packagedPath)) {
-    return packagedPath;
-  }
-  console.warn(
-    '[nota-electron] TrayTemplate.png not found; menu bar extra disabled.',
-  );
-  return null;
+  return resolveDockIconPath();
 }
 
 function dockIconFileName(): 'icon-dark.png' | 'icon.png' {
@@ -159,7 +148,7 @@ function dockIconFileName(): 'icon-dark.png' | 'icon.png' {
  */
 function resolveDockIconPath(): string | null {
   const name = dockIconFileName();
-  const devPath = path.join(__dirname, '../buildResources', name);
+  const devPath = path.join(app.getAppPath(), 'buildResources', name);
   if (existsSync(devPath)) {
     return devPath;
   }
@@ -250,7 +239,10 @@ function createTray(): void {
   if (!iconPath) {
     return;
   }
-  const icon = nativeImage.createFromPath(iconPath);
+  const icon = nativeImage.createFromPath(iconPath).resize({
+    width: 18,
+    height: 18,
+  });
   if (icon.isEmpty()) {
     console.warn(
       '[nota-electron] Tray icon could not be loaded; menu bar extra disabled.',

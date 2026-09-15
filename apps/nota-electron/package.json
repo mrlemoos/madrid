@@ -1,9 +1,9 @@
 {
   "name": "@getmadrid/nota-electron",
-  "version": "0.1.4",
+  "version": "0.1.29",
   "private": true,
   "type": "module",
-  "main": "./dist/main.js",
+  "main": "./dist/src/main.js",
   "author": "Leonardo Lemos <leo@mrlemoos.dev>",
   "license": "Apache-2.0",
   "scripts": {
