@@ -99,10 +99,7 @@ export function PdfJsModalPreview({
 
   return (
     <div
-      className={cn(
-        'flex min-h-[min(80vh,720px)] flex-col overflow-y-auto',
-        className,
-      )}
+      className={cn('flex min-h-[min(80vh,720px)] flex-col', className)}
       style={{ width: formatPinchZoom(zoom), minWidth: '100%' }}
     >
       {phase === 'loading' ? (
