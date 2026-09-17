@@ -23,9 +23,13 @@ function makeSupabase(
         : options.signed,
     error: options.signedError ?? null,
   });
+  const select = vi.fn();
   const from = vi.fn(() => {
     const chain: Record<string, unknown> = {
-      select: () => chain,
+      select: (...args: unknown[]) => {
+        select(...args);
+        return chain;
+      },
       eq: (column: string, value: string) => {
         filters.push([column, value]);
         return chain;
@@ -47,6 +51,7 @@ function makeSupabase(
       storage: { from: vi.fn(() => ({ createSignedUrl })) },
     },
     filters,
+    select,
     createSignedUrl,
   };
 }
@@ -64,7 +69,7 @@ beforeEach(() => {
 describe('GET /s/[token]/attachment/[attachmentId]', () => {
   it('redirects to a short-lived signed URL', async () => {
     // Arrange
-    const { supabase, createSignedUrl } = makeSupabase();
+    const { supabase, createSignedUrl, select } = makeSupabase();
     requireServiceSupabase.mockReturnValue(supabase);
 
     // Act
@@ -78,6 +83,9 @@ describe('GET /s/[token]/attachment/[attachmentId]', () => {
     expect(createSignedUrl).toHaveBeenCalledWith(
       'user-1/note-1/att-1.png',
       3600,
+    );
+    expect(select).toHaveBeenCalledWith(
+      'storage_path, notes!note_attachments_note_id_fkey!inner(share_token)',
     );
   });
 

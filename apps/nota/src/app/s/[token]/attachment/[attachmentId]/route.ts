@@ -37,7 +37,9 @@ export async function GET(
     // returns no row, so it cannot be used to read across notes.
     const { data: attachment } = await supabase
       .from('note_attachments')
-      .select('storage_path, notes!inner(share_token)')
+      .select(
+        'storage_path, notes!note_attachments_note_id_fkey!inner(share_token)',
+      )
       .eq('id', attachmentId)
       .eq('notes.share_token', token)
       .maybeSingle<{ storage_path: string }>();
