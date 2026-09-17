@@ -10,18 +10,20 @@ const route = await import('./route');
 /** Records the filters applied, so the spec can pin the token join. */
 function makeSupabase(
   options: {
-    attachment?: { storage_path: string } | null;
-    signed?: { signedUrl: string } | null;
-    signedError?: { message: string } | null;
+    attachment?: { storage_path: string; content_type: string } | null;
+    file?: Blob | null;
+    fileError?: { message: string } | null;
   } = {},
 ) {
   const filters: [string, string][] = [];
-  const createSignedUrl = vi.fn().mockResolvedValue({
-    data:
-      options.signed === undefined
-        ? { signedUrl: 'https://signed.example/att-1.png' }
-        : options.signed,
-    error: options.signedError ?? null,
+  const file = {
+    arrayBuffer: vi
+      .fn()
+      .mockResolvedValue(new TextEncoder().encode('attachment')),
+  } as unknown as Blob;
+  const download = vi.fn().mockResolvedValue({
+    data: options.file === undefined ? file : options.file,
+    error: options.fileError ?? null,
   });
   const select = vi.fn();
   const from = vi.fn(() => {
@@ -38,7 +40,10 @@ function makeSupabase(
         Promise.resolve({
           data:
             options.attachment === undefined
-              ? { storage_path: 'user-1/note-1/att-1.png' }
+              ? {
+                  storage_path: 'user-1/note-1/att-1.png',
+                  content_type: 'application/pdf',
+                }
               : options.attachment,
           error: null,
         }),
@@ -48,11 +53,11 @@ function makeSupabase(
   return {
     supabase: {
       from,
-      storage: { from: vi.fn(() => ({ createSignedUrl })) },
+      storage: { from: vi.fn(() => ({ download })) },
     },
     filters,
     select,
-    createSignedUrl,
+    download,
   };
 }
 
@@ -67,29 +72,25 @@ beforeEach(() => {
 });
 
 describe('GET /s/[token]/attachment/[attachmentId]', () => {
-  it('redirects to a short-lived signed URL', async () => {
+  it('streams the attachment from the share origin', async () => {
     // Arrange
-    const { supabase, createSignedUrl, select } = makeSupabase();
+    const { supabase, download, select } = makeSupabase();
     requireServiceSupabase.mockReturnValue(supabase);
 
     // Act
     const response = await route.GET({} as Request, get('tok', 'att-1'));
 
     // Assert
-    expect(response.status).toBe(307);
-    expect(response.headers.get('location')).toBe(
-      'https://signed.example/att-1.png',
-    );
-    expect(createSignedUrl).toHaveBeenCalledWith(
-      'user-1/note-1/att-1.png',
-      3600,
-    );
+    expect(response.status).toBe(200);
+    expect(await response.text()).toBe('attachment');
+    expect(response.headers.get('content-type')).toBe('application/pdf');
+    expect(download).toHaveBeenCalledWith('user-1/note-1/att-1.png');
     expect(select).toHaveBeenCalledWith(
-      'storage_path, notes!note_attachments_note_id_fkey!inner(share_token)',
+      'storage_path, content_type, notes!note_attachments_note_id_fkey!inner(share_token)',
     );
   });
 
-  it('caches privately and far short of the signed URL’s life', async () => {
+  it('caches privately', async () => {
     // Arrange
     const { supabase } = makeSupabase();
     requireServiceSupabase.mockReturnValue(supabase);
@@ -142,11 +143,11 @@ describe('GET /s/[token]/attachment/[attachmentId]', () => {
     expect(requireServiceSupabase).not.toHaveBeenCalled();
   });
 
-  it('answers 404 when the file cannot be signed', async () => {
+  it('answers 404 when the file cannot be read', async () => {
     // Arrange
     const { supabase } = makeSupabase({
-      signed: null,
-      signedError: { message: 'object missing' },
+      file: null,
+      fileError: { message: 'object missing' },
     });
     requireServiceSupabase.mockReturnValue(supabase);
 
