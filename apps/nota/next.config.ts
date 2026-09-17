@@ -24,6 +24,14 @@ const CONTENT_SECURITY_POLICY = [
   ...(IS_DEV ? [] : ['upgrade-insecure-requests']),
 ].join('; ');
 
+// The shared attachment endpoint can appear in Firefox's built-in PDF viewer.
+// Keep it frameable only by this origin; all other app routes stay unframeable.
+const SHARED_ATTACHMENT_CONTENT_SECURITY_POLICY =
+  CONTENT_SECURITY_POLICY.replace(
+    "frame-ancestors 'none'",
+    "frame-ancestors 'self'",
+  );
+
 function isNotaWorkspacePackage(packageName: string): boolean {
   return packageName.startsWith('@getmadrid/');
 }
@@ -46,6 +54,15 @@ const nextConfig: NextConfig = {
           { key: 'Content-Security-Policy', value: CONTENT_SECURITY_POLICY },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+      {
+        source: '/s/:token/attachment/:attachmentId',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: SHARED_ATTACHMENT_CONTENT_SECURITY_POLICY,
+          },
         ],
       },
     ];
