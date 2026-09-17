@@ -21,6 +21,7 @@
     "postinstall": "husky",
     "format": "nx format:write",
     "lint": "nx run-many -t lint",
+    "lint:fix": "nx run-many -t lint --fix",
     "check:test-structure": "node tools/check-test-structure.mjs"
   },
   "lint-staged": {

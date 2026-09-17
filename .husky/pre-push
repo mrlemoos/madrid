@@ -1,1 +1,2 @@
 pnpm run check:test-structure
+pnpm run lint:fix
