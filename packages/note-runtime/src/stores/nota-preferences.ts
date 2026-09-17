@@ -213,9 +213,12 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
           emojiReplacerEnabled: prefs.emoji_replacer_enabled,
           showWritingActivityGraph: prefs.show_writing_activity_graph,
           // Tolerates rows written before migration 0027, where the columns are
-          // absent: note icons stay on, folder icons stay off.
-          showSidebarNoteIcons: prefs.show_sidebar_note_icons !== false,
-          showSidebarFolderIcons: prefs.show_sidebar_folder_icons === true,
+          // absent: note icons stay on, folder icons stay off. The types say
+          // non-null, the old rows disagree — so the checks are not redundant.
+
+          showSidebarNoteIcons: prefs.show_sidebar_note_icons,
+          showSidebarFolderIcons: prefs.show_sidebar_folder_icons,
+
           writingActivityColor: parseWritingActivityColor(
             prefs.writing_activity_color,
           ),
@@ -235,9 +238,12 @@ export const useNotaPreferencesStore = create<NotaPreferencesState>()(
           emojiReplacerEnabled: prefs.emoji_replacer_enabled,
           showWritingActivityGraph: prefs.show_writing_activity_graph,
           // Tolerates rows written before migration 0027, where the columns are
-          // absent: note icons stay on, folder icons stay off.
-          showSidebarNoteIcons: prefs.show_sidebar_note_icons !== false,
-          showSidebarFolderIcons: prefs.show_sidebar_folder_icons === true,
+          // absent: note icons stay on, folder icons stay off. The types say
+          // non-null, the old rows disagree — so the checks are not redundant.
+
+          showSidebarNoteIcons: prefs.show_sidebar_note_icons,
+          showSidebarFolderIcons: prefs.show_sidebar_folder_icons,
+
           writingActivityColor: parseWritingActivityColor(
             prefs.writing_activity_color,
           ),
