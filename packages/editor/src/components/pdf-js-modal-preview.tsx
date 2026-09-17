@@ -5,7 +5,7 @@ import { formatPinchZoom, PINCH_ZOOM_DEFAULT } from '../lib/pinch-zoom';
 // Asset URL for the PDF.js worker. `new URL(..., import.meta.url)` is the
 // bundler-native way to emit and reference the asset (replaces Vite's `?url`).
 const pdfjsWorkerUrl = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
+  'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
   import.meta.url,
 ).toString();
 
@@ -53,7 +53,9 @@ export function PdfJsModalPreview({
       container.replaceChildren();
 
       try {
-        const { getDocument, GlobalWorkerOptions } = await import('pdfjs-dist');
+        const { getDocument, GlobalWorkerOptions } = await import(
+          'pdfjs-dist/legacy/build/pdf.mjs'
+        );
         GlobalWorkerOptions.workerSrc = pdfjsWorkerUrl;
 
         const res = await fetch(url);

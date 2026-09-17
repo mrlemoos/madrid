@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PdfJsModalPreview } from './pdf-js-modal-preview';
 
-vi.mock('pdfjs-dist', () => ({
+vi.mock('pdfjs-dist/legacy/build/pdf.mjs', () => ({
   getDocument: () => ({
     promise: Promise.reject(new Error('no pdf in unit test')),
   }),
