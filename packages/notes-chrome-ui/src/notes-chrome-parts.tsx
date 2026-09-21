@@ -105,7 +105,7 @@ export function ChromeNavLinks({
   items: ChromeNavItem[];
 }): JSX.Element {
   return (
-    <div className="flex flex-col gap-3" data-slot="chrome-nav">
+    <div className="flex flex-col gap-1.5" data-slot="chrome-nav">
       {items.map((item) => (
         <Link
           key={item.key}
@@ -118,7 +118,7 @@ export function ChromeNavLinks({
           className={cn(
             NOTA_CHROME_NAV_ITEM_CLASS,
             NOTA_PRESSABLE_CLASS,
-            'flex items-center rounded-md px-3 py-2 text-sm',
+            'flex items-center rounded-md px-2 py-1.5 text-xs',
             item.active
               ? 'bg-muted font-medium text-foreground'
               : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground',
