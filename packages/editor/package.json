@@ -44,7 +44,7 @@
     "@getmadrid/link-platform-preview": "workspace:*",
     "@getmadrid/note-editor-settings": "workspace:*",
     "@getmadrid/notes-yjs-core": "workspace:*",
-    "@tiptap/extension-code-block": "^2.11.5",
+    "@tiptap/extension-code-block": "^3.31.3",
     "@tiptap/extension-code-block-lowlight": "2.11.5",
     "@tiptap/extension-collaboration": "^2.11.5",
     "@tiptap/extension-emoji": "^2.27.2",
