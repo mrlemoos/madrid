@@ -41,6 +41,9 @@ vi.mock('@getmadrid/electron-bridge-ui/update-settings-section', () => ({
 vi.mock('@/components/nota-pro-settings-section', () => ({
   NotaProSettingsSection: () => <div data-testid="subscription" />,
 }));
+vi.mock('@/components/mcp-connect-settings-section', () => ({
+  McpConnectSettingsSection: () => <div data-testid="mcp-connect" />,
+}));
 vi.mock('@/components/theme-menu', () => ({
   ThemeMenu: () => <div data-testid="theme-menu" />,
 }));
@@ -285,13 +288,14 @@ describe('NotesSettingsPage gated sections', () => {
     );
   });
 
-  it('offers semantic search and the activity graph only with Madrid Pro', () => {
+  it('offers semantic search, the activity graph and AI apps only with Madrid Pro', () => {
     // Arrange|Act
     const { unmount } = render(<NotesSettingsPage />);
 
     // Assert
     expect(screen.getByLabelText(/Enable Semantic Search/)).toBeTruthy();
     expect(screen.getByText(/Show writing activity graph/)).toBeTruthy();
+    expect(screen.getByTestId('mcp-connect')).toBeTruthy();
 
     // Arrange
     unmount();
@@ -306,6 +310,7 @@ describe('NotesSettingsPage gated sections', () => {
     // Assert
     expect(screen.queryByLabelText(/Enable Semantic Search/)).toBeNull();
     expect(screen.queryByText(/Show writing activity graph/)).toBeNull();
+    expect(screen.queryByTestId('mcp-connect')).toBeNull();
   });
 
   it('always offers the subscription panel to a signed-in reader', () => {

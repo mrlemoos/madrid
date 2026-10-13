@@ -314,5 +314,11 @@
   "Madrid keeps notes, links, files, daily writing, and search in one calm workspace. Your work stays available across the web and Mac app.": "Madrid reúne notas, enlaces, archivos, escritura diaria y búsqueda en un espacio tranquilo. Tu trabajo sigue disponible en la web y la app de Mac.",
   "Capture a thought before it gets lost.": "Anota una idea antes de que se pierda.",
   "Connect notes without turning your workspace into a project.": "Conecta notas sin convertir tu espacio en un proyecto.",
-  "Keep working when you are offline, then sync when you return.": "Sigue trabajando sin conexión y sincroniza al volver."
+  "Keep working when you are offline, then sync when you return.": "Sigue trabajando sin conexión y sincroniza al volver.",
+  "AI apps": "Apps de IA",
+  "MCP server URL": "URL del servidor MCP",
+  "Paste this address into an AI app that supports MCP, like Claude, and sign in with your Madrid account.": "Pega esta dirección en una app de IA compatible con MCP, como Claude, e inicia sesión con tu cuenta de Madrid.",
+  "It can search, read and create notes, and add to the end of a note. It can't delete or change what you wrote.": "Puede buscar, leer y crear notas, y añadir texto al final de una nota. No puede borrar ni cambiar lo que escribiste.",
+  "Copy": "Copiar",
+  "Copied": "Copiado"
 }

@@ -25,6 +25,7 @@ import {
 import { SidebarIconPreview } from '@getmadrid/note-onboarding-ui/sidebar-icon-preview';
 import { ElectronUpdateSettingsSection } from '@getmadrid/electron-bridge-ui/update-settings-section';
 import { NotaProSettingsSection } from '@/components/nota-pro-settings-section';
+import { McpConnectSettingsSection } from '@/components/mcp-connect-settings-section';
 import { useIsElectron } from '@getmadrid/electron-bridge-ui/use-is-electron';
 import { pathForScreen } from '@getmadrid/app-navigation-core/navigation';
 import { navigatorLooksLikeApplePlatform } from '@/lib/navigator-apple-platform';
@@ -576,6 +577,8 @@ export default function NotesSettingsPage(): JSX.Element {
             </div>
           </section>
         ) : null}
+
+        {notaProEntitled ? <McpConnectSettingsSection /> : null}
 
         {notaProEntitled ? accountSection : null}
       </div>
