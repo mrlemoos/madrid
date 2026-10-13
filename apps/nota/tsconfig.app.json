@@ -23,12 +23,14 @@
     "src/**/*.js",
     "src/**/*.jsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
+    "**/.client/**/*.tsx",
+    "src/app/.well-known/**/*.ts"
   ],
   "exclude": [
     "out-tsc",
     "dist",
     "src/**/*.spec.ts",
+    "src/app/.well-known/**/*.spec.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.tsx",
     "src/**/*.test.tsx",

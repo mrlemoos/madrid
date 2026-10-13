@@ -26,6 +26,7 @@
     "vitest.setup.ts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
+    "src/app/.well-known/**/*.spec.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.tsx",
     "src/**/*.test.js",

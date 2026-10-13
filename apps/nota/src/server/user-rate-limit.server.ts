@@ -45,3 +45,10 @@ export const rateLimitReindexAllPost = createUserRateLimiter({
   max: 1,
   windowMs: 120_000,
 });
+
+/** MCP tool calls: agents loop, so cap per user per minute. */
+export const rateLimitMcpToolCall = createUserRateLimiter({
+  key: 'mcp-tool-call',
+  max: 60,
+  windowMs: 60_000,
+});
